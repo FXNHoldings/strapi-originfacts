@@ -603,6 +603,44 @@ export async function listRoutesByCarrier(airlineSlug: string, limit = 20) {
   return res.data;
 }
 
+/**
+ * Lightweight one-pass scan of the whole routes collection, returning the set
+ * of airport IATA codes that appear as a route ORIGIN and the set of carrier
+ * slugs that operate any route. Used by the sitemap quality gate to decide
+ * which airport/airline pages carry real network data (and so deserve
+ * indexing). Pulls minimal fields only.
+ */
+export async function fetchRouteCoverage(): Promise<{
+  originIatas: Set<string>;
+  carrierSlugs: Set<string>;
+}> {
+  const originIatas = new Set<string>();
+  const carrierSlugs = new Set<string>();
+  let page = 1;
+  const pageSize = 300;
+  while (true) {
+    const r = await strapiFetch<ListResponse<StrapiRoute>>(
+      'routes',
+      {
+        fields: ['id'],
+        populate: { origin: { fields: ['iata'] }, carriers: { fields: ['slug'] } },
+        pagination: { page, pageSize },
+      },
+      3600,
+    );
+    for (const rt of r.data) {
+      if (rt.origin?.iata) originIatas.add(rt.origin.iata.toLowerCase());
+      for (const c of rt.carriers ?? []) {
+        if (c?.slug) carrierSlugs.add(c.slug);
+      }
+    }
+    const pageCount = r.meta?.pagination?.pageCount ?? 1;
+    if (page >= pageCount) break;
+    page++;
+  }
+  return { originIatas, carrierSlugs };
+}
+
 export async function listRoutesFromAirport(iata: string, limit = 20) {
   const res = await strapiFetch<ListResponse<StrapiRoute>>('routes', {
     filters: { origin: { iata: { $eqi: iata } } },
