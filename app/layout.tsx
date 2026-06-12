@@ -68,6 +68,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`${inter.variable} ${urbanist.variable} ${jakarta.variable} ${figtree.variable}`}>
       <body className="min-h-screen flex flex-col font-sans font-normal grain" data-testid="app-shell">
+        {/* Impact.com site verification — raw tag (React 19 hoists it into <head>).
+            Kept as the verbatim <meta name=… value=…> Impact provides; not routed
+            through Next's metadata API, which would rewrite `value` to `content`. */}
+        <meta {...({ name: 'impact-site-verification', value: '3604ebda-47ea-4c1a-ad1e-8d7976f411ce' } as Record<string, string>)} />
         <Script id="consent-default" strategy="beforeInteractive">{`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
