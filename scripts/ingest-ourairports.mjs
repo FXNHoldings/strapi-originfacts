@@ -34,6 +34,10 @@ const RUNWAYS_URL = 'https://davidmegginson.github.io/ourairports-data/runways.c
 
 const STRAPI_URL = (process.env.STRAPI_URL || 'https://cms.fxnstudio.com').replace(/\/$/, '');
 const WRITE_TOKEN = process.env.STRAPI_WRITE_TOKEN || '';
+// --openclaw: generate the prose "About" via the self-hosted openclaw gateway
+// (OpenAI-compatible). Falls back to templated prose if a call fails.
+const OPENCLAW_URL = (process.env.OPENCLAW_URL || 'http://127.0.0.1:18789').replace(/\/$/, '');
+const OPENCLAW_TOKEN = process.env.OPENCLAW_TOKEN || '';
 
 const args = process.argv.slice(2);
 const has = (f) => args.includes(f);
@@ -47,6 +51,7 @@ const OPTS = {
   all: has('--all'),
   fresh: has('--fresh'),
   refreshData: has('--refresh-data'),
+  openclaw: has('--openclaw'),
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -158,7 +163,56 @@ function runwayLines(runways) {
     });
 }
 
-function buildAbout(oa, runways, existing) {
+/** The "## Airport information" detail block (right column of the page). */
+function infoBlock(oa, runways) {
+  const elevFt = numf(oa.elevation_ft);
+  const openRunways = runways.filter((r) => r.closed !== '1');
+  const info = [
+    TYPE_LABEL[oa.type] ? `**Type:** ${TYPE_LABEL[oa.type]}` : '',
+    elevFt != null ? `**Elevation:** ${elevFt.toLocaleString()} ft (${ftToM(elevFt).toLocaleString()} m)` : '',
+    openRunways.length ? `**Runways:** ${openRunways.length}` : '',
+    str(oa.municipality) ? `**Municipality:** ${oa.municipality}` : '',
+    str(oa.home_link) ? `**Website:** ${oa.home_link}` : '',
+    str(oa.wikipedia_link) ? `**Wikipedia:** ${oa.wikipedia_link}` : '',
+  ].filter(Boolean);
+  return info.length ? `## Airport information\n\n` + info.join('  \n') : '';
+}
+
+/** Compact, accurate fact sheet handed to openclaw to ground its prose. */
+function factsString(oa, runways, existing) {
+  const open = runways.filter((r) => r.closed !== '1');
+  return [
+    `- Name: ${str(oa.name) || existing.name}`,
+    `- IATA: ${existing.iata}${str(oa.icao_code) ? `, ICAO: ${oa.icao_code}` : ''}`,
+    `- Type: ${(TYPE_LABEL[oa.type] || 'airport').toLowerCase()}`,
+    `- Serves: ${[str(oa.municipality), regionName(str(oa.iso_country)) || existing.country].filter(Boolean).join(', ')}`,
+    numf(oa.elevation_ft) != null ? `- Elevation: ${numf(oa.elevation_ft)} ft (${ftToM(numf(oa.elevation_ft))} m)` : '',
+    open.length ? `- Runways: ${open.map((r) => `${[str(r.le_ident), str(r.he_ident)].filter(Boolean).join('/')} (${numf(r.length_ft) ? numf(r.length_ft) + ' ft' : 'length n/a'}${surfaceLabel(str(r.surface)) ? ', ' + surfaceLabel(str(r.surface)) : ''}${r.lighted === '1' ? ', lighted' : ''})`).join('; ')}` : '',
+    str(existing.timezone) ? `- Time zone: ${existing.timezone}` : '',
+    str(oa.home_link) ? `- Official site: ${oa.home_link}` : '',
+  ].filter(Boolean).join('\n');
+}
+
+/** Generate the prose About via the openclaw OpenAI-compatible endpoint. */
+async function genProse(facts) {
+  const sys = 'You are a precise travel and aviation content writer. Output ONLY the requested content as plain markdown — no preamble, no closing remarks, no code fences. Use only the facts provided plus well-established general knowledge about the place; do NOT invent passenger numbers, terminal counts, airline names, opening dates, or any history you are unsure of.';
+  const user = `Write an informative "About the airport" section for a travel website airport page. About 230-300 words. Use 2-3 short markdown subheadings (## ...). Make it genuinely useful for visitors and travellers. Do not restate raw codes as a list — weave facts into readable prose.\n\nGrounded facts (accurate):\n${facts}\n\nReturn only the About section.`;
+  const res = await fetch(`${OPENCLAW_URL}/v1/chat/completions`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${OPENCLAW_TOKEN}` },
+    body: JSON.stringify({ model: 'openclaw', messages: [{ role: 'system', content: sys }, { role: 'user', content: user }] }),
+  });
+  if (!res.ok) throw new Error(`openclaw ${res.status}: ${(await res.text().catch(() => '')).slice(0, 200)}`);
+  const j = await res.json();
+  const content = j?.choices?.[0]?.message?.content;
+  if (!content || !content.trim()) throw new Error('openclaw returned empty content');
+  return content.trim().replace(/^```(?:markdown)?\s*/i, '').replace(/\s*```$/i, '').trim();
+}
+
+function buildAbout(oa, runways, existing, prose) {
+  // openclaw mode: rich generated prose (left column) + structured info block (right column)
+  if (prose) return [prose, infoBlock(oa, runways)].filter(Boolean).join('\n\n');
+
   const name = str(oa.name) || existing.name;
   const typeLabel = TYPE_LABEL[oa.type] || 'airport';
   const place = [str(oa.municipality), regionName(str(oa.iso_country)) || existing.country].filter(Boolean).join(', ');
@@ -172,28 +226,18 @@ function buildAbout(oa, runways, existing) {
 
   const openRunways = runways.filter((r) => r.closed !== '1');
   let md = overview;
-
   if (openRunways.length) {
     const lengths = openRunways.map((r) => numf(r.length_ft)).filter((n) => n != null);
     const maxFt = lengths.length ? Math.max(...lengths) : null;
     const summary = `${name} has ${openRunways.length} runway${openRunways.length === 1 ? '' : 's'}${maxFt ? `, the longest measuring ${maxFt.toLocaleString()} ft (${ftToM(maxFt).toLocaleString()} m)` : ''}.`;
     md += `\n\n## Runways\n\n${summary}\n\n` + runwayLines(openRunways).join('\n\n');
   }
-
-  const info = [
-    typeLabel ? `**Type:** ${typeLabel}` : '',
-    elevFt != null ? `**Elevation:** ${elevFt.toLocaleString()} ft (${ftToM(elevFt).toLocaleString()} m)` : '',
-    openRunways.length ? `**Runways:** ${openRunways.length}` : '',
-    str(oa.municipality) ? `**Municipality:** ${oa.municipality}` : '',
-    str(oa.home_link) ? `**Website:** ${oa.home_link}` : '',
-    str(oa.wikipedia_link) ? `**Wikipedia:** ${oa.wikipedia_link}` : '',
-  ].filter(Boolean);
-  if (info.length) md += `\n\n## Airport information\n\n` + info.join('  \n');
-
+  const block = infoBlock(oa, runways);
+  if (block) md += `\n\n${block}`;
   return md;
 }
 
-function buildUpdate(airport, oa, runways) {
+function buildUpdate(airport, oa, runways, prose) {
   const data = {};
   const fillIfEmpty = (k, v) => {
     if (v == null) return;
@@ -207,7 +251,7 @@ function buildUpdate(airport, oa, runways) {
   fillIfEmpty('latitude', numf(oa.latitude_deg));
   fillIfEmpty('longitude', numf(oa.longitude_deg));
 
-  if (OPTS.force || !str(airport.about)) data.about = buildAbout(oa, runways, airport);
+  if (OPTS.force || !str(airport.about)) data.about = buildAbout(oa, runways, airport, prose);
   return Object.keys(data).length ? data : null;
 }
 
@@ -222,7 +266,8 @@ function isNeedy(a) {
 
 async function main() {
   if (OPTS.write && !WRITE_TOKEN) { console.error('FATAL: --write requires STRAPI_WRITE_TOKEN.'); process.exit(1); }
-  console.log(`Mode: ${OPTS.write ? 'WRITE' : 'DRY-RUN'} | strapi: ${STRAPI_URL}`);
+  if (OPTS.openclaw && !OPENCLAW_TOKEN) { console.error('FATAL: --openclaw requires OPENCLAW_TOKEN.'); process.exit(1); }
+  console.log(`Mode: ${OPTS.write ? 'WRITE' : 'DRY-RUN'}${OPTS.openclaw ? ' + openclaw prose' : ''} | strapi: ${STRAPI_URL}`);
 
   const [airportRows, runwayRows] = await Promise.all([loadCsv(AIRPORTS_URL, 'airports.csv'), loadCsv(RUNWAYS_URL, 'runways.csv')]);
   const oaByIata = new Map();
@@ -248,7 +293,12 @@ async function main() {
     if (!oa) { stats.noMatch++; cp.processed[iata] = { status: 'no_match' }; console.log(`${tag} not in OurAirports`); continue; }
     const runways = rwByIdent.get(oa.ident) || [];
     try {
-      const update = buildUpdate(a, oa, runways);
+      let prose = null;
+      if (OPTS.openclaw && (OPTS.force || !str(a.about))) {
+        try { prose = await genProse(factsString(oa, runways, a)); }
+        catch (e) { console.warn(`${tag} openclaw failed (${e.message}) — falling back to templated prose`); }
+      }
+      const update = buildUpdate(a, oa, runways, prose);
       if (!update) { stats.noChange++; cp.processed[iata] = { status: 'no_change' }; console.log(`${tag} nothing to fill`); }
       else if (OPTS.write) {
         await strapiUpdateAirport(a.documentId, update);
