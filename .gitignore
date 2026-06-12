@@ -9,3 +9,6 @@ out
 .DS_Store
 *.tsbuildinfo
 next-env.d.ts
+
+# airport ingest resume checkpoint
+scripts/.airport-ingest-progress.json
