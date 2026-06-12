@@ -73,6 +73,16 @@ export default async function AirportPage({ params }: Props) {
 
   const faqs = airportFaqs(airport, summary);
 
+  // Split the `about` into prose (left column) and the "Airport information"
+  // detail block (right column). Country/Region are already in `facts`, so
+  // we drop those duplicates and keep the contact rows (postal, phone, website).
+  const aboutSections = airport.about ? parseAboutSections(airport.about) : [];
+  const infoSection = aboutSections.find((s) => /airport information/i.test(s.heading || ''));
+  const proseSections = aboutSections.filter((s) => s !== infoSection);
+  const contactRows = infoSection
+    ? parseInfoRows(infoSection).filter((r) => !/^(country|region)/i.test(r.label))
+    : [];
+
   return (
     <article data-testid={`airport-page-${airport.iata}`}>
       <JsonLd data={airportJsonLd(airport, url)} />
@@ -102,7 +112,7 @@ export default async function AirportPage({ params }: Props) {
             {airport.country && <span>· {airport.country}</span>}
             {airport.timezone && <span>· {airport.timezone}</span>}
           </div>
-          <h1 className="editorial-h mt-3 text-3xl font-bold leading-tight sm:text-4xl">
+          <h1 className="editorial-h mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl">
             {airport.name}
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs">
@@ -119,18 +129,18 @@ export default async function AirportPage({ params }: Props) {
         </div>
       </header>
 
-      {/* Overview — factual intro + key-facts panel (always rendered) */}
+      {/* Overview — about prose (left) + Airport information panel (right) */}
       <section className="mx-auto mt-14 max-w-6xl px-6" data-testid="airport-overview">
         <div className="grid gap-10 lg:grid-cols-[6fr_3fr]">
+          {/* Left: about airport content */}
           <div>
             <p className="section-eyebrow">
               <span className="inline-block h-px w-8 bg-forest-800/60" />
-              Overview
+              About {airport.name}
             </p>
             <div className="prose-article mt-4">
-              <p>{airportIntro(airport, summary)}</p>
-              {airport.about &&
-                parseAboutSections(airport.about).map((s, i) =>
+              {proseSections.length > 0 ? (
+                proseSections.map((s, i) =>
                   s.heading ? (
                     <div key={i} className="mt-8">
                       <h3 className="font-urbanist text-xl font-bold text-forest-900">{s.heading}</h3>
@@ -141,13 +151,17 @@ export default async function AirportPage({ params }: Props) {
                   ) : (
                     s.paragraphs.map((p, j) => <p key={`${i}-${j}`}>{p}</p>)
                   ),
-                )}
+                )
+              ) : (
+                <p>{airportIntro(airport, summary)}</p>
+              )}
             </div>
           </div>
 
+          {/* Right: Airport information (codes, location, contact) */}
           <aside className="rounded-[0.3rem] border border-forest-900/10 bg-forest-900/[0.02] p-6 lg:self-start">
             <h3 className="editorial-h text-xs font-bold uppercase tracking-wider text-forest-900/60">
-              Key facts
+              Airport information
             </h3>
             <dl className="mt-5 space-y-4">
               {facts.map((f) => (
@@ -155,6 +169,14 @@ export default async function AirportPage({ params }: Props) {
                   <dt className="text-[11px] uppercase tracking-widest text-forest-900/50">{f.label}</dt>
                   <dd className="mt-1 text-sm font-light text-forest-900">
                     {f.value ?? <span className="text-forest-900/30">—</span>}
+                  </dd>
+                </div>
+              ))}
+              {contactRows.map((r) => (
+                <div key={r.label}>
+                  <dt className="text-[11px] uppercase tracking-widest text-forest-900/50">{r.label}</dt>
+                  <dd className="mt-1 break-words text-sm font-light text-forest-900">
+                    <ContactValue label={r.label} value={r.value} />
                   </dd>
                 </div>
               ))}
@@ -301,4 +323,43 @@ function parseAboutSections(about: string): AboutSection[] {
   }
   if (current.heading || current.paragraphs.length) sections.push(current);
   return sections;
+}
+
+/** Parse `**Label:** value` lines (markdown line-breaks) into rows. */
+function parseInfoRows(section: AboutSection): { label: string; value: string }[] {
+  const rows: { label: string; value: string }[] = [];
+  for (const para of section.paragraphs) {
+    for (const line of para.split('\n')) {
+      const m = line.trim().match(/^\*\*(.+?):\*\*\s*(.+?)\s*$/);
+      if (m) rows.push({ label: m[1].trim(), value: m[2].trim() });
+    }
+  }
+  return rows;
+}
+
+/** Render a contact value: phone as a tel link, website/URL as an external link. */
+function ContactValue({ label, value }: { label: string; value: string }) {
+  const isUrl = /^https?:\/\//i.test(value) || /website|url/i.test(label);
+  const isPhone = /phone|tel/i.test(label);
+  if (isUrl) {
+    const href = value.startsWith('http') ? value : `https://${value}`;
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer nofollow"
+        className="break-all text-forest-700 underline-offset-2 hover:underline"
+      >
+        {value.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+      </a>
+    );
+  }
+  if (isPhone) {
+    return (
+      <a href={`tel:${value.replace(/[^0-9+]/g, '')}`} className="text-forest-700 underline-offset-2 hover:underline">
+        {value}
+      </a>
+    );
+  }
+  return <>{value}</>;
 }
