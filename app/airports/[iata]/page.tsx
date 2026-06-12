@@ -144,12 +144,10 @@ export default async function AirportPage({ params }: Props) {
                   s.heading ? (
                     <div key={i} className="mt-8">
                       <h3 className="font-urbanist text-xl font-bold text-forest-900">{s.heading}</h3>
-                      {s.paragraphs.map((p, j) => (
-                        <p key={j} className="mt-3">{p}</p>
-                      ))}
+                      {renderProse(s.paragraphs, i)}
                     </div>
                   ) : (
-                    s.paragraphs.map((p, j) => <p key={`${i}-${j}`}>{p}</p>)
+                    <div key={i}>{renderProse(s.paragraphs, i)}</div>
                   ),
                 )
               ) : (
@@ -323,6 +321,41 @@ function parseAboutSections(about: string): AboutSection[] {
   }
   if (current.heading || current.paragraphs.length) sections.push(current);
   return sections;
+}
+
+/**
+ * Render about-section content: plain lines become <p>, and consecutive
+ * markdown bullet lines (`- ` / `* `) become a <ul>. Handles a section that is
+ * a single paragraph, a bullet list, or a mix.
+ */
+function renderProse(paragraphs: string[], si: number): React.ReactNode[] {
+  const out: React.ReactNode[] = [];
+  paragraphs.forEach((para, pi) => {
+    const lines = para.split('\n').map((l) => l.trim()).filter(Boolean);
+    let text: string[] = [];
+    let bullets: string[] = [];
+    const flushText = () => {
+      if (text.length) { out.push(<p key={`p-${si}-${pi}-${out.length}`} className="mt-3">{text.join(' ')}</p>); text = []; }
+    };
+    const flushBullets = () => {
+      if (bullets.length) {
+        out.push(
+          <ul key={`u-${si}-${pi}-${out.length}`} className="mt-3 list-disc space-y-1.5 pl-5 text-forest-900/85">
+            {bullets.map((b, bi) => <li key={bi}>{b}</li>)}
+          </ul>,
+        );
+        bullets = [];
+      }
+    };
+    for (const l of lines) {
+      const m = l.match(/^[-*]\s+(.*)$/);
+      if (m) { flushText(); bullets.push(m[1]); }
+      else { flushBullets(); text.push(l); }
+    }
+    flushText();
+    flushBullets();
+  });
+  return out;
 }
 
 /** Parse `**Label:** value` lines (markdown line-breaks) into rows. */

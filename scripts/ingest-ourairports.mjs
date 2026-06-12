@@ -196,7 +196,7 @@ function factsString(oa, runways, existing) {
 /** Generate the prose About via the openclaw OpenAI-compatible endpoint. */
 async function genProse(facts) {
   const sys = 'You are a precise travel and aviation content writer. Output ONLY the requested content as plain markdown — no preamble, no closing remarks, no code fences. Use only the facts provided plus well-established general knowledge about the place; do NOT invent passenger numbers, terminal counts, airline names, opening dates, or any history you are unsure of.';
-  const user = `Write an informative "About the airport" section for a travel website airport page. About 230-300 words. Use 2-3 short markdown subheadings (## ...). Make it genuinely useful for visitors and travellers. Do not restate raw codes as a list — weave facts into readable prose.\n\nGrounded facts (accurate):\n${facts}\n\nReturn only the About section.`;
+  const user = `Write an informative "About the airport" section for a travel website airport page, about 200-260 words total. Structure it as 2-4 short sections, each with a "## " markdown subheading.\n\nRules:\n- Each section must be a SINGLE concise paragraph.\n- EXACTLY ONE of the sections must present its content as a markdown bullet list (each line starting with "- "), 3-6 bullets, instead of a paragraph.\n- Use plain text only: no bold (** **), no backticks or inline code, no tables.\n- Make it genuinely useful for visitors and travellers; weave facts into readable prose.\n\nGrounded facts (accurate):\n${facts}\n\nReturn only the About section.`;
   const res = await fetch(`${OPENCLAW_URL}/v1/chat/completions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${OPENCLAW_TOKEN}` },
