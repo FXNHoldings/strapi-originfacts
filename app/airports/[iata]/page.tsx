@@ -89,7 +89,7 @@ export default async function AirportPage({ params }: Props) {
       <JsonLd data={faqJsonLd(faqs)} />
 
       {/* Breadcrumb */}
-      <div className="mx-auto max-w-6xl px-6 pt-10">
+      <div className="mx-auto max-w-7xl px-6 pt-10">
         <nav className="text-xs uppercase tracking-widest text-forest-900/60">
           <Link href="/airports" className="hover:text-forest-900">Airports</Link>
           <span className="mx-2 text-forest-900/30">/</span>
@@ -98,7 +98,7 @@ export default async function AirportPage({ params }: Props) {
       </div>
 
       {/* Hero */}
-      <header className="relative mx-auto mt-6 max-w-6xl overflow-hidden rounded-[0.3rem]">
+      <header className="relative mx-auto mt-6 max-w-7xl overflow-hidden rounded-[0.3rem]">
         {hero ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={hero} alt={airport.name} className="h-[320px] w-full object-cover" />
@@ -130,7 +130,7 @@ export default async function AirportPage({ params }: Props) {
       </header>
 
       {/* Overview — about prose (left) + Airport information panel (right) */}
-      <section className="mx-auto mt-14 max-w-6xl px-6" data-testid="airport-overview">
+      <section className="mx-auto mt-14 max-w-7xl px-6" data-testid="airport-overview">
         <div className="grid gap-10 lg:grid-cols-[6fr_3fr]">
           {/* Left: about airport content */}
           <div>
@@ -187,7 +187,7 @@ export default async function AirportPage({ params }: Props) {
 
       {/* Airlines operating from here (derived from tracked routes) */}
       {summary.carriers.length > 0 && (
-        <section className="mx-auto mt-16 max-w-6xl px-6" data-testid="airport-airlines">
+        <section className="mx-auto mt-16 max-w-7xl px-6" data-testid="airport-airlines">
           <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
             <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-3xl">
               Airlines flying from {airport.iata}
@@ -212,7 +212,7 @@ export default async function AirportPage({ params }: Props) {
       )}
 
       {/* Top routes from here */}
-      <section className="mx-auto mt-16 max-w-6xl px-6">
+      <section className="mx-auto mt-16 max-w-7xl px-6">
         <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
           <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-3xl">
             Top routes from {airport.iata}
@@ -262,7 +262,7 @@ export default async function AirportPage({ params }: Props) {
 
       {/* Other airports in the same country */}
       {nearby.length > 0 && (
-        <section className="mx-auto mt-16 max-w-6xl px-6" data-testid="airport-nearby">
+        <section className="mx-auto mt-16 max-w-7xl px-6" data-testid="airport-nearby">
           <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
             <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-3xl">
               Other airports in {airport.country}
