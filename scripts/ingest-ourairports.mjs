@@ -309,7 +309,12 @@ async function main() {
         console.log(`${tag} would set: ${Object.keys(update).join(', ')} (${runways.filter((r)=>r.closed!=='1').length} runways)`);
         if (i === 0) console.log('   about preview:\n   ' + (update.about || '').split('\n').join('\n   '));
       }
-    } catch (e) { stats.errors++; cp.processed[iata] = { status: 'error' }; console.error(`${tag} ERROR: ${e.message}`); }
+    } catch (e) {
+      // Do NOT checkpoint errors — leaving them out means the next run retries
+      // them instead of skipping permanently.
+      stats.errors++;
+      console.error(`${tag} ERROR (will retry next run): ${e.message}`);
+    }
     await saveCp(cp);
     if (OPTS.write && i < airports.length - 1) await sleep(OPTS.sleep);
   }
