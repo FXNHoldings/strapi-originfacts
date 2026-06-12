@@ -9,3 +9,8 @@ out
 .DS_Store
 *.tsbuildinfo
 next-env.d.ts
+
+# airport ingest data cache + checkpoints
+scripts/.oa-cache/
+scripts/.ourairports-progress.json
+scripts/.airport-ingest-progress.json
