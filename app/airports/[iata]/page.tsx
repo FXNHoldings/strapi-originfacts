@@ -1,6 +1,22 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getAirport, listRoutesFromAirport, mediaUrl } from '@/lib/strapi';
+import {
+  getAirport,
+  listRoutesFromAirport,
+  listAirportsByCountryCode,
+  mediaUrl,
+} from '@/lib/strapi';
+import {
+  SITE_URL,
+  airportIsSubstantive,
+  airportIntro,
+  airportFaqs,
+  airportJsonLd,
+  faqJsonLd,
+  robotsFor,
+  summariseRoutes,
+} from '@/lib/entity-seo';
+import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -10,12 +26,15 @@ type Props = { params: Promise<{ iata: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { iata } = await params;
   const a = await getAirport(iata);
-  if (!a) return { title: 'Airport not found' };
+  if (!a) return { title: 'Airport not found', robots: { index: false, follow: false } };
+  const routes = await listRoutesFromAirport(a.iata, 1).catch(() => []);
   return {
     title: `${a.name} (${a.iata}) — airport guide`,
     description:
       a.about?.slice(0, 150) ||
-      `${a.name} (${a.iata}) airport guide: terminals, airlines, top destinations, and ground transfer options.`,
+      `${a.name} (${a.iata})${a.city ? ` in ${a.city}` : ''}${a.country ? `, ${a.country}` : ''}: codes, location, airlines, top destinations and ground-transfer basics.`,
+    alternates: { canonical: `${SITE_URL}/airports/${a.iata.toLowerCase()}` },
+    robots: robotsFor(airportIsSubstantive(a, routes.length > 0)),
   };
 }
 
@@ -24,17 +43,45 @@ export default async function AirportPage({ params }: Props) {
   const airport = await getAirport(iata);
   if (!airport) notFound();
 
-  const routes = await listRoutesFromAirport(airport.iata, 15);
+  const [routes, sameCountry] = await Promise.all([
+    listRoutesFromAirport(airport.iata, 15).catch(() => []),
+    airport.countryCode
+      ? listAirportsByCountryCode(airport.countryCode, 30).catch(() => [])
+      : Promise.resolve([]),
+  ]);
+  const summary = summariseRoutes(routes, 'destination');
   const hero = mediaUrl(airport.heroImage ?? null);
+  const url = `${SITE_URL}/airports/${airport.iata.toLowerCase()}`;
+
+  const nearby = sameCountry.filter((a) => a.iata && a.iata !== airport.iata).slice(0, 9);
+
+  const facts: { label: string; value?: string | null }[] = [
+    { label: 'IATA code', value: airport.iata },
+    { label: 'ICAO code', value: airport.icao },
+    { label: 'City', value: airport.city },
+    { label: 'Country', value: airport.country },
+    { label: 'Region', value: airport.region },
+    {
+      label: 'Coordinates',
+      value:
+        typeof airport.latitude === 'number' && typeof airport.longitude === 'number'
+          ? `${airport.latitude.toFixed(3)}°, ${airport.longitude.toFixed(3)}°`
+          : null,
+    },
+    { label: 'Time zone', value: airport.timezone },
+  ];
+
+  const faqs = airportFaqs(airport, summary);
 
   return (
     <article data-testid={`airport-page-${airport.iata}`}>
+      <JsonLd data={airportJsonLd(airport, url)} />
+      <JsonLd data={faqJsonLd(faqs)} />
+
       {/* Breadcrumb */}
       <div className="mx-auto max-w-6xl px-6 pt-10">
         <nav className="text-xs uppercase tracking-widest text-forest-900/60">
-          <Link href="/airlines" className="hover:text-forest-900">Airlines</Link>
-          <span className="mx-2 text-forest-900/30">/</span>
-          <span>Airports</span>
+          <Link href="/airports" className="hover:text-forest-900">Airports</Link>
           <span className="mx-2 text-forest-900/30">/</span>
           <span className="text-forest-900/80">{airport.iata}</span>
         </nav>
@@ -72,32 +119,78 @@ export default async function AirportPage({ params }: Props) {
         </div>
       </header>
 
-      {/* About */}
-      {airport.about && (
-        <section className="mx-auto mt-14 max-w-3xl px-6">
-          <p className="section-eyebrow">
-            <span className="inline-block h-px w-8 bg-forest-800/60" />
-            About {airport.iata}
-          </p>
-          <div className="prose-article mt-4">
-            {parseAboutSections(airport.about).map((s, i) =>
-              s.heading ? (
-                <div key={i} className={i === 0 ? '' : 'mt-8'}>
-                  <h3 className="font-urbanist text-xl font-bold text-forest-900">{s.heading}</h3>
-                  {s.paragraphs.map((p, j) => (
-                    <p key={j} className={j === 0 ? 'mt-3' : 'mt-3'}>{p}</p>
-                  ))}
+      {/* Overview — factual intro + key-facts panel (always rendered) */}
+      <section className="mx-auto mt-14 max-w-6xl px-6" data-testid="airport-overview">
+        <div className="grid gap-10 lg:grid-cols-[6fr_3fr]">
+          <div>
+            <p className="section-eyebrow">
+              <span className="inline-block h-px w-8 bg-forest-800/60" />
+              Overview
+            </p>
+            <div className="prose-article mt-4">
+              <p>{airportIntro(airport, summary)}</p>
+              {airport.about &&
+                parseAboutSections(airport.about).map((s, i) =>
+                  s.heading ? (
+                    <div key={i} className="mt-8">
+                      <h3 className="font-urbanist text-xl font-bold text-forest-900">{s.heading}</h3>
+                      {s.paragraphs.map((p, j) => (
+                        <p key={j} className="mt-3">{p}</p>
+                      ))}
+                    </div>
+                  ) : (
+                    s.paragraphs.map((p, j) => <p key={`${i}-${j}`}>{p}</p>)
+                  ),
+                )}
+            </div>
+          </div>
+
+          <aside className="rounded-[0.3rem] border border-forest-900/10 bg-forest-900/[0.02] p-6 lg:self-start">
+            <h3 className="editorial-h text-xs font-bold uppercase tracking-wider text-forest-900/60">
+              Key facts
+            </h3>
+            <dl className="mt-5 space-y-4">
+              {facts.map((f) => (
+                <div key={f.label}>
+                  <dt className="text-[11px] uppercase tracking-widest text-forest-900/50">{f.label}</dt>
+                  <dd className="mt-1 text-sm font-light text-forest-900">
+                    {f.value ?? <span className="text-forest-900/30">—</span>}
+                  </dd>
                 </div>
-              ) : (
-                s.paragraphs.map((p, j) => <p key={`${i}-${j}`}>{p}</p>)
-              ),
-            )}
+              ))}
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      {/* Airlines operating from here (derived from tracked routes) */}
+      {summary.carriers.length > 0 && (
+        <section className="mx-auto mt-16 max-w-6xl px-6" data-testid="airport-airlines">
+          <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
+            <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-3xl">
+              Airlines flying from {airport.iata}
+            </h2>
+            <span className="text-sm font-light text-forest-900/50">
+              {summary.carriers.length} carrier{summary.carriers.length === 1 ? '' : 's'}
+            </span>
+          </header>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {summary.carriers.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/airlines/${c.slug}`}
+                className="rounded-[0.3rem] border border-forest-900/10 bg-paper px-3 py-1.5 text-sm text-forest-900 transition hover:border-forest-900/30 hover:text-forest-700"
+              >
+                {c.name}
+                {c.iataCode && <span className="ml-1.5 font-mono text-xs text-forest-900/50">{c.iataCode}</span>}
+              </Link>
+            ))}
           </div>
         </section>
       )}
 
       {/* Top routes from here */}
-      <section className="mx-auto mt-16 max-w-6xl px-6 pb-20">
+      <section className="mx-auto mt-16 max-w-6xl px-6">
         <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
           <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-3xl">
             Top routes from {airport.iata}
@@ -144,6 +237,40 @@ export default async function AirportPage({ params }: Props) {
           </div>
         )}
       </section>
+
+      {/* Other airports in the same country */}
+      {nearby.length > 0 && (
+        <section className="mx-auto mt-16 max-w-6xl px-6" data-testid="airport-nearby">
+          <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
+            <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-3xl">
+              Other airports in {airport.country}
+            </h2>
+          </header>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {nearby.map((a) => (
+              <Link
+                key={a.id}
+                href={`/airports/${a.iata.toLowerCase()}`}
+                className="group flex items-center gap-3 rounded-[0.3rem] border border-forest-900/10 bg-paper px-4 py-3 transition hover:-translate-y-0.5 hover:border-forest-900/30"
+              >
+                <span className="flex-none rounded-[0.3rem] bg-forest-900 px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider text-sand-100">
+                  {a.iata}
+                </span>
+                <div className="min-w-0">
+                  <div className="truncate font-urbanist text-sm font-bold text-forest-900 group-hover:text-forest-700">
+                    {a.city || a.name}
+                  </div>
+                  <div className="truncate text-xs text-forest-900/60">{a.name}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <FaqSection faqs={faqs} title={`${airport.name} — frequently asked questions`} />
+
+      <div className="pb-20" />
     </article>
   );
 }

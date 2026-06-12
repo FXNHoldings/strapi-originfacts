@@ -5,9 +5,11 @@ import {
   listAirports,
   listCountries,
   listDestinations,
+  fetchRouteCoverage,
 } from '@/lib/strapi';
 import { SECTIONS } from '@/lib/sections';
 import { LEGAL_DOCS } from '@/lib/legal';
+import { airportIsSubstantive, airlineIsSubstantive } from '@/lib/entity-seo';
 
 const SITE_URL = 'https://www.originfacts.com';
 
@@ -16,18 +18,19 @@ export const revalidate = 3600;
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  const [articlesRes, destinations, airlines, airports, countries] = await Promise.all([
+  const [articlesRes, destinations, airlines, airports, countries, coverage] = await Promise.all([
     listArticles({ pageSize: 200 }).catch(() => ({ data: [], meta: null as never })),
     listDestinations().catch(() => []),
     listAirlines().catch(() => []),
     listAirports().catch(() => []),
     listCountries().catch(() => []),
+    fetchRouteCoverage().catch(() => ({ originIatas: new Set<string>(), carrierSlugs: new Set<string>() })),
   ]);
 
   const articles = articlesRes.data;
 
   const staticPaths: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
+    { url: `${SITE_URL}`, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
     { url: `${SITE_URL}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: 'yearly', priority: 0.4 },
     { url: `${SITE_URL}/articles`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
@@ -66,7 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
   const airlinePaths: MetadataRoute.Sitemap = airlines
-    .filter((a) => a.slug)
+    .filter((a) => a.slug && airlineIsSubstantive(a, coverage.carrierSlugs.has(a.slug)))
     .map((a) => ({
       url: `${SITE_URL}/airlines/${a.slug}`,
       lastModified: now,
@@ -75,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
   const airportPaths: MetadataRoute.Sitemap = airports
-    .filter((a) => a.iata)
+    .filter((a) => a.iata && airportIsSubstantive(a, coverage.originIatas.has(a.iata.toLowerCase())))
     .map((a) => ({
       url: `${SITE_URL}/airports/${a.iata.toLowerCase()}`,
       lastModified: now,

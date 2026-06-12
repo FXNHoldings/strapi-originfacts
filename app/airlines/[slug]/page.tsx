@@ -1,6 +1,17 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getAirline, listRoutesByCarrier, mediaUrl, type StrapiAirline } from '@/lib/strapi';
+import { getAirline, listRoutesByCarrier, mediaUrl } from '@/lib/strapi';
+import {
+  SITE_URL,
+  airlineIsSubstantive,
+  airlineIntro,
+  airlineFaqs,
+  airlineJsonLd,
+  faqJsonLd,
+  robotsFor,
+  summariseRoutes,
+} from '@/lib/entity-seo';
+import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import FlightSearchCTA from '@/components/FlightSearchCTA';
 import type { Metadata } from 'next';
 
@@ -12,8 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const a = await getAirline(slug);
   if (!a) return { title: 'Not found' };
+  const routes = await listRoutesByCarrier(slug, 1).catch(() => []);
   const desc = a.about?.slice(0, 150) || `${a.name}${a.iataCode ? ` (${a.iataCode})` : ''} — airline profile, base of operations, and contact details.`;
-  return { title: a.name, description: desc };
+  return {
+    title: a.name,
+    description: desc,
+    alternates: { canonical: `${SITE_URL}/airlines/${a.slug}` },
+    robots: robotsFor(airlineIsSubstantive(a, routes.length > 0)),
+  };
 }
 
 export default async function AirlinePage({ params }: Props) {
@@ -23,9 +40,14 @@ export default async function AirlinePage({ params }: Props) {
 
   const routes = await listRoutesByCarrier(slug, 15).catch(() => []);
   const logo = mediaUrl(airline.logo ?? null);
+  const summary = summariseRoutes(routes, 'destination');
+  const url = `${SITE_URL}/airlines/${airline.slug}`;
+  const faqs = airlineFaqs(airline, summary);
 
   return (
     <article data-testid={`airline-page-${slug}`}>
+      <JsonLd data={airlineJsonLd(airline, url)} />
+      <JsonLd data={faqJsonLd(faqs)} />
       {/* Breadcrumb */}
       <div className="mx-auto max-w-6xl px-6 pt-10">
         <nav className="text-xs uppercase tracking-widest text-forest-900/60">
@@ -111,15 +133,11 @@ export default async function AirlinePage({ params }: Props) {
               <span className="inline-block h-px w-8 bg-forest-800/60" />
               About {airline.name}
             </p>
-            {airline.about ? (
-              <div className="prose-article mt-4">
-                {airline.about.split(/\n{2,}/).map((para, i) => (
-                  <p key={i}>{para}</p>
-                ))}
-              </div>
-            ) : (
-              <p className="mt-4 text-forest-900/50">No profile written for {airline.name} yet.</p>
-            )}
+            <div className="prose-article mt-4">
+              <p>{airlineIntro(airline, summary)}</p>
+              {airline.about &&
+                airline.about.split(/\n{2,}/).map((para, i) => <p key={i}>{para}</p>)}
+            </div>
           </div>
         </div>
       </section>
@@ -184,6 +202,8 @@ export default async function AirlinePage({ params }: Props) {
           </div>
         </section>
       )}
+
+      <FaqSection faqs={faqs} title={`${airline.name} — frequently asked questions`} />
     </article>
   );
 }

@@ -10,6 +10,8 @@ import {
   mediaUrl,
   type StrapiAirport,
 } from '@/lib/strapi';
+import { SITE_URL, countryFaqs, countryJsonLd, faqJsonLd } from '@/lib/entity-seo';
+import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -53,6 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${country.name} — airports, airlines & top routes`,
     description: `Travel directory for ${country.name} (${country.code}): commercial airports, airlines based in the country, and the busiest inbound routes.`,
+    alternates: { canonical: `${SITE_URL}/countries/${country.code.toLowerCase()}` },
   };
 }
 
@@ -74,8 +77,16 @@ export default async function CountryPage({ params }: Props) {
 
   const cityCount = new Set(airports.map((a) => a.city).filter(Boolean)).size;
 
+  const url = `${SITE_URL}/countries/${country.code.toLowerCase()}`;
+  const faqs = countryFaqs(
+    { code: country.code, name: country.name, region: country.region, currency: country.currency },
+    { airports: airports.length, airlines: airlines.length },
+  );
+
   return (
     <article data-testid={`country-page-${country.code}`}>
+      <JsonLd data={countryJsonLd({ code: country.code, name: country.name }, url)} />
+      <JsonLd data={faqJsonLd(faqs)} />
       {/* Breadcrumb */}
       <div className="mx-auto max-w-6xl px-6 pt-10">
         <nav className="text-xs uppercase tracking-widest text-forest-900/60">
@@ -242,6 +253,8 @@ export default async function CountryPage({ params }: Props) {
           </div>
         )}
       </section>
+
+      <FaqSection faqs={faqs} title={`${country.name} — frequently asked questions`} />
     </article>
   );
 }
