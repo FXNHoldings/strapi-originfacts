@@ -27,7 +27,7 @@ export default function Header() {
     <>
     <header
       ref={headerRef}
-      className={`z-50 bg-white/90 backdrop-blur transition-shadow duration-200 ${
+      className={`z-50 border-b border-forest-900/10 bg-white/90 backdrop-blur transition-shadow duration-200 ${
         stuck ? 'fixed top-0 left-0 right-0 shadow-md' : 'relative'
       }`}
       data-testid="site-header"

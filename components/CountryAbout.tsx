@@ -2,6 +2,14 @@ import type { ReactNode } from 'react';
 
 type Section = { heading: string | null; paragraphs: string[] };
 
+function isWikipediaUrl(url: string): boolean {
+  try {
+    return /(^|\.)wikipedia\.org$/i.test(new URL(url).hostname);
+  } catch {
+    return /wikipedia\.org/i.test(url);
+  }
+}
+
 /** Turn a bullet of the form `domain.tld — description` into a clickable link.
  *  Also handles plain markdown links `[text](https://url)`. Falls back to the
  *  raw text when neither pattern matches. */
@@ -9,6 +17,9 @@ function renderBulletContent(text: string): ReactNode {
   const md = text.match(/^\[([^\]]+)\]\((https?:\/\/[^)]+)\)(.*)$/);
   if (md) {
     const [, label, url, rest] = md;
+    if (isWikipediaUrl(url)) {
+      return `${label}${rest}`;
+    }
     return (
       <>
         <a
@@ -27,6 +38,9 @@ function renderBulletContent(text: string): ReactNode {
   if (domain) {
     const [, host, rest] = domain;
     const href = host.startsWith('http') ? host : `https://${host}`;
+    if (isWikipediaUrl(href)) {
+      return rest.replace(/^\s+[—-]\s+/, '');
+    }
     return (
       <>
         <a

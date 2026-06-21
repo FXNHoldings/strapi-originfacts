@@ -49,7 +49,7 @@ export default {
         outfit: ['var(--font-jakarta)', 'system-ui', 'sans-serif'],
       },
       letterSpacing: { tightest: '0' },
-      maxWidth: { '7xl': '1420px', prose: '68ch' },
+      maxWidth: { '6xl': '1420px', '7xl': '1420px', prose: '68ch' },
       fontSize: {
         '6xl': ['2.5rem', { lineHeight: '1' }],
         '7xl': ['3rem', { lineHeight: '1' }],

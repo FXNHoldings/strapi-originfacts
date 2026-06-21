@@ -13,6 +13,7 @@ import {
 } from '@/lib/entity-seo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import FlightSearchCTA from '@/components/FlightSearchCTA';
+import { getFlySfoAirlineProfile } from '@/lib/flysfo-airline';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -38,11 +39,27 @@ export default async function AirlinePage({ params }: Props) {
   const airline = await getAirline(slug);
   if (!airline) notFound();
 
-  const routes = await listRoutesByCarrier(slug, 15).catch(() => []);
+  const [routes, flySfoProfile] = await Promise.all([
+    listRoutesByCarrier(slug, 15).catch(() => []),
+    getFlySfoAirlineProfile(airline).catch(() => null),
+  ]);
   const logo = mediaUrl(airline.logo ?? null);
   const summary = summariseRoutes(routes, 'destination');
   const url = `${SITE_URL}/airlines/${airline.slug}`;
   const faqs = airlineFaqs(airline, summary);
+  const intro = airlineIntro(airline, summary);
+  const websiteValue = airline.website || flySfoProfile?.website || null;
+  const websiteHref = websiteValue ? normaliseUrl(websiteValue) : null;
+  const customerPhone = airline.phone || flySfoProfile?.generalPhone || null;
+  const baggagePhone = flySfoProfile?.baggagePhone || null;
+  const alliance = flySfoProfile?.alliance || null;
+  const heroFacts = [
+    { label: 'Country', value: airline.country },
+    { label: 'Region', value: airline.region },
+    { label: 'Type', value: airline.type },
+    { label: 'Alliance', value: alliance },
+    { label: 'Popular routes', value: routes.length ? String(routes.length) : undefined },
+  ].filter((fact) => fact.value);
 
   return (
     <article data-testid={`airline-page-${slug}`}>
@@ -59,38 +76,83 @@ export default async function AirlinePage({ params }: Props) {
 
       {/* Hero */}
       <header className="mx-auto mt-6 max-w-6xl px-6">
-        <div className="flex flex-col gap-6 border-b border-forest-900/10 pb-10 sm:flex-row sm:items-center sm:gap-8">
-          <div className="flex h-24 w-24 flex-none items-center justify-center overflow-hidden rounded-[0.3rem] border border-forest-900/10 bg-forest-900/5">
-            {logo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={logo} alt={airline.name} className="h-full w-full object-contain p-2" />
-            ) : (
-              <span className="font-urbanist text-2xl font-bold text-forest-900/60">
-                {(airline.iataCode || airline.name).slice(0, 3).toUpperCase()}
-              </span>
-            )}
-          </div>
-          <div className="flex-1">
-            <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-forest-900/60">
-              {airline.type && <span className="chip">{airline.type}</span>}
-              {airline.region && <span>{airline.region}</span>}
-              {airline.country && <span>· {airline.country}</span>}
-            </div>
-            <h1 className="editorial-h mt-3 text-3xl font-bold leading-tight text-forest-900 sm:text-4xl">
-              {airline.name}
-            </h1>
-            <div className="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs">
-              {airline.iataCode && (
-                <span className="rounded-[0.3rem] bg-forest-900 px-3 py-1.5 font-bold tracking-wider text-sand-100">
-                  IATA · {airline.iataCode}
-                </span>
+        <div className="overflow-hidden rounded-[0.3rem] border border-forest-900/10 bg-gradient-to-br from-white via-forest-50/45 to-sand-50">
+          <div className="grid gap-8 px-6 py-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)] lg:px-8 lg:py-10">
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
+                <div className="flex h-24 w-24 flex-none items-center justify-center overflow-hidden rounded-[0.3rem] border border-forest-900/10 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                  {logo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={logo} alt={airline.name} className="h-full w-full object-contain p-2" />
+                  ) : (
+                    <span className="font-urbanist text-2xl font-bold text-forest-900/60">
+                      {(airline.iataCode || airline.name).slice(0, 3).toUpperCase()}
+                    </span>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-forest-900/60">
+                    {airline.type && <span className="chip">{airline.type}</span>}
+                    {airline.region && <span>{airline.region}</span>}
+                    {airline.country && <span>· {airline.country}</span>}
+                  </div>
+                  <h1 className="editorial-h mt-3 text-3xl font-bold leading-tight text-forest-900 sm:text-5xl">
+                    {airline.name}
+                  </h1>
+                  <p className="mt-4 max-w-3xl text-sm font-light leading-7 text-forest-900/82 sm:text-base">
+                    {intro}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
+                {airline.iataCode && (
+                  <span className="rounded-[0.3rem] bg-forest-900 px-3 py-1.5 font-bold tracking-wider text-sand-100">
+                    IATA · {airline.iataCode}
+                  </span>
+                )}
+                {airline.icaoCode && (
+                  <span className="rounded-[0.3rem] border border-forest-900/20 bg-white/80 px-3 py-1.5 font-bold tracking-wider text-forest-900">
+                    ICAO · {airline.icaoCode}
+                  </span>
+                )}
+                {customerPhone && (
+                  <span className="rounded-[0.3rem] border border-forest-900/10 bg-white/80 px-3 py-1.5 text-forest-900/80">
+                    Customer service · {customerPhone}
+                  </span>
+                )}
+                {alliance && (
+                  <span className="rounded-[0.3rem] border border-forest-900/10 bg-white/80 px-3 py-1.5 text-forest-900/80">
+                    Alliance · {alliance}
+                  </span>
+                )}
+              </div>
+
+              {websiteHref && (
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href={websiteHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center rounded-[0.3rem] bg-forest-900 px-4 py-2 text-sm font-semibold text-sand-100 transition hover:bg-forest-800"
+                  >
+                    Visit official website
+                  </a>
+                </div>
               )}
-              {airline.icaoCode && (
-                <span className="rounded-[0.3rem] border border-forest-900/20 px-3 py-1.5 font-bold tracking-wider text-forest-900">
-                  ICAO · {airline.icaoCode}
-                </span>
-              )}
             </div>
+
+            <aside className="rounded-[0.3rem] border border-forest-900/10 bg-white/85 p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] lg:p-6">
+              <h2 className="text-[11px] uppercase tracking-[0.2em] text-forest-900/55">Airline snapshot</h2>
+              <dl className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+                {heroFacts.map((fact) => (
+                  <div key={fact.label}>
+                    <dt className="text-[11px] uppercase tracking-[0.2em] text-forest-900/45">{fact.label}</dt>
+                    <dd className="mt-1 text-sm font-semibold text-forest-900">{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </aside>
           </div>
         </div>
       </header>
@@ -108,19 +170,21 @@ export default async function AirlinePage({ params }: Props) {
               <InfoRow label="Legal Name" value={airline.legalName} />
               <InfoRow label="Country" value={airline.country} />
               <InfoRow label="Region" value={airline.region} />
+              <InfoRow label="Alliance" value={alliance} />
               <InfoRow label="Address" value={airline.address} multiline />
-              <InfoRow label="Phone" value={airline.phone} />
+              <InfoRow label="Customer Service" value={customerPhone} phone />
+              <InfoRow label="Baggage Service" value={baggagePhone} phone />
               <InfoRow
                 label="Website"
                 value={
-                  airline.website ? (
+                  websiteHref ? (
                     <a
-                      href={airline.website.startsWith('http') ? airline.website : `https://${airline.website}`}
+                      href={websiteHref}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="break-all text-forest-700 underline-offset-2 hover:underline"
                     >
-                      {airline.website.replace(/^https?:\/\//, '')}
+                      {websiteHref.replace(/^https?:\/\//, '')}
                     </a>
                   ) : undefined
                 }
@@ -133,10 +197,13 @@ export default async function AirlinePage({ params }: Props) {
               <span className="inline-block h-px w-8 bg-forest-800/60" />
               About {airline.name}
             </p>
-            <div className="prose-article mt-4">
-              <p>{airlineIntro(airline, summary)}</p>
-              {airline.about &&
-                airline.about.split(/\n{2,}/).map((para, i) => <p key={i}>{para}</p>)}
+            <div className="mt-5 rounded-[0.3rem] border border-forest-900/10 bg-white/85 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+              <div className="prose-article">
+                <p>{intro}</p>
+                {airline.about
+                  ? airline.about.split(/\n{2,}/).map((para, i) => <p key={i}>{para}</p>)
+                  : null}
+              </div>
             </div>
           </div>
         </div>
@@ -158,10 +225,16 @@ export default async function AirlinePage({ params }: Props) {
       {/* Popular routes operated by this airline */}
       {routes.length > 0 && (
         <section className="mx-auto max-w-6xl px-6 pb-20" data-testid="airline-routes">
-          <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
-            <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-3xl">
-              Popular routes operated by {airline.name}
-            </h2>
+          <header className="flex flex-col gap-3 border-b border-forest-900/10 pb-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="section-eyebrow">
+                <span className="inline-block h-px w-8 bg-forest-800/60" />
+                Route network
+              </p>
+              <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-900 lg:text-3xl">
+                Popular routes operated by {airline.name}
+              </h2>
+            </div>
             <span className="text-sm font-light text-forest-900/50">
               {routes.length} route{routes.length === 1 ? '' : 's'}
             </span>
@@ -171,7 +244,7 @@ export default async function AirlinePage({ params }: Props) {
               <Link
                 key={r.id}
                 href={`/flight-routes/${r.slug}`}
-                className="group flex items-center justify-between rounded-[0.3rem] border border-forest-900/10 bg-paper p-5 transition hover:-translate-y-0.5 hover:border-forest-900/30 hover:shadow-sm"
+                className="group flex items-center justify-between rounded-[0.3rem] border border-forest-900/10 bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition hover:-translate-y-0.5 hover:border-forest-900/30 hover:shadow-sm"
                 data-testid={`airline-route-${r.slug}`}
               >
                 <div>
@@ -219,11 +292,13 @@ function InfoRow({
   value,
   mono = false,
   multiline = false,
+  phone = false,
 }: {
   label: string;
   value?: React.ReactNode;
   mono?: boolean;
   multiline?: boolean;
+  phone?: boolean;
 }) {
   return (
     <div>
@@ -235,8 +310,18 @@ function InfoRow({
           (multiline ? 'whitespace-pre-wrap ' : '')
         }
       >
-        {value ?? <span className="text-forest-900/30">—</span>}
+        {phone && typeof value === 'string' ? (
+          <a href={`tel:${value.replace(/[^0-9+]/g, '')}`} className="text-forest-700 underline-offset-2 hover:underline">
+            {value}
+          </a>
+        ) : (
+          value ?? <span className="text-forest-900/30">—</span>
+        )}
       </dd>
     </div>
   );
+}
+
+function normaliseUrl(value: string): string {
+  return /^https?:\/\//i.test(value) ? value : `https://${value}`;
 }

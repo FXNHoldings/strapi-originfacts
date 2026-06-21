@@ -108,6 +108,11 @@
     display: none !important;
   }
 
+  /* Airport detail hero title sits on a dark image/gradient. */
+  [data-testid^="airport-page-"] header h1 {
+    color: #ffffff !important;
+  }
+
   /* Category page sidebar — Popular/Recent post row titles, fluid 14→16px
      with bold weight and slight letter-spacing. Specificity 0,2,1 wins. */
   [data-testid^="category-page-"] [data-testid="blog-sidebar"] h4 {
