@@ -1,4 +1,4 @@
-# FXN Studio Travel Blog — Next.js 15 frontend
+# Originfacts.com Strapi CMS — Next.js 15 frontend
 
 Editorial travel blog that consumes your Strapi CMS (`cms.fxnstudio.com`) and deploys to Vercel in ~2 minutes.
 
