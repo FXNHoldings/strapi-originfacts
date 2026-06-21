@@ -1,13 +1,41 @@
 # Originfacts.com Strapi CMS — Next.js 15 frontend
 
-Editorial travel blog that consumes your Strapi CMS (`cms.fxnstudio.com`) and deploys to Vercel in ~2 minutes.
+OriginFacts.com is a travel and airport information site built with Next.js and backed by a Strapi CMS. The production frontend is self-hosted on a dedicated VM, not deployed on Vercel.
 
 ## Stack
 - Next.js 15 (App Router, React Server Components)
+- React 19
 - Tailwind CSS + `@tailwindcss/typography` for article rendering
 - Fraunces serif display + Geist sans body (distinctive editorial look)
 - Fetches from Strapi 5 REST API, with ISR (60 s stale-while-revalidate)
+- Resend for contact form email
+- TravelPayouts, Stay22, Google AdSense, SerpApi, and RapidAPI Airport Info integrations
 - Fully responsive, SEO-ready (Open Graph, Twitter cards, canonical URLs)
+
+## Production platform
+- Hosting: Dedicated VM at `146.0.42.20`
+- Public site: `https://www.originfacts.com`
+- Canonical redirect: `originfacts.com` redirects to `www.originfacts.com`
+- Web server / reverse proxy: nginx with Let's Encrypt certificates from Certbot
+- Frontend runtime: native systemd service, `originfacts-com.service`
+- Frontend port: `127.0.0.1:3000`, proxied by nginx
+- Project path: `/var/www/html/originfacts.com`
+- CMS: Strapi exposed at `https://cms.fxnstudio.com`
+- CMS container: Docker container `fxn-strapi`, mapped to `127.0.0.1:8888 -> 1337`
+- Deploy webhook: `originfacts-webhook.service`, which runs `/usr/local/bin/deploy-originfacts.sh`
+
+## Docker status
+The OriginFacts frontend is currently **not** running in Docker. It runs directly on the VM using systemd:
+
+```bash
+systemctl status originfacts-com.service
+```
+
+Docker is running on the server for other services, including the Strapi CMS container:
+
+```bash
+docker ps
+```
 
 ## Pages
 - `/` — Home: featured article + latest by category + destinations
@@ -16,53 +44,75 @@ Editorial travel blog that consumes your Strapi CMS (`cms.fxnstudio.com`) and de
 - `/category/[slug]` — Category landing (e.g. Flights, Hotels, Tips)
 - `/destinations` — All destinations grid
 - `/destinations/[slug]` — Destination page with all articles about it
+- `/airports` and `/airports/[iata]` — Airport directory and airport detail pages
+- `/airlines` and `/airlines/[slug]` — Airline directory and airline detail pages
+- `/countries` and `/countries/[code]` — Country travel pages
+- `/flight-routes` and `/flight-routes/[slug]` — Route pages
+- `/flights-from-perth*` — Perth travel landing pages
 
 ## Local development
 
 ```bash
-cd backend/travel-blog
-cp .env.example .env.local
-# edit NEXT_PUBLIC_STRAPI_URL if your CMS is elsewhere
-npm install     # or: pnpm install / yarn
-npm run dev     # → http://localhost:3000
+cd /var/www/html/originfacts.com
+yarn install
+yarn dev
 ```
 
-## Deploy to Vercel
+Local dev runs at `http://localhost:3000`.
 
-1. Push this repo to GitHub (already done via Emergent's Save to GitHub).
-2. Go to [vercel.com/new](https://vercel.com/new) → Import your repo.
-3. Vercel auto-detects Next.js. In **Project Settings → Root Directory**, set:
-   ```
-   backend/travel-blog
-   ```
-4. Add environment variables:
-   ```
-   NEXT_PUBLIC_STRAPI_URL = https://cms.fxnstudio.com
-   REVALIDATE_SECRET      = <long random string>
-   ```
-5. Click **Deploy**. First build takes ~90 s.
+## Build and restart on the VM
 
-## Point your domain at Vercel
+Use these commands for a manual production rebuild:
 
-In your DNS provider (where `fxnstudio.com` is registered):
+```bash
+cd /var/www/html/originfacts.com
+yarn install --frozen-lockfile
+yarn build
+systemctl restart originfacts-com.service
+systemctl status originfacts-com.service
+```
 
-| Type  | Name | Value |
-|-------|------|-------|
-| A     | `@`  | `76.76.21.21` (Vercel) |
-| CNAME | `www`| `cname.vercel-dns.com` |
+To check nginx after changing the vhost:
 
-Leave `cms.fxnstudio.com` pointing at Hetzner unchanged. In Vercel → **Settings → Domains**, add `fxnstudio.com` and `www.fxnstudio.com`.
+```bash
+nginx -t
+systemctl reload nginx
+```
 
-> ⚠️ Before switching `www` DNS, update the Caddyfile on Hetzner to drop the `www` and apex rule (keep only `cms.fxnstudio.com`). Otherwise Caddy will keep trying to renew certs for domains it no longer owns.
+## Automated deployment
 
-## On-demand revalidation (optional)
-When an editor publishes in Strapi, trigger a cache bust so the blog updates instantly:
+Production deploys can be triggered by the GitHub webhook listener:
 
-1. In Strapi admin → **Settings → Webhooks → Create new webhook**:
-   - URL: `https://www.fxnstudio.com/api/revalidate?secret=<REVALIDATE_SECRET>`
-   - Events: `Entry: publish`, `Entry: update`, `Entry: unpublish`
+```bash
+systemctl status originfacts-webhook.service
+tail -f /var/log/originfacts-deploy.log
+```
 
-Without this, the blog revalidates every 60 s anyway (plenty for a blog).
+The webhook deploy script runs:
+
+```bash
+cd /var/www/html/originfacts.com
+git fetch --quiet origin main
+git reset --hard origin/main
+yarn install --frozen-lockfile
+yarn build
+systemctl restart originfacts-com.service
+```
+
+## Environment variables
+Runtime configuration lives in `.env.local` on the VM. Important keys include:
+
+- `NEXT_PUBLIC_STRAPI_URL`
+- `NEXT_PUBLIC_TP_MARKER`
+- `NEXT_PUBLIC_TP_WL_HOST`
+- `TRAVELPAYOUTS_API_TOKEN`
+- `NEXT_PUBLIC_STAY22_AID`
+- `RESEND_API_KEY`
+- `CONTACT_FROM_EMAIL`
+- `CONTACT_TO_EMAIL`
+- `SERPAPI_API_KEY`
+- `NEXT_PUBLIC_ADSENSE_CLIENT`
+- `RAPIDAPI_AIRPORT_INFO_KEY`
 
 ## Customising the look
 - Colours: `tailwind.config.ts` (`forest`, `sand`, `forest`, `paper`, `ink`)

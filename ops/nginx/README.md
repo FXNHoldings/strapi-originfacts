@@ -1,7 +1,7 @@
 # nginx configs for originfacts.com
 
 Snapshot of the nginx vhost serving https://www.originfacts.com from the
-self-hosted Docker container at Hetzner (origin IP `146.0.42.20`).
+self-hosted dedicated VM (origin IP `146.0.42.20`).
 
 ## Files
 
@@ -10,8 +10,8 @@ self-hosted Docker container at Hetzner (origin IP `146.0.42.20`).
     bare host 301'd to the `www` canonical, certbot-managed Let's Encrypt cert.
   - port 80 catch-all 301'ing to HTTPS (also certbot-managed).
 
-  Proxies to `127.0.0.1:3000` (the `originfacts-com-dev` Docker container,
-  which is also what `originfacts.fxnstudio.com` points at).
+  Proxies to `127.0.0.1:3000` (the native `originfacts-com.service` systemd
+  service running `next start`).
 
 ## Deploying changes
 
