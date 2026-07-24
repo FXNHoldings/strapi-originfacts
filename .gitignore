@@ -14,3 +14,9 @@ next-env.d.ts
 scripts/.oa-cache/
 scripts/.ourairports-progress.json
 scripts/.airport-ingest-progress.json
+
+# local build/deploy artifacts (created when HOME is set to the repo dir)
+.cache/
+.config/
+.gitconfig
+.yarn-cache/
