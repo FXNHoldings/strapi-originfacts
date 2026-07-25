@@ -20,3 +20,4 @@ scripts/.airport-ingest-progress.json
 .config/
 .gitconfig
 .yarn-cache/
+.npm/

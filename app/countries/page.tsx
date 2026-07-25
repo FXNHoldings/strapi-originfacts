@@ -1,13 +1,19 @@
 import { listAirports, listCountries } from '@/lib/strapi';
 import CountriesDirectory, { type CountryRow } from '@/components/CountriesDirectory';
 import ExpandableDescription from '@/components/ExpandableDescription';
+import { JsonLd } from '@/components/SeoBlocks';
+import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
+import { HUB_INTROS, HUB_PATHS } from '@/lib/hub-intros';
 
 export const revalidate = 60;
 
+const HUB = HUB_INTROS.countries;
+const PATH = HUB_PATHS.countries;
+
 export const metadata = {
   title: 'Countries — travel directory',
-  description:
-    'Browse countries with commercial air service. ISO country codes, airport counts, cities, and regional groupings — click through for airlines, airports, and routes.',
+  description: HUB.description,
+  alternates: { canonical: PATH },
 };
 
 export default async function CountriesPage() {
@@ -62,13 +68,25 @@ export default async function CountriesPage() {
       .sort((x, y) => x.name.localeCompare(y.name));
   }
 
+  const collectionJsonLd = collectionPageJsonLd({
+    name: HUB.name,
+    description: HUB.description,
+    url: PATH,
+    itemListName: 'Countries',
+    items: countries.map((c) => ({
+      name: c.name,
+      url: `/countries/${c.code.toLowerCase()}`,
+    })),
+  });
+
   return (
     <div className="mx-auto max-w-7xl px-6 py-16" data-testid="countries-page">
+      <JsonLd data={breadcrumbJsonLd([{ name: HUB.name, url: PATH }])} />
+      <JsonLd data={collectionJsonLd} />
+
       <header>
         <h1 className="editorial-h text-3xl font-bold text-forest-900">Countries — Travel Directory</h1>
-        <ExpandableDescription
-          text="A directory of every country with scheduled commercial air service — built from our Travelpayouts dataset and kept current as new carriers launch, hubs shift, and second-tier airports open. Each country page gathers the airports inside its borders, the airlines registered there, the top inbound and outbound routes, and our own travel coverage (hotels, flights, car rentals, on-the-ground tips) so you can move fluidly from a destination idea to the practical bits of getting there. Filter by name or ISO-3166 code, browse by continent, or click straight through to a country profile — useful whether you're decoding a stopover, comparing visa-on-arrival rules across regions, or planning a multi-country itinerary from a single base. The index is read from one source of truth, so a country's airline list stays in sync with the rest of the site as our coverage grows."
-        />
+        <ExpandableDescription text={HUB.intro} />
       </header>
 
       <CountriesDirectory countries={countries} />

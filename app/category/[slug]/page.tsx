@@ -13,6 +13,8 @@ import {
 import { SECTIONS, findSection } from '@/lib/sections';
 import CategoryDescription from '@/components/CategoryDescription';
 import BlogSidebar from '@/components/BlogSidebar';
+import { JsonLd } from '@/components/SeoBlocks';
+import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -48,14 +50,18 @@ async function resolveCategory(slug: string) {
   return null;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { slug } = await params;
   const c = await resolveCategory(slug);
   if (!c) return { title: 'Not found' };
+  // Self-referencing canonical per page. Pointing ?page=2+ back at page 1 would
+  // ask Google to drop those URLs, taking the only crawl path to the older
+  // articles with them.
+  const page = Math.max(1, Number((await searchParams).page) || 1);
   return {
-    title: c.name,
+    title: page > 1 ? `${c.name} — page ${page}` : c.name,
     description: c.description,
-    alternates: { canonical: `/category/${slug}` },
+    alternates: { canonical: page > 1 ? `/category/${slug}?page=${page}` : `/category/${slug}` },
   };
 }
 
@@ -85,8 +91,28 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const total = articlesRes.meta?.pagination?.total ?? 0;
   const pageCount = Math.max(1, articlesRes.meta?.pagination?.pageCount ?? 1);
 
+  // This hub is genuinely server-paginated, so the ItemList describes only the
+  // articles on the current page. Positions continue across pages rather than
+  // restarting at 1, so page 2 reports 11-20.
+  const canonicalPath = page > 1 ? `/category/${slug}?page=${page}` : `/category/${slug}`;
+  const collectionJsonLd = collectionPageJsonLd({
+    name: category.name,
+    description: category.description ?? `Articles filed under ${category.name}.`,
+    url: canonicalPath,
+    itemListName: category.name,
+    items: articles.map((a, i) => ({
+      name: a.title,
+      url: `/articles/${a.slug}`,
+      image: mediaUrl(a.coverImage ?? null),
+      position: (page - 1) * PAGE_SIZE + i + 1,
+    })),
+  });
+
   return (
     <div data-testid={`category-page-${slug}`}>
+      <JsonLd data={breadcrumbJsonLd([{ name: category.name, url: `/category/${slug}` }])} />
+      <JsonLd data={collectionJsonLd} />
+
       <div className="mx-auto max-w-7xl px-6 py-16">
         {/* Header — large title + description on the left, articles count box on the right */}
         <header data-testid="category-header">

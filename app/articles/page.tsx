@@ -1,16 +1,28 @@
 import { redirect } from 'next/navigation';
-import { listArticles } from '@/lib/strapi';
+import { listArticles, mediaUrl } from '@/lib/strapi';
 import ArticleCard from '@/components/ArticleCard';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+import { JsonLd } from '@/components/SeoBlocks';
+import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
 
 export const revalidate = 60;
 
-export const metadata = {
-  title: 'All stories',
-  description: 'Every travel guide, flight hack, and hotel review we\'ve published.',
-};
+const PAGE_SIZE = 12;
+const DESCRIPTION = "Every travel guide, flight hack, and hotel review we've published.";
 
-export default async function ArticlesPage({ searchParams }: { searchParams: Promise<{ page?: string; q?: string }> }) {
+type Props = { searchParams: Promise<{ page?: string; q?: string }> };
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const page = Math.max(1, Number((await searchParams).page) || 1);
+  return {
+    title: page > 1 ? `All stories — page ${page}` : 'All stories',
+    description: DESCRIPTION,
+    alternates: { canonical: page > 1 ? `/articles?page=${page}` : '/articles' },
+  };
+}
+
+export default async function ArticlesPage({ searchParams }: Props) {
   const sp = await searchParams;
   const page = Math.max(1, Number(sp.page) || 1);
   const q = (sp.q || '').trim();
@@ -23,11 +35,27 @@ export default async function ArticlesPage({ searchParams }: { searchParams: Pro
     redirect(`/search?${params.toString()}`);
   }
 
-  const { data, meta } = await listArticles({ page, pageSize: 12 });
+  const { data, meta } = await listArticles({ page, pageSize: PAGE_SIZE });
   const totalPages = meta.pagination.pageCount;
+
+  const collectionJsonLd = collectionPageJsonLd({
+    name: 'All stories',
+    description: DESCRIPTION,
+    url: page > 1 ? `/articles?page=${page}` : '/articles',
+    itemListName: 'Articles',
+    items: data.map((a, i) => ({
+      name: a.title,
+      url: `/articles/${a.slug}`,
+      image: mediaUrl(a.coverImage ?? null),
+      position: (page - 1) * PAGE_SIZE + i + 1,
+    })),
+  });
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-16" data-testid="articles-page">
+      <JsonLd data={breadcrumbJsonLd([{ name: 'All stories', url: '/articles' }])} />
+      <JsonLd data={collectionJsonLd} />
+
       <header className="max-w-3xl">
         <p className="chip">Archive</p>
         <h1 className="editorial-h mt-5 text-3xl font-bold text-forest-900">
