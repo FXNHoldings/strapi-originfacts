@@ -1,4 +1,4 @@
-import type { Faq } from '@/lib/entity-seo';
+import type { Faq, HowToStep } from '@/lib/entity-seo';
 
 /** Renders a schema.org JSON-LD object into a script tag. */
 export function JsonLd({ data }: { data: Record<string, unknown> | null }) {
@@ -8,6 +8,41 @@ export function JsonLd({ data }: { data: Record<string, unknown> | null }) {
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
+  );
+}
+
+/**
+ * Visible numbered steps — the on-page counterpart to HowTo JSON-LD on
+ * step-based articles. ids match the schema's step url anchors (#step-N).
+ */
+export function HowToSteps({
+  steps,
+  title = 'Step by step',
+}: {
+  steps: HowToStep[];
+  title?: string;
+}) {
+  if (!steps.length) return null;
+  return (
+    <section className="mt-12 border-t border-forest-900/10 pt-8" data-testid="howto-steps">
+      <h2 className="editorial-h text-2xl font-bold text-forest-900">{title}</h2>
+      <ol className="mt-6 space-y-6">
+        {steps.map((s, i) => (
+          <li key={i} id={`step-${i + 1}`} className="flex gap-4">
+            <span
+              aria-hidden
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-emphasis font-urbanist text-sm font-bold text-white"
+            >
+              {i + 1}
+            </span>
+            <div className="min-w-0">
+              <h3 className="font-urbanist text-lg font-bold leading-snug text-forest-900">{s.name}</h3>
+              <p className="mt-1.5 text-[15px] font-light leading-7 text-forest-900/78">{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }
 

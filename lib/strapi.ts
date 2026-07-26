@@ -27,6 +27,8 @@ export type StrapiArticle = {
   destinations?: { id: number; name: string; slug: string; type?: 'country' | 'region' | 'city' }[];
   /** Optional editor-managed Q&As (json field) — see normalizeFaqs(). */
   faqs?: unknown;
+  /** Optional how-to steps (json field) — flags the post as a HowTo, see normalizeSteps(). */
+  steps?: unknown;
 };
 
 export type StrapiCategory = {

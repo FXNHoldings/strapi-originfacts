@@ -67,6 +67,64 @@ export function normalizeFaqs(raw: unknown): Faq[] {
   return faqs.length >= MIN_FAQS ? faqs : [];
 }
 
+export type HowToStep = { name: string; text: string; image?: string };
+
+/**
+ * Normalises the `steps` json field on how-to/itinerary articles. A filled
+ * steps field is the explicit editorial flag that a post is a HowTo — no
+ * heading-derived guessing. Entry shape: {name, text, image?} ({title, ...}
+ * also accepted). Under MIN_STEPS valid entries → [] and the article keeps
+ * plain Article schema.
+ */
+export const MIN_STEPS = 2;
+
+export function normalizeSteps(raw: unknown): HowToStep[] {
+  if (!Array.isArray(raw)) return [];
+  const steps: HowToStep[] = [];
+  for (const entry of raw) {
+    if (typeof entry !== 'object' || entry === null) continue;
+    const rec = entry as Record<string, unknown>;
+    const name = rec.name ?? rec.title;
+    const text = rec.text ?? rec.description;
+    if (typeof name !== 'string' || typeof text !== 'string') continue;
+    const cleanName = plainText(name);
+    const cleanText = plainText(text);
+    if (!cleanName || !cleanText) continue;
+    const image = typeof rec.image === 'string' && rec.image.trim() ? rec.image.trim() : undefined;
+    steps.push({ name: cleanName, text: cleanText, ...(image ? { image } : {}) });
+  }
+  return steps.length >= MIN_STEPS ? steps : [];
+}
+
+/** HowTo JSON-LD for step-based articles — emitted INSTEAD of Article. */
+export function howToJsonLd(opts: {
+  name: string;
+  description?: string;
+  url: string;
+  image?: string | null;
+  totalTimeMinutes?: number;
+  steps: HowToStep[];
+}): Record<string, unknown> | null {
+  if (opts.steps.length < MIN_STEPS) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: opts.name,
+    ...(opts.description ? { description: opts.description } : {}),
+    ...(opts.image ? { image: [opts.image] } : {}),
+    ...(opts.totalTimeMinutes ? { totalTime: `PT${opts.totalTimeMinutes}M` } : {}),
+    mainEntityOfPage: { '@type': 'WebPage', '@id': opts.url },
+    step: opts.steps.map((s, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+      ...(s.image ? { image: s.image } : {}),
+      url: `${opts.url}#step-${i + 1}`,
+    })),
+  };
+}
+
 /* ------------------------------------------------------------------ *
  * Quality gate
  * ------------------------------------------------------------------ */

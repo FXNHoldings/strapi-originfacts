@@ -16,8 +16,8 @@ import ShareButtons from '@/components/ShareButtons';
 import BlogSidebar from '@/components/BlogSidebar';
 import RelatedPostsSlider from '@/components/RelatedPostsSlider';
 import { SECTIONS } from '@/lib/sections';
-import { DEFAULT_OG_IMAGE, faqJsonLd, normalizeFaqs } from '@/lib/entity-seo';
-import { JsonLd, FaqSection } from '@/components/SeoBlocks';
+import { DEFAULT_OG_IMAGE, faqJsonLd, howToJsonLd, normalizeFaqs, normalizeSteps } from '@/lib/entity-seo';
+import { JsonLd, FaqSection, HowToSteps } from '@/components/SeoBlocks';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -131,6 +131,7 @@ export default async function ArticlePage({ params }: Props) {
   const articleUrl = `https://www.originfacts.com/articles/${article.slug}`;
   const articleImage = mediaUrl(article.ogImage ?? article.coverImage ?? null);
   const faqs = normalizeFaqs(article.faqs);
+  const steps = normalizeSteps(article.steps);
 
   const articleJsonLd = {
     '@context': 'https://schema.org',
@@ -156,6 +157,17 @@ export default async function ArticlePage({ params }: Props) {
     articleSection: article.category?.name,
     keywords: article.seoKeywords,
   };
+
+  // A filled steps field flags this post as a HowTo: emit HowTo JSON-LD
+  // INSTEAD of Article (never both on one page), with the visible numbered
+  // steps rendered below the body via <HowToSteps />.
+  const howTo = howToJsonLd({
+    name: article.title,
+    description: article.seoDescription || article.excerpt,
+    url: articleUrl,
+    image: articleImage,
+    steps,
+  });
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -183,7 +195,7 @@ export default async function ArticlePage({ params }: Props) {
     <article data-testid="article-page">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howTo ?? articleJsonLd) }}
       />
       <script
         type="application/ld+json"
@@ -310,6 +322,8 @@ export default async function ArticlePage({ params }: Props) {
               data-testid="article-body"
               dangerouslySetInnerHTML={{ __html: html }}
             />
+
+            <HowToSteps steps={steps} />
 
             <AdSlot slot="0000000000" className="mt-12" />
 
