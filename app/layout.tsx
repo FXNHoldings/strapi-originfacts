@@ -10,6 +10,7 @@ import FixedPopularNow from '@/components/FixedPopularNow';
 import FixedScrollToTop from '@/components/FixedScrollToTop';
 import FixedSocialFollow from '@/components/FixedSocialFollow';
 import { ADSENSE_CLIENT, ADSENSE_ENABLED } from '@/lib/adsense';
+import { DEFAULT_OG_IMAGE } from '@/lib/entity-seo';
 import { listSidebarArticles } from '@/lib/strapi';
 
 const inter = Inter({
@@ -51,8 +52,24 @@ export const metadata: Metadata = {
   },
   description:
     'The facts behind every place worth visiting — plus the latest on flights, hotels, airlines, airports and destinations.',
-  openGraph: { type: 'website', siteName: 'Originfacts', locale: 'en_US' },
-  twitter: { card: 'summary_large_image' },
+  // Default share image for every page that doesn't set its own (home, hubs,
+  // about, contact, legal…). Pages defining their own `openGraph` replace this
+  // block wholesale (Next merges per top-level key), so those routes fall back
+  // to DEFAULT_OG_IMAGE explicitly where their entity has no image.
+  openGraph: {
+    type: 'website',
+    siteName: 'Originfacts',
+    locale: 'en_US',
+    images: [
+      {
+        url: DEFAULT_OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: 'Originfacts — The facts behind every place worth visiting',
+      },
+    ],
+  },
+  twitter: { card: 'summary_large_image', images: [DEFAULT_OG_IMAGE] },
   alternates: {
     canonical: '/',
     types: {

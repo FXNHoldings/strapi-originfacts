@@ -8,6 +8,7 @@ import {
 } from '@/lib/strapi';
 import { airportInfoAddress, getAirportInfoByCode } from '@/lib/airport-info';
 import {
+  DEFAULT_OG_IMAGE,
   SITE_URL,
   airportIsSubstantive,
   airportIntro,
@@ -58,11 +59,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `${SITE_URL}/airports/${a.iata.toLowerCase()}`,
       images: hero
         ? [{ url: absoluteUrl(hero), width: 1024, height: 576, alt: `${a.name} airport guide` }]
-        : undefined,
+        : [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: 'Originfacts' }],
     },
     twitter: {
       card: 'summary_large_image',
-      images: hero ? [absoluteUrl(hero)] : undefined,
+      images: [hero ? absoluteUrl(hero) : DEFAULT_OG_IMAGE],
     },
     robots: robotsFor(airportIsSubstantive(a, routes.length > 0)),
   };

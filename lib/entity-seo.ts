@@ -20,6 +20,13 @@ import { getCountryFacts } from '@/lib/country-facts';
 
 export const SITE_URL = 'https://www.originfacts.com';
 
+/**
+ * Default social share image (1200×630), used sitewide via app/layout.tsx and
+ * as the per-page fallback wherever an entity has no image of its own.
+ * Regenerate with: node scripts/generate-og-default.mjs
+ */
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og/default.png`;
+
 /** An `about` shorter than this is treated as effectively empty for gating. */
 export const INDEX_MIN_ABOUT_CHARS = 120;
 

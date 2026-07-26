@@ -16,6 +16,7 @@ import ShareButtons from '@/components/ShareButtons';
 import BlogSidebar from '@/components/BlogSidebar';
 import RelatedPostsSlider from '@/components/RelatedPostsSlider';
 import { SECTIONS } from '@/lib/sections';
+import { DEFAULT_OG_IMAGE } from '@/lib/entity-seo';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -38,9 +39,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: a.publishedAt,
       modifiedTime: a.updatedAt,
       authors: a.author ? [a.author.name] : undefined,
-      images: ogImg ? [{ url: ogImg }] : undefined,
+      // This openGraph block replaces the root layout's, so the sitewide
+      // default image must be restated here for articles without a cover.
+      images: [{ url: ogImg || DEFAULT_OG_IMAGE }],
       url: `/articles/${a.slug}`,
     },
+    // Root layout sets an explicit default twitter image, which would otherwise
+    // beat the article cover (X only falls back to og:image when twitter:image
+    // is absent entirely).
+    twitter: { card: 'summary_large_image', images: [ogImg || DEFAULT_OG_IMAGE] },
   };
 }
 
