@@ -135,19 +135,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             document.head.appendChild(script);
           })();
         `}</Script>
-        {/* Travelpayouts white-label metasearch loader. Lives in <head> per
-            TP docs so the SDK is available on any page that drops in a
-            <div id="tpwl-search"> / <div id="tpwl-tickets"> container.
-            No-ops on pages without those containers. */}
-        <Script id="tpwl-loader" strategy="afterInteractive">{`
-          (function () {
-            var script = document.createElement("script");
-            script.async = 1;
-            script.type = "module";
-            script.src = "https://tpscr.com/wl_web/main.js?wl_id=16677";
-            document.head.appendChild(script);
-          })();
-        `}</Script>
+        {/* Travelpayouts white-label SDK is loaded by <TpwlLoader /> on the
+            flight-search page itself (the only page with tpwl containers) so
+            it re-initialises on client-side navigation — see
+            components/TpwlLoader.tsx. */}
         <Header />
         <main className="flex-1">{children}</main>
         <FixedPopularNow articles={sidebar.popular} />

@@ -31,20 +31,21 @@ const nextConfig = {
         permanent: false,
       },
       // Old /flights/<slug> route-detail pages → /flight-routes/<slug>. Must come before
-      // the /flights page so detail slugs don't try to hit the search widget.
+      // the bare /flights rule so detail slugs don't try to hit the search widget.
       { source: '/flights/:slug+', destination: '/flight-routes/:slug+', permanent: true },
-      // Search page lived briefly at /flight-search; canonical name is /flights now.
-      { source: '/flight-search', destination: '/flights', permanent: true },
-      { source: '/fly', destination: '/flights', permanent: true },
+      // Search page renamed back to /flight-search on 2026-07-26 (it briefly
+      // carried that name before). Old /flights URL 301s across.
+      { source: '/flights', destination: '/flight-search', permanent: true },
+      { source: '/fly', destination: '/flight-search', permanent: true },
       // TPWL whitelabel (wl_id=16677) is configured with Results Page URL pointing at
       // the bare origin, so submitting the search form lands on / with ?flightSearch=…
-      // — bounce it to /flights where the #tpwl-tickets container lives.
+      // — bounce it to /flight-search where the #tpwl-tickets container lives.
       // Soft redirect (permanent:false) — the proper fix is to clear the resultsURL in
       // the TP admin so search rendering stays in-place.
       {
         source: '/',
         has: [{ type: 'query', key: 'flightSearch' }],
-        destination: '/flights',
+        destination: '/flight-search',
         permanent: false,
       },
     ];

@@ -138,7 +138,7 @@ export default function Footer() {
         <div>
           <h4 className="editorial-h text-lg capitalize tracking-normal text-secondary-emphasis">Discover</h4>
           <ul className="mt-3 space-y-2 text-sm text-white/80" data-testid="footer-travel-index">
-            <li><Link href="/flights" className="hover:text-secondary">Flight Search</Link></li>
+            <li><Link href="/flight-search" className="hover:text-secondary">Flight Search</Link></li>
             <li><Link href="/hotels" className="hover:text-secondary">Hotels</Link></li>
             <li><Link href="/countries" className="hover:text-secondary">Countries</Link></li>
             <li><Link href="/airlines" className="hover:text-secondary">Airlines</Link></li>

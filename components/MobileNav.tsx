@@ -9,7 +9,7 @@ type NavItem = { label: string; href?: string; children?: NavItem[] };
 const NAV_TREE: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Destinations', href: '/destinations' },
-  { label: 'Flight Search', href: '/flights' },
+  { label: 'Flight Search', href: '/flight-search' },
   { label: 'Airlines', href: '/airlines' },
   {
     label: 'Airports',

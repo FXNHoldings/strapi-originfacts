@@ -5,11 +5,12 @@ import SearchByDestinationBlock from '@/components/SearchByDestinationBlock';
 import { buildTravelpayoutsDeepLink } from '@/lib/explore';
 import { JsonLd } from '@/components/SeoBlocks';
 import { breadcrumbJsonLd } from '@/lib/jsonld';
+import TpwlLoader from '@/components/TpwlLoader';
 
 export const metadata = {
   title: 'Flight Search',
   description: 'Search hundreds of airlines in one place. Powered by our travel partners.',
-  alternates: { canonical: '/flights' },
+  alternates: { canonical: '/flight-search' },
 };
 
 const BOOKING_FAQ: { q: string; a: string }[] = [
@@ -107,10 +108,11 @@ export default async function FlightsPage({
 
   return (
     <>
-      {/* /flights is a fare-search utility, not a listing of entity cards, so it
-          gets BreadcrumbList only — there is no server-rendered card set for a
+      {/* Fare-search utility, not a listing of entity cards, so it gets
+          BreadcrumbList only — there is no server-rendered card set for a
           CollectionPage/ItemList to describe. */}
-      <JsonLd data={breadcrumbJsonLd([{ name: 'Flight Search', url: '/flights' }])} />
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Flight Search', url: '/flight-search' }])} />
+      <TpwlLoader />
 
       {/* TPWL loader now lives in app/layout.tsx so the SDK is available
           site-wide. The two `<div id="tpwl-search">` / `<div id="tpwl-tickets">`

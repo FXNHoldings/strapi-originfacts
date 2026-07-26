@@ -61,7 +61,7 @@ export default function Header() {
               </li>
               <li data-testid="nav-item-flight-search">
                 <Link
-                  href="/flights"
+                  href="/flight-search"
                   className="inline-flex items-center gap-1.5 px-3 py-2 text-[#000000] transition-colors hover:text-[rgb(1,79,211)]"
                   data-testid="nav-resources-flight-search"
                 >
