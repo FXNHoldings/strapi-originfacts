@@ -59,35 +59,32 @@ export default function Header() {
                   Destinations
                 </Link>
               </li>
-              <li data-testid="nav-item-flights">
+              <li data-testid="nav-item-flight-search">
                 <Link
-                  href="/category/flights"
+                  href="/flights"
                   className="inline-flex items-center gap-1.5 px-3 py-2 text-[#000000] transition-colors hover:text-[rgb(1,79,211)]"
-                  data-testid="nav-flights"
+                  data-testid="nav-resources-flight-search"
                 >
-                  Flights
+                  Flight Search
                 </Link>
               </li>
-              <li data-testid="nav-item-hotels">
+              <li data-testid="nav-item-airlines">
                 <Link
-                  href="/hotels"
+                  href="/airlines"
                   className="inline-flex items-center gap-1.5 px-3 py-2 text-[#000000] transition-colors hover:text-[rgb(1,79,211)]"
-                  data-testid="nav-hotels"
+                  data-testid="nav-airlines"
                 >
-                  Hotels
+                  Airlines
                 </Link>
               </li>
-              <li
-                className="group/allarticles relative"
-                data-testid="nav-item-articles"
-              >
+              <li className="group/airports relative" data-testid="nav-item-airports">
                 <Link
-                  href="/articles"
+                  href="/airports"
                   className="inline-flex items-center gap-1.5 px-3 py-2 text-[#000000] transition-colors hover:text-[rgb(1,79,211)]"
-                  data-testid="nav-articles"
+                  data-testid="nav-airports-all"
                   aria-haspopup="true"
                 >
-                  More Articles
+                  Airports
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -103,13 +100,73 @@ export default function Header() {
                   </svg>
                 </Link>
                 <div
-                  className="invisible absolute left-0 top-full z-10 pt-1 opacity-0 transition duration-150 group-hover/allarticles:visible group-hover/allarticles:opacity-100 group-focus-within/allarticles:visible group-focus-within/allarticles:opacity-100"
+                  className="invisible absolute left-0 top-full z-10 pt-1 opacity-0 transition duration-150 group-hover/airports:visible group-hover/airports:opacity-100 group-focus-within/airports:visible group-focus-within/airports:opacity-100"
+                  data-testid="nav-airports-submenu"
+                >
+                  <div
+                    role="menu"
+                    className="min-w-[200px] rounded-md border border-forest-900/10 bg-paper p-1 shadow-md"
+                  >
+                    <Link
+                      href="/airports/hubs"
+                      className="block rounded px-3 py-2 text-base text-[#000000] transition-colors hover:bg-forest-900/5 hover:text-[rgb(1,79,211)]"
+                      role="menuitem"
+                      data-testid="nav-airports-hubs"
+                    >
+                      Top 100 Airports
+                    </Link>
+                  </div>
+                </div>
+              </li>
+              <li
+                className="group/allarticles relative"
+                data-testid="nav-item-articles"
+              >
+                <Link
+                  href="/articles"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-[#000000] transition-colors hover:text-[rgb(1,79,211)]"
+                  data-testid="nav-articles"
+                  aria-haspopup="true"
+                >
+                  Our Blog
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-3 w-3 opacity-60"
+                    aria-hidden
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </Link>
+                <div
+                  className="invisible absolute right-0 top-full z-10 pt-1 opacity-0 transition duration-150 group-hover/allarticles:visible group-hover/allarticles:opacity-100 group-focus-within/allarticles:visible group-focus-within/allarticles:opacity-100"
                   data-testid="nav-articles-dropdown"
                 >
                   <div
                     role="menu"
                     className="min-w-[220px] rounded-md border border-forest-900/10 bg-paper p-1 shadow-md"
                   >
+                    <Link
+                      href="/category/flights"
+                      className="block rounded px-3 py-2 text-base text-[#000000] transition-colors hover:bg-forest-900/5 hover:text-[rgb(1,79,211)]"
+                      role="menuitem"
+                      data-testid="nav-flights"
+                    >
+                      Flights
+                    </Link>
+                    <Link
+                      href="/hotels"
+                      className="block rounded px-3 py-2 text-base text-[#000000] transition-colors hover:bg-forest-900/5 hover:text-[rgb(1,79,211)]"
+                      role="menuitem"
+                      data-testid="nav-hotels"
+                    >
+                      Hotels
+                    </Link>
                     <Link
                       href="/category/car-rentals"
                       className="block rounded px-3 py-2 text-base text-[#000000] transition-colors hover:bg-forest-900/5 hover:text-[rgb(1,79,211)]"
@@ -126,100 +183,6 @@ export default function Header() {
                     >
                       Travel Tips
                     </Link>
-                  </div>
-                </div>
-              </li>
-              <li
-                className="group/resources relative"
-                data-testid="nav-item-resources"
-              >
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-[#000000] transition-colors hover:text-[rgb(1,79,211)]"
-                  data-testid="nav-resources"
-                  aria-haspopup="true"
-                >
-                  Resources
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-3 w-3 opacity-60"
-                    aria-hidden
-                  >
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
-                </button>
-                <div
-                  className="invisible absolute right-0 top-full z-10 pt-1 opacity-0 transition duration-150 group-hover/resources:visible group-hover/resources:opacity-100 group-focus-within/resources:visible group-focus-within/resources:opacity-100"
-                  data-testid="nav-resources-dropdown"
-                >
-                  <div
-                    role="menu"
-                    className="min-w-[220px] rounded-md border border-forest-900/10 bg-paper p-1 shadow-md"
-                  >
-                    <Link
-                      href="/flights"
-                      className="block rounded px-3 py-2 text-base text-[#000000] transition-colors hover:bg-forest-900/5 hover:text-[rgb(1,79,211)]"
-                      role="menuitem"
-                      data-testid="nav-resources-flight-search"
-                    >
-                      Flight Search
-                    </Link>
-                    <Link
-                      href="/airlines"
-                      className="block rounded px-3 py-2 text-base text-[#000000] transition-colors hover:bg-forest-900/5 hover:text-[rgb(1,79,211)]"
-                      role="menuitem"
-                      data-testid="nav-airlines"
-                    >
-                      Airlines
-                    </Link>
-                    <div className="group/airports-sub relative">
-                      <Link
-                        href="/airports"
-                        className="flex items-center justify-between rounded px-3 py-2 text-base text-[#000000] transition-colors hover:bg-forest-900/5 hover:text-[rgb(1,79,211)]"
-                        role="menuitem"
-                        data-testid="nav-airports-all"
-                        aria-haspopup="true"
-                      >
-                        Airports
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="h-3 w-3 opacity-60"
-                          aria-hidden
-                        >
-                          <polyline points="9 6 15 12 9 18" />
-                        </svg>
-                      </Link>
-                      <div
-                        className="invisible absolute right-full top-0 z-10 pr-1 opacity-0 transition duration-150 group-hover/airports-sub:visible group-hover/airports-sub:opacity-100 group-focus-within/airports-sub:visible group-focus-within/airports-sub:opacity-100"
-                        data-testid="nav-airports-submenu"
-                      >
-                        <div
-                          role="menu"
-                          className="min-w-[200px] rounded-md border border-forest-900/10 bg-paper p-1 shadow-md"
-                        >
-                          <Link
-                            href="/airports/hubs"
-                            className="block rounded px-3 py-2 text-base text-[#000000] transition-colors hover:bg-forest-900/5 hover:text-[rgb(1,79,211)]"
-                            role="menuitem"
-                            data-testid="nav-airports-hubs"
-                          >
-                            Top 100 Airports
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </li>

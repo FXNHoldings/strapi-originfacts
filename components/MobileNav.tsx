@@ -9,26 +9,21 @@ type NavItem = { label: string; href?: string; children?: NavItem[] };
 const NAV_TREE: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Destinations', href: '/destinations' },
-  { label: 'Flights', href: '/category/flights' },
-  { label: 'Hotels', href: '/hotels' },
+  { label: 'Flight Search', href: '/flights' },
+  { label: 'Airlines', href: '/airlines' },
   {
-    label: 'More Articles',
-    href: '/articles',
-    children: [
-      { label: 'Car Rentals', href: '/category/car-rentals' },
-      { label: 'Travel Tips', href: '/category/travel-tips' },
-    ],
+    label: 'Airports',
+    href: '/airports',
+    children: [{ label: 'Top 100 Airports', href: '/airports/hubs' }],
   },
   {
-    label: 'Resources',
+    label: 'Our Blog',
+    href: '/articles',
     children: [
-      { label: 'Flight Search', href: '/flights' },
-      { label: 'Airlines', href: '/airlines' },
-      {
-        label: 'Airports',
-        href: '/airports',
-        children: [{ label: 'Top 100 Airports', href: '/airports/hubs' }],
-      },
+      { label: 'Flights', href: '/category/flights' },
+      { label: 'Hotels', href: '/hotels' },
+      { label: 'Car Rentals', href: '/category/car-rentals' },
+      { label: 'Travel Tips', href: '/category/travel-tips' },
     ],
   },
   { label: 'Trending', href: '/hot-posts' },
