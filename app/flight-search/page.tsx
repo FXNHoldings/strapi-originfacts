@@ -5,6 +5,7 @@ import SearchByDestinationBlock from '@/components/SearchByDestinationBlock';
 import { buildTravelpayoutsDeepLink } from '@/lib/explore';
 import { JsonLd } from '@/components/SeoBlocks';
 import { breadcrumbJsonLd } from '@/lib/jsonld';
+import { faqJsonLd } from '@/lib/entity-seo';
 import TpwlLoader from '@/components/TpwlLoader';
 
 export const metadata = {
@@ -112,6 +113,9 @@ export default async function FlightsPage({
           BreadcrumbList only — there is no server-rendered card set for a
           CollectionPage/ItemList to describe. */}
       <JsonLd data={breadcrumbJsonLd([{ name: 'Flight Search', url: '/flight-search' }])} />
+      {/* The booking FAQ below is rendered visibly further down the page —
+          FAQPage schema mirrors that exact Q&A set. */}
+      <JsonLd data={faqJsonLd(BOOKING_FAQ)} />
       <TpwlLoader />
 
       {/* TPWL loader now lives in app/layout.tsx so the SDK is available

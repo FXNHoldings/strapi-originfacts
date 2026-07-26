@@ -21,6 +21,8 @@ import CountryDetailSections from '@/components/CountryDetailSections';
 import CountryFactsPanel from '@/components/CountryFactsPanel';
 import FlightSearchCTA from '@/components/FlightSearchCTA';
 import { getCountryFacts } from '@/lib/country-facts';
+import { faqJsonLd, normalizeFaqs } from '@/lib/entity-seo';
+import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -66,27 +68,44 @@ export default async function DestinationPage({ params }: Props) {
 
   const hero = mediaUrl(destination.heroImage ?? null);
 
+  // Editor-managed FAQs (Strapi json field), appended below whichever layout
+  // renders. FaqSection + faqJsonLd both no-op when < 2 real Q&As survive
+  // normalisation.
+  const faqs = normalizeFaqs(destination.faqs);
+  const faqBlock = (
+    <>
+      <JsonLd data={faqJsonLd(faqs)} />
+      <FaqSection faqs={faqs} title={`${destination.name} — frequently asked questions`} />
+    </>
+  );
+
   if (isCountry) {
     return (
-      <CountryDestinationPage
-        destination={destination}
-        hero={hero}
-        airports={airports}
-        airlines={airlines}
-        routes={routes}
-        articles={articles}
-      />
+      <>
+        <CountryDestinationPage
+          destination={destination}
+          hero={hero}
+          airports={airports}
+          airlines={airlines}
+          routes={routes}
+          articles={articles}
+        />
+        {faqBlock}
+      </>
     );
   }
 
   if (isContinent) {
     return (
-      <ContinentDestinationPage
-        destination={destination}
-        hero={hero}
-        countries={countries}
-        articles={articles}
-      />
+      <>
+        <ContinentDestinationPage
+          destination={destination}
+          hero={hero}
+          countries={countries}
+          articles={articles}
+        />
+        {faqBlock}
+      </>
     );
   }
 
@@ -158,6 +177,8 @@ export default async function DestinationPage({ params }: Props) {
           </div>
         </section>
       )}
+
+      {faqBlock}
 
       <div className="pb-20" />
     </div>

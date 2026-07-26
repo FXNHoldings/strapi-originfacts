@@ -37,6 +37,36 @@ const num = (v: unknown): v is number => typeof v === 'number' && Number.isFinit
 
 export type Faq = { q: string; a: string };
 
+/** Strips tags + collapses whitespace so schema answers are plain text. */
+const plainText = (s: string): string =>
+  s.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+
+/**
+ * Normalises the free-form `faqs` json field editors fill in Strapi into a
+ * clean Faq[]. Accepts `{q, a}` or `{question, answer}` entry shapes, drops
+ * anything malformed or empty, and strips HTML. Returns [] unless at least
+ * MIN_FAQS real Q&As survive — FAQPage markup with 0-1 entries is worthless
+ * and placeholder rows must never reach the schema.
+ */
+export const MIN_FAQS = 2;
+
+export function normalizeFaqs(raw: unknown): Faq[] {
+  if (!Array.isArray(raw)) return [];
+  const faqs: Faq[] = [];
+  for (const entry of raw) {
+    if (typeof entry !== 'object' || entry === null) continue;
+    const rec = entry as Record<string, unknown>;
+    const q = rec.q ?? rec.question;
+    const a = rec.a ?? rec.answer;
+    if (typeof q !== 'string' || typeof a !== 'string') continue;
+    const cleanQ = plainText(q);
+    const cleanA = plainText(a);
+    if (!cleanQ || !cleanA) continue;
+    faqs.push({ q: cleanQ, a: cleanA });
+  }
+  return faqs.length >= MIN_FAQS ? faqs : [];
+}
+
 /* ------------------------------------------------------------------ *
  * Quality gate
  * ------------------------------------------------------------------ */

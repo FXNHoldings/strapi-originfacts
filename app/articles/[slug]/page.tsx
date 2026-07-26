@@ -16,7 +16,8 @@ import ShareButtons from '@/components/ShareButtons';
 import BlogSidebar from '@/components/BlogSidebar';
 import RelatedPostsSlider from '@/components/RelatedPostsSlider';
 import { SECTIONS } from '@/lib/sections';
-import { DEFAULT_OG_IMAGE } from '@/lib/entity-seo';
+import { DEFAULT_OG_IMAGE, faqJsonLd, normalizeFaqs } from '@/lib/entity-seo';
+import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -129,6 +130,7 @@ export default async function ArticlePage({ params }: Props) {
 
   const articleUrl = `https://www.originfacts.com/articles/${article.slug}`;
   const articleImage = mediaUrl(article.ogImage ?? article.coverImage ?? null);
+  const faqs = normalizeFaqs(article.faqs);
 
   const articleJsonLd = {
     '@context': 'https://schema.org',
@@ -187,6 +189,7 @@ export default async function ArticlePage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      <JsonLd data={faqJsonLd(faqs)} />
 
       {/* Body — single 2-column layout: breadcrumb + title + featured image
           + body live in column 1 alongside BlogSidebar in column 2
@@ -347,6 +350,10 @@ export default async function ArticlePage({ params }: Props) {
           />
         </div>
       </div>
+
+      {/* Editor-managed FAQs (Strapi json field). FaqSection + faqJsonLd both
+          no-op when the normalised list is empty (< 2 real Q&As). */}
+      <FaqSection faqs={faqs} />
 
       {related.length > 0 && (
         <section

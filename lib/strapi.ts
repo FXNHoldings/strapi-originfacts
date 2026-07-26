@@ -25,6 +25,8 @@ export type StrapiArticle = {
   tags?: { id: number; name: string; slug: string }[];
   author?: { id: number; name: string; slug: string; avatar?: StrapiImage } | null;
   destinations?: { id: number; name: string; slug: string; type?: 'country' | 'region' | 'city' }[];
+  /** Optional editor-managed Q&As (json field) — see normalizeFaqs(). */
+  faqs?: unknown;
 };
 
 export type StrapiCategory = {
@@ -75,6 +77,8 @@ export type StrapiDestination = {
     timezones?: string;
   };
   heroImage?: StrapiImage;
+  /** Optional editor-managed Q&As (json field) — see normalizeFaqs(). */
+  faqs?: unknown;
 };
 
 export type AirlineType = 'Scheduled' | 'Charter' | 'Cargo' | 'Low-cost' | 'Regional';
