@@ -44,6 +44,62 @@ export function absoluteUrl(pathOrUrl: string): string {
   return `${SITE_URL}${pathOrUrl.startsWith('/') ? '' : '/'}${pathOrUrl}`;
 }
 
+/* ------------------------------------------------------------------ *
+ * Organization entity
+ * ------------------------------------------------------------------ */
+
+/** Stable node id — every page that mentions the org must use this @id. */
+export const ORG_ID = `${SITE_URL}/#organization`;
+
+const ORG_SAME_AS = [
+  'https://x.com/realoriginfacts',
+  'https://www.facebook.com/originfacts/',
+  'https://www.linkedin.com/company/143027896/',
+  'https://www.reddit.com/r/Originfacts/',
+];
+
+/** Public-facing contact address (also shown on /contact and /legal/contact). */
+export const ORG_CONTACT_EMAIL = 'contact@originfacts.com';
+
+/**
+ * The canonical Originfacts Organization node. Emit the full node on pages
+ * that anchor the entity (home, about, contact); elsewhere reference it as
+ * `{ '@id': ORG_ID }`. `withContactPoint` adds the customer-support
+ * ContactPoint (used on /contact).
+ */
+export function organizationJsonLd(opts: { withContactPoint?: boolean } = {}): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': ORG_ID,
+    name: 'Originfacts',
+    url: SITE_URL,
+    // PNG rather than the site's SVG — Google's logo rich-result support for
+    // SVG is unreliable.
+    logo: {
+      '@type': 'ImageObject',
+      url: `${SITE_URL}/brand/logo/originfacts-logo.png`,
+      width: 344,
+      height: 190,
+    },
+    description:
+      'The facts behind every place worth visiting — plus the latest on flights, hotels, airlines, airports and destinations.',
+    sameAs: ORG_SAME_AS,
+    ...(opts.withContactPoint
+      ? {
+          contactPoint: [
+            {
+              '@type': 'ContactPoint',
+              contactType: 'customer support',
+              email: ORG_CONTACT_EMAIL,
+              availableLanguage: ['English'],
+            },
+          ],
+        }
+      : {}),
+  };
+}
+
 /**
  * BreadcrumbList. Pass the trail without the site root — "Home" is prepended
  * automatically so every hub reports the same first crumb.

@@ -1,0 +1,1097 @@
+name,slug,iata,country,type
+40-Mile Air,40-mile-air,Q5,United States,Scheduled
+9 Air,9-air,AQ,China,Low-cost
+"ABX Air, Inc.",abx-air-inc,GB,United States,Scheduled
+ACT Havayollari A.S.,act-havayollari-as,9T,Turkey,Scheduled
+AHK Air Hong Kong Limited,ahk-air-hong-kong-limited,LD,Hong Kong,Scheduled
+AIS Airlines,ais-airlines,0C,Netherlands,Scheduled
+AIX Connect,aix-connect,I5,India,Low-cost
+ALPAVIA,alpavia,AL,United States,Low-cost
+ALROSA,alrosa,6R,Russia,Scheduled
+ANA Wings,ana-wings,EH,Japan,Scheduled
+APA Guam,apa-guam,P9,Guam,Scheduled
+APG Airlines,apg-airlines,GP,France,Scheduled
+"ARINC(Aeronautical Radio, Inc.)",arincaeronautical-radio-inc,XA,United States,Scheduled
+AS SALAAM AIR,as-salaam-air,0W,Tanzania,Scheduled
+ASKY Airlines,asky-airlines,KP,Togo,Scheduled
+ASL Airlines France,asl-airlines-france,5O,France,Scheduled
+ASL Airlines Ireland,asl-airlines-ireland,5H,Ireland,Low-cost
+ASL Airways,asl-airways,3V,Belgium,Scheduled
+ATSA Airlines,atsa-airlines,4A,Peru,Low-cost
+AZUR Air,azur-air,ZF,Russia,Scheduled
+Abacus International Pte. Ltd.,abacus-international-pte-ltd,1B,Singapore,Scheduled
+AccesRail,accesrail,9B,Canada,Scheduled
+Adria Airways,adria-airways,JP,Slovenia,Scheduled
+Advanced Air,advanced-air,AN,United States,Scheduled
+Aegean Airlines,aegean-airlines,A3,Greece,Scheduled
+Aer Lingus,aer-lingus,EI,Ireland,Scheduled
+Aero Dili,aero-dili,8G,Timor-Leste,Scheduled
+Aero K,aero-k,RF,South Korea,Low-cost
+Aero Mongolia,aero-mongolia,M0,Mongolia,Scheduled
+Aero Nomad Airlines,aero-nomad-airlines,KA,Kyrgyzstan,Scheduled
+Aero-Charter Ukraine,aero-charter-ukraine,DW,Ukraine,Scheduled
+Aero-Tropics Air Services,aero-tropics-air-services,HC,Australia,Scheduled
+AeroItalia,aeroitalia,XZ,Italy,Low-cost
+AeroLink,aerolink,A8,Uganda,Scheduled
+AeroStan,aerostan,KW,Kyrgyzstan,Scheduled
+Aeroflot,aeroflot,SU,Russia,Scheduled
+Aerolineas Argentinas,aerolineas-argentinas,AR,Argentina,Scheduled
+Aerolineas Sosa,aerolineas-sosa,S0,Honduras,Scheduled
+Aeromar,aeromar,VW,Mexico,Scheduled
+Aeromexico Connect,aeromexico-connect,5D,Mexico,Scheduled
+Aeroméxico,aeromexico,AM,Mexico,Scheduled
+Aeronautical Telecommunications Ltd.(AEROTEL),aeronautical-telecommunications-ltdaerotel,XI,Jamaica,Scheduled
+Aeropelican Air Services,aeropelican-air-services,OT,Australia,Scheduled
+Aeroservis,aeroservis,АЯ,Russia,Scheduled
+Aerotranscargo,aerotranscargo,F5,Moldova (Republic of Moldova),Scheduled
+Aerovias DAP,aerovias-dap,V5,Chile,Scheduled
+Africa World Airlines,africa-world-airlines,AW,Ghana,Scheduled
+African Express Airways,african-express-airways,XU,Kenya,Scheduled
+Afrinat International Airlines,afrinat-international-airlines,2F,Gambia,Scheduled
+Afriqiyah Airways,afriqiyah-airways,8U,Libya,Scheduled
+Aigle Azur,aigle-azur,ZI,France,Scheduled
+Air Albania,air-albania,ZB,Reunion,Scheduled
+Air Algerie,air-algerie,AH,Algeria,Scheduled
+Air Alsie,air-alsie,6I,Denmark,Scheduled
+Air Anka,air-anka,6K,Turkey,Scheduled
+Air Antilles,air-antilles,4I,France,Low-cost
+Air Arabia,air-arabia,G9,United Arab Emirates,Low-cost
+Air Arabia Abu Dhabi,air-arabia-abu-dhabi,3L,United Arab Emirates,Low-cost
+Air Arabia Egypt,air-arabia-egypt,E5,Egypt,Low-cost
+Air Arabia Maroc,air-arabia-maroc,3O,Morocco,Low-cost
+Air Astana,air-astana,KC,Kazakhstan,Scheduled
+Air Atlanta,air-atlanta,CC,Iceland,Scheduled
+Air Atlanta Europe,air-atlanta-europe,CT,United Kingdom,Scheduled
+Air Austral,air-austral,UU,France,Scheduled
+Air Berlin,air-berlin,HE,Germany,Scheduled
+Air Botswana,air-botswana,BP,Botswana,Scheduled
+Air Burkina,air-burkina,2J,Burkina Faso,Scheduled
+Air Busan,air-busan,BX,South Korea,Low-cost
+Air Cairo,air-cairo,SM,Egypt,Scheduled
+Air Caledonie,air-caledonie,TY,New Caledonia,Scheduled
+Air Cambodia,air-cambodia,K6,Cambodia,Scheduled
+Air Canada,air-canada,AC,Canada,Scheduled
+Air Canada Express,air-canada-express,QK,Canada,Scheduled
+Air Canada Rouge,air-canada-rouge,RV,Canada,Low-cost
+Air Caraibes,air-caraibes,TX,"France (Guadeloupe, overseas territory)",Scheduled
+"Air Cargo Carriers, LLC.",air-cargo-carriers-llc,2Q,United States,Scheduled
+Air Cargo Germany,air-cargo-germany,6U,Germany,Scheduled
+Air Century,air-century,Y2,Dominican Republic,Scheduled
+Air Changan,air-changan,9H,China,Scheduled
+Air China,air-china,CA,China,Scheduled
+Air Congo,air-congo,4H,Democratic Republic of the Congo,Scheduled
+Air Corsica,air-corsica,XK,France,Scheduled
+Air Cote D'Ivoire,air-cote-divoire,HF,Côte d'Ivoire (Ivory Coast),Scheduled
+Air Creebec,air-creebec,YN,Canada,Scheduled
+Air Dilijans,air-dilijans,RM,Armenia,Scheduled
+Air Djibouti,air-djibouti,DJ,Djibouti,Scheduled
+Air Do,air-do,HD,Japan,Scheduled
+Air Europa,air-europa,UX,Spain,Scheduled
+Air Europa Express,air-europa-express,X5,Spain,Scheduled
+Air Excel,air-excel,0X,Tanzania,Scheduled
+Air Flamenco,air-flamenco,F4,United States,Scheduled
+Air France,air-france,AF,France,Scheduled
+Air Greenland,air-greenland,GL,Greenland,Scheduled
+Air Guilin,air-guilin,GT,China,Scheduled
+Air Iceland Connect,air-iceland-connect,NY,Iceland,Scheduled
+Air Incheon,air-incheon,KJ,South Korea,Scheduled
+Air India,air-india,AI,India,Scheduled
+Air India Express,air-india-express,IX,India,Low-cost
+Air Inuit,air-inuit,3H,Canada,Scheduled
+Air Japan,air-japan,NQ,Japan,Scheduled
+Air KBZ,air-kbz,K7,Myanmar,Scheduled
+Air Kiribati,air-kiribati,IK,Kiribati,Scheduled
+Air Koryo,air-koryo,JS,North Korea,Scheduled
+Air Libya,air-libya,7I,Libya,Scheduled
+Air Link,air-link,LZ,Australia,Scheduled
+Air Lituanica,air-lituanica,LT,Lithuania,Scheduled
+Air Macau,air-macau,NX,Macao,Scheduled
+Air Madagascar,air-madagascar,MD,Madagascar,Scheduled
+Air Manas,air-manas,ZM,Kyrgyzstan,Low-cost
+Air Mauritius,air-mauritius,MK,Mauritius,Scheduled
+Air Mekong,air-mekong,P8,Vietnam,Scheduled
+Air Moana,air-moana,NM,French Polynesia,Scheduled
+Air Mobility Command,air-mobility-command,MC,United States,Scheduled
+Air Moldova,air-moldova,9U,Moldova,Scheduled
+Air Montenegro,air-montenegro,4O,Montenegro,Scheduled
+Air Namibia,air-namibia,SW,Namibia,Scheduled
+Air New Zealand,air-new-zealand,NZ,New Zealand,Scheduled
+Air Niamey,air-niamey,A7,Niger,Low-cost
+Air Niugini,air-niugini,PX,Papua New Guinea,Scheduled
+Air North,air-north,4N,Canada,Scheduled
+Air Nostrum,air-nostrum,YW,Spain,Scheduled
+Air Ocean Airlines,air-ocean-airlines,0O,Ukraine,Scheduled
+Air Panama,air-panama,7P,Panama,Scheduled
+Air Peace,air-peace,P4,Honduras,Low-cost
+Air Premia,air-premia,YP,South Korea,Scheduled
+Air Rarotonga,air-rarotonga,GZ,Cook Islands,Scheduled
+Air Saint Pierre,air-saint-pierre,PJ,France,Scheduled
+Air Samarkand,air-samarkand,9S,Uzbekistan,Scheduled
+Air Seoul,air-seoul,RS,South Korea,Low-cost
+Air Serbia,air-serbia,JU,Serbia,Scheduled
+Air Seychelles,air-seychelles,HM,Seychelles,Scheduled
+Air Tahiti,air-tahiti,VT,French Polynesia,Scheduled
+Air Tahiti Nui,air-tahiti-nui,TN,France,Scheduled
+Air Tanzania,air-tanzania,TC,Tanzania,Scheduled
+Air Thanlwin,air-thanlwin,ST,Myanmar,Scheduled
+Air Timor,air-timor,6C,Timor-Leste,Scheduled
+Air Tindi,air-tindi,8T,Canada,Scheduled
+Air Transat,air-transat,TS,Canada,Scheduled
+Air Transport Association of Americad\b\a Airlines for America,air-transport-association-of-americadba-airlines-for-america,XD,United States,Scheduled
+Air Transport International L.L.C.,air-transport-international-llc,8C,United States,Scheduled
+Air Travel,air-travel,A6,China,Scheduled
+Air Vanuatu,air-vanuatu,NF,Vanuatu,Scheduled
+Air Wisconsin,air-wisconsin,ZW,United States,Scheduled
+Air X Charter,air-x-charter,AX,Malta,Scheduled
+Air Zimbabwe,air-zimbabwe,UM,Zimbabwe,Scheduled
+AirAsia,airasia,AK,Malaysia,Low-cost
+AirAsia Cambodia,airasia-cambodia,KT,Cambodia,Low-cost
+AirAsia X,airasia-x,D7,Malaysia,Low-cost
+AirBorneo,airborneo,MY,Malaysia,Scheduled
+AirBridgeCargo,airbridgecargo,RU,Russia,Scheduled
+AirConnect,airconnect,KS,Romania,Scheduled
+AirDolomiti,airdolomiti,EN,Italy,Scheduled
+AirExplore,airexplore,ED,Slovakia,Scheduled
+AirKenya,airkenya,P2,Kenya,Scheduled
+AirSWIFT,airswift,T6,Philippines,Scheduled
+Aircalin,aircalin,SB,New Caledonia,Scheduled
+Airfast Indonesia,airfast-indonesia,1T,Indonesia,Scheduled
+Airhub Airlines,airhub-airlines,RE,Malta,Scheduled
+Airline Urga,airline-urga,3N,Ukraine,Scheduled
+Airlink,airlink,4Z,Austria,Scheduled
+Airmax S.A.,airmax-sa,X8,Peru,Scheduled
+Airnorth,airnorth,TL,Australia,Scheduled
+Airshop B.V.,airshop-bv,FF,Netherlands,Scheduled
+Airzena,airzena,LV,Georgia,Scheduled
+Ajet,ajet,VF,Cyprus,Low-cost
+Ak Bars Aero,ak-bars-aero,2B,Russia,Low-cost
+Akasa Air,akasa-air,QP,India,Low-cost
+Aklak Air,aklak-air,6L,Canada,Scheduled
+AlMasria Universal Airlines,almasria-universal-airlines,UJ,Egypt,Scheduled
+Alaska Airlines,alaska-airlines,AS,United States,Scheduled
+Alaska Seaplanes,alaska-seaplanes,J5,United States,Scheduled
+AlbaStar,albastar,AP,Spain,Scheduled
+Alexandria Airlines,alexandria-airlines,DQ,Egypt,Scheduled
+All Nippon Airways,all-nippon-airways,NH,Japan,Scheduled
+Allegiant Air,allegiant-air,G4,United States,Low-cost
+Alliance Air,alliance-air,9I,India,Scheduled
+Alliance Airlines,alliance-airlines,QQ,Australia,Scheduled
+Alpha Air Transport,alpha-air-transport,7U,Canada,Scheduled
+Alsa Grupo SLU,alsa-grupo-slu,5I,Spain,Scheduled
+Amadeus IT Group SA,amadeus-it-group-sa,1A,Spain,Scheduled
+Amakusa Airlines,amakusa-airlines,MZ,Japan,Scheduled
+Amaszonas,amaszonas,Z8,Bolivia,Scheduled
+Amaszonas Uruguay,amaszonas-uruguay,Z7,Uruguay,Scheduled
+Amelia,amelia,8R,France,Scheduled
+American Airlines,american-airlines,AA,United States,Scheduled
+American Eagle,american-eagle,ZZ,United States,Scheduled
+Amerijet International Inc.,amerijet-international-inc,M6,United States,Scheduled
+Amtrak,amtrak,2V,United States,Scheduled
+Andes Lineas Aereas,andes-lineas-aereas,O4,Argentina,Scheduled
+Angara Airlines,angara-airlines,2G,Russia,Scheduled
+Anguilla Air Services,anguilla-air-services,Q3,Russia,Scheduled
+Animawings,animawings,A2,Romania,Scheduled
+Arajet,arajet,DM,Dominican Republic,Low-cost
+"Arctic Transportation Services, Inc Ryan Air",arctic-transportation-services-inc-ryan-air,7S,United States,Scheduled
+Ariana Afghan Airlines,ariana-afghan-airlines,FG,Afghanistan,Scheduled
+Arik Air,arik-air,W3,Nigeria,Scheduled
+Arkhangelsk-2,arkhangelsk-2,АЧ,Russia,Scheduled
+Arkia,arkia,IZ,Israel,Scheduled
+Arktika,arktika,СИ,Russia,Scheduled
+Armenia Airways,armenia-airways,6A,Armenia,Scheduled
+Armenian Airlines,armenian-airlines,JI,Armenia,Scheduled
+Aruba Airlines,aruba-airlines,AG,Aruba,Scheduled
+Ascend Airways,ascend-airways,YD,Belarus,Scheduled
+Aserca Airlines,aserca-airlines,R7,Venezuela,Scheduled
+Asian Wings Airways,asian-wings-airways,YJ,Burma,Scheduled
+Asiana Airlines,asiana-airlines,OZ,South Korea,Scheduled
+Asman Airlines,asman-airlines,MN,Kyrgyzstan,Low-cost
+Atlantic Airways,atlantic-airways,RC,Faroe Islands,Low-cost
+Atlas Air,atlas-air,5Y,United States,Scheduled
+Atran,atran,V8,Russia,Scheduled
+Auric Air,auric-air,UI,Tanzania,Scheduled
+Aurigny,aurigny,GR,Guernsey,Scheduled
+Aurora,aurora,HZ,Russia,Scheduled
+Austral Lineas Aereas,austral-lineas-aereas,AU,Argentina,Scheduled
+Australian Airlines,australian-airlines,AO,Australia,Scheduled
+Austrian Airlines,austrian-airlines,OS,Austria,Scheduled
+Avelo Airlines,avelo-airlines,XP,United States,Low-cost
+Avia Traffic Company,avia-traffic-company,ТФ,Kyrgyzstan,Scheduled
+Aviacon Zitotrans Air Company JSC,aviacon-zitotrans-air-company-jsc,ZR,Russia,Scheduled
+Avialeasing Aviation Company,avialeasing-aviation-company,V2,Uzbekistan,Scheduled
+Avianca,avianca,AV,Colombia,Scheduled
+Avianca Brazil,avianca-brazil,O6,Brazil,Scheduled
+Avianca Costa Rica,avianca-costa-rica,LR,Costa Rica,Scheduled
+Avianca Ecuador,avianca-ecuador,2K,Ecuador,Scheduled
+Avianca El Salvador,avianca-el-salvador,TA,El Salvador,Scheduled
+Avianca Guatemala,avianca-guatemala,GU,Guatemala,Scheduled
+Avianca Peru,avianca-peru,T0,Peru,Scheduled
+Aviastar-TU,aviastar-tu,4B,Russia,Scheduled
+Avion Express Lithuania,avion-express-lithuania,X9,Lithuania,Scheduled
+Avion Express Malta,avion-express-malta,4X,Malta,Scheduled
+Avior Airlines,avior-airlines,3R,Venezuela,Scheduled
+Azerbaijan Airlines,azerbaijan-airlines,J2,Azerbaijan,Scheduled
+Azimuth,azimuth,A4,Russia,Scheduled
+Aztec Airways,aztec-airways,AJ,United States,Scheduled
+Azul Airlines,azul-airlines,AD,Brazil,Low-cost
+BA Cityflyer,ba-cityflyer,CJ,United Kingdom,Scheduled
+BA Euroflyer,ba-euroflyer,A0,United Kingdom,Scheduled
+BB Airways,bb-airways,BO,Nepal,Scheduled
+BBN Airlines,bbn-airlines,B5,Indonesia,Scheduled
+BH Air,bh-air,8H,Bulgaria,Scheduled
+BMI regional,bmi-regional,BM,United Kingdom,Scheduled
+BQB Lineas Aereas,bqb-lineas-aereas,5Q,Uruguay,Scheduled
+BRA,bra,TF,Sweden,Scheduled
+BVI Airways,bvi-airways,XV,British Virgin Islands,Scheduled
+Badr Airlines,badr-airlines,J4,Sudan,Scheduled
+Bahamasair,bahamasair,UP,Bahamas,Scheduled
+Balkan,balkan,БА,Bulgaria,Scheduled
+Bamboo Airways,bamboo-airways,QH,Vietnam,Scheduled
+Bangkok Airways,bangkok-airways,PG,Thailand,Scheduled
+Bassaka Air,bassaka-air,5B,Cambodia,Scheduled
+Batik Air,batik-air,ID,Indonesia,Scheduled
+Batik Air Malaysia,batik-air-malaysia,OD,Malaysia,Scheduled
+BeOnd,beond,B4,Maldives,Scheduled
+Bearskin Airlines,bearskin-airlines,JV,Canada,Scheduled
+Bees Airline,bees-airline,7B,Ukraine,Low-cost
+Beijing Capital Airlines,beijing-capital-airlines,JD,China,Scheduled
+Belavia,belavia,B2,Belarus,Scheduled
+Bemidji Airlines,bemidji-airlines,CH,United States,Scheduled
+Bering Air,bering-air,8E,United States,Scheduled
+Berjaya Air,berjaya-air,J8,Malaysia,Scheduled
+BermudAir,bermudair,2T,Bermuda,Scheduled
+Berniq Airways,berniq-airways,NB,Libya,Scheduled
+Bhutan Airlines,bhutan-airlines,B3,Bhutan,Scheduled
+Biman Bangladesh Airlines,biman-bangladesh-airlines,BG,Bangladesh,Scheduled
+Binter Canarias,binter-canarias,NT,Spain,Scheduled
+Blue Air,blue-air,0B,Romania,Low-cost
+Blue Bird Airways,blue-bird-airways,BZ,Kenya,Scheduled
+Blue Islands,blue-islands,SI,United Kingdom,Scheduled
+Blue1,blue1,KF,Finland,Scheduled
+Boliviana de Aviación,boliviana-de-aviacion,OB,Bolivia,Scheduled
+Bonza,bonza,AB,Australia,Low-cost
+Breeze Airways,breeze-airways,MX,United States,Low-cost
+Bringer Air Cargo,bringer-air-cargo,E6,Brazil,Scheduled
+Brit Air,brit-air,DB,France,Scheduled
+British Airways,british-airways,BA,United Kingdom,Scheduled
+Brussels Airlines,brussels-airlines,SN,Belgium,Scheduled
+Buddha Air,buddha-air,U4,Nepal,Scheduled
+Buffalo Airways Ltd.,buffalo-airways-ltd,J0,Canada,Scheduled
+Bul Air,bul-air,LB,India,Scheduled
+Bulgaria Air,bulgaria-air,FB,Bulgaria,Scheduled
+Buraq Air,buraq-air,UZ,Libya,Scheduled
+Buta Airways,buta-airways,55,Azerbaijan,Low-cost
+Buzz,buzz,RR,Poland,Low-cost
+CEIBA Intercontinental,ceiba-intercontinental,C2,Equatorial Guinea,Scheduled
+CJSC Royal Flight airlines,cjsc-royal-flight-airlines,4R,Russia,Scheduled
+CM Airlines,cm-airlines,H5,Honduras,Scheduled
+CSA Czech Airlines,csa-czech-airlines,OK,Czech Republic,Scheduled
+Cabo Verde Airlines,cabo-verde-airlines,VR,Cape Verde,Scheduled
+Caicos Express Airways,caicos-express-airways,9Q,Turks and Caicos Islands,Scheduled
+Calima Aviacion S.L,calima-aviacion-sl,3C,Spain,Scheduled
+Calm Air,calm-air,MO,Canada,Scheduled
+Camair-Co,camair-co,QC,Cameroon,Scheduled
+Cambodia Airways,cambodia-airways,KR,Cambodia,Scheduled
+Canadian North,canadian-north,5T,Canada,Scheduled
+Canaryfly,canaryfly,PM,Spain,Scheduled
+Cape Air,cape-air,9K,United States,Scheduled
+Cargojet Airways Ltd.,cargojet-airways-ltd,W8,Canada,Scheduled
+Cargolux,cargolux,CV,Luxembourg,Scheduled
+Caribbean Air Export Import Inc.,caribbean-air-export-import-inc,CB,United Kingdom,Scheduled
+Caribbean Airlines,caribbean-airlines,BW,Trinidad and Tobago,Scheduled
+Carpatair,carpatair,V3,Romania,Scheduled
+Cathay Pacific,cathay-pacific,CX,Hong Kong,Scheduled
+Cayman Airways,cayman-airways,KX,Cayman Islands,Scheduled
+Cebgo,cebgo,DG,Philippines,Low-cost
+Cebu Pacific,cebu-pacific,5J,Philippines,Low-cost
+CemAir,cemair,5Z,South Africa,Scheduled
+Central Airlines,central-airlines,I9,China,Scheduled
+Central Mountain Air,central-mountain-air,9M,Canada,Scheduled
+Centrum Air,centrum-air,C6,Uzbekistan,Low-cost
+Chair Airlines,chair-airlines,GM,Switzerland,Scheduled
+Chalair Aviation,chalair-aviation,CE,France,Scheduled
+Challenge Air Cargo Ltd,challenge-air-cargo-ltd,X6,Malta,Scheduled
+Challenge Airlines BE,challenge-airlines-be,X7,Belgium,Scheduled
+Challenge Airlines IL,challenge-airlines-il,5C,Israel,Scheduled
+"Charter Air Transport, Inc.",charter-air-transport-inc,VC,United States,Low-cost
+Chautauqua Airlines,chautauqua-airlines,RP,United States,Scheduled
+Chengdu Airlines,chengdu-airlines,EU,China,Scheduled
+China Airlines,china-airlines,CI,Taiwan,Scheduled
+China Cargo Airlines,china-cargo-airlines,CK,China,Scheduled
+China Eastern,china-eastern,MU,China,Scheduled
+China Express Airlines,china-express-airlines,G5,China,Scheduled
+China Postal Airlines Ltd.,china-postal-airlines-ltd,CF,China,Scheduled
+China Southern Airlines,china-southern-airlines,CZ,China,Scheduled
+China United Airlines,china-united-airlines,KN,China,Low-cost
+Chongqing Airlines,chongqing-airlines,OQ,China,Scheduled
+Chu Kong Passenger Transport Co. Ltd.,chu-kong-passenger-transport-co-ltd,3A,China,Scheduled
+Cimber,cimber,QA,Denmark,Scheduled
+Cinnamon Air,cinnamon-air,C7,Sri Lanka,Scheduled
+Citilink,citilink,QG,Indonesia,Low-cost
+Cityjet,cityjet,WX,Ireland,Scheduled
+Clic,clic,VE,Colombia,Low-cost
+Coastal Aviation,coastal-aviation,CQ,United States,Scheduled
+Cobalt Air,cobalt-air,CO,Cyprus,Scheduled
+Colorful Guizhou Airlines,colorful-guizhou-airlines,GY,China,Low-cost
+CommutAir,commutair,C5,United States,Scheduled
+Compass Airlines,compass-airlines,CP,United States,Scheduled
+Condor,condor,DF,Germany,Scheduled
+"Conquest Air, Inc.",conquest-air-inc,C4,Mexico,Scheduled
+Contour Airlines,contour-airlines,LF,United States,Scheduled
+Conviasa,conviasa,V0,Venezuela,Scheduled
+Copa Airlines,copa-airlines,CM,Panama,Scheduled
+Corendon Airlines,corendon-airlines,XC,Turkey,Scheduled
+Corendon Airlines Europe,corendon-airlines-europe,XR,Malta,Scheduled
+Corendon Dutch Airlines,corendon-dutch-airlines,CD,Netherlands,Scheduled
+Corsair International,corsair-international,SS,France,Scheduled
+Croatia Airlines,croatia-airlines,OU,Croatia,Scheduled
+Cronos Airlines,cronos-airlines,C8,Equatorial Guinea,Scheduled
+Crown Airlines,crown-airlines,FQ,United States,Scheduled
+Cubana,cubana,CU,Cuba,Scheduled
+Cyprus Airways,cyprus-airways,CY,Cyprus,Scheduled
+DHL Aero Expreso S.A.,dhl-aero-expreso-sa,D5,Panama,Scheduled
+DHL Air Limited,dhl-air-limited,D0,United Kingdom,Scheduled
+DHL Aviation EEMEA B.S.C.(c),dhl-aviation-eemea-bscc,ES,Bahrain,Scheduled
+DHL de Guatemala,dhl-de-guatemala,L3,Guatemala,Scheduled
+DOT LT,dot-lt,R6,Lithuania,Scheduled
+Daallo Airlines,daallo-airlines,D3,Djibouti,Scheduled
+Dan Air,dan-air,DN,India,Low-cost
+Dana Air,dana-air,9J,Nigeria,Scheduled
+Danish Air Transport,danish-air-transport,DX,Denmark,Scheduled
+Delta Air Lines,delta-air-lines,DL,United States,Scheduled
+Denver Air Connection (DAC),denver-air-connection-dac,KG,United States,Scheduled
+Department of National Defence,department-of-national-defence,YF,Canada,Scheduled
+Deutsche Bahn AG,deutsche-bahn-ag,2A,Germany,Scheduled
+Discover Airlines,discover-airlines,4Y,Germany,Low-cost
+Dniproavia,dniproavia,Z6,Ukraine,Scheduled
+DoKaSch,dokasch,3D,North Macedonia,Scheduled
+Dobrolet,dobrolet,QD,Russia,Scheduled
+Donavia,donavia,D9,Russia,Scheduled
+Donghai Airlines,donghai-airlines,DZ,China,Scheduled
+Drukair,drukair,KB,Bhutan,Scheduled
+E-Savtravel,e-savtravel,L1,Brazil,Scheduled
+EL AL,el-al,LY,Israel,Scheduled
+EVA Air,eva-air,BR,Taiwan,Scheduled
+Eagle Atlantic Airlines,eagle-atlantic-airlines,E2,Ghana,Low-cost
+Eaglexpress Air Charter Sdn.Bhd.dbaEaglexpress Air,eaglexpress-air-charter-sdnbhddbaeaglexpress-air,9A,Malaysia,Scheduled
+Eastar Jet,eastar-jet,ZE,South Korea,Low-cost
+Eastern Air Lines,eastern-air-lines,EA,United States,Scheduled
+"Eastern Airlines, LLC",eastern-airlines-llc,2D,United States,Scheduled
+Eastern Airways,eastern-airways,T3,United Kingdom,Low-cost
+EcoJet,ecojet,8J,Bolivia,Scheduled
+Edelweiss Air,edelweiss-air,WK,Switzerland,Scheduled
+Egyptair,egyptair,MS,Egypt,Scheduled
+Electra Airways,electra-airways,3E,Bulgaria,Scheduled
+Electronic Data Systems Corporation,electronic-data-systems-corporation,1Y,United States,Scheduled
+Ellinair,ellinair,EL,Greece,Scheduled
+Emetebe Airlines,emetebe-airlines,0A,Ecuador,Scheduled
+Emirates,emirates,EK,United Arab Emirates,Scheduled
+Empire Airlines,empire-airlines,EM,United States,Scheduled
+Endeavor Air,endeavor-air,9E,United States,Scheduled
+Enter Air,enter-air,E4,Poland,Scheduled
+Envoy Air,envoy-air,MQ,United States,Scheduled
+Equaflight,equaflight,E7,Republic of the Congo,Scheduled
+Eritrean Airlines,eritrean-airlines,B8,Eritrea,Scheduled
+Ernest Airlines,ernest-airlines,EG,Italy,Low-cost
+Eswatini Air,eswatini-air,RN,Eswatini,Scheduled
+Ethiopian Airlines,ethiopian-airlines,ET,Ethiopia,Scheduled
+Etihad Airways,etihad-airways,EY,United Arab Emirates,Scheduled
+Euro-Asia Air,euro-asia-air,6Z,Kazakhstan,Scheduled
+EuroAtlantic Airways,euroatlantic-airways,YU,Portugal,Scheduled
+Euroairlines,euroairlines,Q4,Spain,Scheduled
+Eurolot,eurolot,K2,Poland,Scheduled
+European Air Charter,european-air-charter,H6,United Kingdom,Scheduled
+European Air Transport,european-air-transport,QY,Belgium,Scheduled
+European Cargo Services BV,european-cargo-services-bv,EJ,Netherlands,Scheduled
+Eurostar,eurostar,9F,United Kingdom,Scheduled
+Eurowings,eurowings,EW,Germany,Low-cost
+Everts Air Cargo,everts-air-cargo,5V,United States,Scheduled
+Express Airline,express-airline,7A,Tunisia,Scheduled
+ExpressJet,expressjet,EV,United States,Scheduled
+Eznis Airways,eznis-airways,MG,Mongolia,Scheduled
+FAT Far Eastern Air Transport,fat-far-eastern-air-transport,FE,Taiwan (Republic of China),Scheduled
+FLYONE Armenia,flyone-armenia,3F,Armenia,Low-cost
+FLYYO,flyyo,4D,Romania,Scheduled
+Fastjet Zimbabwe,fastjet-zimbabwe,FN,Zimbabwe,Scheduled
+FedEx,fedex,FX,United States,Scheduled
+Federal Air,federal-air,7V,South Africa,Scheduled
+Fiji Airways,fiji-airways,FJ,Fiji,Scheduled
+Finist'air,finistair,0D,France,Scheduled
+Finnair,finnair,AY,Finland,Scheduled
+Firefly,firefly,FY,Malaysia,Scheduled
+First Air,first-air,7F,Canada,Scheduled
+FitsAir,fitsair,8D,Sri Lanka,Low-cost
+Flair Airlines,flair-airlines,F8,Canada,Low-cost
+FlexFlight,flexflight,W2,Denmark,Scheduled
+Flightlink,flightlink,YS,Tanzania,Scheduled
+Fly All Ways,fly-all-ways,8W,Suriname,Scheduled
+Fly Arna,fly-arna,G6,Armenia,Low-cost
+Fly Baghdad,fly-baghdad,IF,Iraq,Scheduled
+Fly Branson Travel dba Branson AirExpress,fly-branson-travel-dba-branson-airexpress,1X,United States,Scheduled
+Fly CamInter,fly-caminter,EF,Cambodia,Low-cost
+Fly Jordan,fly-jordan,F0,Jordan,Scheduled
+Fly Lili,fly-lili,FL,Romania,Scheduled
+Fly One,fly-one,5F,Moldova,Low-cost
+Fly One (Romania),fly-one-romania,OE,Moldova,Low-cost
+Fly Oya,fly-oya,YI,Libya,Scheduled
+Fly Pro,fly-pro,FP,United States,Scheduled
+Fly Red Sea,fly-red-sea,Z4,Saudi Arabia,Scheduled
+Fly2Sky,fly2sky,F6,Bulgaria,Scheduled
+FlyALS,flyals,0F,Kenya,Scheduled
+FlyAden,flyaden,DH,Yemen,Scheduled
+FlyArystan,flyarystan,FS,Kazakhstan,Low-cost
+FlyBosnia,flybosnia,6W,Bosnia and Herzegovina,Scheduled
+FlyEgypt,flyegypt,FT,Egypt,Scheduled
+FlyGabon,flygabon,J7,Gabon,Scheduled
+FlyJinnah,flyjinnah,9P,Pakistan,Low-cost
+FlyKhiva,flykhiva,2U,Uzbekistan,Scheduled
+FlyNamibia,flynamibia,WV,Namibia,Scheduled
+FlyOne Asia,flyone-asia,7Q,Thailand,Low-cost
+FlySafair,flysafair,FA,South Africa,Low-cost
+Flybe,flybe,BE,United Kingdom,Low-cost
+Flybondi,flybondi,FO,Argentina,Low-cost
+Flybusteam,flybusteam,ГЭ,Russia,Scheduled
+Flydubai,flydubai,FZ,United Arab Emirates,Low-cost
+Flynas,flynas,XY,Saudi Arabia,Low-cost
+Freebird Airlines,freebird-airlines,FH,Turkey,Scheduled
+Freedom Airline Express,freedom-airline-express,4F,United States,Scheduled
+French Armed Forces,french-armed-forces,RD,France,Scheduled
+French Bee,french-bee,BF,France,Low-cost
+Frontier Airlines,frontier-airlines,F9,United States,Low-cost
+Fuji Dream Airlines,fuji-dream-airlines,JH,Japan,Scheduled
+Fuzhou Airlines,fuzhou-airlines,FU,China,Scheduled
+GP Aviation,gp-aviation,IV,Bulgaria,Scheduled
+GX Airlines,gx-airlines,GX,China,Scheduled
+Galileo International,galileo-international,1V,United States,Scheduled
+Gambia Bird Airlines,gambia-bird-airlines,3G,Gambia,Scheduled
+Garuda Indonesia,garuda-indonesia,GA,Indonesia,Scheduled
+Gazpromavia,gazpromavia,4G,Russia,Scheduled
+Georgian Airways,georgian-airways,A9,Georgia,Scheduled
+Georgian Wings,georgian-wings,D4,Georgia,Low-cost
+German Airways,german-airways,ZQ,Germany,Scheduled
+GetJet Airlines,getjet-airlines,GW,Russia,Scheduled
+Ghadames Air,ghadames-air,NJ,Libya,Scheduled
+Global Aviation (GEA),global-aviation-gea,IG,South Africa,Scheduled
+Global Aviation Services Group,global-aviation-services-group,5S,Libya,Scheduled
+Global Feeder Services,global-feeder-services,GC,United States,Scheduled
+GlobeAir,globeair,0K,Austria,Scheduled
+Globus Airlines,globus-airlines,GH,Russia,Scheduled
+Globus LLС,globus-lls,XT,Russia,Scheduled
+GoJet Airlines,gojet-airlines,G7,United States,Scheduled
+Gol Transportes Aéreos,gol-transportes-aereos,G3,Brazil,Low-cost
+Grand Canyon Scenic Airlines,grand-canyon-scenic-airlines,YR,United States,Scheduled
+Grand China Air,grand-china-air,CN,China,Scheduled
+Grant Aviation,grant-aviation,GV,United States,Scheduled
+Great Lakes Airlines,great-lakes-airlines,ZK,United States,Scheduled
+Greater Bay Airlines,greater-bay-airlines,HB,Hong Kong,Low-cost
+Green Africa Airways,green-africa-airways,Q9,Nigeria,Scheduled
+Grumeti Air,grumeti-air,0G,Libya,Scheduled
+Gulf Air,gulf-air,GF,Bahrain,Scheduled
+GullivAir,gullivair,G2,Bulgaria,Scheduled
+Guyane Express Fly,guyane-express-fly,G8,French Guiana,Low-cost
+HK Express,hk-express,UO,Hong Kong SAR of China,Low-cost
+HOP!,hop,A5,France,Low-cost
+Hahn Air,hahn-air,H1,Germany,Scheduled
+Hahn Air Technologies,hahn-air-technologies,X1,Germany,Scheduled
+Hainan Airlines,hainan-airlines,HU,China,Scheduled
+Halcyonair,halcyonair,7Z,Cape Verde,Scheduled
+Harbour Air Seaplanes,harbour-air-seaplanes,YB,Canada,Scheduled
+Hawaiian Airlines,hawaiian-airlines,HA,United States,Scheduled
+Hawkair,hawkair,BH,Canada,Scheduled
+Hayways,hayways,Y5,Armenia,Low-cost
+Hebei Airlines,hebei-airlines,NS,China,Scheduled
+Heli Air Monaco,heli-air-monaco,YO,Monaco,Scheduled
+Helicópteros del Sureste,helicopteros-del-sureste,UV,Spain,Scheduled
+Helijet,helijet,JB,Canada,Scheduled
+Helvetic Airways,helvetic-airways,2L,Switzerland,Scheduled
+Heron Aviation,heron-aviation,0V,Germany,Scheduled
+Heston Airlines,heston-airlines,HN,Lithuania,Scheduled
+Hi Fly Ltd,hi-fly-ltd,5M,Portugal,Scheduled
+HiSky,hisky,H7,Moldova,Scheduled
+HiSky Europe,hisky-europe,H4,Romania,Low-cost
+Himalaya Airlines,himalaya-airlines,H9,Nepal,Scheduled
+Hinterland Aviation,hinterland-aviation,OI,Australia,Scheduled
+Hong Kong Air Cargo Carrier Limited,hong-kong-air-cargo-carrier-limited,RH,Hong Kong,Scheduled
+Hong Kong Airlines,hong-kong-airlines,HX,Hong Kong SAR of China,Scheduled
+Horizon Air,horizon-air,QX,United States,Scheduled
+Humo Air,humo-air,HJ,Uzbekistan,Low-cost
+Hunnu Air,hunnu-air,MR,Germany,Scheduled
+Hydro - Quebec,hydro-quebec,0Q,Canada,Scheduled
+Héli Sécurité Hélicopter Airline,heli-securite-helicopter-airline,HS,France,Scheduled
+IATA - Clearing HouseInternational Air Transport Association,iata-clearing-houseinternational-air-transport-association,XB,Canada,Scheduled
+IBC Airways,ibc-airways,II,United States,Scheduled
+IHY Izmir Havayollari A.S.,ihy-izmir-havayollari-as,44,Turkey,Scheduled
+"INFINI Travel Information, Inc.",infini-travel-information-inc,1F,Japan,Scheduled
+IRYO,iryo,I6,Spain,Scheduled
+ITA Airways,ita-airways,AZ,Italy,Scheduled
+ITA Software Inc.,ita-software-inc,1U,United States,Scheduled
+Iberia,iberia,IB,Spain,Scheduled
+Iberia Express,iberia-express,I2,Spain,Low-cost
+Iberojet,iberojet,E9,United States,Scheduled
+Ibex Airlines,ibex-airlines,FW,Japan,Scheduled
+Ibom Air,ibom-air,QI,Denmark,Scheduled
+Icelandair,icelandair,FI,Iceland,Scheduled
+Ikar,ikar,EO,Russia,Low-cost
+IndiGo,indigo,6E,India,Low-cost
+Indonesia AirAsia,indonesia-airasia,QZ,Indonesia,Low-cost
+InnoAviation,innoaviation,I3,Iran,Scheduled
+Insel Air Aruba,insel-air-aruba,8I,Aruba,Scheduled
+InterCaribbean Airways,intercaribbean-airways,JY,Turks and Caicos Islands,Scheduled
+IrAero,iraero,IO,Russia,Scheduled
+Iran Air,iran-air,IR,Iran,Scheduled
+Iran Airtour,iran-airtour,B9,Iran,Scheduled
+Iran Aseman Airlines,iran-aseman-airlines,EP,Iran,Scheduled
+Iraqi Airways,iraqi-airways,IA,Iraq,Scheduled
+Island Air,island-air,WP,Mexico,Scheduled
+Island Air Express,island-air-express,I4,United States,Scheduled
+Islena de Inversiones S.A. de C.V.dba Islena Airlines,islena-de-inversiones-sa-de-cvdba-islena-airlines,WC,Honduras,Scheduled
+Israir Airlines,israir-airlines,6H,Israel,Scheduled
+Itek Air,itek-air,GI,Kyrgyzstan,Scheduled
+Izhavia,izhavia,I8,Russia,Scheduled
+J&M Alaska Air,jandm-alaska-air,JN,United States,Scheduled
+"JSC ""Sirena-Travel""",jsc-sirena-travel,1H,Russia,Scheduled
+JSC Aircompany ATMA,jsc-aircompany-atma,IM,Kazakhstan,Scheduled
+JSC Kazaviaspas,jsc-kazaviaspas,ZS,Kazakhstan,Scheduled
+JSC Transport Automated InformationSystems - TAIS,jsc-transport-automated-informationsystems-tais,1M,Russia,Scheduled
+Jambojet,jambojet,JM,Kenya,Low-cost
+Japan Air Commuter,japan-air-commuter,JC,Japan,Scheduled
+Japan Airlines,japan-airlines,JL,Japan,Scheduled
+Japan Transocean Air,japan-transocean-air,NU,Japan,Scheduled
+Jazeera Airways,jazeera-airways,J9,Kuwait,Low-cost
+Jeju Air,jeju-air,7C,Republic of Korea,Low-cost
+Jet Airways,jet-airways,9W,India,Scheduled
+Jet Airways Inc.,jet-airways-inc,QJ,United States,Scheduled
+Jet Asia Airways,jet-asia-airways,JF,Thailand,Scheduled
+Jet Aviation Business,jet-aviation-business,PP,Switzerland,Scheduled
+Jet Ops,jet-ops,J6,United Arab Emirates,Scheduled
+Jet2.com,jet2com,LS,United Kingdom,Low-cost
+JetAir Caribbean,jetair-caribbean,4J,Curaçao,Scheduled
+JetLite,jetlite,S2,India,Low-cost
+JetSmart,jetsmart,JA,Chile,Low-cost
+JetSmart Argentina,jetsmart-argentina,WJ,Argentina,Low-cost
+JetSmart Peru,jetsmart-peru,JZ,Peru,Low-cost
+Jetairfly,jetairfly,TB,Belgium,Low-cost
+Jetstar,jetstar,JQ,Australia,Low-cost
+Jetstar Asia,jetstar-asia,3K,Singapore,Low-cost
+Jetstar Japan,jetstar-japan,GK,Japan,Low-cost
+Jiangxi Air,jiangxi-air,RY,China,Low-cost
+Jin Air,jin-air,LJ,South Korea,Low-cost
+Jonair,jonair,0N,Sweden,Scheduled
+Jonika Airlines,jonika-airlines,JO,Ukraine,Low-cost
+Jordan Aviation,jordan-aviation,R5,Jordan,Scheduled
+Joy Air,joy-air,JR,China,Scheduled
+Juneyao Airlines,juneyao-airlines,HO,China,Scheduled
+K-Mile Air Co. Ltd,k-mile-air-co-ltd,8K,Thailand,Scheduled
+KC International Airlines,kc-international-airlines,3Q,Cambodia,Scheduled
+KLM Cityhopper,klm-cityhopper,WA,Netherlands,Scheduled
+KLM Royal Dutch Airlines,klm-royal-dutch-airlines,KL,Netherlands,Scheduled
+KM Malta Airlines,km-malta-airlines,KM,Malta,Low-cost
+Kalitta Air,kalitta-air,K4,United States,Scheduled
+Kalstar Aviation,kalstar-aviation,KD,Indonesia,Scheduled
+Kam Air,kam-air,RQ,Afghanistan,Scheduled
+Kamchatka Air,kamchatka-air,ДЕ,Russia,Scheduled
+Kan Air,kan-air,K8,Thailand,Scheduled
+Kartika Airlines,kartika-airlines,3Y,Indonesia,Scheduled
+Kenmore Air,kenmore-air,M5,United States,Scheduled
+Kenn Borek Air,kenn-borek-air,4K,Canada,Scheduled
+Kenya Airways,kenya-airways,KQ,Kenya,Scheduled
+Khabarovsk Avia,khabarovsk-avia,НИ,Russia,Scheduled
+Komiaviatrans,komiaviatrans,ИГ,Russia,Scheduled
+Korean Air,korean-air,KE,Republic of Korea,Scheduled
+Korongo Airlines,korongo-airlines,ZC,Democratic Republic of the Congo,Scheduled
+Kosmos,kosmos,ГК,Russia,Scheduled
+Kostroma Air,kostroma-air,КБ,Russia,Scheduled
+KrasAvia,krasavia,KV,Russia,Scheduled
+Kulula,kulula,МН,South Africa,Low-cost
+Kunming Airlines,kunming-airlines,KY,China,Scheduled
+Kuwait Airways,kuwait-airways,KU,Kuwait,Scheduled
+Kyrgyz Air,kyrgyz-air,KH,Kyrgyzstan,Scheduled
+LAM Mozambique Airlines,lam-mozambique-airlines,TM,Mozambique,Scheduled
+LAN Chile Cargo,lan-chile-cargo,UC,Chile,Scheduled
+LANHSA,lanhsa,00,Israel,Scheduled
+LASER Airlines,laser-airlines,QL,Venezuela,Scheduled
+LATAM Airlines,latam-airlines,LA,Chile,Scheduled
+LATAM Airlines Brasil,latam-airlines-brasil,JJ,Brazil,Scheduled
+LATAM Airlines Colombia,latam-airlines-colombia,4C,Colombia,Scheduled
+LATAM Airlines Ecuador,latam-airlines-ecuador,XL,Ecuador,Scheduled
+LATAM Airlines Paraguay,latam-airlines-paraguay,PZ,Paraguay,Scheduled
+LATAM Airlines Peru,latam-airlines-peru,LP,Peru,Scheduled
+LATAM Express,latam-express,LU,Chile,Scheduled
+LEAV,leav,KK,Turkey,Scheduled
+LIFT Airline,lift-airline,GE,South Africa,Low-cost
+LOT Polish,lot-polish,LO,Poland,Scheduled
+La Compagnie,la-compagnie,B0,France,Scheduled
+La Costeña,la-costena,LC,Nicaragua,Scheduled
+Lanexang Airways International,lanexang-airways-international,5A,Laos,Scheduled
+Lanmei Airlines,lanmei-airlines,LQ,Cambodia,Low-cost
+Lao Airlines,lao-airlines,QV,Laos,Scheduled
+Lao Skyway,lao-skyway,LK,Laos,Scheduled
+"Laparkan Airways, Inc.",laparkan-airways-inc,LE,United States,Scheduled
+Lauda Europe,lauda-europe,LW,Malta,Scheduled
+Level,level,LL,Spain,Scheduled
+Levu,levu,6V,Brazil,Scheduled
+Liat Air,liat-air,5L,Antigua and Barbuda,Scheduled
+Libyan Airlines,libyan-airlines,LN,Libya,Scheduled
+Libyan Wings,libyan-wings,YL,Libya,Scheduled
+Linea Aerea Carguera de Colombia S.A.,linea-aerea-carguera-de-colombia-sa,L7,Colombia,Scheduled
+Linear Air,linear-air,O2,,Scheduled
+Link Airways,link-airways,FC,Australia,Scheduled
+Lion Air,lion-air,JT,Indonesia,Low-cost
+Loganair,loganair,LM,United Kingdom,Scheduled
+Longtail Aviation,longtail-aviation,6T,Bermuda,Scheduled
+Loong Air,loong-air,GJ,China,Scheduled
+Lucky Air,lucky-air,8L,China,Low-cost
+Lufthansa,lufthansa,LH,Germany,Scheduled
+Lufthansa City Airlines,lufthansa-city-airlines,VL,Bulgaria,Scheduled
+Lufthansa CityLine,lufthansa-cityline,CL,Germany,Scheduled
+Lufthansa Systems,lufthansa-systems,S1,Germany,Scheduled
+Lulutai Airlines,lulutai-airlines,L8,Tonga,Scheduled
+Lumiwings,lumiwings,L9,Greece,Scheduled
+Luxair,luxair,LG,Luxembourg,Scheduled
+Luxwing,luxwing,BN,Malta,Scheduled
+"Lynden Air Cargo, LLC",lynden-air-cargo-llc,L2,United States,Scheduled
+Lynx Air,lynx-air,Y9,Canada,Low-cost
+MAYAir,mayair,7M,Mexico,Scheduled
+MHS Aviation,mhs-aviation,M2,Germany,Scheduled
+MIAT Mongolian Airlines,miat-mongolian-airlines,OM,Mongolia,Scheduled
+MNG Airlines,mng-airlines,MB,Turkey,Scheduled
+MYAirline,myairline,Z9,Malaysia,Low-cost
+Magnicharters,magnicharters,0Z,Mexico,Scheduled
+Mahan Air,mahan-air,W5,Iran,Scheduled
+Malawi Airlines,malawi-airlines,3W,Malawi,Scheduled
+Malaysia Airlines,malaysia-airlines,MH,Malaysia,Scheduled
+Maldivian,maldivian,Q2,Maldives,Scheduled
+Malta Air,malta-air,MW,Malta,Low-cost
+Maluti Sky,maluti-sky,7D,Lesotho,Scheduled
+Mandarin Airlines,mandarin-airlines,AE,Taiwan,Scheduled
+Mango,mango,JE,South Africa,Low-cost
+Mann Yadanarpon Airlines,mann-yadanarpon-airlines,7Y,Myanmar,Scheduled
+Manta Air,manta-air,NR,Maldives,Scheduled
+Marabu,marabu,DI,Germany,Scheduled
+Marathon Airlines,marathon-airlines,O8,Greece,Scheduled
+Martinair,martinair,MP,Netherlands,Scheduled
+Mas de Carga S.A. de C.V. dba Masair,mas-de-carga-sa-de-cv-dba-masair,M7,Mexico,Scheduled
+Mauritania Airlines,mauritania-airlines,L6,Mauritania,Scheduled
+Mavi Gok Airlines,mavi-gok-airlines,4M,Turkey,Scheduled
+Maximus Air,maximus-air,6M,United Arab Emirates,Scheduled
+Maya Island Air,maya-island-air,2M,Belize,Scheduled
+Meraj Airlines,meraj-airlines,0I,Iran,Scheduled
+Mesa Airlines,mesa-airlines,YV,United States,Scheduled
+MetroJet,metrojet,7K,Hong Kong SAR of China,Scheduled
+Middle East Airlines,middle-east-airlines,ME,Lebanon,Low-cost
+Mistral Air,mistral-air,M4,Italy,Scheduled
+Moldavian Airlines,moldavian-airlines,2М,Moldova,Scheduled
+Monacair,monacair,QM,Monaco,Scheduled
+Montenegro Airlines,montenegro-airlines,YM,Montenegro,Scheduled
+Motor Sich Airlines,motor-sich-airlines,M9,Ukraine,Scheduled
+Myanmar Airways International,myanmar-airways-international,8M,Myanmar,Scheduled
+Myanmar National Airlines,myanmar-national-airlines,UB,Myanmar,Scheduled
+Myway Airlines,myway-airlines,MJ,Georgia,Scheduled
+NAM Air,nam-air,IN,Indonesia,Scheduled
+NORRA,norra,N7,Finland,Scheduled
+NOVA Airlines,nova-airlines,O9,Sudan,Scheduled
+Nakina Air Service,nakina-air-service,T2,Canada,Scheduled
+Naryan-Mar Airlines,naryan-mar-airlines,НЯ,Russia,Scheduled
+National Airlines,national-airlines,N8,United States,Scheduled
+Nauru Airlines,nauru-airlines,ON,Nauru,Scheduled
+Navios Evolusi Solusindo,navios-evolusi-solusindo,1J,Indonesia,Scheduled
+Navitaire,navitaire,1N,United States,Scheduled
+Neos,neos,NO,Italy,Scheduled
+Nepal Airlines,nepal-airlines,RA,Nepal,Scheduled
+Nesma Airlines,nesma-airlines,NE,Egypt,Scheduled
+New Pacific Airlines,new-pacific-airlines,7H,United States,Low-cost
+Nexus Airlines,nexus-airlines,GD,Australia,Scheduled
+Niger Airlines,niger-airlines,6N,Niger,Scheduled
+Niki,niki,HG,Austria,Low-cost
+Nile Air,nile-air,NP,Egypt,Scheduled
+"Ningxia Cargo Airlines CO.,LTD",ningxia-cargo-airlines-coltd,HT,China,Scheduled
+Nippon Cargo Airlines,nippon-cargo-airlines,KZ,Japan,Scheduled
+Nok Air,nok-air,DD,Thailand,Low-cost
+NokScoot,nokscoot,XW,Thailand,Low-cost
+Nolinor Aviation,nolinor-aviation,N5,Canada,Scheduled
+Nomad Aviation,nomad-aviation,NA,Namibia,Scheduled
+Nomad Aviation (PTY) Ltd.,nomad-aviation-pty-ltd,N6,South Africa,Scheduled
+NordStar,nordstar,Y7,Russia,Scheduled
+Nordwind Airlines,nordwind-airlines,N4,Russia,Scheduled
+Norse Atlantic Airways,norse-atlantic-airways,N0,Norway,Low-cost
+Norse Atlantic UK,norse-atlantic-uk,Z0,United Kingdom,Low-cost
+North Flying,north-flying,M3,Denmark,Scheduled
+North-Wright Airways,north-wright-airways,HW,Canada,Scheduled
+Northern Air Cargo,northern-air-cargo,NC,United States,Scheduled
+Northwest,northwest,0E,United States,Scheduled
+Northwest Airlines,northwest-airlines,NW,United States,Scheduled
+Northwestern Air,northwestern-air,J3,Canada,Scheduled
+Norwegian Air Shuttle,norwegian-air-shuttle,DY,Norway,Low-cost
+Norwegian Air Sweden,norwegian-air-sweden,D8,Sweden,Scheduled
+Norwegian Long Haul,norwegian-long-haul,DU,Norway,Scheduled
+Nouvelair,nouvelair,BJ,Tunisia,Scheduled
+NovAir,novair,NG,Sweden,Scheduled
+Novoair,novoair,VQ,Bangladesh,Scheduled
+NyxAir,nyxair,OJ,Estonia,Scheduled
+Okay Airways,okay-airways,BK,China,Scheduled
+Olympic Air,olympic-air,OA,Greece,Scheduled
+Oman Air,oman-air,WY,Oman,Scheduled
+Omni Air International,omni-air-international,OY,United States,Scheduled
+OneClick,oneclick,4L,Georgia,Scheduled
+OneJet,onejet,J1,United States,Scheduled
+Onur Air,onur-air,8Q,Turkey,Low-cost
+Orient Thai Airlines,orient-thai-airlines,OX,Thailand,Low-cost
+Oriental Air Bridge,oriental-air-bridge,OC,Japan,Scheduled
+PAL Airlines,pal-airlines,PB,Canada,Scheduled
+PAL Express,pal-express,2P,Philippines,Low-cost
+PAWA Dominicana,pawa-dominicana,7N,Dominican Republic,Scheduled
+PIA,pia,PK,Pakistan,Scheduled
+PLAY,play,OG,Thailand,Low-cost
+PM Air LLC,pm-air-llc,Z3,United States,Scheduled
+PNG Air,png-air,CG,Papua New Guinea,Scheduled
+PT. My Indo Airlines,pt-my-indo-airlines,2Y,Indonesia,Scheduled
+Pacific Airlines,pacific-airlines,BL,Vietnam,Scheduled
+Pacific Coastal Airlines,pacific-coastal-airlines,8P,Canada,Scheduled
+Panama Airways,panama-airways,8A,Panama,Scheduled
+Panorama Airways,panorama-airways,5P,Spain,Scheduled
+Papillon Airways,papillon-airways,HI,United States,Scheduled
+Paranair,paranair,ZP,Azerbaijan,Scheduled
+Pascan Aviation,pascan-aviation,P6,Canada,Scheduled
+PassionAir,passionair,OP,United States,Scheduled
+Pattaya Airways,pattaya-airways,VV,Thailand,Scheduled
+Peach,peach,MM,Japan,Low-cost
+Pegasus Airlines,pegasus-airlines,PC,Turkey,Low-cost
+Pelita Air,pelita-air,IP,Indonesia,Scheduled
+People's,peoples,PE,Italy,Scheduled
+Petroleum Air Services,petroleum-air-services,UF,Egypt,Scheduled
+Philippine Airlines,philippine-airlines,PR,Philippines,Scheduled
+Philippines AirAsia,philippines-airasia,Z2,Philippines,Low-cost
+Phoenix Air,phoenix-air,PH,United States,Scheduled
+Piedmont Airlines,piedmont-airlines,PT,Sweden,Scheduled
+Pobeda,pobeda,DP,Russia,Low-cost
+"Polar Air Cargo Worldwide, Inc.",polar-air-cargo-worldwide-inc,PO,United States,Scheduled
+Polar Airlines,polar-airlines,PI,Russia,Scheduled
+PopulAir,populair,HP,Sweden,Low-cost
+Porter Airlines,porter-airlines,P3,Canada,Scheduled
+Porter Airlines Canada,porter-airlines-canada,PD,Canada,Low-cost
+Portugalia Airlines,portugalia-airlines,NI,Portugal,Scheduled
+Precision Air,precision-air,PW,Tanzania,Scheduled
+Premier Trans Aire Inc.,premier-trans-aire-inc,3X,United States,Scheduled
+Premium Jet AG,premium-jet-ag,0J,Switzerland,Scheduled
+Primera Air,primera-air,PF,Iceland,Scheduled
+Proflight Zambia,proflight-zambia,P0,Zambia,Scheduled
+Punta Europa,punta-europa,PU,Uruguay,Scheduled
+Qanot Sharq,qanot-sharq,HH,Uzbekistan,Low-cost
+Qantas,qantas,QF,Australia,Scheduled
+Qatar Airways,qatar-airways,QR,Qatar,Scheduled
+Qazaq Air,qazaq-air,IQ,Kazakhstan,Low-cost
+Qeshm Air,qeshm-air,QB,Iran,Scheduled
+Qingdao Airlines,qingdao-airlines,QW,China,Scheduled
+Quikjet Cargo Airlines Pvt. Ltd,quikjet-cargo-airlines-pvt-ltd,QO,India,Scheduled
+"Radixx Solutions International, Inc.",radixx-solutions-international-inc,1D,United States,Scheduled
+Rano Air,rano-air,R4,Nigeria,Scheduled
+Raya Airways Sdn. Bhd.dba Raya Airways,raya-airways-sdn-bhddba-raya-airways,TH,Malaysia,Scheduled
+Red Sea Airlines,red-sea-airlines,4S,Egypt,Low-cost
+Red Wings,red-wings,WZ,Russia,Scheduled
+Regional Air,regional-air,8N,Mauritania,Scheduled
+Regional Jet OÜ,regional-jet-ou,EE,Estonia,Scheduled
+Regional Sky,regional-sky,4P,Democratic Republic of the Congo,Scheduled
+Renegade Air,renegade-air,0R,,Scheduled
+Republic Airways,republic-airways,YX,United States,Scheduled
+Rex - Regional Express,rex-regional-express,ZL,Australia,Scheduled
+Rise Air,rise-air,4T,Canada,Scheduled
+Riyadh Air,riyadh-air,RX,United States,Scheduled
+Rossiya Airlines,rossiya-airlines,FV,Russia,Scheduled
+Rotana Jet,rotana-jet,RG,United Arab Emirates,Scheduled
+Royal Air Maroc,royal-air-maroc,AT,Morocco,Scheduled
+Royal Air Philippines,royal-air-philippines,RW,Philippines,Low-cost
+Royal Brunei Airlines,royal-brunei-airlines,BI,Brunei,Scheduled
+Royal Flight,royal-flight,RL,Russia,Scheduled
+Royal Jordanian,royal-jordanian,RJ,Jordan,Scheduled
+Ruili Airlines,ruili-airlines,DR,China,Low-cost
+RusLine,rusline,7R,Russia,Scheduled
+Rutaca Airlines,rutaca-airlines,5R,Venezuela,Scheduled
+RwandAir,rwandair,WB,Rwanda,Scheduled
+Ryanair,ryanair,FR,Ireland,Low-cost
+Ryanair UK,ryanair-uk,RK,United Kingdom,Low-cost
+S7 Airlines,s7-airlines,S7,Russia,Scheduled
+SANSA,sansa,RZ,Costa Rica,Scheduled
+SAS Scandinavian,sas-scandinavian,SK,Sweden,Scheduled
+SATA,sata,S4,Portugal,Scheduled
+SATA Air Acores,sata-air-acores,SP,Portugal,Scheduled
+SATCO,satco,S3,Peru,Scheduled
+SCAT,scat,DV,Kazakhstan,Low-cost
+SEAir International,seair-international,XO,Spain,Low-cost
+SF Airlines Company Ltd,sf-airlines-company-ltd,O3,People's Republic of China,Scheduled
+SITA - Airlines WorldwideTelecommunications and Information Svcs,sita-airlines-worldwidetelecommunications-and-information-sv,XS,Switzerland,Scheduled
+SKOL,skol,СД,Russia,Scheduled
+SKS Airways,sks-airways,KI,Indonesia,Scheduled
+SNCF,sncf,2C,France,Scheduled
+STARLUX Airlines,starlux-airlines,JX,Singapore,Scheduled
+STP Airways,stp-airways,8F,Sao Tome and Principe,Scheduled
+SUN-AIR,sun-air,ZU,Denmark,Scheduled
+SWISS,swiss,LX,Switzerland,Scheduled
+Sabre Inc.,sabre-inc,1S,United States,Scheduled
+Safarilink Aviation,safarilink-aviation,F2,Kenya,Scheduled
+Safi Airways,safi-airways,4Q,Afghanistan,Scheduled
+SalamAir,salamair,OV,Estonia,Low-cost
+Samoa Airways,samoa-airways,OL,Samoa,Scheduled
+Sapsan,sapsan,R0,Pakistan,Scheduled
+Saudia,saudia,SV,Saudi Arabia,Scheduled
+Scoot,scoot,TZ,Singapore,Low-cost
+SeaPort Airlines,seaport-airlines,X4,United States,Scheduled
+Seaborne Airlines,seaborne-airlines,BB,United States,Scheduled
+Sepehran Airlines,sepehran-airlines,IS,Iran,Low-cost
+Serene Air,serene-air,ER,Pakistan,Scheduled
+Serve Air,serve-air,V6,Ukraine,Scheduled
+Severstal Air Company,severstal-air-company,D2,Russia,Scheduled
+Shaheen Air,shaheen-air,NL,Pakistan,Scheduled
+Shandong Airlines,shandong-airlines,SC,China,Scheduled
+Shanghai Airlines,shanghai-airlines,FM,China,Scheduled
+Sharp Airlines,sharp-airlines,SH,Australia,Scheduled
+Shenzhen Airlines,shenzhen-airlines,ZH,China,Scheduled
+Shirak Avia,shirak-avia,5G,Canada,Scheduled
+Shree Airlines,shree-airlines,N9,Nigeria,Scheduled
+Shun Tak-China Travel Ship,shun-tak-china-travel-ship,8S,China,Scheduled
+SiLA,sila,СЛ,Russia,Scheduled
+Sichuan Airlines,sichuan-airlines,3U,China,Scheduled
+Silk Avia,silk-avia,US,Uzbekistan,Scheduled
+Silk Way West Airlines,silk-way-west-airlines,7L,Cuba,Scheduled
+SilkAir,silkair,MI,Singapore,Scheduled
+Silver Air,silver-air,0P,Djibouti,Scheduled
+Silver Airways,silver-airways,3M,United States,Scheduled
+Singapore Airlines,singapore-airlines,SQ,Singapore,Scheduled
+Skippers Aviation,skippers-aviation,HK,Germany,Scheduled
+Sky Airline,sky-airline,H2,Chile,Low-cost
+Sky Airline Peru,sky-airline-peru,H8,Peru,Low-cost
+Sky Airlines,sky-airlines,ZY,Turkey,Scheduled
+Sky Angkor Airlines,sky-angkor-airlines,ZA,Cambodia,Scheduled
+Sky Express Greece,sky-express-greece,GQ,Greece,Scheduled
+Sky Fru,sky-fru,R8,Kyrgyzstan,Scheduled
+Sky Gates Airlines,sky-gates-airlines,U3,Russia,Scheduled
+Sky High,sky-high,DO,Italy,Scheduled
+"Sky Lease I, Inc.",sky-lease-i-inc,GG,United States,Scheduled
+Sky Mali,sky-mali,ML,Mali,Scheduled
+Sky Vision Airlines,sky-vision-airlines,SE,France,Scheduled
+Sky Wings Airlines,sky-wings-airlines,ND,Greece,Scheduled
+SkyAlps,skyalps,BQ,Italy,Scheduled
+SkyBahamas,skybahamas,Q7,Bahamas,Scheduled
+SkyJet Airlines,skyjet-airlines,M8,Uganda,Scheduled
+SkyTaxi,skytaxi,TE,Romania,Scheduled
+SkyUp Airlines,skyup-airlines,PQ,Puerto Rico,Low-cost
+SkyUp MT,skyup-mt,U5,United States,Low-cost
+SkyWest Airlines,skywest-airlines,OO,Australia,Scheduled
+SkyWork Airlines,skywork-airlines,SX,Switzerland,Scheduled
+Skyline Express Airline,skyline-express-airline,QU,China,Scheduled
+Skymark Airlines,skymark-airlines,BC,Japan,Low-cost
+Skytrans Australia,skytrans-australia,QN,Australia,Scheduled
+Skyward Airlines,skyward-airlines,OW,Canada,Scheduled
+Small Planet Airlines Poland,small-planet-airlines-poland,P7,Poland,Scheduled
+SmartAvia,smartavia,5N,Russia,Scheduled
+SmartLynx Airlines Estonia,smartlynx-airlines-estonia,6Y,Latvia,Scheduled
+SmartLynx Malta,smartlynx-malta,2N,Malta,Scheduled
+SmartWings Czechia,smartwings-czechia,QS,Czechia,Low-cost
+SmartWings Hungary,smartwings-hungary,7O,Hungary,Low-cost
+SmartWings Poland,smartwings-poland,3Z,Poland,Low-cost
+"Smokey Bay Air, Inc.",smokey-bay-air-inc,2E,Sri Lanka,Scheduled
+Solaseed Air,solaseed-air,6J,Japan,Low-cost
+Solomon Airlines,solomon-airlines,IE,Solomon Islands,Scheduled
+Somon Air,somon-air,SZ,Tajikistan,Scheduled
+Sounds Air,sounds-air,S8,South Africa,Scheduled
+South African Airways,south-african-airways,SA,South Africa,Scheduled
+Southern Air,southern-air,9R,United States,Scheduled
+Southern Air Charter,southern-air-charter,PL,Bahamas,Scheduled
+Southern Airways Express,southern-airways-express,9X,United States,Scheduled
+Southern Sky Airlines,southern-sky-airlines,IH,Italy,Scheduled
+Southwest Airlines,southwest-airlines,WN,United States,Low-cost
+Southwind airlines,southwind-airlines,2S,Liberia,Low-cost
+Special Ground Handling Service -XH,special-ground-handling-service-xh,XH,United Kingdom,Scheduled
+SpiceJet,spicejet,SG,India,Low-cost
+Spirit Airlines,spirit-airlines,NK,United States,Low-cost
+Spring Airlines,spring-airlines,9C,China,Low-cost
+Spring Japan,spring-japan,IJ,Japan,Low-cost
+Springjet,springjet,5K,Portugal,Low-cost
+SriLankan Airlines,srilankan-airlines,UL,Sri Lanka,Scheduled
+Sriwijaya Air,sriwijaya-air,SJ,Indonesia,Scheduled
+St Barth Commuter,st-barth-commuter,PV,France,Scheduled
+Stabo Air Limited,stabo-air-limited,4E,,Scheduled
+Star Air,star-air,S5,India,Scheduled
+Star Peru,star-peru,2I,Peru,Scheduled
+StarFlyer,starflyer,7G,Japan,Scheduled
+Starbow,starbow,S9,Ghana,Scheduled
+Sudan Airways,sudan-airways,SD,Sudan,Scheduled
+Sun Air Express,sun-air-express,6G,United States,Scheduled
+Sun Country Airlines,sun-country-airlines,SY,United States,Low-cost
+Sun PhuQuoc Airways,sun-phuquoc-airways,9G,Vietnam,Scheduled
+SunExpress,sunexpress,XQ,Turkey,Low-cost
+SunExpress Deutschland,sunexpress-deutschland,XG,Germany,Low-cost
+Sunclass Airlines,sunclass-airlines,DK,Denmark,Scheduled
+SundAir,sundair,SR,Germany,Scheduled
+Sunday Airlines,sunday-airlines,0S,Kazakhstan,Scheduled
+Sunlight Air,sunlight-air,2R,Canada,Scheduled
+Sunrise Airways,sunrise-airways,S6,Haiti,Scheduled
+Sunrise Dominicana,sunrise-dominicana,D6,South Africa,Scheduled
+"Sunsplash Aviation, LLC.",sunsplash-aviation-llc,YH,Colombia,Scheduled
+Sunwing Airlines,sunwing-airlines,WG,Canada,Low-cost
+Suparna Airlines,suparna-airlines,Y8,People's Republic of China,Scheduled
+Super Air Jet,super-air-jet,IU,Indonesia,Low-cost
+Surinam Airways,surinam-airways,PY,Suriname,Scheduled
+Swiftair,swiftair,WT,Spain,Scheduled
+Swoop,swoop,WO,Canada,Low-cost
+Sylt Air GmbH,sylt-air-gmbh,7E,Germany,Scheduled
+SyrianAir,syrianair,RB,Syria,Scheduled
+T'way Air,tway-air,TW,South Korea,Low-cost
+TAAG Angola,taag-angola,DT,Angola,Scheduled
+TAB - Transportes Aéreos Bolivianos,tab-transportes-aereos-bolivianos,B1,Bolivia,Scheduled
+TAG Airlines,tag-airlines,5U,Switzerland,Scheduled
+TAME,tame,EQ,Ecuador,Scheduled
+TAP Air Portugal,tap-air-portugal,TP,Portugal,Scheduled
+TAR Aerolíneas,tar-aerolineas,YQ,Mexico,Scheduled
+THAI Airways,thai-airways,TG,Thailand,Scheduled
+THAI Smile,thai-smile,WE,Thailand,Low-cost
+TIK Systems,tik-systems,T1,Turkey,Scheduled
+TRIP Linhas Aéreas,trip-linhas-aereas,T4,Brazil,Scheduled
+TUI Airways,tui-airways,BY,United Kingdom,Scheduled
+TUI fly Deutschland,tui-fly-deutschland,X3,Germany,Scheduled
+TUIfly Netherlands,tuifly-netherlands,OR,Netherlands,Scheduled
+TUIfly Nordiс,tuifly-nordis,6B,Sweden,Scheduled
+Tailwind Airlines,tailwind-airlines,TI,Turkey,Scheduled
+Tajik Air,tajik-air,7J,Tajikistan,Scheduled
+Tampa Cargo,tampa-cargo,QT,Colombia,Scheduled
+Tandem Aero,tandem-aero,TQ,Moldova,Scheduled
+Taquan Air,taquan-air,K3,United States,Scheduled
+Tarco Aviation,tarco-aviation,3T,Sudan,Scheduled
+Tarom,tarom,RO,Romania,Scheduled
+Tashkent Air,tashkent-air,U7,Uzbekistan,Scheduled
+Tassili Airlines,tassili-airlines,SF,Algeria,Scheduled
+Tatarstan Airlines,tatarstan-airlines,U9,Russia,Scheduled
+Tayaran Jet,tayaran-jet,E8,Jordan,Low-cost
+Tbilisi Airways,tbilisi-airways,TD,,Scheduled
+Terra Avia,terra-avia,T8,Ireland,Scheduled
+Texel Air Ltd,texel-air-ltd,TT,Lithuania,Low-cost
+TezJet,tezjet,K9,Cambodia,Scheduled
+Thai AirAsia,thai-airasia,FD,Thailand,Low-cost
+Thai AirAsia X,thai-airasia-x,XJ,Thailand,Low-cost
+Thai Lion Air,thai-lion-air,SL,Thailand,Low-cost
+Thai Vietjet Air,thai-vietjet-air,VZ,Thailand,Low-cost
+The Landline Company,the-landline-company,L4,Italy,Scheduled
+Thomas Cook Airlines,thomas-cook-airlines,MT,Belgium,Scheduled
+Thomas Cook Airlines Belgium,thomas-cook-airlines-belgium,HQ,Belgium,Scheduled
+Tianjin Airlines,tianjin-airlines,GS,China,Scheduled
+Tibet Airlines,tibet-airlines,TV,China,Scheduled
+Tigerair Mandala,tigerair-mandala,RI,Indonesia,Scheduled
+Tigerair Taiwan,tigerair-taiwan,IT,Taiwan,Low-cost
+Titan Airways Limited,titan-airways-limited,ZT,United Kingdom,Scheduled
+Toki Air,toki-air,BV,Italy,Low-cost
+Total Linhas Aereas,total-linhas-aereas,0T,Brazil,Scheduled
+Trade Air,trade-air,C3,Croatia,Scheduled
+Tradewind Aviation,tradewind-aviation,TJ,United States,Scheduled
+Trans Air Congo,trans-air-congo,Q8,Republic of the Congo,Scheduled
+Transair Senegal,transair-senegal,R2,Senegal,Scheduled
+Transavia,transavia,HV,Netherlands,Low-cost
+Transavia France,transavia-france,TO,France,Low-cost
+Transnusa,transnusa,8B,Indonesia,Scheduled
+Travel Service Slovensko,travel-service-slovensko,6D,Slovakia,Scheduled
+Travel Technology Interactive SA,travel-technology-interactive-sa,Y1,France,Scheduled
+Travelsky Technology Limited,travelsky-technology-limited,1E,China,Scheduled
+Trenitalia,trenitalia,7T,Switzerland,Scheduled
+Trigana Air Service,trigana-air-service,IL,Indonesia,Scheduled
+Tropic Air,tropic-air,9N,Belize,Scheduled
+Tunisair,tunisair,TU,Tunisia,Scheduled
+Tunisair Express,tunisair-express,UG,Tunisia,Scheduled
+Turkish Airlines,turkish-airlines,TK,Turkey,Scheduled
+Turkmenistan Airlines,turkmenistan-airlines,T5,Turkmenistan,Scheduled
+Tus Airways,tus-airways,U8,Armenia,Low-cost
+Twin Jet,twin-jet,T7,France,Scheduled
+UBM Aviation - OAG,ubm-aviation-oag,CR,United Kingdom,Scheduled
+UIA,uia,PS,Ukraine,Scheduled
+ULS Airlines Cargo,uls-airlines-cargo,GO,Turkey,Scheduled
+UPS,ups,5X,United States,Scheduled
+UR Airlines,ur-airlines,UD,Armenia,Scheduled
+US-Bangla Airlines,us-bangla-airlines,BS,Bangladesh,Scheduled
+UTair,utair,ЮЭ,Russia,Scheduled
+UVT Aero,uvt-aero,RT,Russia,Scheduled
+Uganda Airlines,uganda-airlines,UR,Uganda,Scheduled
+Ultimate Jetcharters,ultimate-jetcharters,UE,Russia,Scheduled
+Umza Air,umza-air,UY,Cameroon,Scheduled
+Uni Air,uni-air,B7,Taiwan,Scheduled
+Uni-Top Airlines,uni-top-airlines,UW,,Scheduled
+United Airlines,united-airlines,UA,United States,Scheduled
+United Nigeria Airlines,united-nigeria-airlines,UN,Nigeria,Scheduled
+Universal Air,universal-air,VO,Malta,Scheduled
+Up Israel,up-israel,86,Israel,Scheduled
+Ural Airlines,ural-airlines,U6,Russia,Scheduled
+Urumqi Air,urumqi-air,UQ,Uganda,Scheduled
+Uzbekistan Airways,uzbekistan-airways,HY,Uzbekistan,Scheduled
+Uzbekistan Express,uzbekistan-express,0H,Uzbekistan,Low-cost
+VIM Airlines,vim-airlines,NN,Russia,Scheduled
+VLM Airlines,vlm-airlines,VG,Belgium,Scheduled
+VOEPASS Linhas Aéreas,voepass-linhas-aereas,2Z,Brazil,Scheduled
+ValueJet,valuejet,VK,Nigeria,Low-cost
+Vanilla Air,vanilla-air,JW,Japan,Low-cost
+Videcom International Limited,videcom-international-limited,U1,United Kingdom,Scheduled
+Vieques Air Link,vieques-air-link,V4,United States,Scheduled
+Vietjet,vietjet,VJ,Vietnam,Low-cost
+Vietnam Airlines,vietnam-airlines,VN,Vietnam,Scheduled
+Vietravel Airlines,vietravel-airlines,VU,Vietnam,Scheduled
+Villa Air,villa-air,VP,Vietnam,Scheduled
+Virgin America,virgin-america,VX,United States,Low-cost
+Virgin Atlantic,virgin-atlantic,VS,United Kingdom,Scheduled
+Virgin Australia,virgin-australia,VA,Australia,Scheduled
+Vision Air (Moldova),vision-air-moldova,4V,Moldova,Scheduled
+Vistara,vistara,UK,India,Scheduled
+Viva Aerobus,viva-aerobus,VB,Mexico,Low-cost
+Viva Air Colombia,viva-air-colombia,VH,Colombia,Low-cost
+Vladivostok Air,vladivostok-air,XF,Russia,Scheduled
+Volaris,volaris,Y4,Mexico,Low-cost
+Volaris Costa Rica,volaris-costa-rica,Q6,Costa Rica,Low-cost
+Volaris El Salvador,volaris-el-salvador,N3,El Salvador,Low-cost
+Volga-Dnepr Airlines,volga-dnepr-airlines,VI,Russia,Scheduled
+Volo,volo,DC,Sweden,Scheduled
+Volotea,volotea,V7,Spain,Low-cost
+Vueling,vueling,VY,Spain,Low-cost
+WOW Air,wow-air,WW,Iceland,Low-cost
+Wamos Air,wamos-air,EB,Spain,Scheduled
+Warbelows Air,warbelows-air,4W,Nigeria,Scheduled
+Webjet Linhas Aereas,webjet-linhas-aereas,WH,Germany,Scheduled
+West Air,west-air,PN,China,Low-cost
+West Link Airlines,west-link-airlines,9L,United States,Scheduled
+WestJet,westjet,WS,Canada,Low-cost
+WestJet Encore,westjet-encore,WR,Canada,Low-cost
+Western Air,western-air,WU,Bahamas,Scheduled
+White Airways,white-airways,WI,Portugal,Scheduled
+Widerøe,wideroe,WF,Norway,Scheduled
+Winair,winair,WM,United States,Scheduled
+Windrose Airlines,windrose-airlines,7W,Ukraine,Scheduled
+Wingo,wingo,P5,Colombia,Scheduled
+Wings Air,wings-air,IW,Indonesia,Low-cost
+Wings of Lebanon,wings-of-lebanon,W7,Lebanon,Scheduled
+Wizz Air,wizz-air,W6,Hungary,Low-cost
+Wizz Air Abu Dhabi,wizz-air-abu-dhabi,5W,United Arab Emirates,Low-cost
+Wizz Air Malta,wizz-air-malta,W4,Malta,Low-cost
+Wizz Air UK,wizz-air-uk,W9,United Kingdom,Scheduled
+World Atlantic Airlines,world-atlantic-airlines,WL,United States,Scheduled
+World Ticket Ltd,world-ticket-ltd,W1,Canada,Scheduled
+World2Fly,world2fly,2W,Austria,Scheduled
+World2Fly (Portugal),world2fly-portugal,3P,Portugal,Scheduled
+Worldspan,worldspan,1P,United States,Scheduled
+Wright Air Service,wright-air-service,8V,United States,Scheduled
+XEJet,xejet,4U,Germany,Scheduled
+Xiamen Airlines,xiamen-airlines,MF,China,Scheduled
+XpressAir,xpressair,XN,Indonesia,Scheduled
+YANAIR,yanair,YE,Iran,Scheduled
+YTO Cargo Airlines,yto-cargo-airlines,YG,Ukraine,Scheduled
+Yakutia Airlines,yakutia-airlines,R3,Russia,Scheduled
+Yamal Airlines,yamal-airlines,YC,Russia,Scheduled
+Yemenia,yemenia,IY,Yemen,Scheduled
+Yeti Airlines,yeti-airlines,YT,Nepal,Scheduled
+ZIPAIR,zipair,ZG,Japan,Low-cost
+Zagros Airlines,zagros-airlines,ZO,Iran,Scheduled
+Zambezi Airlines,zambezi-airlines,ZJ,Zambia,Scheduled
+Zambia Airways,zambia-airways,ZN,Zambia,Scheduled
+"Zapways, Inc.",zapways-inc,R1,Philippines,Scheduled
+Zimex Aviation,zimex-aviation,XM,Switzerland,Scheduled
+aero,aero,N2,Estonia,Scheduled
+airBaltic,airbaltic,BT,Latvia,Low-cost
+airblue,airblue,PA,Pakistan,Low-cost
+avianca express,avianca-express,EX,Colombia,Scheduled
+easyJet,easyjet,DS,United Kingdom,Low-cost
+flyCAA,flycaa,BU,Democratic Republic of the Congo,Scheduled
+flyadeal,flyadeal,F3,Saudi Arabia,Low-cost
+iFly,ifly,F7,Switzerland,Scheduled
+jetBlue,jetblue,B6,United States,Low-cost

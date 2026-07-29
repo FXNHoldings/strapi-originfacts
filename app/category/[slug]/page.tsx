@@ -15,6 +15,7 @@ import CategoryDescription from '@/components/CategoryDescription';
 import BlogSidebar from '@/components/BlogSidebar';
 import { JsonLd } from '@/components/SeoBlocks';
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
+import { clampDescription } from '@/lib/seo';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -60,7 +61,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const page = Math.max(1, Number((await searchParams).page) || 1);
   return {
     title: page > 1 ? `${c.name} — page ${page}` : c.name,
-    description: c.description,
+    description: clampDescription(c.description),
     alternates: { canonical: page > 1 ? `/category/${slug}?page=${page}` : `/category/${slug}` },
   };
 }

@@ -10,6 +10,7 @@ import {
   readLegalMarkdown,
 } from '@/lib/legal';
 import LegalTableOfContents from '@/components/LegalTableOfContents';
+import { clampDescription } from '@/lib/seo';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!doc) return { title: 'Not found' };
   return {
     title: `${doc.title} — Originfacts`,
-    description: doc.description,
+    description: clampDescription(doc.description),
   };
 }
 

@@ -37,10 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/destinations`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/flight-search`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/flight-routes`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${SITE_URL}/hotels`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/airlines`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${SITE_URL}/airports`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${SITE_URL}/airports/hubs`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${SITE_URL}/countries`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
     { url: `${SITE_URL}/sitemap`, lastModified: now, changeFrequency: 'weekly', priority: 0.4 },
   ];
@@ -77,23 +74,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     }));
 
-  const airportPaths: MetadataRoute.Sitemap = airports
-    .filter((a) => a.iata && airportIsSubstantive(a, coverage.originIatas.has(a.iata.toLowerCase())))
-    .map((a) => ({
-      url: `${SITE_URL}/airports/${a.iata.toLowerCase()}`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    }));
+  // Airport pages are temporarily noindexed and out of the sitemap for the
+  // AdSense review — see AIRPORTS_INDEXABLE in lib/entity-seo.ts.
+  const airportPaths: MetadataRoute.Sitemap = [];
+  void airports;
 
-  const countryPaths: MetadataRoute.Sitemap = countries
-    .filter((c) => c.code)
-    .map((c) => ({
-      url: `${SITE_URL}/countries/${c.code.toLowerCase()}`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    }));
+  // /countries/<code> permanently redirects to /destinations/<slug>; the
+  // destination pages are already listed, so the redirecting URLs stay out
+  // of the sitemap (Google flags sitemaps full of redirects).
+  const countryPaths: MetadataRoute.Sitemap = [];
+  void countries;
 
   const legalPaths: MetadataRoute.Sitemap = LEGAL_DOCS.map((d) => ({
     url: `${SITE_URL}/legal/${d.slug}`,

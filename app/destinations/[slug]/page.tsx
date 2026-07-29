@@ -23,6 +23,8 @@ import FlightSearchCTA from '@/components/FlightSearchCTA';
 import { getCountryFacts } from '@/lib/country-facts';
 import { faqJsonLd, normalizeFaqs } from '@/lib/entity-seo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
+import KeyFacts from '@/components/KeyFacts';
+import { clampDescription } from '@/lib/seo';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -37,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!d) return { title: 'Not found' };
   return {
     title: d.name,
-    description: d.description,
+    description: clampDescription(d.description),
     alternates: { canonical: `/destinations/${slug}` },
   };
 }
@@ -130,6 +132,11 @@ export default async function DestinationPage({ params }: Props) {
       </section>
 
       <div className="mx-auto max-w-7xl px-6 py-16">
+        <KeyFacts
+          tldr={destination.tldr}
+          keyFacts={destination.keyFacts}
+          title={`${destination.name} at a glance`}
+        />
         <h2 className="editorial-h text-3xl font-bold text-forest-900">
           {articles.length === 0 ? 'No stories yet' : `${articles.length} stor${articles.length === 1 ? 'y' : 'ies'} from ${destination.name}`}
         </h2>

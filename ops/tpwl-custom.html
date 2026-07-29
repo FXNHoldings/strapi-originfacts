@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="description" content="Search Flights" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <meta property="og:title" content="Search Flight" />
+  <meta property="og:description"
+    content="We search hundreds of travel sites at once to find the cheapest flights for you." />
+  <meta content="en_US" property="og:locale">
+  <meta content="product.item" property="og:type">
+  <meta content="[:og_image:]" property="og:image">
+
+  <meta content="Search Cheap Flights" name="twitter:title">
+  <meta content="We search hundreds of travel sites at once to find the cheapest flights for you."
+    name="twitter:description">
+  <meta content="summary_large_image" name="twitter:card">
+  <title>Search Flights[:route_info:]</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap">
+
+  <style>
+    /* ---------- Brand tokens (mirror originfacts.com tailwind config) ---------- */
+    :root {
+      --of-paper: #f0f2f4;
+      --of-ink: #07142b;
+      --of-text: #07142b;
+      --of-text-muted: rgba(7, 20, 43, 0.7);
+      --of-link: #014fd3;            /* primary-emphasis */
+      --of-link-hover: #0072de;      /* primary-emphasisHover */
+      --of-header-border: rgba(9, 45, 116, 0.10);   /* forest-900/10 */
+      --of-footer-border: rgba(1, 79, 211, 0.10);   /* primary-emphasis/10 */
+
+      --of-forest-900: #092d74;
+      --of-forest-950: #061b46;      /* footer background */
+      --of-secondary: #fff6d1;       /* footer link hover */
+      --of-secondary-em: #ffe200;    /* footer headings / icon hover */
+
+      /* Travelpayouts widget variables so TP-rendered UI blends in */
+      --tpwl-main-text: var(--of-text);
+      --tpwl-headline-text: var(--of-text);
+      --tpwl-search-form-background: var(--of-paper);
+      --tpwl-search-result-background: var(--of-paper);
+      --tpwl-links: var(--of-link);
+      --tpwl-font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      color: var(--of-text);
+      background-color: var(--of-paper);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body a {
+      color: var(--of-link);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.1s linear;
+    }
+
+    body a:hover,
+    body a:focus {
+      color: var(--of-link-hover);
+      text-decoration: none;
+    }
+
+    /* ---------- TOP BAR (Header.tsx: white/90, blur, shadow once scrolled) ---------- */
+    .of-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--of-header-border);
+      transition: box-shadow 0.2s ease;
+    }
+
+    .of-topbar.is-stuck {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    }
+
+    .of-topbar__inner {
+      max-width: 1280px;               /* max-w-7xl */
+      margin: 0 auto;
+      padding: 0.8rem 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .of-topbar__brand { display: inline-flex; flex-shrink: 0; }
+    .of-topbar__brand img { display: block; height: 3rem; width: auto; }
+    .of-topbar__brand:hover { text-decoration: none; opacity: 0.9; }
+
+    .of-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .of-nav a,
+    .of-nav__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;                /* font-semibold, as on the site */
+      color: #000;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .of-nav a:hover,
+    .of-nav__btn:hover {
+      color: var(--of-link);
+      text-decoration: none;
+    }
+
+    .of-nav__chev { width: 12px; height: 12px; opacity: 0.6; }
+
+    /* ---------- Dropdowns (hover-bridge pattern from the React header) ---------- */
+    .of-nav__item { position: relative; }
+
+    .of-nav__menu-wrap,
+    .of-nav__submenu-wrap-pop {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+      position: absolute;
+      z-index: 10;
+    }
+
+    .of-nav__menu-wrap { top: 100%; left: 0; padding-top: 4px; }
+    .of-nav__menu-wrap--right { left: auto; right: 0; }
+
+    .of-nav__menu {
+      min-width: 220px;
+      background: var(--of-paper);
+      border: 1px solid var(--of-header-border);
+      border-radius: 6px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      padding: 4px;
+    }
+
+    .of-nav__menu a {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 12px;
+      border-radius: 4px;
+      color: #000;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .of-nav__menu a:hover {
+      background: rgba(9, 45, 116, 0.05);
+      color: var(--of-link);
+      text-decoration: none;
+    }
+
+    .of-nav__item:hover > .of-nav__menu-wrap,
+    .of-nav__item:focus-within > .of-nav__menu-wrap {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* ---------- TP HERO / SEARCH ---------- */
+    .tpwl-logo-header {
+      position: relative;
+      color: var(--of-text);
+      font-weight: 600;
+      background-color: var(--of-paper);
+      padding: 40px 100px 16px;
+      margin-bottom: -20px;
+      z-index: 101;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    .tpwl-logo-header h1 {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      line-height: 1.1;
+      color: var(--of-ink);
+      margin: 0;
+    }
+
+    .tpwl-logo-header p {
+      margin: 5px 0 0;
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--of-text-muted);
+    }
+
+    .tpwl-search-header {
+      padding: 24px 100px;
+      background-color: var(--of-paper);
+      position: sticky;
+      top: 75px;                        /* below the sticky top bar */
+      z-index: 100;
+      transition: all 0.3s linear;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    .tpwl-logo__wrapper { display: none; }
+
+    .tpwl-search__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tpwl__content {
+      flex: 1 0 auto;
+      max-width: 1280px;
+      min-width: 976px;
+    }
+
+    .tpwl-main { background-color: var(--of-paper); }
+
+    .tpwl-tickets__wrapper #tpwl-tickets:not(:empty) { margin-bottom: 32px; }
+
+    .tpwl-tickets__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 100px;
+    }
+
+    .tpwl-widgets__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 100px;
+      margin-bottom: 32px;
+    }
+
+    .tpwl-widgets__wrapper h3 {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-weight: 700;
+      text-align: center;
+      font-size: 1.5rem;
+      color: var(--of-ink);
+      margin: 0 0 32px;
+    }
+
+    .tpwl-widget-weedles {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    .tpwl-widget-weedle { display: flex; justify-content: center; }
+
+    /* ---------- FOOTER (Footer.tsx: forest-950, yellow headings, 50/20/20/10 grid) ---------- */
+    .tpwl-footer__wrapper {
+      display: block;
+      padding: 0;
+      background: var(--of-forest-950);
+      color: #fff;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 400;
+      margin-top: 96px;                 /* mt-24 */
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      border-top: 1px solid var(--of-footer-border);
+    }
+
+    .of-footer__grid {
+      display: grid;
+      grid-template-columns: 50fr 20fr 20fr 10fr;   /* Brand / Company / Discover / Topics */
+      gap: 40px;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+
+    .of-footer__brand { display: inline-block; }
+    .of-footer__brand img { display: block; height: 40px; width: auto; }
+
+    .of-footer__tagline {
+      max-width: 24rem;                 /* max-w-sm */
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.55;
+      margin: 12px 0 0;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .of-footer__socials {
+      list-style: none;
+      margin: 20px 0 0;
+      padding: 0;
+      display: flex;
+      gap: 12px;
+    }
+
+    .of-footer__socials a {
+      display: inline-flex;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .of-footer__socials a:hover {
+      border-color: var(--of-secondary-em);
+      color: var(--of-secondary-em);
+      text-decoration: none;
+    }
+
+    .of-footer__socials svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .of-footer__heading {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 18px;                  /* text-lg */
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--of-secondary-em);
+      margin: 0 0 12px;
+      text-transform: capitalize;
+    }
+
+    .of-footer__menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .of-footer__menu li { margin-bottom: 8px; }
+
+    .of-footer__menu a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 14px;                  /* text-sm */
+      font-weight: 400;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      transition: color 0.15s ease;
+    }
+
+    .of-footer__menu a:hover {
+      color: var(--of-secondary);       /* hover:text-secondary (#fff6d1) */
+      text-decoration: none;
+    }
+
+    .of-footer__bottom-wrap { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+
+    .of-footer__bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .of-footer__legal {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .of-footer__legal a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .of-footer__legal a:hover { color: var(--of-secondary); }
+
+    /* ---------- MOBILE ---------- */
+    @media (max-width: 1175px) {
+      .of-topbar { position: static; }
+      .of-topbar__inner { padding: 0.8rem 16px; gap: 12px; }
+      .of-nav { gap: 0; }
+
+      .of-nav a,
+      .of-nav__btn { padding: 6px 8px; font-size: 14px; }
+
+      /* Hover dropdowns don't work on touch — hide the panels */
+      .of-nav__menu-wrap { display: none; }
+
+      .tpwl-logo-header {
+        position: static;
+        padding: 24px 16px 6px;
+        margin-bottom: 0;
+      }
+
+      .tpwl-logo-header h1 { font-size: 34px; max-width: 512px; }
+      .tpwl__content { max-width: unset; min-width: unset; }
+      .tpwl-search__wrapper { display: block; }
+      .tpwl-search-header { padding: 16px; position: static; }
+      .tpwl-tickets__wrapper { padding: 0 16px; }
+      .tpwl-widgets__wrapper { padding: 48px 16px; }
+      .tpwl-widgets__wrapper h3 { font-size: 24px; }
+      .tpwl-widgets__wrapper .tpwl__content { flex: 1 0 100%; }
+      .tpwl-widget-weedles { grid-template-columns: 1fr; }
+
+      .of-footer__grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 48px 16px;
+      }
+
+      .of-footer__bottom { padding: 20px 16px; }
+    }
+
+    @media (max-width: 560px) {
+      .of-nav { display: none; }
+    }
+  </style>
+
+  [:embed_script:]
+  [:cookie_policy_script:]
+  <!-- NOTE: the tp-em.com "extra monetization" script was removed on purpose.
+       It serves pop-under/redirect ads, which violate the Google AdSense
+       Program Policies. Do not re-add it while AdSense runs on this domain. -->
+</head>
+
+<body>
+  <nav class="of-topbar" id="of-topbar" itemscope itemtype="http://schema.org/WPHeader" role="banner">
+    <div class="of-topbar__inner">
+      <a href="https://www.originfacts.com" class="of-topbar__brand" aria-label="Originfacts home">
+        <img src="https://www.originfacts.com/brand/logo/logo.svg" alt="Originfacts" />
+      </a>
+      <div class="of-nav">
+        <a href="https://www.originfacts.com/destinations">Destinations</a>
+        <a href="https://www.originfacts.com/flight-search">Flight Search</a>
+        <a href="https://www.originfacts.com/airlines">Airlines</a>
+
+        <div class="of-nav__item">
+          <a href="https://www.originfacts.com/airports" class="of-nav__btn" aria-haspopup="true">
+            Airports
+            <svg class="of-nav__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <div class="of-nav__menu-wrap">
+            <div class="of-nav__menu" role="menu">
+              <a href="https://www.originfacts.com/airports/hubs" role="menuitem">Top 100 Airports</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="of-nav__item">
+          <a href="https://www.originfacts.com/articles" class="of-nav__btn" aria-haspopup="true">
+            Blog
+            <svg class="of-nav__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <div class="of-nav__menu-wrap of-nav__menu-wrap--right">
+            <div class="of-nav__menu" role="menu">
+              <a href="https://www.originfacts.com/category/flights" role="menuitem">Flights</a>
+              <a href="https://www.originfacts.com/hotels" role="menuitem">Hotels</a>
+              <a href="https://www.originfacts.com/category/car-rentals" role="menuitem">Car Rentals</a>
+              <a href="https://www.originfacts.com/category/travel-tips" role="menuitem">Travel Tips</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="tpwl-logo-header">
+    <div class="tpwl-logo__wrapper">
+      <div class="tpwl-logo__logo"></div>
+      Flight tickets
+    </div>
+    <div class="tpwl-search__wrapper">
+      <div class="tpwl__content">
+        <h1>Thousands of cheap flights.</h1>
+        <p>Search hundreds of airlines at once.</p>
+      </div>
+    </div>
+  </header>
+
+  <header class="tpwl-search-header">
+    <div class="tpwl-search__wrapper">
+      <div class="tpwl__content">
+        <div id="tpwl-search"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="tpwl-main">
+    <div class="tpwl-tickets__wrapper">
+      <div class="tpwl__content">
+        <div id="tpwl-tickets"></div>
+      </div>
+    </div>
+
+    <div class="tpwl-widgets__wrapper">
+      <div class="tpwl__content">
+        <h3>Popular destinations</h3>
+        <!-- Popular destination widgets will be rendered here -->
+        <div id="tpwl-widget-weedles" class="tpwl-widget-weedles">
+          <!-- Change IATA code in data-destination attribute to show different destinations -->
+          <div class="tpwl-widget-weedle" data-destination="IST" is="weedle"></div>
+          <div class="tpwl-widget-weedle" data-destination="DXB" is="weedle"></div>
+          <div class="tpwl-widget-weedle" data-destination="MOW" is="weedle"></div>
+          <div class="tpwl-widget-weedle" data-destination="LAS" is="weedle"></div>
+          <div class="tpwl-widget-weedle" data-destination="NYC" is="weedle"></div>
+          <div class="tpwl-widget-weedle" data-destination="LON" is="weedle"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="tpwl-footer__wrapper">
+    <div class="of-footer__grid">
+      <div>
+        <a href="https://www.originfacts.com" class="of-footer__brand" aria-label="Originfacts home">
+          <img src="https://www.originfacts.com/footer-logo.svg" alt="Originfacts" />
+        </a>
+        <p class="of-footer__tagline">
+          The facts behind every place worth visiting — plus the latest on flights, hotels, airlines, airports and
+          destinations.
+        </p>
+        <ul class="of-footer__socials" aria-label="Originfacts on social media">
+          <li>
+            <a href="https://x.com/realoriginfacts" target="_blank" rel="noopener noreferrer"
+              aria-label="Originfacts on X">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817-5.967 6.817H1.677l7.73-8.835L1.255 2.25h6.83l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/originfacts/" target="_blank" rel="noopener noreferrer"
+              aria-label="Originfacts on Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M22 12.06C22 6.48 17.52 2 11.94 2 6.36 2 1.88 6.48 1.88 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.78v-2.91h2.54V9.84c0-2.51 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46H15.1c-1.24 0-1.62.77-1.62 1.56v1.87h2.76l-.44 2.91h-2.32V22c4.78-.76 8.52-4.92 8.52-9.94z" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.originfacts.com/feed.xml" aria-label="Originfacts RSS feed" title="RSS feed">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M4.252 11.105a8.643 8.643 0 0 1 8.643 8.643h-2.882a5.761 5.761 0 0 0-5.761-5.761zM4.252 5.343A14.404 14.404 0 0 1 18.657 19.748h-2.882A11.523 11.523 0 0 0 4.252 8.225zM6.413 16.146a2.16 2.16 0 1 1-4.321 0 2.16 2.16 0 0 1 4.321 0z" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="of-footer__heading">Company</h4>
+        <ul class="of-footer__menu">
+          <li><a href="https://www.originfacts.com/">Home</a></li>
+          <li><a href="https://www.originfacts.com/about">About</a></li>
+          <li><a href="https://www.originfacts.com/legal">Legal Notice</a></li>
+          <li><a href="https://www.originfacts.com/legal/disclaimer">Disclaimer</a></li>
+          <li><a href="https://www.originfacts.com/legal/accessibility">Accessibility</a></li>
+          <li><a href="https://www.originfacts.com/sitemap">Site Map</a></li>
+          <li><a href="https://www.originfacts.com/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="of-footer__heading">Discover</h4>
+        <ul class="of-footer__menu">
+          <li><a href="https://www.originfacts.com/flight-search">Flight Search</a></li>
+          <li><a href="https://www.originfacts.com/hotels">Hotels</a></li>
+          <li><a href="https://www.originfacts.com/countries">Countries</a></li>
+          <li><a href="https://www.originfacts.com/airlines">Airlines</a></li>
+          <li><a href="https://www.originfacts.com/airports">Airports</a></li>
+          <li><a href="https://www.originfacts.com/flight-routes">Flight Routes</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="of-footer__heading">Topics</h4>
+        <ul class="of-footer__menu">
+          <li><a href="https://www.originfacts.com/category/destinations">Destinations</a></li>
+          <li><a href="https://www.originfacts.com/category/flights">Flights</a></li>
+          <li><a href="https://www.originfacts.com/category/hotels">Hotels</a></li>
+          <li><a href="https://www.originfacts.com/category/car-rentals">Car Rentals</a></li>
+          <li><a href="https://www.originfacts.com/category/travel-tips">Travel Tips</a></li>
+          <li><a href="https://www.originfacts.com/hot-posts">Trending</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="of-footer__bottom-wrap">
+      <div class="of-footer__bottom">
+        <div>© [:current_year:] Originfacts. All rights reserved.</div>
+        <ul class="of-footer__legal" aria-label="Legal">
+          <li><a href="https://www.originfacts.com/legal/privacy">Privacy Policy</a></li>
+          <li><a href="https://www.originfacts.com/legal/terms">Terms of Use</a></li>
+          <li><a href="https://www.originfacts.com/legal/cookies">Cookie Policy</a></li>
+          <li><a href="https://www.originfacts.com/legal/affiliate-disclosure">Affiliate Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <div class="tpwl-cookie-banner" id="tpwl-cookie-banner">
+    <div class="tpwl-cookie-banner__logo"></div>
+    <div class="tpwl-cookie-banner__text">To provide a better experience we use cookies to store your search history and
+      selected filters. By clicking or navigating the site, you agree to allow our collection of information through
+      cookies.</div>
+    <div class="tpwl-cookie-banner__actions">
+      <button class="tpwl-cookie-banner__base-button tpwl-cookie-banner__accept"
+        id="tpwl-accept-cookie-btn">Accept</button>
+      <a class="tpwl-cookie-banner__base-button tpwl-cookie-banner__link"
+        href="https://www.originfacts.com/legal/cookies" target="_blank">Cookies Policy</a>
+    </div>
+  </div>
+
+  <script>
+    /* Header shadow once scrolled (matches the React header's stuck state). */
+    (function () {
+      var bar = document.getElementById('of-topbar');
+      if (!bar) return;
+      var onScroll = function () {
+        bar.classList.toggle('is-stuck', window.scrollY > 80);
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    /* Popular-destination widgets. */
+    (function () {
+      const container = document.getElementById('tpwl-widget-weedles');
+      const weedleElements = container.querySelectorAll('div[is="weedle"]');
+      weedleElements.forEach(element => {
+        if (!TPWL_EXTRA) return;
+        const destination = element.getAttribute('data-destination');
+        const scriptElement = document.createElement('script');
+        scriptElement.async = 1;
+        scriptElement.src = `https://[:widget_domain:]/content?currency=${String(TPWL_EXTRA.currency).toLowerCase()}&trs=${TPWL_EXTRA.trs}&shmarker=${TPWL_EXTRA.marker}&destination=${destination}&target_host=${TPWL_EXTRA.domain}&locale=${TPWL_EXTRA.locale}&limit=6&powered_by=false&primary=%23${TPWL_EXTRA.link_color}&promo_id=4044&campaign_id=100`;
+        element.appendChild(scriptElement);
+      });
+    })();
+  </script>
+</body>
+
+</html>

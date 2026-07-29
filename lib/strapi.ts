@@ -29,6 +29,10 @@ export type StrapiArticle = {
   faqs?: unknown;
   /** Optional how-to steps (json field) — flags the post as a HowTo, see normalizeSteps(). */
   steps?: unknown;
+  /** Optional 40-60 word direct-answer summary shown in the KeyFacts callout. */
+  tldr?: string;
+  /** Optional quick-scan facts (json) — see normalizeKeyFacts(). */
+  keyFacts?: unknown;
 };
 
 export type StrapiCategory = {
@@ -81,6 +85,10 @@ export type StrapiDestination = {
   heroImage?: StrapiImage;
   /** Optional editor-managed Q&As (json field) — see normalizeFaqs(). */
   faqs?: unknown;
+  /** Optional 40-60 word direct-answer summary shown in the KeyFacts callout. */
+  tldr?: string;
+  /** Optional quick-scan facts (json) — see normalizeKeyFacts(). */
+  keyFacts?: unknown;
 };
 
 export type AirlineType = 'Scheduled' | 'Charter' | 'Cargo' | 'Low-cost' | 'Regional';
@@ -105,6 +113,12 @@ export type StrapiAirline = {
   address?: string;
   phone?: string;
   website?: string;
+  keyDestinations?: string[];
+  faqs?: { q: string; a: string }[];
+  frequentFlyerProgram?: string;
+  frequentFlyerUrl?: string;
+  goodToKnow?: { title: string; body: string }[];
+  shortDescription?: string;
 };
 
 export type StrapiAirport = {

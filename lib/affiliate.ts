@@ -11,8 +11,6 @@
  *   /search/LHR2205BKK1
  */
 
-const WL_HOST = process.env.NEXT_PUBLIC_TP_WL_HOST || 'www.aviasales.com';
-const MARKER = process.env.NEXT_PUBLIC_TP_MARKER;
 
 /** Format a Date as Aviasales' compact DDMM (e.g. 22 May → "2205"). */
 function formatDDMM(d: Date): string {
@@ -68,11 +66,11 @@ export function flightSearchUrl(opts: FlightSearchOpts): string {
   const path =
     `${origin.toUpperCase()}${formatDDMM(depart)}${destination.toUpperCase()}${ret ? formatDDMM(ret) : ''}${passengers}`;
 
-  const params = new URLSearchParams();
-  if (MARKER) params.set('marker', MARKER);
-  if (subId) params.set('sub_id', subId);
-  if (airline) params.set('airline', airline.toUpperCase());
-
-  const qs = params.toString();
-  return `https://${WL_HOST}/search/${path}${qs ? `?${qs}` : ''}`;
+  // Search runs on our own /flight-search page (the embedded TPWL SDK reads
+  // the flightSearch param and renders results in-page). The white-label host
+  // (flights.originfacts.com) is retired — do not link to it. The SDK's wl_id
+  // config carries the affiliate marker; sub_id granularity is not supported
+  // in-page, but the airline carrier filter passes through as a query param.
+  void subId;
+  return `/flight-search?flightSearch=${path}${airline ? `&airline=${airline.toUpperCase()}` : ''}`;
 }

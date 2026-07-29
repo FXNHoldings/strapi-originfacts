@@ -67,6 +67,31 @@ export function normalizeFaqs(raw: unknown): Faq[] {
   return faqs.length >= MIN_FAQS ? faqs : [];
 }
 
+export type KeyFact = { label?: string; value: string };
+
+/**
+ * Normalises the `keyFacts` json field: accepts plain strings or
+ * {label, value} entries, strips HTML, drops empties.
+ */
+export function normalizeKeyFacts(raw: unknown): KeyFact[] {
+  if (!Array.isArray(raw)) return [];
+  const facts: KeyFact[] = [];
+  for (const entry of raw) {
+    if (typeof entry === 'string') {
+      const value = plainText(entry);
+      if (value) facts.push({ value });
+      continue;
+    }
+    if (typeof entry !== 'object' || entry === null) continue;
+    const rec = entry as Record<string, unknown>;
+    const value = typeof rec.value === 'string' ? plainText(rec.value) : '';
+    if (!value) continue;
+    const label = typeof rec.label === 'string' ? plainText(rec.label) : '';
+    facts.push(label ? { label, value } : { value });
+  }
+  return facts;
+}
+
 export type HowToStep = { name: string; text: string; image?: string };
 
 /**
@@ -144,7 +169,14 @@ export function airportIsSubstantive(a: StrapiAirport, hasRoutes: boolean): bool
 }
 
 export function airlineIsSubstantive(a: StrapiAirline, hasRoutes: boolean): boolean {
-  return hasText(a.about) || hasRoutes;
+  // A page is substantive (indexable + in the sitemap) once it carries real
+  // generated content: a long-enough About, a full 8-question FAQ set, or
+  // tracked routes. Thin, un-enriched airlines stay noindex until content
+  // lands — then they flip automatically, no manual un-exclusion needed.
+  const faqCount = Array.isArray(a.faqs)
+    ? a.faqs.filter((f) => f && (f as { q?: string; a?: string }).q && (f as { q?: string; a?: string }).a).length
+    : 0;
+  return hasText(a.about) || hasRoutes || faqCount >= 8;
 }
 
 export function countryHasData(c: Pick<StrapiCountry, 'code' | 'about'>): boolean {
@@ -152,6 +184,13 @@ export function countryHasData(c: Pick<StrapiCountry, 'code' | 'about'>): boolea
 }
 
 /** Next.js metadata `robots` block for a gated page. */
+/**
+ * Airport pages are temporarily noindexed for the AdSense review — the 3.5k
+ * templated pages read as "low value content" to reviewers. Flip back to true
+ * after approval to restore indexing (sitemap entries in app/sitemap.ts too).
+ */
+export const AIRPORTS_INDEXABLE = false;
+
 export const robotsFor = (indexable: boolean) =>
   indexable
     ? { index: true, follow: true }
@@ -238,6 +277,111 @@ export function airlineIntro(a: StrapiAirline, s?: RouteSummary): string {
   return lead + hub + net;
 }
 
+/**
+ * "About {airline}" body — always at most 4 paragraphs:
+ *   1. identity (generated from codes/type/base/founded/legal name)
+ *   2-3. up to two paragraphs of CMS editorial (`about`), when present
+ *   4. network + practical footer (generated from tracked routes/alliance/hub)
+ * Every generated sentence is grounded in a present field.
+ */
+export function airlineAbout(
+  a: StrapiAirline,
+  s?: RouteSummary,
+  opts?: { alliance?: string | null; longestRouteSentence?: string },
+): string[] {
+  const paras: string[] = [];
+  const name = a.name;
+  const code = a.iataCode ? (a.icaoCode ? `${a.iataCode}/${a.icaoCode}` : a.iataCode) : a.icaoCode;
+
+  // 1 — identity
+  const kind = a.type ? `${a.type.toLowerCase()} airline` : 'airline';
+  const base = [a.city, a.country].filter(Boolean).join(', ');
+  const identity =
+    `${name}${code ? ` (${code})` : ''} is a ${kind}${base ? ` based in ${base}` : ''}` +
+    `${num(a.founded) ? `, founded in ${a.founded}` : ''}.` +
+    `${a.legalName && a.legalName !== name ? ` The company operates legally as ${a.legalName}.` : ''}` +
+    `${a.region ? ` It is one of the ${a.region} carriers profiled on Originfacts.` : ''}`;
+  paras.push(identity);
+
+  // 2-3 — CMS editorial, capped at two paragraphs
+  if (hasText(a.about)) {
+    const cmsParas = a.about!.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+    paras.push(...cmsParas.slice(0, 2));
+  }
+
+  // 4 — network + practical
+  const closing: string[] = [];
+  if (s && s.destinationCount > 0) {
+    closing.push(
+      `On the network side, Originfacts currently tracks ${pluralise(s.destinationCount, 'destination')}${s.countryCount > 1 ? ` across ${pluralise(s.countryCount, 'country', 'countries')}` : ''} served by ${name}.`,
+    );
+    if (opts?.longestRouteSentence) closing.push(opts.longestRouteSentence);
+  }
+  if (a.airport) closing.push(`Day-to-day operations are centred on ${a.airport}.`);
+  if (opts?.alliance) closing.push(`${name} is a member of the ${opts.alliance} alliance.`);
+  closing.push(
+    `For bookings, schedule changes and service queries, use the official website and customer-service contacts listed in the details panel on this page.`,
+  );
+  paras.push(closing.join(' '));
+
+  return paras.slice(0, 4);
+}
+
+/**
+ * "Flying with X — what to expect" paragraphs. Every statement is derived
+ * from a present field (type, alliance, founded, hub, country) so the copy
+ * stays truthful and varies between airlines instead of repeating one
+ * boilerplate block across all 137 pages.
+ */
+export function airlineExpectations(a: StrapiAirline, alliance?: string | null): string[] {
+  const paras: string[] = [];
+  const name = a.name;
+
+  switch (a.type) {
+    case 'Low-cost':
+      paras.push(
+        `${name} operates a low-cost model, which means headline fares are typically unbundled: seat selection, checked baggage and on-board food are usually sold as paid extras rather than included in the base ticket. When comparing ${name} against full-service alternatives, weigh the total price after extras — not just the headline fare — and check cabin-baggage size limits before you fly, as budget carriers tend to enforce them strictly at the gate.`,
+      );
+      break;
+    case 'Charter':
+      paras.push(
+        `${name} is a charter operator, so most of its seats are sold through tour operators and package-holiday providers rather than as standalone tickets. Schedules follow seasonal demand, which means routes can appear and disappear with the holiday calendar — if you find a standalone seat-only fare, confirm the operating dates carefully.`,
+      );
+      break;
+    case 'Cargo':
+      paras.push(
+        `${name} is a cargo carrier: it moves freight rather than fare-paying passengers. The details on this page are provided for aviation reference rather than trip planning.`,
+      );
+      break;
+    case 'Regional':
+      paras.push(
+        `${name} is a regional carrier, typically flying shorter sectors on smaller aircraft — often as a feeder into larger hubs. Two practical notes: cabin-baggage allowances on regional aircraft can be tighter than on mainline jets (larger carry-ons may be gate-checked), and tight hub connections are usually protected when both flights sit on a single ticket.`,
+      );
+      break;
+    case 'Scheduled':
+      paras.push(
+        `${name} operates scheduled services, selling tickets directly and through travel agencies on a published timetable. Fare classes usually range from restrictive economy tickets to flexible fares — the cheapest bucket generally books out first, so the earlier you commit to fixed dates, the better the price tends to be.`,
+      );
+      break;
+  }
+
+  if (alliance) {
+    paras.push(
+      `${name} is a member of ${alliance}. For frequent flyers that matters: miles earned on ${name} flights can normally be credited to partner programmes across the alliance, and elite-status benefits such as lounge access or priority boarding are typically recognised when flying with other ${alliance} members. Check the fare class before booking — deeply discounted tickets sometimes earn reduced or zero mileage.`,
+    );
+  }
+
+  const founded = num(a.founded) ? (a.founded as number) : null;
+  const age = founded ? new Date().getFullYear() - founded : null;
+  if (founded && age && age > 0) {
+    paras.push(
+      `Founded in ${founded}, ${name} has been flying for ${age >= 20 ? `more than ${Math.floor(age / 10) * 10} years` : `${age} ${age === 1 ? 'year' : 'years'}`}${a.airport ? `, with operations centred on ${a.airport}` : ''}${a.country ? `${a.airport ? '' : ','} in ${a.country}` : ''}.`,
+    );
+  }
+
+  return paras;
+}
+
 /* ------------------------------------------------------------------ *
  * FAQs — every answer is grounded in a present field
  * ------------------------------------------------------------------ */
@@ -272,32 +416,73 @@ export function airportFaqs(a: StrapiAirport, s?: RouteSummary): Faq[] {
   return faqs;
 }
 
-export function airlineFaqs(a: StrapiAirline, s?: RouteSummary): Faq[] {
+export function airlineFaqs(
+  a: StrapiAirline,
+  s?: RouteSummary,
+  opts?: { alliance?: string | null; topOrigins?: string[] },
+): Faq[] {
   const faqs: Faq[] = [];
-  if (a.iataCode || a.icaoCode) {
+  const name = a.name;
+  const alliance = opts?.alliance ?? null;
+  const topOrigins = opts?.topOrigins ?? [];
+
+  faqs.push({
+    q: `What is ${name}'s carry-on size allowance?`,
+    a: `Carry-on limits on ${name} depend on the fare type and aircraft, and the airline publishes its current size and weight allowance on its official website.${a.type === 'Low-cost' ? ` As a low-cost carrier, ${name} tends to enforce cabin-bag rules strictly at the gate, and larger bags usually cost extra.` : ''} Measure your bag before you fly — paying for luggage at the gate is almost always the most expensive option.`,
+  });
+
+  if (a.airport) {
     faqs.push({
-      q: `What is ${a.name}'s airline code?`,
-      a: `${a.name}'s IATA code is ${a.iataCode ?? 'not assigned'}${a.icaoCode ? ` and its ICAO code is ${a.icaoCode}` : ''}.`,
+      q: `What is ${name}'s primary hub?`,
+      a: `${name}'s operations are centred on ${a.airport}${a.city || a.country ? ` in ${[a.city, a.country].filter(Boolean).join(', ')}` : ''}.`,
     });
   }
-  if (a.country || a.city) {
+
+  faqs.push({
+    q: `When are ${name} plane tickets cheapest?`,
+    a: `As a rule of thumb, ${name} fares on short-haul routes are cheapest 1–3 months before departure, and 2–6 months ahead for long-haul. Tuesday and Wednesday departures tend to be cheaper than Friday and Sunday, and flying outside school holidays makes the biggest difference of all. Fares are dynamic, so when you see a good price, lock it in.`,
+  });
+
+  if (topOrigins.length > 0) {
     faqs.push({
-      q: `Where is ${a.name} based?`,
-      a: `${a.name} is based in ${[a.city, a.country].filter(Boolean).join(', ')}${a.airport ? `, operating mainly from ${a.airport}` : ''}.`,
+      q: `What are the most popular airports for ${name} flights to depart from?`,
+      a: `Among the routes Originfacts tracks, ${name} flights most often depart from ${listProse(topOrigins, 4)}.`,
     });
   }
-  if (num(a.founded)) {
-    faqs.push({ q: `When was ${a.name} founded?`, a: `${a.name} was founded in ${a.founded}.` });
+
+  if (s && s.destinationCount > 0) {
+    faqs.push({
+      q: `How many destinations does ${name} fly to?`,
+      a: `Originfacts currently tracks ${pluralise(s.destinationCount, 'destination')} on ${name}'s network${s.countryCount > 1 ? ` across ${pluralise(s.countryCount, 'country', 'countries')}` : ''}. The airline's full network is typically larger — see its official route map for the complete picture.`,
+    });
   }
-  if (a.type) {
-    faqs.push({ q: `What type of airline is ${a.name}?`, a: `${a.name} is classified as a ${a.type.toLowerCase()} airline.` });
-  }
+
   if (s && s.destinationNames.length) {
     faqs.push({
-      q: `Where does ${a.name} fly?`,
-      a: `Tracked destinations on ${a.name}'s network include ${listProse(s.destinationNames, 8)}.`,
+      q: `Where does ${name} fly to?`,
+      a: `Tracked destinations on ${name}'s network include ${listProse(s.destinationNames, 8)}.`,
+    });
+  } else if (Array.isArray(a.keyDestinations) && a.keyDestinations.length) {
+    // Fallback for airlines with no tracked routes: use the generated
+    // key-destinations list so the destination questions still appear.
+    faqs.push({
+      q: `Where does ${name} fly to?`,
+      a: `${name}'s network includes destinations such as ${listProse(a.keyDestinations, 10)}. Check the airline's official route map for its full, current network.`,
     });
   }
+
+  faqs.push({
+    q: `How does Originfacts find low prices on ${name} flights?`,
+    a: `Originfacts compares live ${name} fares alongside hundreds of other airlines and online travel agencies through our search partner Travelpayouts, then surfaces the lowest total price for each itinerary. You complete the booking directly with the airline or agency at the same price — Originfacts never adds a fee.`,
+  });
+
+  if (alliance) {
+    faqs.push({
+      q: `Is ${name} part of an airline alliance?`,
+      a: `Yes — ${name} is a member of ${alliance}. Miles earned on ${name} flights can normally be credited to partner programmes across the alliance, and elite-status benefits are typically recognised on other ${alliance} carriers.`,
+    });
+  }
+
   return faqs;
 }
 

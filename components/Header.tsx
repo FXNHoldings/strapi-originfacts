@@ -49,7 +49,7 @@ export default function Header() {
 
         <div className="ml-auto hidden items-center justify-end gap-2 lg:flex">
           <nav className="hidden md:block" data-testid="primary-nav">
-            <ul className="flex items-center justify-end gap-1 font-sans text-[1rem] font-semibold tracking-normal">
+            <ul className="flex items-center justify-end gap-4 font-sans text-[1rem] font-semibold tracking-normal">
               <li data-testid="nav-item-destinations">
                 <Link
                   href="/destinations"
@@ -128,7 +128,7 @@ export default function Header() {
                   data-testid="nav-articles"
                   aria-haspopup="true"
                 >
-                  Our Blog
+                  Blog
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

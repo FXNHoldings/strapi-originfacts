@@ -111,6 +111,38 @@ export default function BlogSidebar({
           </li>
           <li>
             <a
+              href="https://www.linkedin.com/company/143027896/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between rounded bg-[#0a66c2] px-4 py-2.5 text-sm font-bold text-white transition hover:opacity-90"
+            >
+              <span className="flex items-center gap-2.5">
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
+                  <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.75C24 .78 23.2 0 22.22 0z" />
+                </svg>
+                LinkedIn
+              </span>
+              <span className="text-xs font-semibold opacity-90">Follow</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.reddit.com/r/Originfacts/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between rounded bg-[#ff4500] px-4 py-2.5 text-sm font-bold text-white transition hover:opacity-90"
+            >
+              <span className="flex items-center gap-2.5">
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
+                  <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.74c.69 0 1.25.56 1.25 1.25a1.25 1.25 0 0 1-2.5.01c0-.69.56-1.26 1.25-1.26zm-5.01 1.4c2.62 0 4.99.87 6.66 2.23a1.81 1.81 0 0 1 2.4 2.75c0 .05.01.1.01.15 0 2.68-3.15 4.85-7.06 4.85s-7.06-2.17-7.06-4.85c0-.05 0-.1.01-.15a1.81 1.81 0 0 1 2.4-2.75C7.02 7.01 9.39 6.14 12 6.14zm-3.8 4.15a1.25 1.25 0 0 0 0 2.5 1.25 1.25 0 0 0 0-2.5zm7.6 0a1.25 1.25 0 0 0 0 2.5 1.25 1.25 0 0 0 0-2.5zm-3.8 4.66c-1 0-1.98.11-2.85.35-.25.07-.4.32-.33.57.06.2.24.34.45.34l.12-.02c.77-.21 1.65-.32 2.54-.32.89 0 1.77.11 2.54.32l.12.02c.21 0 .39-.14.45-.34a.46.46 0 0 0-.33-.57c-.87-.24-1.85-.35-2.85-.35z" />
+                </svg>
+                Reddit
+              </span>
+              <span className="text-xs font-semibold opacity-90">Follow</span>
+            </a>
+          </li>
+          <li>
+            <a
               href="/feed.xml"
               className="flex items-center justify-between rounded bg-[#ee802f] px-4 py-2.5 text-sm font-bold text-white transition hover:opacity-90"
             >

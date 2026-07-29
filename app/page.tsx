@@ -9,6 +9,7 @@ import {
   mediaUrl,
   type StrapiArticle,
 } from '@/lib/strapi';
+import { ORG_ID, organizationJsonLd } from '@/lib/jsonld';
 
 const FEATURED_COUNTRY_SLUGS = [
   'japan',
@@ -65,26 +66,16 @@ export default async function HomePage() {
   const hero = latest[0];
   const side = latest.slice(1, 13);
 
-  const organizationJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Originfacts',
-    url: 'https://www.originfacts.com',
-    logo: 'https://www.originfacts.com/brand/logo/logo.svg',
-    description:
-      'The facts behind every place worth visiting — plus the latest on flights, hotels, airlines, airports and destinations.',
-    sameAs: [
-      'https://x.com/realoriginfacts',
-      'https://www.facebook.com/originfacts/',
-    ],
-  };
+  // Shared Organization node (lib/jsonld.ts) — same @id everywhere the brand
+  // entity appears (home, about, contact) so engines see one consistent org.
+  const orgJsonLd = organizationJsonLd();
 
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Originfacts',
     url: 'https://www.originfacts.com',
-    publisher: { '@type': 'Organization', name: 'Originfacts' },
+    publisher: { '@id': ORG_ID },
     potentialAction: {
       '@type': 'SearchAction',
       target: 'https://www.originfacts.com/articles?q={search_term_string}',
@@ -96,7 +87,7 @@ export default async function HomePage() {
     <div data-testid="home-page">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
       />
       <script
         type="application/ld+json"

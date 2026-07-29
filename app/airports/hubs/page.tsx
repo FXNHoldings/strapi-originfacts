@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   title: 'Top international airport hubs',
   description:
     "The world's busiest international airports — 100 hubs across 6 continents, with terminal, runway and airline detail for each.",
+  // Temporarily noindexed for AdSense review — see AIRPORTS_INDEXABLE.
+  robots: { index: false, follow: true },
 };
 
 export default async function HubsPage() {

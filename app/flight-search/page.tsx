@@ -2,11 +2,11 @@ import { redirect } from 'next/navigation';
 import Script from 'next/script';
 import PopularDestinationsBlock from '@/components/PopularDestinationsBlock';
 import SearchByDestinationBlock from '@/components/SearchByDestinationBlock';
-import { buildTravelpayoutsDeepLink } from '@/lib/explore';
 import { JsonLd } from '@/components/SeoBlocks';
 import { breadcrumbJsonLd } from '@/lib/jsonld';
 import { faqJsonLd } from '@/lib/entity-seo';
 import TpwlLoader from '@/components/TpwlLoader';
+import AirlineResultsFilter from '@/components/AirlineResultsFilter';
 
 export const metadata = {
   title: 'Flight Search',
@@ -78,11 +78,18 @@ const PRO_TIPS: ProTip[] = [
   },
 ];
 
+// "YYYY-MM-DD" → "DDMM" (TPWL search-segment date encoding).
+function isoToDDMM(iso?: string): string {
+  if (!iso || iso.length < 10) return '';
+  return `${iso.slice(8, 10)}${iso.slice(5, 7)}`;
+}
+
 // Pass-through landing for explore-card click-throughs. When called with
 // ?origin=PER&destination=KUL&depart=YYYY-MM-DD&return=YYYY-MM-DD&pax=1 we
-// build the TravelPayouts deep link (white-label host + affiliate marker +
-// DDMM date encoding) and 302 the visitor there. Hitting /flights
-// with no params shows the on-site search widget below as before.
+// rewrite to ?flightSearch=PER<DDMM>KUL<DDMM><pax> on this same page — the
+// embedded TPWL SDK reads that param and renders the results in-page, so
+// visitors never leave originfacts.com for the white-label host. Hitting the
+// page with no params shows the on-site search widget below as before.
 export default async function FlightsPage({
   searchParams,
 }: {
@@ -96,15 +103,15 @@ export default async function FlightsPage({
     const depart = pick('depart');
     const ret = pick('return');
     const paxRaw = pick('pax');
-    const pax = paxRaw ? Number(paxRaw) : 1;
-    const url = buildTravelpayoutsDeepLink({
-      origin: origin.toUpperCase(),
-      destination: destination.toUpperCase(),
-      departureISO: depart,
-      returnISO: ret,
-      passengers: Number.isFinite(pax) && pax > 0 ? pax : 1,
-    });
-    redirect(url);
+    const paxNum = paxRaw ? Number(paxRaw) : 1;
+    const pax = Number.isFinite(paxNum) && paxNum > 0 ? paxNum : 1;
+    const segment = `${origin.toUpperCase()}${isoToDDMM(depart)}${destination.toUpperCase()}${isoToDDMM(ret)}${pax}`;
+    const airline = pick('airline');
+    const an = pick('an');
+    redirect(
+      `/flight-search?flightSearch=${segment}` +
+        (airline ? `&airline=${airline.toUpperCase()}${an ? `&an=${encodeURIComponent(an)}` : ''}` : ''),
+    );
   }
 
   return (
@@ -134,10 +141,10 @@ export default async function FlightsPage({
 })();`}
       </Script>
 
-      <div data-testid="fly-page">
+      <div data-testid="fly-page" className="font-inter-scope">
         <div className="bg-[#f0f3f5]">
-          <div className="mx-auto max-w-7xl px-6 pb-14 pt-16">
-            <header className="max-w-3xl">
+          <div className="fs-search-band mx-auto max-w-7xl px-6 pb-14 pt-16">
+            <header className="max-w-3xl" data-testid="flight-search-hero">
               <h1 className="editorial-h text-[2.5rem] font-bold tracking-[-1px] text-forest-900">
                 Compare every airline. In one search.
               </h1>
@@ -155,6 +162,7 @@ export default async function FlightsPage({
 
         <div className="mx-auto max-w-7xl px-6 pb-16">
         <div className="mt-12">
+          <AirlineResultsFilter />
           <div id="tpwl-tickets" />
         </div>
 

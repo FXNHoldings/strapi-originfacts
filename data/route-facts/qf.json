@@ -1,0 +1,86 @@
+{
+  "iata": "QF",
+  "name": "Qantas",
+  "isLowcost": false,
+  "routeCount": 400,
+  "destinationCount": 92,
+  "countryCount": 25,
+  "keyDestinations": [
+    "Sydney",
+    "Brisbane",
+    "Perth",
+    "Melbourne",
+    "Cairns",
+    "Darwin",
+    "Singapore",
+    "Adelaide",
+    "Alice Springs",
+    "Canberra",
+    "Auckland",
+    "Los Angeles",
+    "Nadi",
+    "Broome",
+    "Karratha",
+    "Townsville",
+    "Port Hedland",
+    "Ayers Rock",
+    "Hong Kong",
+    "Mount Isa",
+    "Noumea",
+    "Bangkok",
+    "Denpasar (Bali)",
+    "Gold Coast"
+  ],
+  "topHubs": [
+    {
+      "city": "Sydney",
+      "routes": 49
+    },
+    {
+      "city": "Brisbane",
+      "routes": 42
+    },
+    {
+      "city": "Melbourne",
+      "routes": 28
+    },
+    {
+      "city": "Perth",
+      "routes": 27
+    },
+    {
+      "city": "Cairns",
+      "routes": 16
+    }
+  ],
+  "fleet": [
+    "Airbus A320",
+    "Airbus A330-200",
+    "Airbus A330-300",
+    "Airbus A340-300",
+    "Airbus A340-600",
+    "Airbus A380-800",
+    "Boeing 717-200",
+    "Boeing 737-400",
+    "Boeing 737-700",
+    "Boeing 737-800",
+    "Boeing 747-400",
+    "Boeing 767-300",
+    "Boeing 777-200ER",
+    "Dash 8",
+    "Dash 8-300",
+    "Dash 8-400",
+    "Embraer E170",
+    "Fokker 100",
+    "Fokker 50"
+  ],
+  "longestRoute": {
+    "km": 13808,
+    "from": "Sydney",
+    "to": "Dallas",
+    "fromIata": "SYD",
+    "toIata": "DFW"
+  },
+  "source": "TravelPayouts route data",
+  "updated": "2026-07"
+}

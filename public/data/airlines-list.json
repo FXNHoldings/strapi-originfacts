@@ -1,0 +1,7677 @@
+{
+ "total": 1096,
+ "airlines": [
+  {
+   "name": "40-Mile Air",
+   "slug": "40-mile-air",
+   "iata": "Q5",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "9 Air",
+   "slug": "9-air",
+   "iata": "AQ",
+   "country": "China",
+   "type": "Low-cost"
+  },
+  {
+   "name": "ABX Air, Inc.",
+   "slug": "abx-air-inc",
+   "iata": "GB",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ACT Havayollari A.S.",
+   "slug": "act-havayollari-as",
+   "iata": "9T",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AHK Air Hong Kong Limited",
+   "slug": "ahk-air-hong-kong-limited",
+   "iata": "LD",
+   "country": "Hong Kong",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AIS Airlines",
+   "slug": "ais-airlines",
+   "iata": "0C",
+   "country": "Netherlands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AIX Connect",
+   "slug": "aix-connect",
+   "iata": "I5",
+   "country": "India",
+   "type": "Low-cost"
+  },
+  {
+   "name": "ALPAVIA",
+   "slug": "alpavia",
+   "iata": "AL",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "ALROSA",
+   "slug": "alrosa",
+   "iata": "6R",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ANA Wings",
+   "slug": "ana-wings",
+   "iata": "EH",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "APA Guam",
+   "slug": "apa-guam",
+   "iata": "P9",
+   "country": "Guam",
+   "type": "Scheduled"
+  },
+  {
+   "name": "APG Airlines",
+   "slug": "apg-airlines",
+   "iata": "GP",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ARINC(Aeronautical Radio, Inc.)",
+   "slug": "arincaeronautical-radio-inc",
+   "iata": "XA",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AS SALAAM AIR",
+   "slug": "as-salaam-air",
+   "iata": "0W",
+   "country": "Tanzania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ASKY Airlines",
+   "slug": "asky-airlines",
+   "iata": "KP",
+   "country": "Togo",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ASL Airlines France",
+   "slug": "asl-airlines-france",
+   "iata": "5O",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ASL Airlines Ireland",
+   "slug": "asl-airlines-ireland",
+   "iata": "5H",
+   "country": "Ireland",
+   "type": "Low-cost"
+  },
+  {
+   "name": "ASL Airways",
+   "slug": "asl-airways",
+   "iata": "3V",
+   "country": "Belgium",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ATSA Airlines",
+   "slug": "atsa-airlines",
+   "iata": "4A",
+   "country": "Peru",
+   "type": "Low-cost"
+  },
+  {
+   "name": "AZUR Air",
+   "slug": "azur-air",
+   "iata": "ZF",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Abacus International Pte. Ltd.",
+   "slug": "abacus-international-pte-ltd",
+   "iata": "1B",
+   "country": "Singapore",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AccesRail",
+   "slug": "accesrail",
+   "iata": "9B",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Adria Airways",
+   "slug": "adria-airways",
+   "iata": "JP",
+   "country": "Slovenia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Advanced Air",
+   "slug": "advanced-air",
+   "iata": "AN",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aegean Airlines",
+   "slug": "aegean-airlines",
+   "iata": "A3",
+   "country": "Greece",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aer Lingus",
+   "slug": "aer-lingus",
+   "iata": "EI",
+   "country": "Ireland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aero Dili",
+   "slug": "aero-dili",
+   "iata": "8G",
+   "country": "Timor-Leste",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aero K",
+   "slug": "aero-k",
+   "iata": "RF",
+   "country": "South Korea",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Aero Mongolia",
+   "slug": "aero-mongolia",
+   "iata": "M0",
+   "country": "Mongolia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aero Nomad Airlines",
+   "slug": "aero-nomad-airlines",
+   "iata": "KA",
+   "country": "Kyrgyzstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aero-Charter Ukraine",
+   "slug": "aero-charter-ukraine",
+   "iata": "DW",
+   "country": "Ukraine",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aero-Tropics Air Services",
+   "slug": "aero-tropics-air-services",
+   "iata": "HC",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AeroItalia",
+   "slug": "aeroitalia",
+   "iata": "XZ",
+   "country": "Italy",
+   "type": "Low-cost"
+  },
+  {
+   "name": "AeroLink",
+   "slug": "aerolink",
+   "iata": "A8",
+   "country": "Uganda",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AeroStan",
+   "slug": "aerostan",
+   "iata": "KW",
+   "country": "Kyrgyzstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aeroflot",
+   "slug": "aeroflot",
+   "iata": "SU",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aerolineas Argentinas",
+   "slug": "aerolineas-argentinas",
+   "iata": "AR",
+   "country": "Argentina",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aerolineas Sosa",
+   "slug": "aerolineas-sosa",
+   "iata": "S0",
+   "country": "Honduras",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aeromar",
+   "slug": "aeromar",
+   "iata": "VW",
+   "country": "Mexico",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aeromexico Connect",
+   "slug": "aeromexico-connect",
+   "iata": "5D",
+   "country": "Mexico",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aeroméxico",
+   "slug": "aeromexico",
+   "iata": "AM",
+   "country": "Mexico",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aeronautical Telecommunications Ltd.(AEROTEL)",
+   "slug": "aeronautical-telecommunications-ltdaerotel",
+   "iata": "XI",
+   "country": "Jamaica",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aeropelican Air Services",
+   "slug": "aeropelican-air-services",
+   "iata": "OT",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aeroservis",
+   "slug": "aeroservis",
+   "iata": "АЯ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aerotranscargo",
+   "slug": "aerotranscargo",
+   "iata": "F5",
+   "country": "Moldova (Republic of Moldova)",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aerovias DAP",
+   "slug": "aerovias-dap",
+   "iata": "V5",
+   "country": "Chile",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Africa World Airlines",
+   "slug": "africa-world-airlines",
+   "iata": "AW",
+   "country": "Ghana",
+   "type": "Scheduled"
+  },
+  {
+   "name": "African Express Airways",
+   "slug": "african-express-airways",
+   "iata": "XU",
+   "country": "Kenya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Afrinat International Airlines",
+   "slug": "afrinat-international-airlines",
+   "iata": "2F",
+   "country": "Gambia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Afriqiyah Airways",
+   "slug": "afriqiyah-airways",
+   "iata": "8U",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aigle Azur",
+   "slug": "aigle-azur",
+   "iata": "ZI",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Albania",
+   "slug": "air-albania",
+   "iata": "ZB",
+   "country": "Reunion",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Algerie",
+   "slug": "air-algerie",
+   "iata": "AH",
+   "country": "Algeria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Alsie",
+   "slug": "air-alsie",
+   "iata": "6I",
+   "country": "Denmark",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Anka",
+   "slug": "air-anka",
+   "iata": "6K",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Antilles",
+   "slug": "air-antilles",
+   "iata": "4I",
+   "country": "France",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Arabia",
+   "slug": "air-arabia",
+   "iata": "G9",
+   "country": "United Arab Emirates",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Arabia Abu Dhabi",
+   "slug": "air-arabia-abu-dhabi",
+   "iata": "3L",
+   "country": "United Arab Emirates",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Arabia Egypt",
+   "slug": "air-arabia-egypt",
+   "iata": "E5",
+   "country": "Egypt",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Arabia Maroc",
+   "slug": "air-arabia-maroc",
+   "iata": "3O",
+   "country": "Morocco",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Astana",
+   "slug": "air-astana",
+   "iata": "KC",
+   "country": "Kazakhstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Atlanta",
+   "slug": "air-atlanta",
+   "iata": "CC",
+   "country": "Iceland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Atlanta Europe",
+   "slug": "air-atlanta-europe",
+   "iata": "CT",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Austral",
+   "slug": "air-austral",
+   "iata": "UU",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Berlin",
+   "slug": "air-berlin",
+   "iata": "HE",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Botswana",
+   "slug": "air-botswana",
+   "iata": "BP",
+   "country": "Botswana",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Burkina",
+   "slug": "air-burkina",
+   "iata": "2J",
+   "country": "Burkina Faso",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Busan",
+   "slug": "air-busan",
+   "iata": "BX",
+   "country": "South Korea",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Cairo",
+   "slug": "air-cairo",
+   "iata": "SM",
+   "country": "Egypt",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Caledonie",
+   "slug": "air-caledonie",
+   "iata": "TY",
+   "country": "New Caledonia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Cambodia",
+   "slug": "air-cambodia",
+   "iata": "K6",
+   "country": "Cambodia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Canada",
+   "slug": "air-canada",
+   "iata": "AC",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Canada Express",
+   "slug": "air-canada-express",
+   "iata": "QK",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Canada Rouge",
+   "slug": "air-canada-rouge",
+   "iata": "RV",
+   "country": "Canada",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Caraibes",
+   "slug": "air-caraibes",
+   "iata": "TX",
+   "country": "France (Guadeloupe, overseas territory)",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Cargo Carriers, LLC.",
+   "slug": "air-cargo-carriers-llc",
+   "iata": "2Q",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Cargo Germany",
+   "slug": "air-cargo-germany",
+   "iata": "6U",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Century",
+   "slug": "air-century",
+   "iata": "Y2",
+   "country": "Dominican Republic",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Changan",
+   "slug": "air-changan",
+   "iata": "9H",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air China",
+   "slug": "air-china",
+   "iata": "CA",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Congo",
+   "slug": "air-congo",
+   "iata": "4H",
+   "country": "Democratic Republic of the Congo",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Corsica",
+   "slug": "air-corsica",
+   "iata": "XK",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Cote D'Ivoire",
+   "slug": "air-cote-divoire",
+   "iata": "HF",
+   "country": "Côte d'Ivoire (Ivory Coast)",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Creebec",
+   "slug": "air-creebec",
+   "iata": "YN",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Dilijans",
+   "slug": "air-dilijans",
+   "iata": "RM",
+   "country": "Armenia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Djibouti",
+   "slug": "air-djibouti",
+   "iata": "DJ",
+   "country": "Djibouti",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Do",
+   "slug": "air-do",
+   "iata": "HD",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Europa",
+   "slug": "air-europa",
+   "iata": "UX",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Europa Express",
+   "slug": "air-europa-express",
+   "iata": "X5",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Excel",
+   "slug": "air-excel",
+   "iata": "0X",
+   "country": "Tanzania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Flamenco",
+   "slug": "air-flamenco",
+   "iata": "F4",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air France",
+   "slug": "air-france",
+   "iata": "AF",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Greenland",
+   "slug": "air-greenland",
+   "iata": "GL",
+   "country": "Greenland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Guilin",
+   "slug": "air-guilin",
+   "iata": "GT",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Iceland Connect",
+   "slug": "air-iceland-connect",
+   "iata": "NY",
+   "country": "Iceland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Incheon",
+   "slug": "air-incheon",
+   "iata": "KJ",
+   "country": "South Korea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air India",
+   "slug": "air-india",
+   "iata": "AI",
+   "country": "India",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air India Express",
+   "slug": "air-india-express",
+   "iata": "IX",
+   "country": "India",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Inuit",
+   "slug": "air-inuit",
+   "iata": "3H",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Japan",
+   "slug": "air-japan",
+   "iata": "NQ",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air KBZ",
+   "slug": "air-kbz",
+   "iata": "K7",
+   "country": "Myanmar",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Kiribati",
+   "slug": "air-kiribati",
+   "iata": "IK",
+   "country": "Kiribati",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Koryo",
+   "slug": "air-koryo",
+   "iata": "JS",
+   "country": "North Korea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Libya",
+   "slug": "air-libya",
+   "iata": "7I",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Link",
+   "slug": "air-link",
+   "iata": "LZ",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Lituanica",
+   "slug": "air-lituanica",
+   "iata": "LT",
+   "country": "Lithuania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Macau",
+   "slug": "air-macau",
+   "iata": "NX",
+   "country": "Macao",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Madagascar",
+   "slug": "air-madagascar",
+   "iata": "MD",
+   "country": "Madagascar",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Manas",
+   "slug": "air-manas",
+   "iata": "ZM",
+   "country": "Kyrgyzstan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Mauritius",
+   "slug": "air-mauritius",
+   "iata": "MK",
+   "country": "Mauritius",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Mekong",
+   "slug": "air-mekong",
+   "iata": "P8",
+   "country": "Vietnam",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Moana",
+   "slug": "air-moana",
+   "iata": "NM",
+   "country": "French Polynesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Mobility Command",
+   "slug": "air-mobility-command",
+   "iata": "MC",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Moldova",
+   "slug": "air-moldova",
+   "iata": "9U",
+   "country": "Moldova",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Montenegro",
+   "slug": "air-montenegro",
+   "iata": "4O",
+   "country": "Montenegro",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Namibia",
+   "slug": "air-namibia",
+   "iata": "SW",
+   "country": "Namibia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air New Zealand",
+   "slug": "air-new-zealand",
+   "iata": "NZ",
+   "country": "New Zealand",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Niamey",
+   "slug": "air-niamey",
+   "iata": "A7",
+   "country": "Niger",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Niugini",
+   "slug": "air-niugini",
+   "iata": "PX",
+   "country": "Papua New Guinea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air North",
+   "slug": "air-north",
+   "iata": "4N",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Nostrum",
+   "slug": "air-nostrum",
+   "iata": "YW",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Ocean Airlines",
+   "slug": "air-ocean-airlines",
+   "iata": "0O",
+   "country": "Ukraine",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Panama",
+   "slug": "air-panama",
+   "iata": "7P",
+   "country": "Panama",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Peace",
+   "slug": "air-peace",
+   "iata": "P4",
+   "country": "Honduras",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Premia",
+   "slug": "air-premia",
+   "iata": "YP",
+   "country": "South Korea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Rarotonga",
+   "slug": "air-rarotonga",
+   "iata": "GZ",
+   "country": "Cook Islands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Saint Pierre",
+   "slug": "air-saint-pierre",
+   "iata": "PJ",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Samarkand",
+   "slug": "air-samarkand",
+   "iata": "9S",
+   "country": "Uzbekistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Seoul",
+   "slug": "air-seoul",
+   "iata": "RS",
+   "country": "South Korea",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Air Serbia",
+   "slug": "air-serbia",
+   "iata": "JU",
+   "country": "Serbia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Seychelles",
+   "slug": "air-seychelles",
+   "iata": "HM",
+   "country": "Seychelles",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Tahiti",
+   "slug": "air-tahiti",
+   "iata": "VT",
+   "country": "French Polynesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Tahiti Nui",
+   "slug": "air-tahiti-nui",
+   "iata": "TN",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Tanzania",
+   "slug": "air-tanzania",
+   "iata": "TC",
+   "country": "Tanzania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Thanlwin",
+   "slug": "air-thanlwin",
+   "iata": "ST",
+   "country": "Myanmar",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Timor",
+   "slug": "air-timor",
+   "iata": "6C",
+   "country": "Timor-Leste",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Tindi",
+   "slug": "air-tindi",
+   "iata": "8T",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Transat",
+   "slug": "air-transat",
+   "iata": "TS",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Transport Association of Americad\\b\\a Airlines for America",
+   "slug": "air-transport-association-of-americadba-airlines-for-america",
+   "iata": "XD",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Transport International L.L.C.",
+   "slug": "air-transport-international-llc",
+   "iata": "8C",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Travel",
+   "slug": "air-travel",
+   "iata": "A6",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Vanuatu",
+   "slug": "air-vanuatu",
+   "iata": "NF",
+   "country": "Vanuatu",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Wisconsin",
+   "slug": "air-wisconsin",
+   "iata": "ZW",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air X Charter",
+   "slug": "air-x-charter",
+   "iata": "AX",
+   "country": "Malta",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Air Zimbabwe",
+   "slug": "air-zimbabwe",
+   "iata": "UM",
+   "country": "Zimbabwe",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AirAsia",
+   "slug": "airasia",
+   "iata": "AK",
+   "country": "Malaysia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "AirAsia Cambodia",
+   "slug": "airasia-cambodia",
+   "iata": "KT",
+   "country": "Cambodia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "AirAsia X",
+   "slug": "airasia-x",
+   "iata": "D7",
+   "country": "Malaysia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "AirBorneo",
+   "slug": "airborneo",
+   "iata": "MY",
+   "country": "Malaysia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AirBridgeCargo",
+   "slug": "airbridgecargo",
+   "iata": "RU",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AirConnect",
+   "slug": "airconnect",
+   "iata": "KS",
+   "country": "Romania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AirDolomiti",
+   "slug": "airdolomiti",
+   "iata": "EN",
+   "country": "Italy",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AirExplore",
+   "slug": "airexplore",
+   "iata": "ED",
+   "country": "Slovakia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AirKenya",
+   "slug": "airkenya",
+   "iata": "P2",
+   "country": "Kenya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AirSWIFT",
+   "slug": "airswift",
+   "iata": "T6",
+   "country": "Philippines",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aircalin",
+   "slug": "aircalin",
+   "iata": "SB",
+   "country": "New Caledonia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Airfast Indonesia",
+   "slug": "airfast-indonesia",
+   "iata": "1T",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Airhub Airlines",
+   "slug": "airhub-airlines",
+   "iata": "RE",
+   "country": "Malta",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Airline Urga",
+   "slug": "airline-urga",
+   "iata": "3N",
+   "country": "Ukraine",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Airlink",
+   "slug": "airlink",
+   "iata": "4Z",
+   "country": "Austria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Airmax S.A.",
+   "slug": "airmax-sa",
+   "iata": "X8",
+   "country": "Peru",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Airnorth",
+   "slug": "airnorth",
+   "iata": "TL",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Airshop B.V.",
+   "slug": "airshop-bv",
+   "iata": "FF",
+   "country": "Netherlands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Airzena",
+   "slug": "airzena",
+   "iata": "LV",
+   "country": "Georgia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ajet",
+   "slug": "ajet",
+   "iata": "VF",
+   "country": "Cyprus",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Ak Bars Aero",
+   "slug": "ak-bars-aero",
+   "iata": "2B",
+   "country": "Russia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Akasa Air",
+   "slug": "akasa-air",
+   "iata": "QP",
+   "country": "India",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Aklak Air",
+   "slug": "aklak-air",
+   "iata": "6L",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AlMasria Universal Airlines",
+   "slug": "almasria-universal-airlines",
+   "iata": "UJ",
+   "country": "Egypt",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Alaska Airlines",
+   "slug": "alaska-airlines",
+   "iata": "AS",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Alaska Seaplanes",
+   "slug": "alaska-seaplanes",
+   "iata": "J5",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "AlbaStar",
+   "slug": "albastar",
+   "iata": "AP",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Alexandria Airlines",
+   "slug": "alexandria-airlines",
+   "iata": "DQ",
+   "country": "Egypt",
+   "type": "Scheduled"
+  },
+  {
+   "name": "All Nippon Airways",
+   "slug": "all-nippon-airways",
+   "iata": "NH",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Allegiant Air",
+   "slug": "allegiant-air",
+   "iata": "G4",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Alliance Air",
+   "slug": "alliance-air",
+   "iata": "9I",
+   "country": "India",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Alliance Airlines",
+   "slug": "alliance-airlines",
+   "iata": "QQ",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Alpha Air Transport",
+   "slug": "alpha-air-transport",
+   "iata": "7U",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Alsa Grupo SLU",
+   "slug": "alsa-grupo-slu",
+   "iata": "5I",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Amadeus IT Group SA",
+   "slug": "amadeus-it-group-sa",
+   "iata": "1A",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Amakusa Airlines",
+   "slug": "amakusa-airlines",
+   "iata": "MZ",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Amaszonas",
+   "slug": "amaszonas",
+   "iata": "Z8",
+   "country": "Bolivia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Amaszonas Uruguay",
+   "slug": "amaszonas-uruguay",
+   "iata": "Z7",
+   "country": "Uruguay",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Amelia",
+   "slug": "amelia",
+   "iata": "8R",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "American Airlines",
+   "slug": "american-airlines",
+   "iata": "AA",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "American Eagle",
+   "slug": "american-eagle",
+   "iata": "ZZ",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Amerijet International Inc.",
+   "slug": "amerijet-international-inc",
+   "iata": "M6",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Amtrak",
+   "slug": "amtrak",
+   "iata": "2V",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Andes Lineas Aereas",
+   "slug": "andes-lineas-aereas",
+   "iata": "O4",
+   "country": "Argentina",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Angara Airlines",
+   "slug": "angara-airlines",
+   "iata": "2G",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Anguilla Air Services",
+   "slug": "anguilla-air-services",
+   "iata": "Q3",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Animawings",
+   "slug": "animawings",
+   "iata": "A2",
+   "country": "Romania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Arajet",
+   "slug": "arajet",
+   "iata": "DM",
+   "country": "Dominican Republic",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Arctic Transportation Services, Inc Ryan Air",
+   "slug": "arctic-transportation-services-inc-ryan-air",
+   "iata": "7S",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ariana Afghan Airlines",
+   "slug": "ariana-afghan-airlines",
+   "iata": "FG",
+   "country": "Afghanistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Arik Air",
+   "slug": "arik-air",
+   "iata": "W3",
+   "country": "Nigeria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Arkhangelsk-2",
+   "slug": "arkhangelsk-2",
+   "iata": "АЧ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Arkia",
+   "slug": "arkia",
+   "iata": "IZ",
+   "country": "Israel",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Arktika",
+   "slug": "arktika",
+   "iata": "СИ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Armenia Airways",
+   "slug": "armenia-airways",
+   "iata": "6A",
+   "country": "Armenia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Armenian Airlines",
+   "slug": "armenian-airlines",
+   "iata": "JI",
+   "country": "Armenia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aruba Airlines",
+   "slug": "aruba-airlines",
+   "iata": "AG",
+   "country": "Aruba",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ascend Airways",
+   "slug": "ascend-airways",
+   "iata": "YD",
+   "country": "Belarus",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aserca Airlines",
+   "slug": "aserca-airlines",
+   "iata": "R7",
+   "country": "Venezuela",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Asian Wings Airways",
+   "slug": "asian-wings-airways",
+   "iata": "YJ",
+   "country": "Burma",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Asiana Airlines",
+   "slug": "asiana-airlines",
+   "iata": "OZ",
+   "country": "South Korea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Asman Airlines",
+   "slug": "asman-airlines",
+   "iata": "MN",
+   "country": "Kyrgyzstan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Atlantic Airways",
+   "slug": "atlantic-airways",
+   "iata": "RC",
+   "country": "Faroe Islands",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Atlas Air",
+   "slug": "atlas-air",
+   "iata": "5Y",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Atran",
+   "slug": "atran",
+   "iata": "V8",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Auric Air",
+   "slug": "auric-air",
+   "iata": "UI",
+   "country": "Tanzania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aurigny",
+   "slug": "aurigny",
+   "iata": "GR",
+   "country": "Guernsey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aurora",
+   "slug": "aurora",
+   "iata": "HZ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Austral Lineas Aereas",
+   "slug": "austral-lineas-aereas",
+   "iata": "AU",
+   "country": "Argentina",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Australian Airlines",
+   "slug": "australian-airlines",
+   "iata": "AO",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Austrian Airlines",
+   "slug": "austrian-airlines",
+   "iata": "OS",
+   "country": "Austria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avelo Airlines",
+   "slug": "avelo-airlines",
+   "iata": "XP",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Avia Traffic Company",
+   "slug": "avia-traffic-company",
+   "iata": "ТФ",
+   "country": "Kyrgyzstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aviacon Zitotrans Air Company JSC",
+   "slug": "aviacon-zitotrans-air-company-jsc",
+   "iata": "ZR",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avialeasing Aviation Company",
+   "slug": "avialeasing-aviation-company",
+   "iata": "V2",
+   "country": "Uzbekistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avianca",
+   "slug": "avianca",
+   "iata": "AV",
+   "country": "Colombia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avianca Brazil",
+   "slug": "avianca-brazil",
+   "iata": "O6",
+   "country": "Brazil",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avianca Costa Rica",
+   "slug": "avianca-costa-rica",
+   "iata": "LR",
+   "country": "Costa Rica",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avianca Ecuador",
+   "slug": "avianca-ecuador",
+   "iata": "2K",
+   "country": "Ecuador",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avianca El Salvador",
+   "slug": "avianca-el-salvador",
+   "iata": "TA",
+   "country": "El Salvador",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avianca Guatemala",
+   "slug": "avianca-guatemala",
+   "iata": "GU",
+   "country": "Guatemala",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avianca Peru",
+   "slug": "avianca-peru",
+   "iata": "T0",
+   "country": "Peru",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aviastar-TU",
+   "slug": "aviastar-tu",
+   "iata": "4B",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avion Express Lithuania",
+   "slug": "avion-express-lithuania",
+   "iata": "X9",
+   "country": "Lithuania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avion Express Malta",
+   "slug": "avion-express-malta",
+   "iata": "4X",
+   "country": "Malta",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Avior Airlines",
+   "slug": "avior-airlines",
+   "iata": "3R",
+   "country": "Venezuela",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Azerbaijan Airlines",
+   "slug": "azerbaijan-airlines",
+   "iata": "J2",
+   "country": "Azerbaijan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Azimuth",
+   "slug": "azimuth",
+   "iata": "A4",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Aztec Airways",
+   "slug": "aztec-airways",
+   "iata": "AJ",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Azul Airlines",
+   "slug": "azul-airlines",
+   "iata": "AD",
+   "country": "Brazil",
+   "type": "Low-cost"
+  },
+  {
+   "name": "BA Cityflyer",
+   "slug": "ba-cityflyer",
+   "iata": "CJ",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BA Euroflyer",
+   "slug": "ba-euroflyer",
+   "iata": "A0",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BB Airways",
+   "slug": "bb-airways",
+   "iata": "BO",
+   "country": "Nepal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BBN Airlines",
+   "slug": "bbn-airlines",
+   "iata": "B5",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BH Air",
+   "slug": "bh-air",
+   "iata": "8H",
+   "country": "Bulgaria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BMI regional",
+   "slug": "bmi-regional",
+   "iata": "BM",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BQB Lineas Aereas",
+   "slug": "bqb-lineas-aereas",
+   "iata": "5Q",
+   "country": "Uruguay",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BRA",
+   "slug": "bra",
+   "iata": "TF",
+   "country": "Sweden",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BVI Airways",
+   "slug": "bvi-airways",
+   "iata": "XV",
+   "country": "British Virgin Islands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Badr Airlines",
+   "slug": "badr-airlines",
+   "iata": "J4",
+   "country": "Sudan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bahamasair",
+   "slug": "bahamasair",
+   "iata": "UP",
+   "country": "Bahamas",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Balkan",
+   "slug": "balkan",
+   "iata": "БА",
+   "country": "Bulgaria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bamboo Airways",
+   "slug": "bamboo-airways",
+   "iata": "QH",
+   "country": "Vietnam",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bangkok Airways",
+   "slug": "bangkok-airways",
+   "iata": "PG",
+   "country": "Thailand",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bassaka Air",
+   "slug": "bassaka-air",
+   "iata": "5B",
+   "country": "Cambodia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Batik Air",
+   "slug": "batik-air",
+   "iata": "ID",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Batik Air Malaysia",
+   "slug": "batik-air-malaysia",
+   "iata": "OD",
+   "country": "Malaysia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BeOnd",
+   "slug": "beond",
+   "iata": "B4",
+   "country": "Maldives",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bearskin Airlines",
+   "slug": "bearskin-airlines",
+   "iata": "JV",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bees Airline",
+   "slug": "bees-airline",
+   "iata": "7B",
+   "country": "Ukraine",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Beijing Capital Airlines",
+   "slug": "beijing-capital-airlines",
+   "iata": "JD",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Belavia",
+   "slug": "belavia",
+   "iata": "B2",
+   "country": "Belarus",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bemidji Airlines",
+   "slug": "bemidji-airlines",
+   "iata": "CH",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bering Air",
+   "slug": "bering-air",
+   "iata": "8E",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Berjaya Air",
+   "slug": "berjaya-air",
+   "iata": "J8",
+   "country": "Malaysia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "BermudAir",
+   "slug": "bermudair",
+   "iata": "2T",
+   "country": "Bermuda",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Berniq Airways",
+   "slug": "berniq-airways",
+   "iata": "NB",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bhutan Airlines",
+   "slug": "bhutan-airlines",
+   "iata": "B3",
+   "country": "Bhutan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Biman Bangladesh Airlines",
+   "slug": "biman-bangladesh-airlines",
+   "iata": "BG",
+   "country": "Bangladesh",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Binter Canarias",
+   "slug": "binter-canarias",
+   "iata": "NT",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Blue Air",
+   "slug": "blue-air",
+   "iata": "0B",
+   "country": "Romania",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Blue Bird Airways",
+   "slug": "blue-bird-airways",
+   "iata": "BZ",
+   "country": "Kenya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Blue Islands",
+   "slug": "blue-islands",
+   "iata": "SI",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Blue1",
+   "slug": "blue1",
+   "iata": "KF",
+   "country": "Finland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Boliviana de Aviación",
+   "slug": "boliviana-de-aviacion",
+   "iata": "OB",
+   "country": "Bolivia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bonza",
+   "slug": "bonza",
+   "iata": "AB",
+   "country": "Australia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Breeze Airways",
+   "slug": "breeze-airways",
+   "iata": "MX",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Bringer Air Cargo",
+   "slug": "bringer-air-cargo",
+   "iata": "E6",
+   "country": "Brazil",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Brit Air",
+   "slug": "brit-air",
+   "iata": "DB",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "British Airways",
+   "slug": "british-airways",
+   "iata": "BA",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Brussels Airlines",
+   "slug": "brussels-airlines",
+   "iata": "SN",
+   "country": "Belgium",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Buddha Air",
+   "slug": "buddha-air",
+   "iata": "U4",
+   "country": "Nepal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Buffalo Airways Ltd.",
+   "slug": "buffalo-airways-ltd",
+   "iata": "J0",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bul Air",
+   "slug": "bul-air",
+   "iata": "LB",
+   "country": "India",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Bulgaria Air",
+   "slug": "bulgaria-air",
+   "iata": "FB",
+   "country": "Bulgaria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Buraq Air",
+   "slug": "buraq-air",
+   "iata": "UZ",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Buta Airways",
+   "slug": "buta-airways",
+   "iata": "55",
+   "country": "Azerbaijan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Buzz",
+   "slug": "buzz",
+   "iata": "RR",
+   "country": "Poland",
+   "type": "Low-cost"
+  },
+  {
+   "name": "CEIBA Intercontinental",
+   "slug": "ceiba-intercontinental",
+   "iata": "C2",
+   "country": "Equatorial Guinea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "CJSC Royal Flight airlines",
+   "slug": "cjsc-royal-flight-airlines",
+   "iata": "4R",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "CM Airlines",
+   "slug": "cm-airlines",
+   "iata": "H5",
+   "country": "Honduras",
+   "type": "Scheduled"
+  },
+  {
+   "name": "CSA Czech Airlines",
+   "slug": "csa-czech-airlines",
+   "iata": "OK",
+   "country": "Czech Republic",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cabo Verde Airlines",
+   "slug": "cabo-verde-airlines",
+   "iata": "VR",
+   "country": "Cape Verde",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Caicos Express Airways",
+   "slug": "caicos-express-airways",
+   "iata": "9Q",
+   "country": "Turks and Caicos Islands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Calima Aviacion S.L",
+   "slug": "calima-aviacion-sl",
+   "iata": "3C",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Calm Air",
+   "slug": "calm-air",
+   "iata": "MO",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Camair-Co",
+   "slug": "camair-co",
+   "iata": "QC",
+   "country": "Cameroon",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cambodia Airways",
+   "slug": "cambodia-airways",
+   "iata": "KR",
+   "country": "Cambodia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Canadian North",
+   "slug": "canadian-north",
+   "iata": "5T",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Canaryfly",
+   "slug": "canaryfly",
+   "iata": "PM",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cape Air",
+   "slug": "cape-air",
+   "iata": "9K",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cargojet Airways Ltd.",
+   "slug": "cargojet-airways-ltd",
+   "iata": "W8",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cargolux",
+   "slug": "cargolux",
+   "iata": "CV",
+   "country": "Luxembourg",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Caribbean Air Export Import Inc.",
+   "slug": "caribbean-air-export-import-inc",
+   "iata": "CB",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Caribbean Airlines",
+   "slug": "caribbean-airlines",
+   "iata": "BW",
+   "country": "Trinidad and Tobago",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Carpatair",
+   "slug": "carpatair",
+   "iata": "V3",
+   "country": "Romania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cathay Pacific",
+   "slug": "cathay-pacific",
+   "iata": "CX",
+   "country": "Hong Kong",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cayman Airways",
+   "slug": "cayman-airways",
+   "iata": "KX",
+   "country": "Cayman Islands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cebgo",
+   "slug": "cebgo",
+   "iata": "DG",
+   "country": "Philippines",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Cebu Pacific",
+   "slug": "cebu-pacific",
+   "iata": "5J",
+   "country": "Philippines",
+   "type": "Low-cost"
+  },
+  {
+   "name": "CemAir",
+   "slug": "cemair",
+   "iata": "5Z",
+   "country": "South Africa",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Central Airlines",
+   "slug": "central-airlines",
+   "iata": "I9",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Central Mountain Air",
+   "slug": "central-mountain-air",
+   "iata": "9M",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Centrum Air",
+   "slug": "centrum-air",
+   "iata": "C6",
+   "country": "Uzbekistan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Chair Airlines",
+   "slug": "chair-airlines",
+   "iata": "GM",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Chalair Aviation",
+   "slug": "chalair-aviation",
+   "iata": "CE",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Challenge Air Cargo Ltd",
+   "slug": "challenge-air-cargo-ltd",
+   "iata": "X6",
+   "country": "Malta",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Challenge Airlines BE",
+   "slug": "challenge-airlines-be",
+   "iata": "X7",
+   "country": "Belgium",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Challenge Airlines IL",
+   "slug": "challenge-airlines-il",
+   "iata": "5C",
+   "country": "Israel",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Charter Air Transport, Inc.",
+   "slug": "charter-air-transport-inc",
+   "iata": "VC",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Chautauqua Airlines",
+   "slug": "chautauqua-airlines",
+   "iata": "RP",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Chengdu Airlines",
+   "slug": "chengdu-airlines",
+   "iata": "EU",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "China Airlines",
+   "slug": "china-airlines",
+   "iata": "CI",
+   "country": "Taiwan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "China Cargo Airlines",
+   "slug": "china-cargo-airlines",
+   "iata": "CK",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "China Eastern",
+   "slug": "china-eastern",
+   "iata": "MU",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "China Express Airlines",
+   "slug": "china-express-airlines",
+   "iata": "G5",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "China Postal Airlines Ltd.",
+   "slug": "china-postal-airlines-ltd",
+   "iata": "CF",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "China Southern Airlines",
+   "slug": "china-southern-airlines",
+   "iata": "CZ",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "China United Airlines",
+   "slug": "china-united-airlines",
+   "iata": "KN",
+   "country": "China",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Chongqing Airlines",
+   "slug": "chongqing-airlines",
+   "iata": "OQ",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Chu Kong Passenger Transport Co. Ltd.",
+   "slug": "chu-kong-passenger-transport-co-ltd",
+   "iata": "3A",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cimber",
+   "slug": "cimber",
+   "iata": "QA",
+   "country": "Denmark",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cinnamon Air",
+   "slug": "cinnamon-air",
+   "iata": "C7",
+   "country": "Sri Lanka",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Citilink",
+   "slug": "citilink",
+   "iata": "QG",
+   "country": "Indonesia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Cityjet",
+   "slug": "cityjet",
+   "iata": "WX",
+   "country": "Ireland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Clic",
+   "slug": "clic",
+   "iata": "VE",
+   "country": "Colombia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Coastal Aviation",
+   "slug": "coastal-aviation",
+   "iata": "CQ",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cobalt Air",
+   "slug": "cobalt-air",
+   "iata": "CO",
+   "country": "Cyprus",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Colorful Guizhou Airlines",
+   "slug": "colorful-guizhou-airlines",
+   "iata": "GY",
+   "country": "China",
+   "type": "Low-cost"
+  },
+  {
+   "name": "CommutAir",
+   "slug": "commutair",
+   "iata": "C5",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Compass Airlines",
+   "slug": "compass-airlines",
+   "iata": "CP",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Condor",
+   "slug": "condor",
+   "iata": "DF",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Conquest Air, Inc.",
+   "slug": "conquest-air-inc",
+   "iata": "C4",
+   "country": "Mexico",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Contour Airlines",
+   "slug": "contour-airlines",
+   "iata": "LF",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Conviasa",
+   "slug": "conviasa",
+   "iata": "V0",
+   "country": "Venezuela",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Copa Airlines",
+   "slug": "copa-airlines",
+   "iata": "CM",
+   "country": "Panama",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Corendon Airlines",
+   "slug": "corendon-airlines",
+   "iata": "XC",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Corendon Airlines Europe",
+   "slug": "corendon-airlines-europe",
+   "iata": "XR",
+   "country": "Malta",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Corendon Dutch Airlines",
+   "slug": "corendon-dutch-airlines",
+   "iata": "CD",
+   "country": "Netherlands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Corsair International",
+   "slug": "corsair-international",
+   "iata": "SS",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Croatia Airlines",
+   "slug": "croatia-airlines",
+   "iata": "OU",
+   "country": "Croatia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cronos Airlines",
+   "slug": "cronos-airlines",
+   "iata": "C8",
+   "country": "Equatorial Guinea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Crown Airlines",
+   "slug": "crown-airlines",
+   "iata": "FQ",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cubana",
+   "slug": "cubana",
+   "iata": "CU",
+   "country": "Cuba",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Cyprus Airways",
+   "slug": "cyprus-airways",
+   "iata": "CY",
+   "country": "Cyprus",
+   "type": "Scheduled"
+  },
+  {
+   "name": "DHL Aero Expreso S.A.",
+   "slug": "dhl-aero-expreso-sa",
+   "iata": "D5",
+   "country": "Panama",
+   "type": "Scheduled"
+  },
+  {
+   "name": "DHL Air Limited",
+   "slug": "dhl-air-limited",
+   "iata": "D0",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "DHL Aviation EEMEA B.S.C.(c)",
+   "slug": "dhl-aviation-eemea-bscc",
+   "iata": "ES",
+   "country": "Bahrain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "DHL de Guatemala",
+   "slug": "dhl-de-guatemala",
+   "iata": "L3",
+   "country": "Guatemala",
+   "type": "Scheduled"
+  },
+  {
+   "name": "DOT LT",
+   "slug": "dot-lt",
+   "iata": "R6",
+   "country": "Lithuania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Daallo Airlines",
+   "slug": "daallo-airlines",
+   "iata": "D3",
+   "country": "Djibouti",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Dan Air",
+   "slug": "dan-air",
+   "iata": "DN",
+   "country": "India",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Dana Air",
+   "slug": "dana-air",
+   "iata": "9J",
+   "country": "Nigeria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Danish Air Transport",
+   "slug": "danish-air-transport",
+   "iata": "DX",
+   "country": "Denmark",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Delta Air Lines",
+   "slug": "delta-air-lines",
+   "iata": "DL",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Denver Air Connection (DAC)",
+   "slug": "denver-air-connection-dac",
+   "iata": "KG",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Department of National Defence",
+   "slug": "department-of-national-defence",
+   "iata": "YF",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Deutsche Bahn AG",
+   "slug": "deutsche-bahn-ag",
+   "iata": "2A",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Discover Airlines",
+   "slug": "discover-airlines",
+   "iata": "4Y",
+   "country": "Germany",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Dniproavia",
+   "slug": "dniproavia",
+   "iata": "Z6",
+   "country": "Ukraine",
+   "type": "Scheduled"
+  },
+  {
+   "name": "DoKaSch",
+   "slug": "dokasch",
+   "iata": "3D",
+   "country": "North Macedonia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Dobrolet",
+   "slug": "dobrolet",
+   "iata": "QD",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Donavia",
+   "slug": "donavia",
+   "iata": "D9",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Donghai Airlines",
+   "slug": "donghai-airlines",
+   "iata": "DZ",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Drukair",
+   "slug": "drukair",
+   "iata": "KB",
+   "country": "Bhutan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "E-Savtravel",
+   "slug": "e-savtravel",
+   "iata": "L1",
+   "country": "Brazil",
+   "type": "Scheduled"
+  },
+  {
+   "name": "EL AL",
+   "slug": "el-al",
+   "iata": "LY",
+   "country": "Israel",
+   "type": "Scheduled"
+  },
+  {
+   "name": "EVA Air",
+   "slug": "eva-air",
+   "iata": "BR",
+   "country": "Taiwan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Eagle Atlantic Airlines",
+   "slug": "eagle-atlantic-airlines",
+   "iata": "E2",
+   "country": "Ghana",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Eaglexpress Air Charter Sdn.Bhd.dbaEaglexpress Air",
+   "slug": "eaglexpress-air-charter-sdnbhddbaeaglexpress-air",
+   "iata": "9A",
+   "country": "Malaysia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Eastar Jet",
+   "slug": "eastar-jet",
+   "iata": "ZE",
+   "country": "South Korea",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Eastern Air Lines",
+   "slug": "eastern-air-lines",
+   "iata": "EA",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Eastern Airlines, LLC",
+   "slug": "eastern-airlines-llc",
+   "iata": "2D",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Eastern Airways",
+   "slug": "eastern-airways",
+   "iata": "T3",
+   "country": "United Kingdom",
+   "type": "Low-cost"
+  },
+  {
+   "name": "EcoJet",
+   "slug": "ecojet",
+   "iata": "8J",
+   "country": "Bolivia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Edelweiss Air",
+   "slug": "edelweiss-air",
+   "iata": "WK",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Egyptair",
+   "slug": "egyptair",
+   "iata": "MS",
+   "country": "Egypt",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Electra Airways",
+   "slug": "electra-airways",
+   "iata": "3E",
+   "country": "Bulgaria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Electronic Data Systems Corporation",
+   "slug": "electronic-data-systems-corporation",
+   "iata": "1Y",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ellinair",
+   "slug": "ellinair",
+   "iata": "EL",
+   "country": "Greece",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Emetebe Airlines",
+   "slug": "emetebe-airlines",
+   "iata": "0A",
+   "country": "Ecuador",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Emirates",
+   "slug": "emirates",
+   "iata": "EK",
+   "country": "United Arab Emirates",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Empire Airlines",
+   "slug": "empire-airlines",
+   "iata": "EM",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Endeavor Air",
+   "slug": "endeavor-air",
+   "iata": "9E",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Enter Air",
+   "slug": "enter-air",
+   "iata": "E4",
+   "country": "Poland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Envoy Air",
+   "slug": "envoy-air",
+   "iata": "MQ",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Equaflight",
+   "slug": "equaflight",
+   "iata": "E7",
+   "country": "Republic of the Congo",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Eritrean Airlines",
+   "slug": "eritrean-airlines",
+   "iata": "B8",
+   "country": "Eritrea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ernest Airlines",
+   "slug": "ernest-airlines",
+   "iata": "EG",
+   "country": "Italy",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Eswatini Air",
+   "slug": "eswatini-air",
+   "iata": "RN",
+   "country": "Eswatini",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ethiopian Airlines",
+   "slug": "ethiopian-airlines",
+   "iata": "ET",
+   "country": "Ethiopia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Etihad Airways",
+   "slug": "etihad-airways",
+   "iata": "EY",
+   "country": "United Arab Emirates",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Euro-Asia Air",
+   "slug": "euro-asia-air",
+   "iata": "6Z",
+   "country": "Kazakhstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "EuroAtlantic Airways",
+   "slug": "euroatlantic-airways",
+   "iata": "YU",
+   "country": "Portugal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Euroairlines",
+   "slug": "euroairlines",
+   "iata": "Q4",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Eurolot",
+   "slug": "eurolot",
+   "iata": "K2",
+   "country": "Poland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "European Air Charter",
+   "slug": "european-air-charter",
+   "iata": "H6",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "European Air Transport",
+   "slug": "european-air-transport",
+   "iata": "QY",
+   "country": "Belgium",
+   "type": "Scheduled"
+  },
+  {
+   "name": "European Cargo Services BV",
+   "slug": "european-cargo-services-bv",
+   "iata": "EJ",
+   "country": "Netherlands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Eurostar",
+   "slug": "eurostar",
+   "iata": "9F",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Eurowings",
+   "slug": "eurowings",
+   "iata": "EW",
+   "country": "Germany",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Everts Air Cargo",
+   "slug": "everts-air-cargo",
+   "iata": "5V",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Express Airline",
+   "slug": "express-airline",
+   "iata": "7A",
+   "country": "Tunisia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ExpressJet",
+   "slug": "expressjet",
+   "iata": "EV",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Eznis Airways",
+   "slug": "eznis-airways",
+   "iata": "MG",
+   "country": "Mongolia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FAT Far Eastern Air Transport",
+   "slug": "fat-far-eastern-air-transport",
+   "iata": "FE",
+   "country": "Taiwan (Republic of China)",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FLYONE Armenia",
+   "slug": "flyone-armenia",
+   "iata": "3F",
+   "country": "Armenia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "FLYYO",
+   "slug": "flyyo",
+   "iata": "4D",
+   "country": "Romania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fastjet Zimbabwe",
+   "slug": "fastjet-zimbabwe",
+   "iata": "FN",
+   "country": "Zimbabwe",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FedEx",
+   "slug": "fedex",
+   "iata": "FX",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Federal Air",
+   "slug": "federal-air",
+   "iata": "7V",
+   "country": "South Africa",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fiji Airways",
+   "slug": "fiji-airways",
+   "iata": "FJ",
+   "country": "Fiji",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Finist'air",
+   "slug": "finistair",
+   "iata": "0D",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Finnair",
+   "slug": "finnair",
+   "iata": "AY",
+   "country": "Finland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Firefly",
+   "slug": "firefly",
+   "iata": "FY",
+   "country": "Malaysia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "First Air",
+   "slug": "first-air",
+   "iata": "7F",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FitsAir",
+   "slug": "fitsair",
+   "iata": "8D",
+   "country": "Sri Lanka",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Flair Airlines",
+   "slug": "flair-airlines",
+   "iata": "F8",
+   "country": "Canada",
+   "type": "Low-cost"
+  },
+  {
+   "name": "FlexFlight",
+   "slug": "flexflight",
+   "iata": "W2",
+   "country": "Denmark",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Flightlink",
+   "slug": "flightlink",
+   "iata": "YS",
+   "country": "Tanzania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fly All Ways",
+   "slug": "fly-all-ways",
+   "iata": "8W",
+   "country": "Suriname",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fly Arna",
+   "slug": "fly-arna",
+   "iata": "G6",
+   "country": "Armenia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Fly Baghdad",
+   "slug": "fly-baghdad",
+   "iata": "IF",
+   "country": "Iraq",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fly Branson Travel dba Branson AirExpress",
+   "slug": "fly-branson-travel-dba-branson-airexpress",
+   "iata": "1X",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fly CamInter",
+   "slug": "fly-caminter",
+   "iata": "EF",
+   "country": "Cambodia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Fly Jordan",
+   "slug": "fly-jordan",
+   "iata": "F0",
+   "country": "Jordan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fly Lili",
+   "slug": "fly-lili",
+   "iata": "FL",
+   "country": "Romania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fly One",
+   "slug": "fly-one",
+   "iata": "5F",
+   "country": "Moldova",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Fly One (Romania)",
+   "slug": "fly-one-romania",
+   "iata": "OE",
+   "country": "Moldova",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Fly Oya",
+   "slug": "fly-oya",
+   "iata": "YI",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fly Pro",
+   "slug": "fly-pro",
+   "iata": "FP",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fly Red Sea",
+   "slug": "fly-red-sea",
+   "iata": "Z4",
+   "country": "Saudi Arabia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fly2Sky",
+   "slug": "fly2sky",
+   "iata": "F6",
+   "country": "Bulgaria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FlyALS",
+   "slug": "flyals",
+   "iata": "0F",
+   "country": "Kenya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FlyAden",
+   "slug": "flyaden",
+   "iata": "DH",
+   "country": "Yemen",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FlyArystan",
+   "slug": "flyarystan",
+   "iata": "FS",
+   "country": "Kazakhstan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "FlyBosnia",
+   "slug": "flybosnia",
+   "iata": "6W",
+   "country": "Bosnia and Herzegovina",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FlyEgypt",
+   "slug": "flyegypt",
+   "iata": "FT",
+   "country": "Egypt",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FlyGabon",
+   "slug": "flygabon",
+   "iata": "J7",
+   "country": "Gabon",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FlyJinnah",
+   "slug": "flyjinnah",
+   "iata": "9P",
+   "country": "Pakistan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "FlyKhiva",
+   "slug": "flykhiva",
+   "iata": "2U",
+   "country": "Uzbekistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FlyNamibia",
+   "slug": "flynamibia",
+   "iata": "WV",
+   "country": "Namibia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "FlyOne Asia",
+   "slug": "flyone-asia",
+   "iata": "7Q",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "FlySafair",
+   "slug": "flysafair",
+   "iata": "FA",
+   "country": "South Africa",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Flybe",
+   "slug": "flybe",
+   "iata": "BE",
+   "country": "United Kingdom",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Flybondi",
+   "slug": "flybondi",
+   "iata": "FO",
+   "country": "Argentina",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Flybusteam",
+   "slug": "flybusteam",
+   "iata": "ГЭ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Flydubai",
+   "slug": "flydubai",
+   "iata": "FZ",
+   "country": "United Arab Emirates",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Flynas",
+   "slug": "flynas",
+   "iata": "XY",
+   "country": "Saudi Arabia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Freebird Airlines",
+   "slug": "freebird-airlines",
+   "iata": "FH",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Freedom Airline Express",
+   "slug": "freedom-airline-express",
+   "iata": "4F",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "French Armed Forces",
+   "slug": "french-armed-forces",
+   "iata": "RD",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "French Bee",
+   "slug": "french-bee",
+   "iata": "BF",
+   "country": "France",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Frontier Airlines",
+   "slug": "frontier-airlines",
+   "iata": "F9",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Fuji Dream Airlines",
+   "slug": "fuji-dream-airlines",
+   "iata": "JH",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Fuzhou Airlines",
+   "slug": "fuzhou-airlines",
+   "iata": "FU",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "GP Aviation",
+   "slug": "gp-aviation",
+   "iata": "IV",
+   "country": "Bulgaria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "GX Airlines",
+   "slug": "gx-airlines",
+   "iata": "GX",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Galileo International",
+   "slug": "galileo-international",
+   "iata": "1V",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Gambia Bird Airlines",
+   "slug": "gambia-bird-airlines",
+   "iata": "3G",
+   "country": "Gambia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Garuda Indonesia",
+   "slug": "garuda-indonesia",
+   "iata": "GA",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Gazpromavia",
+   "slug": "gazpromavia",
+   "iata": "4G",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Georgian Airways",
+   "slug": "georgian-airways",
+   "iata": "A9",
+   "country": "Georgia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Georgian Wings",
+   "slug": "georgian-wings",
+   "iata": "D4",
+   "country": "Georgia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "German Airways",
+   "slug": "german-airways",
+   "iata": "ZQ",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "GetJet Airlines",
+   "slug": "getjet-airlines",
+   "iata": "GW",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ghadames Air",
+   "slug": "ghadames-air",
+   "iata": "NJ",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Global Aviation (GEA)",
+   "slug": "global-aviation-gea",
+   "iata": "IG",
+   "country": "South Africa",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Global Aviation Services Group",
+   "slug": "global-aviation-services-group",
+   "iata": "5S",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Global Feeder Services",
+   "slug": "global-feeder-services",
+   "iata": "GC",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "GlobeAir",
+   "slug": "globeair",
+   "iata": "0K",
+   "country": "Austria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Globus Airlines",
+   "slug": "globus-airlines",
+   "iata": "GH",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Globus LLС",
+   "slug": "globus-lls",
+   "iata": "XT",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "GoJet Airlines",
+   "slug": "gojet-airlines",
+   "iata": "G7",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Gol Transportes Aéreos",
+   "slug": "gol-transportes-aereos",
+   "iata": "G3",
+   "country": "Brazil",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Grand Canyon Scenic Airlines",
+   "slug": "grand-canyon-scenic-airlines",
+   "iata": "YR",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Grand China Air",
+   "slug": "grand-china-air",
+   "iata": "CN",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Grant Aviation",
+   "slug": "grant-aviation",
+   "iata": "GV",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Great Lakes Airlines",
+   "slug": "great-lakes-airlines",
+   "iata": "ZK",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Greater Bay Airlines",
+   "slug": "greater-bay-airlines",
+   "iata": "HB",
+   "country": "Hong Kong",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Green Africa Airways",
+   "slug": "green-africa-airways",
+   "iata": "Q9",
+   "country": "Nigeria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Grumeti Air",
+   "slug": "grumeti-air",
+   "iata": "0G",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Gulf Air",
+   "slug": "gulf-air",
+   "iata": "GF",
+   "country": "Bahrain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "GullivAir",
+   "slug": "gullivair",
+   "iata": "G2",
+   "country": "Bulgaria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Guyane Express Fly",
+   "slug": "guyane-express-fly",
+   "iata": "G8",
+   "country": "French Guiana",
+   "type": "Low-cost"
+  },
+  {
+   "name": "HK Express",
+   "slug": "hk-express",
+   "iata": "UO",
+   "country": "Hong Kong SAR of China",
+   "type": "Low-cost"
+  },
+  {
+   "name": "HOP!",
+   "slug": "hop",
+   "iata": "A5",
+   "country": "France",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Hahn Air",
+   "slug": "hahn-air",
+   "iata": "H1",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hahn Air Technologies",
+   "slug": "hahn-air-technologies",
+   "iata": "X1",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hainan Airlines",
+   "slug": "hainan-airlines",
+   "iata": "HU",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Halcyonair",
+   "slug": "halcyonair",
+   "iata": "7Z",
+   "country": "Cape Verde",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Harbour Air Seaplanes",
+   "slug": "harbour-air-seaplanes",
+   "iata": "YB",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hawaiian Airlines",
+   "slug": "hawaiian-airlines",
+   "iata": "HA",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hawkair",
+   "slug": "hawkair",
+   "iata": "BH",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hayways",
+   "slug": "hayways",
+   "iata": "Y5",
+   "country": "Armenia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Hebei Airlines",
+   "slug": "hebei-airlines",
+   "iata": "NS",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Heli Air Monaco",
+   "slug": "heli-air-monaco",
+   "iata": "YO",
+   "country": "Monaco",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Helicópteros del Sureste",
+   "slug": "helicopteros-del-sureste",
+   "iata": "UV",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Helijet",
+   "slug": "helijet",
+   "iata": "JB",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Helvetic Airways",
+   "slug": "helvetic-airways",
+   "iata": "2L",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Heron Aviation",
+   "slug": "heron-aviation",
+   "iata": "0V",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Heston Airlines",
+   "slug": "heston-airlines",
+   "iata": "HN",
+   "country": "Lithuania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hi Fly Ltd",
+   "slug": "hi-fly-ltd",
+   "iata": "5M",
+   "country": "Portugal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "HiSky",
+   "slug": "hisky",
+   "iata": "H7",
+   "country": "Moldova",
+   "type": "Scheduled"
+  },
+  {
+   "name": "HiSky Europe",
+   "slug": "hisky-europe",
+   "iata": "H4",
+   "country": "Romania",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Himalaya Airlines",
+   "slug": "himalaya-airlines",
+   "iata": "H9",
+   "country": "Nepal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hinterland Aviation",
+   "slug": "hinterland-aviation",
+   "iata": "OI",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hong Kong Air Cargo Carrier Limited",
+   "slug": "hong-kong-air-cargo-carrier-limited",
+   "iata": "RH",
+   "country": "Hong Kong",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hong Kong Airlines",
+   "slug": "hong-kong-airlines",
+   "iata": "HX",
+   "country": "Hong Kong SAR of China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Horizon Air",
+   "slug": "horizon-air",
+   "iata": "QX",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Humo Air",
+   "slug": "humo-air",
+   "iata": "HJ",
+   "country": "Uzbekistan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Hunnu Air",
+   "slug": "hunnu-air",
+   "iata": "MR",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Hydro - Quebec",
+   "slug": "hydro-quebec",
+   "iata": "0Q",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Héli Sécurité Hélicopter Airline",
+   "slug": "heli-securite-helicopter-airline",
+   "iata": "HS",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "IATA - Clearing HouseInternational Air Transport Association",
+   "slug": "iata-clearing-houseinternational-air-transport-association",
+   "iata": "XB",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "IBC Airways",
+   "slug": "ibc-airways",
+   "iata": "II",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "IHY Izmir Havayollari A.S.",
+   "slug": "ihy-izmir-havayollari-as",
+   "iata": "44",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "INFINI Travel Information, Inc.",
+   "slug": "infini-travel-information-inc",
+   "iata": "1F",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "IRYO",
+   "slug": "iryo",
+   "iata": "I6",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ITA Airways",
+   "slug": "ita-airways",
+   "iata": "AZ",
+   "country": "Italy",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ITA Software Inc.",
+   "slug": "ita-software-inc",
+   "iata": "1U",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Iberia",
+   "slug": "iberia",
+   "iata": "IB",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Iberia Express",
+   "slug": "iberia-express",
+   "iata": "I2",
+   "country": "Spain",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Iberojet",
+   "slug": "iberojet",
+   "iata": "E9",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ibex Airlines",
+   "slug": "ibex-airlines",
+   "iata": "FW",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ibom Air",
+   "slug": "ibom-air",
+   "iata": "QI",
+   "country": "Denmark",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Icelandair",
+   "slug": "icelandair",
+   "iata": "FI",
+   "country": "Iceland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ikar",
+   "slug": "ikar",
+   "iata": "EO",
+   "country": "Russia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "IndiGo",
+   "slug": "indigo",
+   "iata": "6E",
+   "country": "India",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Indonesia AirAsia",
+   "slug": "indonesia-airasia",
+   "iata": "QZ",
+   "country": "Indonesia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "InnoAviation",
+   "slug": "innoaviation",
+   "iata": "I3",
+   "country": "Iran",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Insel Air Aruba",
+   "slug": "insel-air-aruba",
+   "iata": "8I",
+   "country": "Aruba",
+   "type": "Scheduled"
+  },
+  {
+   "name": "InterCaribbean Airways",
+   "slug": "intercaribbean-airways",
+   "iata": "JY",
+   "country": "Turks and Caicos Islands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "IrAero",
+   "slug": "iraero",
+   "iata": "IO",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Iran Air",
+   "slug": "iran-air",
+   "iata": "IR",
+   "country": "Iran",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Iran Airtour",
+   "slug": "iran-airtour",
+   "iata": "B9",
+   "country": "Iran",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Iran Aseman Airlines",
+   "slug": "iran-aseman-airlines",
+   "iata": "EP",
+   "country": "Iran",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Iraqi Airways",
+   "slug": "iraqi-airways",
+   "iata": "IA",
+   "country": "Iraq",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Island Air",
+   "slug": "island-air",
+   "iata": "WP",
+   "country": "Mexico",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Island Air Express",
+   "slug": "island-air-express",
+   "iata": "I4",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Islena de Inversiones S.A. de C.V.dba Islena Airlines",
+   "slug": "islena-de-inversiones-sa-de-cvdba-islena-airlines",
+   "iata": "WC",
+   "country": "Honduras",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Israir Airlines",
+   "slug": "israir-airlines",
+   "iata": "6H",
+   "country": "Israel",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Itek Air",
+   "slug": "itek-air",
+   "iata": "GI",
+   "country": "Kyrgyzstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Izhavia",
+   "slug": "izhavia",
+   "iata": "I8",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "J&M Alaska Air",
+   "slug": "jandm-alaska-air",
+   "iata": "JN",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "JSC \"Sirena-Travel\"",
+   "slug": "jsc-sirena-travel",
+   "iata": "1H",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "JSC Aircompany ATMA",
+   "slug": "jsc-aircompany-atma",
+   "iata": "IM",
+   "country": "Kazakhstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "JSC Kazaviaspas",
+   "slug": "jsc-kazaviaspas",
+   "iata": "ZS",
+   "country": "Kazakhstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "JSC Transport Automated InformationSystems - TAIS",
+   "slug": "jsc-transport-automated-informationsystems-tais",
+   "iata": "1M",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Jambojet",
+   "slug": "jambojet",
+   "iata": "JM",
+   "country": "Kenya",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Japan Air Commuter",
+   "slug": "japan-air-commuter",
+   "iata": "JC",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Japan Airlines",
+   "slug": "japan-airlines",
+   "iata": "JL",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Japan Transocean Air",
+   "slug": "japan-transocean-air",
+   "iata": "NU",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Jazeera Airways",
+   "slug": "jazeera-airways",
+   "iata": "J9",
+   "country": "Kuwait",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jeju Air",
+   "slug": "jeju-air",
+   "iata": "7C",
+   "country": "Republic of Korea",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jet Airways",
+   "slug": "jet-airways",
+   "iata": "9W",
+   "country": "India",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Jet Airways Inc.",
+   "slug": "jet-airways-inc",
+   "iata": "QJ",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Jet Asia Airways",
+   "slug": "jet-asia-airways",
+   "iata": "JF",
+   "country": "Thailand",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Jet Aviation Business",
+   "slug": "jet-aviation-business",
+   "iata": "PP",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Jet Ops",
+   "slug": "jet-ops",
+   "iata": "J6",
+   "country": "United Arab Emirates",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Jet2.com",
+   "slug": "jet2com",
+   "iata": "LS",
+   "country": "United Kingdom",
+   "type": "Low-cost"
+  },
+  {
+   "name": "JetAir Caribbean",
+   "slug": "jetair-caribbean",
+   "iata": "4J",
+   "country": "Curaçao",
+   "type": "Scheduled"
+  },
+  {
+   "name": "JetLite",
+   "slug": "jetlite",
+   "iata": "S2",
+   "country": "India",
+   "type": "Low-cost"
+  },
+  {
+   "name": "JetSmart",
+   "slug": "jetsmart",
+   "iata": "JA",
+   "country": "Chile",
+   "type": "Low-cost"
+  },
+  {
+   "name": "JetSmart Argentina",
+   "slug": "jetsmart-argentina",
+   "iata": "WJ",
+   "country": "Argentina",
+   "type": "Low-cost"
+  },
+  {
+   "name": "JetSmart Peru",
+   "slug": "jetsmart-peru",
+   "iata": "JZ",
+   "country": "Peru",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jetairfly",
+   "slug": "jetairfly",
+   "iata": "TB",
+   "country": "Belgium",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jetstar",
+   "slug": "jetstar",
+   "iata": "JQ",
+   "country": "Australia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jetstar Asia",
+   "slug": "jetstar-asia",
+   "iata": "3K",
+   "country": "Singapore",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jetstar Japan",
+   "slug": "jetstar-japan",
+   "iata": "GK",
+   "country": "Japan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jiangxi Air",
+   "slug": "jiangxi-air",
+   "iata": "RY",
+   "country": "China",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jin Air",
+   "slug": "jin-air",
+   "iata": "LJ",
+   "country": "South Korea",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jonair",
+   "slug": "jonair",
+   "iata": "0N",
+   "country": "Sweden",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Jonika Airlines",
+   "slug": "jonika-airlines",
+   "iata": "JO",
+   "country": "Ukraine",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Jordan Aviation",
+   "slug": "jordan-aviation",
+   "iata": "R5",
+   "country": "Jordan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Joy Air",
+   "slug": "joy-air",
+   "iata": "JR",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Juneyao Airlines",
+   "slug": "juneyao-airlines",
+   "iata": "HO",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "K-Mile Air Co. Ltd",
+   "slug": "k-mile-air-co-ltd",
+   "iata": "8K",
+   "country": "Thailand",
+   "type": "Scheduled"
+  },
+  {
+   "name": "KC International Airlines",
+   "slug": "kc-international-airlines",
+   "iata": "3Q",
+   "country": "Cambodia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "KLM Cityhopper",
+   "slug": "klm-cityhopper",
+   "iata": "WA",
+   "country": "Netherlands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "KLM Royal Dutch Airlines",
+   "slug": "klm-royal-dutch-airlines",
+   "iata": "KL",
+   "country": "Netherlands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "KM Malta Airlines",
+   "slug": "km-malta-airlines",
+   "iata": "KM",
+   "country": "Malta",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Kalitta Air",
+   "slug": "kalitta-air",
+   "iata": "K4",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kalstar Aviation",
+   "slug": "kalstar-aviation",
+   "iata": "KD",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kam Air",
+   "slug": "kam-air",
+   "iata": "RQ",
+   "country": "Afghanistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kamchatka Air",
+   "slug": "kamchatka-air",
+   "iata": "ДЕ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kan Air",
+   "slug": "kan-air",
+   "iata": "K8",
+   "country": "Thailand",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kartika Airlines",
+   "slug": "kartika-airlines",
+   "iata": "3Y",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kenmore Air",
+   "slug": "kenmore-air",
+   "iata": "M5",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kenn Borek Air",
+   "slug": "kenn-borek-air",
+   "iata": "4K",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kenya Airways",
+   "slug": "kenya-airways",
+   "iata": "KQ",
+   "country": "Kenya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Khabarovsk Avia",
+   "slug": "khabarovsk-avia",
+   "iata": "НИ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Komiaviatrans",
+   "slug": "komiaviatrans",
+   "iata": "ИГ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Korean Air",
+   "slug": "korean-air",
+   "iata": "KE",
+   "country": "Republic of Korea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Korongo Airlines",
+   "slug": "korongo-airlines",
+   "iata": "ZC",
+   "country": "Democratic Republic of the Congo",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kosmos",
+   "slug": "kosmos",
+   "iata": "ГК",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kostroma Air",
+   "slug": "kostroma-air",
+   "iata": "КБ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "KrasAvia",
+   "slug": "krasavia",
+   "iata": "KV",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kulula",
+   "slug": "kulula",
+   "iata": "МН",
+   "country": "South Africa",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Kunming Airlines",
+   "slug": "kunming-airlines",
+   "iata": "KY",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kuwait Airways",
+   "slug": "kuwait-airways",
+   "iata": "KU",
+   "country": "Kuwait",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Kyrgyz Air",
+   "slug": "kyrgyz-air",
+   "iata": "KH",
+   "country": "Kyrgyzstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LAM Mozambique Airlines",
+   "slug": "lam-mozambique-airlines",
+   "iata": "TM",
+   "country": "Mozambique",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LAN Chile Cargo",
+   "slug": "lan-chile-cargo",
+   "iata": "UC",
+   "country": "Chile",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LANHSA",
+   "slug": "lanhsa",
+   "iata": "00",
+   "country": "Israel",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LASER Airlines",
+   "slug": "laser-airlines",
+   "iata": "QL",
+   "country": "Venezuela",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LATAM Airlines",
+   "slug": "latam-airlines",
+   "iata": "LA",
+   "country": "Chile",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LATAM Airlines Brasil",
+   "slug": "latam-airlines-brasil",
+   "iata": "JJ",
+   "country": "Brazil",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LATAM Airlines Colombia",
+   "slug": "latam-airlines-colombia",
+   "iata": "4C",
+   "country": "Colombia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LATAM Airlines Ecuador",
+   "slug": "latam-airlines-ecuador",
+   "iata": "XL",
+   "country": "Ecuador",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LATAM Airlines Paraguay",
+   "slug": "latam-airlines-paraguay",
+   "iata": "PZ",
+   "country": "Paraguay",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LATAM Airlines Peru",
+   "slug": "latam-airlines-peru",
+   "iata": "LP",
+   "country": "Peru",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LATAM Express",
+   "slug": "latam-express",
+   "iata": "LU",
+   "country": "Chile",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LEAV",
+   "slug": "leav",
+   "iata": "KK",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "LIFT Airline",
+   "slug": "lift-airline",
+   "iata": "GE",
+   "country": "South Africa",
+   "type": "Low-cost"
+  },
+  {
+   "name": "LOT Polish",
+   "slug": "lot-polish",
+   "iata": "LO",
+   "country": "Poland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "La Compagnie",
+   "slug": "la-compagnie",
+   "iata": "B0",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "La Costeña",
+   "slug": "la-costena",
+   "iata": "LC",
+   "country": "Nicaragua",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lanexang Airways International",
+   "slug": "lanexang-airways-international",
+   "iata": "5A",
+   "country": "Laos",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lanmei Airlines",
+   "slug": "lanmei-airlines",
+   "iata": "LQ",
+   "country": "Cambodia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Lao Airlines",
+   "slug": "lao-airlines",
+   "iata": "QV",
+   "country": "Laos",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lao Skyway",
+   "slug": "lao-skyway",
+   "iata": "LK",
+   "country": "Laos",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Laparkan Airways, Inc.",
+   "slug": "laparkan-airways-inc",
+   "iata": "LE",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lauda Europe",
+   "slug": "lauda-europe",
+   "iata": "LW",
+   "country": "Malta",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Level",
+   "slug": "level",
+   "iata": "LL",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Levu",
+   "slug": "levu",
+   "iata": "6V",
+   "country": "Brazil",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Liat Air",
+   "slug": "liat-air",
+   "iata": "5L",
+   "country": "Antigua and Barbuda",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Libyan Airlines",
+   "slug": "libyan-airlines",
+   "iata": "LN",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Libyan Wings",
+   "slug": "libyan-wings",
+   "iata": "YL",
+   "country": "Libya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Linea Aerea Carguera de Colombia S.A.",
+   "slug": "linea-aerea-carguera-de-colombia-sa",
+   "iata": "L7",
+   "country": "Colombia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Linear Air",
+   "slug": "linear-air",
+   "iata": "O2",
+   "country": "",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Link Airways",
+   "slug": "link-airways",
+   "iata": "FC",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lion Air",
+   "slug": "lion-air",
+   "iata": "JT",
+   "country": "Indonesia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Loganair",
+   "slug": "loganair",
+   "iata": "LM",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Longtail Aviation",
+   "slug": "longtail-aviation",
+   "iata": "6T",
+   "country": "Bermuda",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Loong Air",
+   "slug": "loong-air",
+   "iata": "GJ",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lucky Air",
+   "slug": "lucky-air",
+   "iata": "8L",
+   "country": "China",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Lufthansa",
+   "slug": "lufthansa",
+   "iata": "LH",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lufthansa City Airlines",
+   "slug": "lufthansa-city-airlines",
+   "iata": "VL",
+   "country": "Bulgaria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lufthansa CityLine",
+   "slug": "lufthansa-cityline",
+   "iata": "CL",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lufthansa Systems",
+   "slug": "lufthansa-systems",
+   "iata": "S1",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lulutai Airlines",
+   "slug": "lulutai-airlines",
+   "iata": "L8",
+   "country": "Tonga",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lumiwings",
+   "slug": "lumiwings",
+   "iata": "L9",
+   "country": "Greece",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Luxair",
+   "slug": "luxair",
+   "iata": "LG",
+   "country": "Luxembourg",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Luxwing",
+   "slug": "luxwing",
+   "iata": "BN",
+   "country": "Malta",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lynden Air Cargo, LLC",
+   "slug": "lynden-air-cargo-llc",
+   "iata": "L2",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Lynx Air",
+   "slug": "lynx-air",
+   "iata": "Y9",
+   "country": "Canada",
+   "type": "Low-cost"
+  },
+  {
+   "name": "MAYAir",
+   "slug": "mayair",
+   "iata": "7M",
+   "country": "Mexico",
+   "type": "Scheduled"
+  },
+  {
+   "name": "MHS Aviation",
+   "slug": "mhs-aviation",
+   "iata": "M2",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "MIAT Mongolian Airlines",
+   "slug": "miat-mongolian-airlines",
+   "iata": "OM",
+   "country": "Mongolia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "MNG Airlines",
+   "slug": "mng-airlines",
+   "iata": "MB",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "MYAirline",
+   "slug": "myairline",
+   "iata": "Z9",
+   "country": "Malaysia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Magnicharters",
+   "slug": "magnicharters",
+   "iata": "0Z",
+   "country": "Mexico",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Mahan Air",
+   "slug": "mahan-air",
+   "iata": "W5",
+   "country": "Iran",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Malawi Airlines",
+   "slug": "malawi-airlines",
+   "iata": "3W",
+   "country": "Malawi",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Malaysia Airlines",
+   "slug": "malaysia-airlines",
+   "iata": "MH",
+   "country": "Malaysia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Maldivian",
+   "slug": "maldivian",
+   "iata": "Q2",
+   "country": "Maldives",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Malta Air",
+   "slug": "malta-air",
+   "iata": "MW",
+   "country": "Malta",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Maluti Sky",
+   "slug": "maluti-sky",
+   "iata": "7D",
+   "country": "Lesotho",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Mandarin Airlines",
+   "slug": "mandarin-airlines",
+   "iata": "AE",
+   "country": "Taiwan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Mango",
+   "slug": "mango",
+   "iata": "JE",
+   "country": "South Africa",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Mann Yadanarpon Airlines",
+   "slug": "mann-yadanarpon-airlines",
+   "iata": "7Y",
+   "country": "Myanmar",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Manta Air",
+   "slug": "manta-air",
+   "iata": "NR",
+   "country": "Maldives",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Marabu",
+   "slug": "marabu",
+   "iata": "DI",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Marathon Airlines",
+   "slug": "marathon-airlines",
+   "iata": "O8",
+   "country": "Greece",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Martinair",
+   "slug": "martinair",
+   "iata": "MP",
+   "country": "Netherlands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Mas de Carga S.A. de C.V. dba Masair",
+   "slug": "mas-de-carga-sa-de-cv-dba-masair",
+   "iata": "M7",
+   "country": "Mexico",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Mauritania Airlines",
+   "slug": "mauritania-airlines",
+   "iata": "L6",
+   "country": "Mauritania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Mavi Gok Airlines",
+   "slug": "mavi-gok-airlines",
+   "iata": "4M",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Maximus Air",
+   "slug": "maximus-air",
+   "iata": "6M",
+   "country": "United Arab Emirates",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Maya Island Air",
+   "slug": "maya-island-air",
+   "iata": "2M",
+   "country": "Belize",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Meraj Airlines",
+   "slug": "meraj-airlines",
+   "iata": "0I",
+   "country": "Iran",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Mesa Airlines",
+   "slug": "mesa-airlines",
+   "iata": "YV",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "MetroJet",
+   "slug": "metrojet",
+   "iata": "7K",
+   "country": "Hong Kong SAR of China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Middle East Airlines",
+   "slug": "middle-east-airlines",
+   "iata": "ME",
+   "country": "Lebanon",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Mistral Air",
+   "slug": "mistral-air",
+   "iata": "M4",
+   "country": "Italy",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Moldavian Airlines",
+   "slug": "moldavian-airlines",
+   "iata": "2М",
+   "country": "Moldova",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Monacair",
+   "slug": "monacair",
+   "iata": "QM",
+   "country": "Monaco",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Montenegro Airlines",
+   "slug": "montenegro-airlines",
+   "iata": "YM",
+   "country": "Montenegro",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Motor Sich Airlines",
+   "slug": "motor-sich-airlines",
+   "iata": "M9",
+   "country": "Ukraine",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Myanmar Airways International",
+   "slug": "myanmar-airways-international",
+   "iata": "8M",
+   "country": "Myanmar",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Myanmar National Airlines",
+   "slug": "myanmar-national-airlines",
+   "iata": "UB",
+   "country": "Myanmar",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Myway Airlines",
+   "slug": "myway-airlines",
+   "iata": "MJ",
+   "country": "Georgia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "NAM Air",
+   "slug": "nam-air",
+   "iata": "IN",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "NORRA",
+   "slug": "norra",
+   "iata": "N7",
+   "country": "Finland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "NOVA Airlines",
+   "slug": "nova-airlines",
+   "iata": "O9",
+   "country": "Sudan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nakina Air Service",
+   "slug": "nakina-air-service",
+   "iata": "T2",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Naryan-Mar Airlines",
+   "slug": "naryan-mar-airlines",
+   "iata": "НЯ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "National Airlines",
+   "slug": "national-airlines",
+   "iata": "N8",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nauru Airlines",
+   "slug": "nauru-airlines",
+   "iata": "ON",
+   "country": "Nauru",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Navios Evolusi Solusindo",
+   "slug": "navios-evolusi-solusindo",
+   "iata": "1J",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Navitaire",
+   "slug": "navitaire",
+   "iata": "1N",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Neos",
+   "slug": "neos",
+   "iata": "NO",
+   "country": "Italy",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nepal Airlines",
+   "slug": "nepal-airlines",
+   "iata": "RA",
+   "country": "Nepal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nesma Airlines",
+   "slug": "nesma-airlines",
+   "iata": "NE",
+   "country": "Egypt",
+   "type": "Scheduled"
+  },
+  {
+   "name": "New Pacific Airlines",
+   "slug": "new-pacific-airlines",
+   "iata": "7H",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Nexus Airlines",
+   "slug": "nexus-airlines",
+   "iata": "GD",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Niger Airlines",
+   "slug": "niger-airlines",
+   "iata": "6N",
+   "country": "Niger",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Niki",
+   "slug": "niki",
+   "iata": "HG",
+   "country": "Austria",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Nile Air",
+   "slug": "nile-air",
+   "iata": "NP",
+   "country": "Egypt",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ningxia Cargo Airlines CO.,LTD",
+   "slug": "ningxia-cargo-airlines-coltd",
+   "iata": "HT",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nippon Cargo Airlines",
+   "slug": "nippon-cargo-airlines",
+   "iata": "KZ",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nok Air",
+   "slug": "nok-air",
+   "iata": "DD",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "NokScoot",
+   "slug": "nokscoot",
+   "iata": "XW",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Nolinor Aviation",
+   "slug": "nolinor-aviation",
+   "iata": "N5",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nomad Aviation",
+   "slug": "nomad-aviation",
+   "iata": "NA",
+   "country": "Namibia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nomad Aviation (PTY) Ltd.",
+   "slug": "nomad-aviation-pty-ltd",
+   "iata": "N6",
+   "country": "South Africa",
+   "type": "Scheduled"
+  },
+  {
+   "name": "NordStar",
+   "slug": "nordstar",
+   "iata": "Y7",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nordwind Airlines",
+   "slug": "nordwind-airlines",
+   "iata": "N4",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Norse Atlantic Airways",
+   "slug": "norse-atlantic-airways",
+   "iata": "N0",
+   "country": "Norway",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Norse Atlantic UK",
+   "slug": "norse-atlantic-uk",
+   "iata": "Z0",
+   "country": "United Kingdom",
+   "type": "Low-cost"
+  },
+  {
+   "name": "North Flying",
+   "slug": "north-flying",
+   "iata": "M3",
+   "country": "Denmark",
+   "type": "Scheduled"
+  },
+  {
+   "name": "North-Wright Airways",
+   "slug": "north-wright-airways",
+   "iata": "HW",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Northern Air Cargo",
+   "slug": "northern-air-cargo",
+   "iata": "NC",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Northwest",
+   "slug": "northwest",
+   "iata": "0E",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Northwest Airlines",
+   "slug": "northwest-airlines",
+   "iata": "NW",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Northwestern Air",
+   "slug": "northwestern-air",
+   "iata": "J3",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Norwegian Air Shuttle",
+   "slug": "norwegian-air-shuttle",
+   "iata": "DY",
+   "country": "Norway",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Norwegian Air Sweden",
+   "slug": "norwegian-air-sweden",
+   "iata": "D8",
+   "country": "Sweden",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Norwegian Long Haul",
+   "slug": "norwegian-long-haul",
+   "iata": "DU",
+   "country": "Norway",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Nouvelair",
+   "slug": "nouvelair",
+   "iata": "BJ",
+   "country": "Tunisia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "NovAir",
+   "slug": "novair",
+   "iata": "NG",
+   "country": "Sweden",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Novoair",
+   "slug": "novoair",
+   "iata": "VQ",
+   "country": "Bangladesh",
+   "type": "Scheduled"
+  },
+  {
+   "name": "NyxAir",
+   "slug": "nyxair",
+   "iata": "OJ",
+   "country": "Estonia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Okay Airways",
+   "slug": "okay-airways",
+   "iata": "BK",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Olympic Air",
+   "slug": "olympic-air",
+   "iata": "OA",
+   "country": "Greece",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Oman Air",
+   "slug": "oman-air",
+   "iata": "WY",
+   "country": "Oman",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Omni Air International",
+   "slug": "omni-air-international",
+   "iata": "OY",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "OneClick",
+   "slug": "oneclick",
+   "iata": "4L",
+   "country": "Georgia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "OneJet",
+   "slug": "onejet",
+   "iata": "J1",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Onur Air",
+   "slug": "onur-air",
+   "iata": "8Q",
+   "country": "Turkey",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Orient Thai Airlines",
+   "slug": "orient-thai-airlines",
+   "iata": "OX",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Oriental Air Bridge",
+   "slug": "oriental-air-bridge",
+   "iata": "OC",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "PAL Airlines",
+   "slug": "pal-airlines",
+   "iata": "PB",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "PAL Express",
+   "slug": "pal-express",
+   "iata": "2P",
+   "country": "Philippines",
+   "type": "Low-cost"
+  },
+  {
+   "name": "PAWA Dominicana",
+   "slug": "pawa-dominicana",
+   "iata": "7N",
+   "country": "Dominican Republic",
+   "type": "Scheduled"
+  },
+  {
+   "name": "PIA",
+   "slug": "pia",
+   "iata": "PK",
+   "country": "Pakistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "PLAY",
+   "slug": "play",
+   "iata": "OG",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "PM Air LLC",
+   "slug": "pm-air-llc",
+   "iata": "Z3",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "PNG Air",
+   "slug": "png-air",
+   "iata": "CG",
+   "country": "Papua New Guinea",
+   "type": "Scheduled"
+  },
+  {
+   "name": "PT. My Indo Airlines",
+   "slug": "pt-my-indo-airlines",
+   "iata": "2Y",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Pacific Airlines",
+   "slug": "pacific-airlines",
+   "iata": "BL",
+   "country": "Vietnam",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Pacific Coastal Airlines",
+   "slug": "pacific-coastal-airlines",
+   "iata": "8P",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Panama Airways",
+   "slug": "panama-airways",
+   "iata": "8A",
+   "country": "Panama",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Panorama Airways",
+   "slug": "panorama-airways",
+   "iata": "5P",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Papillon Airways",
+   "slug": "papillon-airways",
+   "iata": "HI",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Paranair",
+   "slug": "paranair",
+   "iata": "ZP",
+   "country": "Azerbaijan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Pascan Aviation",
+   "slug": "pascan-aviation",
+   "iata": "P6",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "PassionAir",
+   "slug": "passionair",
+   "iata": "OP",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Pattaya Airways",
+   "slug": "pattaya-airways",
+   "iata": "VV",
+   "country": "Thailand",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Peach",
+   "slug": "peach",
+   "iata": "MM",
+   "country": "Japan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Pegasus Airlines",
+   "slug": "pegasus-airlines",
+   "iata": "PC",
+   "country": "Turkey",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Pelita Air",
+   "slug": "pelita-air",
+   "iata": "IP",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "People's",
+   "slug": "peoples",
+   "iata": "PE",
+   "country": "Italy",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Petroleum Air Services",
+   "slug": "petroleum-air-services",
+   "iata": "UF",
+   "country": "Egypt",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Philippine Airlines",
+   "slug": "philippine-airlines",
+   "iata": "PR",
+   "country": "Philippines",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Philippines AirAsia",
+   "slug": "philippines-airasia",
+   "iata": "Z2",
+   "country": "Philippines",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Phoenix Air",
+   "slug": "phoenix-air",
+   "iata": "PH",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Piedmont Airlines",
+   "slug": "piedmont-airlines",
+   "iata": "PT",
+   "country": "Sweden",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Pobeda",
+   "slug": "pobeda",
+   "iata": "DP",
+   "country": "Russia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Polar Air Cargo Worldwide, Inc.",
+   "slug": "polar-air-cargo-worldwide-inc",
+   "iata": "PO",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Polar Airlines",
+   "slug": "polar-airlines",
+   "iata": "PI",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "PopulAir",
+   "slug": "populair",
+   "iata": "HP",
+   "country": "Sweden",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Porter Airlines",
+   "slug": "porter-airlines",
+   "iata": "P3",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Porter Airlines Canada",
+   "slug": "porter-airlines-canada",
+   "iata": "PD",
+   "country": "Canada",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Portugalia Airlines",
+   "slug": "portugalia-airlines",
+   "iata": "NI",
+   "country": "Portugal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Precision Air",
+   "slug": "precision-air",
+   "iata": "PW",
+   "country": "Tanzania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Premier Trans Aire Inc.",
+   "slug": "premier-trans-aire-inc",
+   "iata": "3X",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Premium Jet AG",
+   "slug": "premium-jet-ag",
+   "iata": "0J",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Primera Air",
+   "slug": "primera-air",
+   "iata": "PF",
+   "country": "Iceland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Proflight Zambia",
+   "slug": "proflight-zambia",
+   "iata": "P0",
+   "country": "Zambia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Punta Europa",
+   "slug": "punta-europa",
+   "iata": "PU",
+   "country": "Uruguay",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Qanot Sharq",
+   "slug": "qanot-sharq",
+   "iata": "HH",
+   "country": "Uzbekistan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Qantas",
+   "slug": "qantas",
+   "iata": "QF",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Qatar Airways",
+   "slug": "qatar-airways",
+   "iata": "QR",
+   "country": "Qatar",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Qazaq Air",
+   "slug": "qazaq-air",
+   "iata": "IQ",
+   "country": "Kazakhstan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Qeshm Air",
+   "slug": "qeshm-air",
+   "iata": "QB",
+   "country": "Iran",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Qingdao Airlines",
+   "slug": "qingdao-airlines",
+   "iata": "QW",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Quikjet Cargo Airlines Pvt. Ltd",
+   "slug": "quikjet-cargo-airlines-pvt-ltd",
+   "iata": "QO",
+   "country": "India",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Radixx Solutions International, Inc.",
+   "slug": "radixx-solutions-international-inc",
+   "iata": "1D",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Rano Air",
+   "slug": "rano-air",
+   "iata": "R4",
+   "country": "Nigeria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Raya Airways Sdn. Bhd.dba Raya Airways",
+   "slug": "raya-airways-sdn-bhddba-raya-airways",
+   "iata": "TH",
+   "country": "Malaysia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Red Sea Airlines",
+   "slug": "red-sea-airlines",
+   "iata": "4S",
+   "country": "Egypt",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Red Wings",
+   "slug": "red-wings",
+   "iata": "WZ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Regional Air",
+   "slug": "regional-air",
+   "iata": "8N",
+   "country": "Mauritania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Regional Jet OÜ",
+   "slug": "regional-jet-ou",
+   "iata": "EE",
+   "country": "Estonia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Regional Sky",
+   "slug": "regional-sky",
+   "iata": "4P",
+   "country": "Democratic Republic of the Congo",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Renegade Air",
+   "slug": "renegade-air",
+   "iata": "0R",
+   "country": "",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Republic Airways",
+   "slug": "republic-airways",
+   "iata": "YX",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Rex - Regional Express",
+   "slug": "rex-regional-express",
+   "iata": "ZL",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Rise Air",
+   "slug": "rise-air",
+   "iata": "4T",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Riyadh Air",
+   "slug": "riyadh-air",
+   "iata": "RX",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Rossiya Airlines",
+   "slug": "rossiya-airlines",
+   "iata": "FV",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Rotana Jet",
+   "slug": "rotana-jet",
+   "iata": "RG",
+   "country": "United Arab Emirates",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Royal Air Maroc",
+   "slug": "royal-air-maroc",
+   "iata": "AT",
+   "country": "Morocco",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Royal Air Philippines",
+   "slug": "royal-air-philippines",
+   "iata": "RW",
+   "country": "Philippines",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Royal Brunei Airlines",
+   "slug": "royal-brunei-airlines",
+   "iata": "BI",
+   "country": "Brunei",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Royal Flight",
+   "slug": "royal-flight",
+   "iata": "RL",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Royal Jordanian",
+   "slug": "royal-jordanian",
+   "iata": "RJ",
+   "country": "Jordan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ruili Airlines",
+   "slug": "ruili-airlines",
+   "iata": "DR",
+   "country": "China",
+   "type": "Low-cost"
+  },
+  {
+   "name": "RusLine",
+   "slug": "rusline",
+   "iata": "7R",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Rutaca Airlines",
+   "slug": "rutaca-airlines",
+   "iata": "5R",
+   "country": "Venezuela",
+   "type": "Scheduled"
+  },
+  {
+   "name": "RwandAir",
+   "slug": "rwandair",
+   "iata": "WB",
+   "country": "Rwanda",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ryanair",
+   "slug": "ryanair",
+   "iata": "FR",
+   "country": "Ireland",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Ryanair UK",
+   "slug": "ryanair-uk",
+   "iata": "RK",
+   "country": "United Kingdom",
+   "type": "Low-cost"
+  },
+  {
+   "name": "S7 Airlines",
+   "slug": "s7-airlines",
+   "iata": "S7",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SANSA",
+   "slug": "sansa",
+   "iata": "RZ",
+   "country": "Costa Rica",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SAS Scandinavian",
+   "slug": "sas-scandinavian",
+   "iata": "SK",
+   "country": "Sweden",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SATA",
+   "slug": "sata",
+   "iata": "S4",
+   "country": "Portugal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SATA Air Acores",
+   "slug": "sata-air-acores",
+   "iata": "SP",
+   "country": "Portugal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SATCO",
+   "slug": "satco",
+   "iata": "S3",
+   "country": "Peru",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SCAT",
+   "slug": "scat",
+   "iata": "DV",
+   "country": "Kazakhstan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "SEAir International",
+   "slug": "seair-international",
+   "iata": "XO",
+   "country": "Spain",
+   "type": "Low-cost"
+  },
+  {
+   "name": "SF Airlines Company Ltd",
+   "slug": "sf-airlines-company-ltd",
+   "iata": "O3",
+   "country": "People's Republic of China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SITA - Airlines WorldwideTelecommunications and Information Svcs",
+   "slug": "sita-airlines-worldwidetelecommunications-and-information-sv",
+   "iata": "XS",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SKOL",
+   "slug": "skol",
+   "iata": "СД",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SKS Airways",
+   "slug": "sks-airways",
+   "iata": "KI",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SNCF",
+   "slug": "sncf",
+   "iata": "2C",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "STARLUX Airlines",
+   "slug": "starlux-airlines",
+   "iata": "JX",
+   "country": "Singapore",
+   "type": "Scheduled"
+  },
+  {
+   "name": "STP Airways",
+   "slug": "stp-airways",
+   "iata": "8F",
+   "country": "Sao Tome and Principe",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SUN-AIR",
+   "slug": "sun-air",
+   "iata": "ZU",
+   "country": "Denmark",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SWISS",
+   "slug": "swiss",
+   "iata": "LX",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sabre Inc.",
+   "slug": "sabre-inc",
+   "iata": "1S",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Safarilink Aviation",
+   "slug": "safarilink-aviation",
+   "iata": "F2",
+   "country": "Kenya",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Safi Airways",
+   "slug": "safi-airways",
+   "iata": "4Q",
+   "country": "Afghanistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SalamAir",
+   "slug": "salamair",
+   "iata": "OV",
+   "country": "Estonia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Samoa Airways",
+   "slug": "samoa-airways",
+   "iata": "OL",
+   "country": "Samoa",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sapsan",
+   "slug": "sapsan",
+   "iata": "R0",
+   "country": "Pakistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Saudia",
+   "slug": "saudia",
+   "iata": "SV",
+   "country": "Saudi Arabia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Scoot",
+   "slug": "scoot",
+   "iata": "TZ",
+   "country": "Singapore",
+   "type": "Low-cost"
+  },
+  {
+   "name": "SeaPort Airlines",
+   "slug": "seaport-airlines",
+   "iata": "X4",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Seaborne Airlines",
+   "slug": "seaborne-airlines",
+   "iata": "BB",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sepehran Airlines",
+   "slug": "sepehran-airlines",
+   "iata": "IS",
+   "country": "Iran",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Serene Air",
+   "slug": "serene-air",
+   "iata": "ER",
+   "country": "Pakistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Serve Air",
+   "slug": "serve-air",
+   "iata": "V6",
+   "country": "Ukraine",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Severstal Air Company",
+   "slug": "severstal-air-company",
+   "iata": "D2",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Shaheen Air",
+   "slug": "shaheen-air",
+   "iata": "NL",
+   "country": "Pakistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Shandong Airlines",
+   "slug": "shandong-airlines",
+   "iata": "SC",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Shanghai Airlines",
+   "slug": "shanghai-airlines",
+   "iata": "FM",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sharp Airlines",
+   "slug": "sharp-airlines",
+   "iata": "SH",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Shenzhen Airlines",
+   "slug": "shenzhen-airlines",
+   "iata": "ZH",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Shirak Avia",
+   "slug": "shirak-avia",
+   "iata": "5G",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Shree Airlines",
+   "slug": "shree-airlines",
+   "iata": "N9",
+   "country": "Nigeria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Shun Tak-China Travel Ship",
+   "slug": "shun-tak-china-travel-ship",
+   "iata": "8S",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SiLA",
+   "slug": "sila",
+   "iata": "СЛ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sichuan Airlines",
+   "slug": "sichuan-airlines",
+   "iata": "3U",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Silk Avia",
+   "slug": "silk-avia",
+   "iata": "US",
+   "country": "Uzbekistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Silk Way West Airlines",
+   "slug": "silk-way-west-airlines",
+   "iata": "7L",
+   "country": "Cuba",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SilkAir",
+   "slug": "silkair",
+   "iata": "MI",
+   "country": "Singapore",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Silver Air",
+   "slug": "silver-air",
+   "iata": "0P",
+   "country": "Djibouti",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Silver Airways",
+   "slug": "silver-airways",
+   "iata": "3M",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Singapore Airlines",
+   "slug": "singapore-airlines",
+   "iata": "SQ",
+   "country": "Singapore",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Skippers Aviation",
+   "slug": "skippers-aviation",
+   "iata": "HK",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky Airline",
+   "slug": "sky-airline",
+   "iata": "H2",
+   "country": "Chile",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Sky Airline Peru",
+   "slug": "sky-airline-peru",
+   "iata": "H8",
+   "country": "Peru",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Sky Airlines",
+   "slug": "sky-airlines",
+   "iata": "ZY",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky Angkor Airlines",
+   "slug": "sky-angkor-airlines",
+   "iata": "ZA",
+   "country": "Cambodia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky Express Greece",
+   "slug": "sky-express-greece",
+   "iata": "GQ",
+   "country": "Greece",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky Fru",
+   "slug": "sky-fru",
+   "iata": "R8",
+   "country": "Kyrgyzstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky Gates Airlines",
+   "slug": "sky-gates-airlines",
+   "iata": "U3",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky High",
+   "slug": "sky-high",
+   "iata": "DO",
+   "country": "Italy",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky Lease I, Inc.",
+   "slug": "sky-lease-i-inc",
+   "iata": "GG",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky Mali",
+   "slug": "sky-mali",
+   "iata": "ML",
+   "country": "Mali",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky Vision Airlines",
+   "slug": "sky-vision-airlines",
+   "iata": "SE",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sky Wings Airlines",
+   "slug": "sky-wings-airlines",
+   "iata": "ND",
+   "country": "Greece",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SkyAlps",
+   "slug": "skyalps",
+   "iata": "BQ",
+   "country": "Italy",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SkyBahamas",
+   "slug": "skybahamas",
+   "iata": "Q7",
+   "country": "Bahamas",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SkyJet Airlines",
+   "slug": "skyjet-airlines",
+   "iata": "M8",
+   "country": "Uganda",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SkyTaxi",
+   "slug": "skytaxi",
+   "iata": "TE",
+   "country": "Romania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SkyUp Airlines",
+   "slug": "skyup-airlines",
+   "iata": "PQ",
+   "country": "Puerto Rico",
+   "type": "Low-cost"
+  },
+  {
+   "name": "SkyUp MT",
+   "slug": "skyup-mt",
+   "iata": "U5",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "SkyWest Airlines",
+   "slug": "skywest-airlines",
+   "iata": "OO",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SkyWork Airlines",
+   "slug": "skywork-airlines",
+   "iata": "SX",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Skyline Express Airline",
+   "slug": "skyline-express-airline",
+   "iata": "QU",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Skymark Airlines",
+   "slug": "skymark-airlines",
+   "iata": "BC",
+   "country": "Japan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Skytrans Australia",
+   "slug": "skytrans-australia",
+   "iata": "QN",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Skyward Airlines",
+   "slug": "skyward-airlines",
+   "iata": "OW",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Small Planet Airlines Poland",
+   "slug": "small-planet-airlines-poland",
+   "iata": "P7",
+   "country": "Poland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SmartAvia",
+   "slug": "smartavia",
+   "iata": "5N",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SmartLynx Airlines Estonia",
+   "slug": "smartlynx-airlines-estonia",
+   "iata": "6Y",
+   "country": "Latvia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SmartLynx Malta",
+   "slug": "smartlynx-malta",
+   "iata": "2N",
+   "country": "Malta",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SmartWings Czechia",
+   "slug": "smartwings-czechia",
+   "iata": "QS",
+   "country": "Czechia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "SmartWings Hungary",
+   "slug": "smartwings-hungary",
+   "iata": "7O",
+   "country": "Hungary",
+   "type": "Low-cost"
+  },
+  {
+   "name": "SmartWings Poland",
+   "slug": "smartwings-poland",
+   "iata": "3Z",
+   "country": "Poland",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Smokey Bay Air, Inc.",
+   "slug": "smokey-bay-air-inc",
+   "iata": "2E",
+   "country": "Sri Lanka",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Solaseed Air",
+   "slug": "solaseed-air",
+   "iata": "6J",
+   "country": "Japan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Solomon Airlines",
+   "slug": "solomon-airlines",
+   "iata": "IE",
+   "country": "Solomon Islands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Somon Air",
+   "slug": "somon-air",
+   "iata": "SZ",
+   "country": "Tajikistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sounds Air",
+   "slug": "sounds-air",
+   "iata": "S8",
+   "country": "South Africa",
+   "type": "Scheduled"
+  },
+  {
+   "name": "South African Airways",
+   "slug": "south-african-airways",
+   "iata": "SA",
+   "country": "South Africa",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Southern Air",
+   "slug": "southern-air",
+   "iata": "9R",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Southern Air Charter",
+   "slug": "southern-air-charter",
+   "iata": "PL",
+   "country": "Bahamas",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Southern Airways Express",
+   "slug": "southern-airways-express",
+   "iata": "9X",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Southern Sky Airlines",
+   "slug": "southern-sky-airlines",
+   "iata": "IH",
+   "country": "Italy",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Southwest Airlines",
+   "slug": "southwest-airlines",
+   "iata": "WN",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Southwind airlines",
+   "slug": "southwind-airlines",
+   "iata": "2S",
+   "country": "Liberia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Special Ground Handling Service -XH",
+   "slug": "special-ground-handling-service-xh",
+   "iata": "XH",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SpiceJet",
+   "slug": "spicejet",
+   "iata": "SG",
+   "country": "India",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Spirit Airlines",
+   "slug": "spirit-airlines",
+   "iata": "NK",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Spring Airlines",
+   "slug": "spring-airlines",
+   "iata": "9C",
+   "country": "China",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Spring Japan",
+   "slug": "spring-japan",
+   "iata": "IJ",
+   "country": "Japan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Springjet",
+   "slug": "springjet",
+   "iata": "5K",
+   "country": "Portugal",
+   "type": "Low-cost"
+  },
+  {
+   "name": "SriLankan Airlines",
+   "slug": "srilankan-airlines",
+   "iata": "UL",
+   "country": "Sri Lanka",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sriwijaya Air",
+   "slug": "sriwijaya-air",
+   "iata": "SJ",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "St Barth Commuter",
+   "slug": "st-barth-commuter",
+   "iata": "PV",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Stabo Air Limited",
+   "slug": "stabo-air-limited",
+   "iata": "4E",
+   "country": "",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Star Air",
+   "slug": "star-air",
+   "iata": "S5",
+   "country": "India",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Star Peru",
+   "slug": "star-peru",
+   "iata": "2I",
+   "country": "Peru",
+   "type": "Scheduled"
+  },
+  {
+   "name": "StarFlyer",
+   "slug": "starflyer",
+   "iata": "7G",
+   "country": "Japan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Starbow",
+   "slug": "starbow",
+   "iata": "S9",
+   "country": "Ghana",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sudan Airways",
+   "slug": "sudan-airways",
+   "iata": "SD",
+   "country": "Sudan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sun Air Express",
+   "slug": "sun-air-express",
+   "iata": "6G",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sun Country Airlines",
+   "slug": "sun-country-airlines",
+   "iata": "SY",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Sun PhuQuoc Airways",
+   "slug": "sun-phuquoc-airways",
+   "iata": "9G",
+   "country": "Vietnam",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SunExpress",
+   "slug": "sunexpress",
+   "iata": "XQ",
+   "country": "Turkey",
+   "type": "Low-cost"
+  },
+  {
+   "name": "SunExpress Deutschland",
+   "slug": "sunexpress-deutschland",
+   "iata": "XG",
+   "country": "Germany",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Sunclass Airlines",
+   "slug": "sunclass-airlines",
+   "iata": "DK",
+   "country": "Denmark",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SundAir",
+   "slug": "sundair",
+   "iata": "SR",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sunday Airlines",
+   "slug": "sunday-airlines",
+   "iata": "0S",
+   "country": "Kazakhstan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sunlight Air",
+   "slug": "sunlight-air",
+   "iata": "2R",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sunrise Airways",
+   "slug": "sunrise-airways",
+   "iata": "S6",
+   "country": "Haiti",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sunrise Dominicana",
+   "slug": "sunrise-dominicana",
+   "iata": "D6",
+   "country": "South Africa",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sunsplash Aviation, LLC.",
+   "slug": "sunsplash-aviation-llc",
+   "iata": "YH",
+   "country": "Colombia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Sunwing Airlines",
+   "slug": "sunwing-airlines",
+   "iata": "WG",
+   "country": "Canada",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Suparna Airlines",
+   "slug": "suparna-airlines",
+   "iata": "Y8",
+   "country": "People's Republic of China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Super Air Jet",
+   "slug": "super-air-jet",
+   "iata": "IU",
+   "country": "Indonesia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Surinam Airways",
+   "slug": "surinam-airways",
+   "iata": "PY",
+   "country": "Suriname",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Swiftair",
+   "slug": "swiftair",
+   "iata": "WT",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Swoop",
+   "slug": "swoop",
+   "iata": "WO",
+   "country": "Canada",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Sylt Air GmbH",
+   "slug": "sylt-air-gmbh",
+   "iata": "7E",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "SyrianAir",
+   "slug": "syrianair",
+   "iata": "RB",
+   "country": "Syria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "T'way Air",
+   "slug": "tway-air",
+   "iata": "TW",
+   "country": "South Korea",
+   "type": "Low-cost"
+  },
+  {
+   "name": "TAAG Angola",
+   "slug": "taag-angola",
+   "iata": "DT",
+   "country": "Angola",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TAB - Transportes Aéreos Bolivianos",
+   "slug": "tab-transportes-aereos-bolivianos",
+   "iata": "B1",
+   "country": "Bolivia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TAG Airlines",
+   "slug": "tag-airlines",
+   "iata": "5U",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TAME",
+   "slug": "tame",
+   "iata": "EQ",
+   "country": "Ecuador",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TAP Air Portugal",
+   "slug": "tap-air-portugal",
+   "iata": "TP",
+   "country": "Portugal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TAR Aerolíneas",
+   "slug": "tar-aerolineas",
+   "iata": "YQ",
+   "country": "Mexico",
+   "type": "Scheduled"
+  },
+  {
+   "name": "THAI Airways",
+   "slug": "thai-airways",
+   "iata": "TG",
+   "country": "Thailand",
+   "type": "Scheduled"
+  },
+  {
+   "name": "THAI Smile",
+   "slug": "thai-smile",
+   "iata": "WE",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "TIK Systems",
+   "slug": "tik-systems",
+   "iata": "T1",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TRIP Linhas Aéreas",
+   "slug": "trip-linhas-aereas",
+   "iata": "T4",
+   "country": "Brazil",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TUI Airways",
+   "slug": "tui-airways",
+   "iata": "BY",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TUI fly Deutschland",
+   "slug": "tui-fly-deutschland",
+   "iata": "X3",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TUIfly Netherlands",
+   "slug": "tuifly-netherlands",
+   "iata": "OR",
+   "country": "Netherlands",
+   "type": "Scheduled"
+  },
+  {
+   "name": "TUIfly Nordiс",
+   "slug": "tuifly-nordis",
+   "iata": "6B",
+   "country": "Sweden",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tailwind Airlines",
+   "slug": "tailwind-airlines",
+   "iata": "TI",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tajik Air",
+   "slug": "tajik-air",
+   "iata": "7J",
+   "country": "Tajikistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tampa Cargo",
+   "slug": "tampa-cargo",
+   "iata": "QT",
+   "country": "Colombia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tandem Aero",
+   "slug": "tandem-aero",
+   "iata": "TQ",
+   "country": "Moldova",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Taquan Air",
+   "slug": "taquan-air",
+   "iata": "K3",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tarco Aviation",
+   "slug": "tarco-aviation",
+   "iata": "3T",
+   "country": "Sudan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tarom",
+   "slug": "tarom",
+   "iata": "RO",
+   "country": "Romania",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tashkent Air",
+   "slug": "tashkent-air",
+   "iata": "U7",
+   "country": "Uzbekistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tassili Airlines",
+   "slug": "tassili-airlines",
+   "iata": "SF",
+   "country": "Algeria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tatarstan Airlines",
+   "slug": "tatarstan-airlines",
+   "iata": "U9",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tayaran Jet",
+   "slug": "tayaran-jet",
+   "iata": "E8",
+   "country": "Jordan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Tbilisi Airways",
+   "slug": "tbilisi-airways",
+   "iata": "TD",
+   "country": "",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Terra Avia",
+   "slug": "terra-avia",
+   "iata": "T8",
+   "country": "Ireland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Texel Air Ltd",
+   "slug": "texel-air-ltd",
+   "iata": "TT",
+   "country": "Lithuania",
+   "type": "Low-cost"
+  },
+  {
+   "name": "TezJet",
+   "slug": "tezjet",
+   "iata": "K9",
+   "country": "Cambodia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Thai AirAsia",
+   "slug": "thai-airasia",
+   "iata": "FD",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Thai AirAsia X",
+   "slug": "thai-airasia-x",
+   "iata": "XJ",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Thai Lion Air",
+   "slug": "thai-lion-air",
+   "iata": "SL",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Thai Vietjet Air",
+   "slug": "thai-vietjet-air",
+   "iata": "VZ",
+   "country": "Thailand",
+   "type": "Low-cost"
+  },
+  {
+   "name": "The Landline Company",
+   "slug": "the-landline-company",
+   "iata": "L4",
+   "country": "Italy",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Thomas Cook Airlines",
+   "slug": "thomas-cook-airlines",
+   "iata": "MT",
+   "country": "Belgium",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Thomas Cook Airlines Belgium",
+   "slug": "thomas-cook-airlines-belgium",
+   "iata": "HQ",
+   "country": "Belgium",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tianjin Airlines",
+   "slug": "tianjin-airlines",
+   "iata": "GS",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tibet Airlines",
+   "slug": "tibet-airlines",
+   "iata": "TV",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tigerair Mandala",
+   "slug": "tigerair-mandala",
+   "iata": "RI",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tigerair Taiwan",
+   "slug": "tigerair-taiwan",
+   "iata": "IT",
+   "country": "Taiwan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Titan Airways Limited",
+   "slug": "titan-airways-limited",
+   "iata": "ZT",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Toki Air",
+   "slug": "toki-air",
+   "iata": "BV",
+   "country": "Italy",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Total Linhas Aereas",
+   "slug": "total-linhas-aereas",
+   "iata": "0T",
+   "country": "Brazil",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Trade Air",
+   "slug": "trade-air",
+   "iata": "C3",
+   "country": "Croatia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tradewind Aviation",
+   "slug": "tradewind-aviation",
+   "iata": "TJ",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Trans Air Congo",
+   "slug": "trans-air-congo",
+   "iata": "Q8",
+   "country": "Republic of the Congo",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Transair Senegal",
+   "slug": "transair-senegal",
+   "iata": "R2",
+   "country": "Senegal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Transavia",
+   "slug": "transavia",
+   "iata": "HV",
+   "country": "Netherlands",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Transavia France",
+   "slug": "transavia-france",
+   "iata": "TO",
+   "country": "France",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Transnusa",
+   "slug": "transnusa",
+   "iata": "8B",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Travel Service Slovensko",
+   "slug": "travel-service-slovensko",
+   "iata": "6D",
+   "country": "Slovakia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Travel Technology Interactive SA",
+   "slug": "travel-technology-interactive-sa",
+   "iata": "Y1",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Travelsky Technology Limited",
+   "slug": "travelsky-technology-limited",
+   "iata": "1E",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Trenitalia",
+   "slug": "trenitalia",
+   "iata": "7T",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Trigana Air Service",
+   "slug": "trigana-air-service",
+   "iata": "IL",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tropic Air",
+   "slug": "tropic-air",
+   "iata": "9N",
+   "country": "Belize",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tunisair",
+   "slug": "tunisair",
+   "iata": "TU",
+   "country": "Tunisia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tunisair Express",
+   "slug": "tunisair-express",
+   "iata": "UG",
+   "country": "Tunisia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Turkish Airlines",
+   "slug": "turkish-airlines",
+   "iata": "TK",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Turkmenistan Airlines",
+   "slug": "turkmenistan-airlines",
+   "iata": "T5",
+   "country": "Turkmenistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Tus Airways",
+   "slug": "tus-airways",
+   "iata": "U8",
+   "country": "Armenia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Twin Jet",
+   "slug": "twin-jet",
+   "iata": "T7",
+   "country": "France",
+   "type": "Scheduled"
+  },
+  {
+   "name": "UBM Aviation - OAG",
+   "slug": "ubm-aviation-oag",
+   "iata": "CR",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "UIA",
+   "slug": "uia",
+   "iata": "PS",
+   "country": "Ukraine",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ULS Airlines Cargo",
+   "slug": "uls-airlines-cargo",
+   "iata": "GO",
+   "country": "Turkey",
+   "type": "Scheduled"
+  },
+  {
+   "name": "UPS",
+   "slug": "ups",
+   "iata": "5X",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "UR Airlines",
+   "slug": "ur-airlines",
+   "iata": "UD",
+   "country": "Armenia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "US-Bangla Airlines",
+   "slug": "us-bangla-airlines",
+   "iata": "BS",
+   "country": "Bangladesh",
+   "type": "Scheduled"
+  },
+  {
+   "name": "UTair",
+   "slug": "utair",
+   "iata": "ЮЭ",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "UVT Aero",
+   "slug": "uvt-aero",
+   "iata": "RT",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Uganda Airlines",
+   "slug": "uganda-airlines",
+   "iata": "UR",
+   "country": "Uganda",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ultimate Jetcharters",
+   "slug": "ultimate-jetcharters",
+   "iata": "UE",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Umza Air",
+   "slug": "umza-air",
+   "iata": "UY",
+   "country": "Cameroon",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Uni Air",
+   "slug": "uni-air",
+   "iata": "B7",
+   "country": "Taiwan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Uni-Top Airlines",
+   "slug": "uni-top-airlines",
+   "iata": "UW",
+   "country": "",
+   "type": "Scheduled"
+  },
+  {
+   "name": "United Airlines",
+   "slug": "united-airlines",
+   "iata": "UA",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "United Nigeria Airlines",
+   "slug": "united-nigeria-airlines",
+   "iata": "UN",
+   "country": "Nigeria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Universal Air",
+   "slug": "universal-air",
+   "iata": "VO",
+   "country": "Malta",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Up Israel",
+   "slug": "up-israel",
+   "iata": "86",
+   "country": "Israel",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Ural Airlines",
+   "slug": "ural-airlines",
+   "iata": "U6",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Urumqi Air",
+   "slug": "urumqi-air",
+   "iata": "UQ",
+   "country": "Uganda",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Uzbekistan Airways",
+   "slug": "uzbekistan-airways",
+   "iata": "HY",
+   "country": "Uzbekistan",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Uzbekistan Express",
+   "slug": "uzbekistan-express",
+   "iata": "0H",
+   "country": "Uzbekistan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "VIM Airlines",
+   "slug": "vim-airlines",
+   "iata": "NN",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "VLM Airlines",
+   "slug": "vlm-airlines",
+   "iata": "VG",
+   "country": "Belgium",
+   "type": "Scheduled"
+  },
+  {
+   "name": "VOEPASS Linhas Aéreas",
+   "slug": "voepass-linhas-aereas",
+   "iata": "2Z",
+   "country": "Brazil",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ValueJet",
+   "slug": "valuejet",
+   "iata": "VK",
+   "country": "Nigeria",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Vanilla Air",
+   "slug": "vanilla-air",
+   "iata": "JW",
+   "country": "Japan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Videcom International Limited",
+   "slug": "videcom-international-limited",
+   "iata": "U1",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Vieques Air Link",
+   "slug": "vieques-air-link",
+   "iata": "V4",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Vietjet",
+   "slug": "vietjet",
+   "iata": "VJ",
+   "country": "Vietnam",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Vietnam Airlines",
+   "slug": "vietnam-airlines",
+   "iata": "VN",
+   "country": "Vietnam",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Vietravel Airlines",
+   "slug": "vietravel-airlines",
+   "iata": "VU",
+   "country": "Vietnam",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Villa Air",
+   "slug": "villa-air",
+   "iata": "VP",
+   "country": "Vietnam",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Virgin America",
+   "slug": "virgin-america",
+   "iata": "VX",
+   "country": "United States",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Virgin Atlantic",
+   "slug": "virgin-atlantic",
+   "iata": "VS",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Virgin Australia",
+   "slug": "virgin-australia",
+   "iata": "VA",
+   "country": "Australia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Vision Air (Moldova)",
+   "slug": "vision-air-moldova",
+   "iata": "4V",
+   "country": "Moldova",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Vistara",
+   "slug": "vistara",
+   "iata": "UK",
+   "country": "India",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Viva Aerobus",
+   "slug": "viva-aerobus",
+   "iata": "VB",
+   "country": "Mexico",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Viva Air Colombia",
+   "slug": "viva-air-colombia",
+   "iata": "VH",
+   "country": "Colombia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Vladivostok Air",
+   "slug": "vladivostok-air",
+   "iata": "XF",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Volaris",
+   "slug": "volaris",
+   "iata": "Y4",
+   "country": "Mexico",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Volaris Costa Rica",
+   "slug": "volaris-costa-rica",
+   "iata": "Q6",
+   "country": "Costa Rica",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Volaris El Salvador",
+   "slug": "volaris-el-salvador",
+   "iata": "N3",
+   "country": "El Salvador",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Volga-Dnepr Airlines",
+   "slug": "volga-dnepr-airlines",
+   "iata": "VI",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Volo",
+   "slug": "volo",
+   "iata": "DC",
+   "country": "Sweden",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Volotea",
+   "slug": "volotea",
+   "iata": "V7",
+   "country": "Spain",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Vueling",
+   "slug": "vueling",
+   "iata": "VY",
+   "country": "Spain",
+   "type": "Low-cost"
+  },
+  {
+   "name": "WOW Air",
+   "slug": "wow-air",
+   "iata": "WW",
+   "country": "Iceland",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Wamos Air",
+   "slug": "wamos-air",
+   "iata": "EB",
+   "country": "Spain",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Warbelows Air",
+   "slug": "warbelows-air",
+   "iata": "4W",
+   "country": "Nigeria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Webjet Linhas Aereas",
+   "slug": "webjet-linhas-aereas",
+   "iata": "WH",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "West Air",
+   "slug": "west-air",
+   "iata": "PN",
+   "country": "China",
+   "type": "Low-cost"
+  },
+  {
+   "name": "West Link Airlines",
+   "slug": "west-link-airlines",
+   "iata": "9L",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "WestJet",
+   "slug": "westjet",
+   "iata": "WS",
+   "country": "Canada",
+   "type": "Low-cost"
+  },
+  {
+   "name": "WestJet Encore",
+   "slug": "westjet-encore",
+   "iata": "WR",
+   "country": "Canada",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Western Air",
+   "slug": "western-air",
+   "iata": "WU",
+   "country": "Bahamas",
+   "type": "Scheduled"
+  },
+  {
+   "name": "White Airways",
+   "slug": "white-airways",
+   "iata": "WI",
+   "country": "Portugal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Widerøe",
+   "slug": "wideroe",
+   "iata": "WF",
+   "country": "Norway",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Winair",
+   "slug": "winair",
+   "iata": "WM",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Windrose Airlines",
+   "slug": "windrose-airlines",
+   "iata": "7W",
+   "country": "Ukraine",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Wingo",
+   "slug": "wingo",
+   "iata": "P5",
+   "country": "Colombia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Wings Air",
+   "slug": "wings-air",
+   "iata": "IW",
+   "country": "Indonesia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Wings of Lebanon",
+   "slug": "wings-of-lebanon",
+   "iata": "W7",
+   "country": "Lebanon",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Wizz Air",
+   "slug": "wizz-air",
+   "iata": "W6",
+   "country": "Hungary",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Wizz Air Abu Dhabi",
+   "slug": "wizz-air-abu-dhabi",
+   "iata": "5W",
+   "country": "United Arab Emirates",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Wizz Air Malta",
+   "slug": "wizz-air-malta",
+   "iata": "W4",
+   "country": "Malta",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Wizz Air UK",
+   "slug": "wizz-air-uk",
+   "iata": "W9",
+   "country": "United Kingdom",
+   "type": "Scheduled"
+  },
+  {
+   "name": "World Atlantic Airlines",
+   "slug": "world-atlantic-airlines",
+   "iata": "WL",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "World Ticket Ltd",
+   "slug": "world-ticket-ltd",
+   "iata": "W1",
+   "country": "Canada",
+   "type": "Scheduled"
+  },
+  {
+   "name": "World2Fly",
+   "slug": "world2fly",
+   "iata": "2W",
+   "country": "Austria",
+   "type": "Scheduled"
+  },
+  {
+   "name": "World2Fly (Portugal)",
+   "slug": "world2fly-portugal",
+   "iata": "3P",
+   "country": "Portugal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Worldspan",
+   "slug": "worldspan",
+   "iata": "1P",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Wright Air Service",
+   "slug": "wright-air-service",
+   "iata": "8V",
+   "country": "United States",
+   "type": "Scheduled"
+  },
+  {
+   "name": "XEJet",
+   "slug": "xejet",
+   "iata": "4U",
+   "country": "Germany",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Xiamen Airlines",
+   "slug": "xiamen-airlines",
+   "iata": "MF",
+   "country": "China",
+   "type": "Scheduled"
+  },
+  {
+   "name": "XpressAir",
+   "slug": "xpressair",
+   "iata": "XN",
+   "country": "Indonesia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "YANAIR",
+   "slug": "yanair",
+   "iata": "YE",
+   "country": "Iran",
+   "type": "Scheduled"
+  },
+  {
+   "name": "YTO Cargo Airlines",
+   "slug": "yto-cargo-airlines",
+   "iata": "YG",
+   "country": "Ukraine",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Yakutia Airlines",
+   "slug": "yakutia-airlines",
+   "iata": "R3",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Yamal Airlines",
+   "slug": "yamal-airlines",
+   "iata": "YC",
+   "country": "Russia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Yemenia",
+   "slug": "yemenia",
+   "iata": "IY",
+   "country": "Yemen",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Yeti Airlines",
+   "slug": "yeti-airlines",
+   "iata": "YT",
+   "country": "Nepal",
+   "type": "Scheduled"
+  },
+  {
+   "name": "ZIPAIR",
+   "slug": "zipair",
+   "iata": "ZG",
+   "country": "Japan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "Zagros Airlines",
+   "slug": "zagros-airlines",
+   "iata": "ZO",
+   "country": "Iran",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Zambezi Airlines",
+   "slug": "zambezi-airlines",
+   "iata": "ZJ",
+   "country": "Zambia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Zambia Airways",
+   "slug": "zambia-airways",
+   "iata": "ZN",
+   "country": "Zambia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Zapways, Inc.",
+   "slug": "zapways-inc",
+   "iata": "R1",
+   "country": "Philippines",
+   "type": "Scheduled"
+  },
+  {
+   "name": "Zimex Aviation",
+   "slug": "zimex-aviation",
+   "iata": "XM",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "aero",
+   "slug": "aero",
+   "iata": "N2",
+   "country": "Estonia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "airBaltic",
+   "slug": "airbaltic",
+   "iata": "BT",
+   "country": "Latvia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "airblue",
+   "slug": "airblue",
+   "iata": "PA",
+   "country": "Pakistan",
+   "type": "Low-cost"
+  },
+  {
+   "name": "avianca express",
+   "slug": "avianca-express",
+   "iata": "EX",
+   "country": "Colombia",
+   "type": "Scheduled"
+  },
+  {
+   "name": "easyJet",
+   "slug": "easyjet",
+   "iata": "DS",
+   "country": "United Kingdom",
+   "type": "Low-cost"
+  },
+  {
+   "name": "flyCAA",
+   "slug": "flycaa",
+   "iata": "BU",
+   "country": "Democratic Republic of the Congo",
+   "type": "Scheduled"
+  },
+  {
+   "name": "flyadeal",
+   "slug": "flyadeal",
+   "iata": "F3",
+   "country": "Saudi Arabia",
+   "type": "Low-cost"
+  },
+  {
+   "name": "iFly",
+   "slug": "ifly",
+   "iata": "F7",
+   "country": "Switzerland",
+   "type": "Scheduled"
+  },
+  {
+   "name": "jetBlue",
+   "slug": "jetblue",
+   "iata": "B6",
+   "country": "United States",
+   "type": "Low-cost"
+  }
+ ]
+}

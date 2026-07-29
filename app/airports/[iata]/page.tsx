@@ -17,6 +17,7 @@ import {
   faqJsonLd,
   robotsFor,
   summariseRoutes,
+  AIRPORTS_INDEXABLE,
 } from '@/lib/entity-seo';
 import { getAirportWeather, weatherLabel } from '@/lib/open-meteo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
@@ -65,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       images: [hero ? absoluteUrl(hero) : DEFAULT_OG_IMAGE],
     },
-    robots: robotsFor(airportIsSubstantive(a, routes.length > 0)),
+    robots: robotsFor(AIRPORTS_INDEXABLE && airportIsSubstantive(a, routes.length > 0)),
   };
 }
 

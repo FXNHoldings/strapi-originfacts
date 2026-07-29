@@ -18,6 +18,8 @@ import RelatedPostsSlider from '@/components/RelatedPostsSlider';
 import { SECTIONS } from '@/lib/sections';
 import { DEFAULT_OG_IMAGE, faqJsonLd, howToJsonLd, normalizeFaqs, normalizeSteps } from '@/lib/entity-seo';
 import { JsonLd, FaqSection, HowToSteps } from '@/components/SeoBlocks';
+import KeyFacts from '@/components/KeyFacts';
+import { clampDescription, warnIfLong } from '@/lib/seo';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -29,9 +31,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const a = await getArticle(slug);
   if (!a) return { title: 'Not found' };
   const ogImg = mediaUrl(a.ogImage ?? a.coverImage ?? null);
+  warnIfLong(`/articles/${a.slug}`, { title: a.seoTitle || a.title, description: a.seoDescription || a.excerpt });
   return {
     title: a.seoTitle || a.title,
-    description: a.seoDescription || a.excerpt,
+    description: clampDescription(a.seoDescription || a.excerpt),
     alternates: { canonical: `/articles/${a.slug}` },
     openGraph: {
       title: a.seoTitle || a.title,
@@ -316,6 +319,8 @@ export default async function ArticlePage({ params }: Props) {
                 />
               </div>
             )}
+
+            <KeyFacts tldr={article.tldr} keyFacts={article.keyFacts} />
 
             <div
               className="prose-article"

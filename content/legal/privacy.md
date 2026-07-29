@@ -24,7 +24,7 @@ Phone: +44 7413 408585
 Website: www.originfacts.com
 ICO registration reference: ZB940664
 
-EU representative, if required: [INSERT EU REPRESENTATIVE NAME AND CONTACT DETAILS, OR CONFIRM EXEMPTION WITH LEGAL COUNSEL]
+EU representative: We have not appointed an EU representative under Article 27 GDPR. EU data subjects can direct any privacy enquiry to the contact below and we will respond directly.
 
 For privacy requests, email support@fxnholdings.com with the subject line "Privacy Request".
 

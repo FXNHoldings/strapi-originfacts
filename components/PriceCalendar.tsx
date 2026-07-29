@@ -30,7 +30,10 @@ export default function PriceCalendar({
       currency: 'usd',
       trs: '401311',
       shmarker: '314807',
-      searchUrl: 'www.originfacts.com/flights',
+      // Travelpayouts white-label host (registered WL domain for marker
+      // 314807). Must be flights.originfacts.com — pointing the marker
+      // redirect at www.originfacts.com makes tpscr.com/r return Forbidden.
+      searchUrl: 'flights.originfacts.com/flights',
       locale: 'en',
       powered_by: 'false',
       one_way: 'false',

@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { SECTIONS } from '@/lib/sections';
 import { getLegalDoc } from '@/lib/legal';
-import { CookieSettingsButton } from '@/components/CookieConsent';
 
 const BOTTOM_BAR_SLUGS = ['privacy', 'terms', 'cookies', 'affiliate-disclosure'];
 
@@ -59,6 +58,34 @@ export default function Footer() {
             </li>
             <li>
               <a
+                href="https://www.linkedin.com/company/143027896/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Originfacts on LinkedIn"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-secondary-emphasis hover:text-secondary-emphasis"
+                data-testid="footer-social-linkedin"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
+                  <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.75C24 .78 23.2 0 22.22 0z" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.reddit.com/r/Originfacts/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Originfacts on Reddit"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-secondary-emphasis hover:text-secondary-emphasis"
+                data-testid="footer-social-reddit"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
+                  <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.74c.69 0 1.25.56 1.25 1.25a1.25 1.25 0 0 1-2.5.01c0-.69.56-1.26 1.25-1.26zm-5.01 1.4c2.62 0 4.99.87 6.66 2.23a1.81 1.81 0 0 1 2.4 2.75c0 .05.01.1.01.15 0 2.68-3.15 4.85-7.06 4.85s-7.06-2.17-7.06-4.85c0-.05 0-.1.01-.15a1.81 1.81 0 0 1 2.4-2.75C7.02 7.01 9.39 6.14 12 6.14zm-3.8 4.15a1.25 1.25 0 0 0 0 2.5 1.25 1.25 0 0 0 0-2.5zm7.6 0a1.25 1.25 0 0 0 0 2.5 1.25 1.25 0 0 0 0-2.5zm-3.8 4.66c-1 0-1.98.11-2.85.35-.25.07-.4.32-.33.57.06.2.24.34.45.34l.12-.02c.77-.21 1.65-.32 2.54-.32.89 0 1.77.11 2.54.32l.12.02c.21 0 .39-.14.45-.34a.46.46 0 0 0-.33-.57c-.87-.24-1.85-.35-2.85-.35z" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
                 href="/feed.xml"
                 aria-label="Originfacts RSS feed"
                 title="RSS feed"
@@ -77,60 +104,7 @@ export default function Footer() {
           <ul className="mt-3 space-y-2 text-sm text-white/80" data-testid="footer-company">
             <li><Link href="/" className="hover:text-secondary">Home</Link></li>
             <li><Link href="/about" className="hover:text-secondary">About</Link></li>
-            <li className="group/legal relative" data-testid="footer-legal-stuff">
-              <button
-                type="button"
-                className="inline-flex items-center gap-1.5 text-left hover:text-secondary"
-                aria-haspopup="true"
-              >
-                Legal Stuff
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-3 w-3 opacity-60"
-                  aria-hidden
-                >
-                  <polyline points="9 6 15 12 9 18" />
-                </svg>
-              </button>
-              <div
-                className="invisible absolute left-full top-0 z-10 pl-2 opacity-0 transition duration-150 group-hover/legal:visible group-hover/legal:opacity-100 group-focus-within/legal:visible group-focus-within/legal:opacity-100"
-                data-testid="footer-legal-submenu"
-              >
-                <div
-                  role="menu"
-                  className="min-w-[200px] rounded-md border border-white/10 bg-forest-900 p-1 shadow-md"
-                >
-                  <Link
-                    href="/legal/disclaimer"
-                    className="block rounded px-3 py-2 text-sm text-white/80 transition hover:bg-white/5 hover:text-secondary"
-                    role="menuitem"
-                  >
-                    Disclaimer
-                  </Link>
-                  <Link
-                    href="/legal/accessibility"
-                    className="block rounded px-3 py-2 text-sm text-white/80 transition hover:bg-white/5 hover:text-secondary"
-                    role="menuitem"
-                  >
-                    Accessibility
-                  </Link>
-                  <Link
-                    href="/legal"
-                    className="block rounded px-3 py-2 text-sm text-white/80 transition hover:bg-white/5 hover:text-secondary"
-                    role="menuitem"
-                  >
-                    Legal Notice
-                  </Link>
-                  <CookieSettingsButton className="block w-full rounded px-3 py-2 text-left text-sm text-white/80 transition hover:bg-white/5 hover:text-secondary" />
-                </div>
-              </div>
-            </li>
+            <li><Link href="/articles" className="hover:text-secondary">Blog</Link></li>
             <li><Link href="/sitemap" className="hover:text-secondary">Site Map</Link></li>
             <li><Link href="/contact" className="hover:text-secondary">Contact</Link></li>
           </ul>

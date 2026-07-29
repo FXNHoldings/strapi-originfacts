@@ -246,6 +246,32 @@
   .section-eyebrow {
     @apply flex items-baseline gap-3 text-xs font-medium uppercase tracking-wider text-primary-emphasis/70;
   }
+  /* Airline-page section eyebrow: a boarding-pass style tag — solid forest
+     chip, white uppercase label, leading ✈. Reuses the same markup as
+     .section-eyebrow (the old decorative line span is hidden here). */
+  .eyebrow-tag {
+    @apply inline-flex items-center gap-1.5 rounded-[0.2rem] bg-forest-900 px-2.5 py-[0.3rem] text-[11px] font-bold uppercase tracking-wider text-sand-100;
+  }
+  /* Hide the Travelpayouts currency selector in the flight-search widget
+     (light-DOM case; the shadow-DOM case is handled by TpwlHideCurrency). */
+  .localization-button-currencies {
+    display: none !important;
+  }
+  /* Flight-search page only: force Inter on all headings (h1–h6) and body text,
+     overriding the site's Urbanist/Figtree/Jakarta faces. Scoped to the page
+     wrapper so no other page is affected. */
+  .font-inter-scope,
+  .font-inter-scope :where(h1, h2, h3, h4, h5, h6, p, a, span, li, div, button, input, label, dl, dt, dd) {
+    font-family: var(--font-inter), system-ui, sans-serif !important;
+  }
+  .eyebrow-tag::before {
+    content: "\2708";
+    @apply text-[11px] leading-none;
+    transform: translateY(-0.5px);
+  }
+  .eyebrow-tag > span {
+    display: none;
+  }
 }
 
 /* ---------- /flights: make the search form sticky during results ----------
@@ -278,6 +304,22 @@ html.flight-search-active [data-testid="popular-destinations"],
 html.flight-search-active [data-testid="cheap-flights-by-destination"],
 html.flight-search-active [data-testid="booking-faq"] {
   display: none;
+}
+
+/* Results view matches the white-label layout: hero copy hidden, search form
+   compact at the top with the ticket list right below it. */
+html.flight-search-active [data-testid="flight-search-hero"] {
+  display: none;
+}
+html.flight-search-active .fs-search-band {
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+html.flight-search-active .tpwl-search-wrap {
+  margin-top: 0;
+}
+html.flight-search-active #tpwl-tickets {
+  margin-top: 0;
 }
 
 /* ---------- TPWL search form fields → 4px corner radius ----------
@@ -411,8 +453,8 @@ html.flight-search-active [data-testid="booking-faq"] {
          prose-strong:font-medium prose-strong:text-ink
          prose-blockquote:border-l-sand-500 prose-blockquote:font-display prose-blockquote:font-normal prose-blockquote:text-forest-900 prose-blockquote:not-italic;
   max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 .prose-article p,
 .prose-article ol,

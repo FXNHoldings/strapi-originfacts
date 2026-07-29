@@ -35,7 +35,7 @@ export default function ScheduleWidget({
       trs: '401311',
       shmarker: '314807',
       color_button: '#FF0000',
-      target_host: 'www.originfacts.com/flights',
+      target_host: 'flights.originfacts.com/flights',
       locale: 'en',
       powered_by: 'false',
       origin: origin.toUpperCase(),
