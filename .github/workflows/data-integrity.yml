@@ -17,7 +17,7 @@ on:
   workflow_dispatch: {}
   pull_request:
     paths:
-      - 'scripts/validate-aviation-data.mjs'
+      - 'ops/validate-aviation-data.mjs'
       - 'docs/data/integrity-baseline.json'
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
           STRAPI_URL: ${{ secrets.STRAPI_PUBLIC_URL }}
           STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
         run: |
-          node scripts/validate-aviation-data.mjs \
+          node ops/validate-aviation-data.mjs \
             --gate docs/data/integrity-baseline.json \
             --out integrity-report.md
           echo '## Data integrity report' >> "$GITHUB_STEP_SUMMARY"

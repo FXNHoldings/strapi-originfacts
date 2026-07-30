@@ -1,6 +1,6 @@
 # Aviation data integrity report
 
-Generated 2026-07-30 by `scripts/validate-aviation-data.mjs` — READ-ONLY reconciliation; no records were modified.
+Generated 2026-07-30 by `ops/validate-aviation-data.mjs` — READ-ONLY reconciliation; no records were modified.
 Dataset: 1096 airlines, 501 routes. References: OpenFlights registry + Wikidata (entity URL cited per row). 362 record(s) unverified (no confident reference match — NOT guessed).
 
 **2786 suspected errors** (1636 high / 587 medium / 563 low):
