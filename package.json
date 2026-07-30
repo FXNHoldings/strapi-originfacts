@@ -12,11 +12,16 @@
   "dependencies": {
     "date-fns": "^4.1.0",
     "marked": "^15.0.3",
-    "next": "^15.1.0",
-    "qs": "^6.13.1",
+    "next": "^15.5.21",
+    "qs": "^6.15.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "resend": "^6.12.3"
+  },
+  "resolutions": {
+    "postcss": "^8.5.18",
+    "sharp": "^0.35.0",
+    "qs": "^6.15.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.15",
@@ -25,7 +30,7 @@
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.5.0",
+    "postcss": "^8.5.18",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2"
   }
