@@ -5,7 +5,7 @@
 # links whose href differs from the target's canonical URL. The job never
 # fails the pipeline — it's a report, surfaced in the run summary and as an
 # artifact. Run it locally against a build with:
-#   node scripts/check-canonical-links.mjs http://127.0.0.1:3000
+#   node ops/check-canonical-links.mjs http://127.0.0.1:3000
 name: canonical-links
 
 on:
@@ -18,7 +18,7 @@ on:
       - 'components/Footer.tsx'
       - 'components/MobileNav.tsx'
       - 'components/FixedRightBar.tsx'
-      - 'scripts/check-canonical-links.mjs'
+      - 'ops/check-canonical-links.mjs'
 
 jobs:
   audit:
@@ -32,7 +32,7 @@ jobs:
       - name: Crawl production for non-canonical internal links
         # Always exits 0; the count line and report are informational.
         run: |
-          node scripts/check-canonical-links.mjs https://www.originfacts.com \
+          node ops/check-canonical-links.mjs https://www.originfacts.com \
             --max 80 --out non-canonical-links.md
           echo '## Canonical-link audit' >> "$GITHUB_STEP_SUMMARY"
           cat non-canonical-links.md >> "$GITHUB_STEP_SUMMARY"
