@@ -1,21 +1,43 @@
-import { getAirlineReviews, SUBRATING_LABELS } from '@/lib/airline-reviews';
+import {
+  getAirlineReviews,
+  SOURCE_META,
+  SUBRATING_LABELS,
+  sourceLabel,
+  type AirlineReviewStats,
+} from '@/lib/airline-reviews';
 
 /**
- * Traveller reviews from the unified review store. Currently fed by the
- * Skytrax archive dataset (reviews up to mid-2015), so the section is
- * explicitly framed as historical and every card carries its date.
- * Attribution: reviews originally published on airlinequality.com (Skytrax).
+ * Traveller reviews from the unified review store, which may hold reviews from
+ * several sources at once (Skytrax archive, TripAdvisor…). Everything shown —
+ * the badge, the per-source breakdown, the attribution line — is derived from
+ * the file's own `sources`, so a page never credits a source it is not showing.
+ *
+ * Reviews are historical by nature, so the year range is always on screen and
+ * every card carries its date.
  */
 export default function AirlineReviews({ slug, name }: { slug: string; name: string }) {
   const data = getAirlineReviews(slug);
   if (!data || data.stats.reviewCount === 0) return null;
 
   const { stats } = data;
+  const sources = data.sources ?? [];
+  const bySource = data.statsBySource ?? {};
+  const multiSource = sources.length > 1;
+
   const shown = data.reviews.slice(0, 6);
   const years = `${stats.firstReviewDate.slice(0, 4)}–${stats.lastReviewDate.slice(0, 4)}`;
   const subs = stats.subratings
     ? Object.entries(stats.subratings).map(([k, v]) => ({ label: SUBRATING_LABELS[k] ?? k, avg: v }))
     : [];
+
+  const sourceNames = sources.map(sourceLabel);
+  const sourceList =
+    sourceNames.length > 1
+      ? `${sourceNames.slice(0, -1).join(', ')} and ${sourceNames[sourceNames.length - 1]}`
+      : (sourceNames[0] ?? 'traveller review sites');
+
+  const linkFor = (source: string) =>
+    (bySource[source] as AirlineReviewStats | undefined)?.sourceUrl ?? SOURCE_META[source]?.home ?? null;
 
   return (
     <section className="mx-auto max-w-6xl px-6 pb-20" data-testid="airline-reviews">
@@ -30,7 +52,7 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
           </h2>
         </div>
         <span className="text-xs uppercase tracking-[0.2em] text-forest-900/50">
-          Skytrax archive · {years}
+          {sourceNames.join(' + ')} · {years}
         </span>
       </header>
 
@@ -50,6 +72,26 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
             <div className="mt-3 rounded-[0.3rem] bg-forest-900/[0.04] px-3 py-2 text-xs text-forest-900/75">
               <span className="font-bold text-forest-900">{stats.recommendPct}%</span> recommended the airline
             </div>
+          )}
+
+          {/* With more than one source the headline average is a blend, so show
+              what each source contributed rather than letting one stand in for all. */}
+          {multiSource && (
+            <dl className="mt-4 space-y-1.5 border-t border-forest-900/10 pt-3 text-left">
+              {sources.map((source) => {
+                const s = bySource[source];
+                if (!s) return null;
+                return (
+                  <div key={source} className="flex items-baseline justify-between gap-2 text-[11px]">
+                    <dt className="text-forest-900/60">{sourceLabel(source)}</dt>
+                    <dd className="font-mono text-forest-900/80">
+                      {s.avgRating10 !== null ? `${s.avgRating10.toFixed(1)}/10` : '—'}
+                      <span className="text-forest-900/45"> · {s.reviewCount}</span>
+                    </dd>
+                  </div>
+                );
+              })}
+            </dl>
           )}
         </div>
 
@@ -85,6 +127,7 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
             r.date ? `Flew ${r.date.slice(0, 7)}` : null,
           ].filter(Boolean);
           const text = r.text.length > 300 ? `${r.text.slice(0, 297).trimEnd()}…` : r.text;
+          const place = r.authorCountry ?? r.authorLocation ?? null;
           return (
             <article
               key={r.id}
@@ -96,13 +139,17 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
                     {r.rating10}/10
                   </span>
                 )}
-                <span
-                  className={`text-[11px] font-bold uppercase tracking-wider ${
-                    r.recommended ? 'text-forest-700' : 'text-forest-900/40'
-                  }`}
-                >
-                  {r.recommended ? 'Recommended' : 'Not recommended'}
-                </span>
+                {/* Only sources that actually record a recommend flag get this
+                    badge — absent is not the same as "not recommended". */}
+                {r.recommended !== null && r.recommended !== undefined && (
+                  <span
+                    className={`text-[11px] font-bold uppercase tracking-wider ${
+                      r.recommended ? 'text-forest-700' : 'text-forest-900/40'
+                    }`}
+                  >
+                    {r.recommended ? 'Recommended' : 'Not recommended'}
+                  </span>
+                )}
               </div>
               {r.title && (
                 <h3 className="mt-3 font-urbanist text-base font-bold leading-snug text-forest-900">
@@ -116,8 +163,9 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
               )}
               <p className="mt-3 text-sm font-light leading-6 text-forest-900/78">{text}</p>
               <p className="mt-auto pt-4 text-xs text-forest-900/50">
-                {r.author ?? 'Skytrax traveller'}
-                {r.authorCountry ? `, ${r.authorCountry}` : ''}
+                {r.author ?? 'Traveller'}
+                {place ? `, ${place}` : ''}
+                {multiSource && <span className="text-forest-900/35"> · {sourceLabel(r.source)}</span>}
               </p>
             </article>
           );
@@ -125,9 +173,25 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
       </div>
 
       <p className="mt-6 text-xs text-forest-900/50">
-        Historical traveller reviews originally published on Skytrax (airlinequality.com), shown
-        for reference — service standards may have changed since. Originfacts does not edit or
-        verify individual reviews.
+        Traveller reviews originally published on{' '}
+        {sources.map((source, i) => {
+          const href = linkFor(source);
+          return (
+            <span key={source}>
+              {i > 0 && (i === sources.length - 1 ? ' and ' : ', ')}
+              {href ? (
+                <a href={href} rel="nofollow noopener noreferrer" target="_blank" className="underline">
+                  {sourceLabel(source)}
+                </a>
+              ) : (
+                sourceLabel(source)
+              )}
+            </span>
+          );
+        })}
+        {sources.length === 0 && sourceList}, shown for reference — service standards may have changed
+        since. Originfacts does not edit or verify individual reviews, and the sample reflects who
+        chose to leave one.
       </p>
     </section>
   );
