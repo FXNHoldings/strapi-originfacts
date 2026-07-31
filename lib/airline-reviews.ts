@@ -73,6 +73,67 @@ export function sourceLabel(source: string): string {
   return SOURCE_META[source]?.label ?? source;
 }
 
+/**
+ * Choose which reviews to put on screen.
+ *
+ * Taking the newest N is not safe here: review sites cluster sentiment in time,
+ * so a recent run of one-star reviews can fill every card while the headline
+ * average describes a much wider spread. (Qantas: stored average 4.3/10, newest
+ * six all 2/10.) Slots are instead allocated across rating bands in proportion
+ * to the stored distribution — largest-remainder — and filled newest-first
+ * within each band. The visible cards then match the number above them, and the
+ * result is deterministic rather than cherry-picked.
+ */
+export function pickRepresentative(reviews: AirlineReview[], count: number): AirlineReview[] {
+  if (reviews.length <= count) return reviews;
+
+  const rated = reviews.filter((r) => r.rating10 !== null);
+  if (rated.length === 0) return reviews.slice(0, count);
+
+  const byRating = new Map<number, AirlineReview[]>();
+  for (const review of rated) {
+    const band = review.rating10 as number;
+    if (!byRating.has(band)) byRating.set(band, []);
+    byRating.get(band)!.push(review);
+  }
+  for (const list of byRating.values()) list.sort((a, b) => b.date.localeCompare(a.date));
+
+  const bands = [...byRating.entries()]
+    .sort((a, b) => b[0] - a[0])
+    .map(([band, list]) => {
+      const exact = (list.length / rated.length) * count;
+      return { band, list, exact, take: Math.floor(exact) };
+    });
+
+  let left = count - bands.reduce((sum, b) => sum + b.take, 0);
+  const byRemainder = [...bands].sort(
+    (a, b) => b.exact - Math.floor(b.exact) - (a.exact - Math.floor(a.exact)) || b.band - a.band
+  );
+  for (const b of byRemainder) {
+    if (left <= 0) break;
+    if (b.take < b.list.length) {
+      b.take += 1;
+      left -= 1;
+    }
+  }
+
+  const chosen = bands.flatMap((b) => b.list.slice(0, b.take));
+
+  // Bands can run dry before the quota is met; top up by recency.
+  if (chosen.length < count) {
+    const taken = new Set(chosen.map((r) => r.id));
+    for (const review of reviews) {
+      if (chosen.length >= count) break;
+      if (!taken.has(review.id)) {
+        chosen.push(review);
+        taken.add(review.id);
+      }
+    }
+  }
+
+  return chosen.sort((a, b) => b.date.localeCompare(a.date)).slice(0, count);
+}
+
 const DIR = path.join(process.cwd(), 'content', 'airline-reviews');
 
 export function getAirlineReviews(slug: string): AirlineReviewFile | null {

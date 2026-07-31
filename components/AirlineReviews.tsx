@@ -1,5 +1,6 @@
 import {
   getAirlineReviews,
+  pickRepresentative,
   SOURCE_META,
   SUBRATING_LABELS,
   sourceLabel,
@@ -24,7 +25,7 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
   const bySource = data.statsBySource ?? {};
   const multiSource = sources.length > 1;
 
-  const shown = data.reviews.slice(0, 6);
+  const shown = pickRepresentative(data.reviews, 6);
   const years = `${stats.firstReviewDate.slice(0, 4)}–${stats.lastReviewDate.slice(0, 4)}`;
   const subs = stats.subratings
     ? Object.entries(stats.subratings).map(([k, v]) => ({ label: SUBRATING_LABELS[k] ?? k, avg: v }))
@@ -57,7 +58,13 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
       </header>
 
       {/* Summary tiles + category averages */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+      {/* Sources without per-category ratings (TripAdvisor) have no second
+          panel, so the grid collapses rather than reserving an empty column. */}
+      <div
+        className={`mt-6 grid gap-6 ${
+          subs.length > 0 ? 'lg:grid-cols-[240px_minmax(0,1fr)]' : 'sm:grid-cols-[minmax(0,240px)]'
+        }`}
+      >
         <div className="rounded-[0.3rem] border border-forest-900/10 bg-white/85 p-6 text-center shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
           {stats.avgRating10 !== null && (
             <div className="font-urbanist text-5xl font-bold text-forest-900">
