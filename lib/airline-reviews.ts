@@ -74,6 +74,47 @@ export function sourceLabel(source: string): string {
 }
 
 /**
+ * Counts per star band, 5 down to 1, for the rating histogram. Ratings are
+ * stored 0–10, so each band covers two points (10 → 5 stars, 2 → 1 star).
+ * Empty bands are kept so the histogram always has five rows.
+ */
+export function ratingBands(reviews: AirlineReview[]): { star: number; count: number }[] {
+  const counts = new Map<number, number>([[5, 0], [4, 0], [3, 0], [2, 0], [1, 0]]);
+
+  for (const review of reviews) {
+    if (review.rating10 === null) continue;
+    const star = Math.min(5, Math.max(1, Math.ceil(review.rating10 / 2)));
+    counts.set(star, (counts.get(star) ?? 0) + 1);
+  }
+
+  return [5, 4, 3, 2, 1].map((star) => ({ star, count: counts.get(star) ?? 0 }));
+}
+
+/**
+ * Frequency of a free-text facet (cabin, route) across the stored reviews.
+ * These chips are counted from the reviews themselves — nothing here is
+ * inferred, summarised or otherwise asserted on the reviewers' behalf.
+ */
+export function facetCounts(
+  reviews: AirlineReview[],
+  key: 'cabin' | 'route',
+  limit: number
+): { label: string; count: number }[] {
+  const counts = new Map<string, number>();
+
+  for (const review of reviews) {
+    const value = review[key];
+    if (!value) continue;
+    counts.set(value, (counts.get(value) ?? 0) + 1);
+  }
+
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([label, count]) => ({ label, count }));
+}
+
+/**
  * Choose which reviews to put on screen.
  *
  * Taking the newest N is not safe here: review sites cluster sentiment in time,
