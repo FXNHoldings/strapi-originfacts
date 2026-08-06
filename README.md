@@ -117,4 +117,43 @@ Runtime configuration lives in `.env.local` on the VM. Important keys include:
 ## Customising the look
 - Colours: `tailwind.config.ts` (`forest`, `sand`, `forest`, `paper`, `ink`)
 - Fonts: `app/layout.tsx` — swap Fraunces / Geist for any other pair you like
-- Home hero copy: `app/page.tsx`
+- Home hero copy: `app/page.tsx`\n
+## Deployment
+
+Hosted on **Vercel**, built from `main` on push. Repository:
+`xmpcross/strapi-originfacts`.
+
+Server-rendered Next.js: it reads Strapi at request time and uses `next/image`
+with remote patterns, so it needs a Next.js runtime rather than a static host.
+
+### Environment variables
+
+Set in the Vercel project, not committed:
+
+```text
+NEXT_PUBLIC_STRAPI_URL           CMS read at request time
+STRAPI_API_TOKEN                 optional; public reads work without it
+NEXT_PUBLIC_SITE_URL             canonicals, sitemap, RSS, OpenGraph
+NEXT_PUBLIC_GA_MEASUREMENT_ID    analytics
+```
+
+### Notes specific to this site
+
+- Four loaders read from disk while serving: `content/airline-reviews`,
+  `content/legal`, `content/pages` and `data/route-facts/all.json`. The paths are
+  built with `join(process.cwd(), …)`, which Next's tracer cannot follow, so
+  `outputFileTracingIncludes` in `next.config.mjs` bundles them explicitly.
+  Without it the build stays green and the pages render empty.
+- `scripts` is a symlink to `/opt/scripts/originfacts` on the origin server and
+  is **not tracked**. Committing it broke the Vercel build with
+  `ENOENT … stat '/vercel/path0/scripts'`, because an absolute symlink dangles
+  anywhere else.
+- Five API routes (`contact`, `flight-deals`, `nearest-airport`, `nearest-city`,
+  `category-articles`) run as serverless functions.
+
+### The CMS is a runtime dependency
+
+Content is fetched per request and per revalidation, so **the site has no
+content if Strapi is unreachable**. That server is a separate machine from the
+one Vercel runs on, and a DNS failure on the CMS host is enough to empty the
+site — which is exactly what happened in August 2026.
