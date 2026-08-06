@@ -7,6 +7,19 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   allowedDevOrigins: ['preview.fxnstudio.com'],
+  // Markdown and JSON read from disk at request time. The paths are built with
+  // join(process.cwd(), …) rather than written as literals, so Next's file
+  // tracer cannot follow them and would leave these out of the serverless
+  // bundle — the loaders catch their own errors, so the result is a green
+  // build serving pages with no airline reviews and no legal text.
+  outputFileTracingIncludes: {
+    '/**': [
+      './content/airline-reviews/**',
+      './content/legal/**',
+      './content/pages/**',
+      './data/route-facts/**',
+    ],
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: strapiHost },
