@@ -22,3 +22,11 @@ scripts/.airport-ingest-progress.json
 .yarn-cache/
 .npm/
 ops/data/
+
+# Local tooling: a symlink to /opt/scripts/originfacts on the build host.
+# Absolute and machine-specific, so it dangles anywhere else — on Vercel it
+# made `next build` fail with ENOENT stat /vercel/path0/scripts.
+scripts
+
+# Editor swap files
+.*.swp
