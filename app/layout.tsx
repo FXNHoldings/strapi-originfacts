@@ -82,6 +82,7 @@ export const metadata: Metadata = {
     // than being hand-written into the body.
     'mitgo-verification': 'c35b4b6a-ddfe-4741-ab3e-2c1b7538a949',
     'Takeads-verification': 'd5d48ab4-be05-4198-bb51-e1492a80937c',
+    'verify-admitad': 'f0703eb480',
     ...(ADSENSE_ENABLED ? { 'google-adsense-account': ADSENSE_CLIENT } : {}),
   },
 };
