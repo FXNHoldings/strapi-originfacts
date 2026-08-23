@@ -4,7 +4,8 @@
  *
  * Two jobs:
  *  1. Quality gate — `*IsSubstantive()` decides whether a page carries enough
- *     real, page-specific information to deserve indexing. Pages that fail are
+ *     real, page-specific information to deserve indexing (airlines have since
+ *     moved to a data-derived tier — see lib/airline-tier.ts). Pages that fail are
  *     served `robots: noindex, follow` and dropped from the sitemap, so Google
  *     only sees pages with genuine content (the fix for the "scaled/low-value
  *     content" AdSense rejection). They stay live for users, and re-enter the
@@ -168,16 +169,11 @@ export function airportIsSubstantive(a: StrapiAirport, hasRoutes: boolean): bool
   return hasText(a.about) || hasRoutes;
 }
 
-export function airlineIsSubstantive(a: StrapiAirline, hasRoutes: boolean): boolean {
-  // A page is substantive (indexable + in the sitemap) once it carries real
-  // generated content: a long-enough About, a full 8-question FAQ set, or
-  // tracked routes. Thin, un-enriched airlines stay noindex until content
-  // lands — then they flip automatically, no manual un-exclusion needed.
-  const faqCount = Array.isArray(a.faqs)
-    ? a.faqs.filter((f) => f && (f as { q?: string; a?: string }).q && (f as { q?: string; a?: string }).a).length
-    : 0;
-  return hasText(a.about) || hasRoutes || faqCount >= 8;
-}
+/*
+ * Airlines are gated by tier instead — see lib/airline-tier.ts. The `about`
+ * test below is wrong for them: the enrichment pass wrote an `about` onto 1,019
+ * of the 1,096 airlines, which opened the gate for the whole directory at once.
+ */
 
 export function countryHasData(c: Pick<StrapiCountry, 'code' | 'about'>): boolean {
   return hasText(c.about) || Boolean(getCountryFacts(c.code));

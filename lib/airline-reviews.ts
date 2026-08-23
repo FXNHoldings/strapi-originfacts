@@ -214,3 +214,29 @@ export function getAirlineReviews(slug: string): AirlineReviewFile | null {
     return null;
   }
 }
+
+/**
+ * Whether a review file exists for a slug, without reading or parsing it.
+ *
+ * The tier gate asks this for all ~1,100 airlines on every sitemap build, so
+ * the directory is listed once and every later answer comes from the resulting
+ * set. Going through `getAirlineReviews` would parse 202 files totalling
+ * several megabytes to answer a question the filenames already settle.
+ */
+let reviewedSlugs: Set<string> | null = null;
+
+export function hasAirlineReviews(slug: string): boolean {
+  if (!reviewedSlugs) {
+    try {
+      reviewedSlugs = new Set(
+        fs
+          .readdirSync(DIR)
+          .filter((f) => f.endsWith('.json'))
+          .map((f) => f.slice(0, -'.json'.length)),
+      );
+    } catch {
+      reviewedSlugs = new Set();
+    }
+  }
+  return reviewedSlugs.has(slug);
+}
