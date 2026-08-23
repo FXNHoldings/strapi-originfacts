@@ -30,6 +30,11 @@
   --hero-rule: #b6d5ef;
   --hero-text: #33415f;
   --hero-dim: #4a5b78;
+  /* Sector endpoints: origin on the brand blue, destination on terracotta —
+     the site's only other hue, so the two ends read apart without inventing a
+     colour the palette does not have. */
+  --sector-from: #0072de;  /* forest.500 */
+  --sector-to: #b85812;    /* terracotta.500 */
   --foot-bg: #ffffff;
   --foot-text: #33415f;
 
@@ -158,7 +163,9 @@
 .ledgerRight { margin-left: auto; }
 
 /* ---------- layout ---------- */
-.main { padding: 48px 0 88px; }
+/* White rather than the --paper ground. The module cards are also white, so
+   their 1px --rule border is now what separates them from the page. */
+.main { background: var(--card); padding: 48px 0 88px; }
 .cols { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 64px; align-items: start; }
 
 .module {
@@ -220,6 +227,67 @@
 .module tbody th { font-family: var(--t1-head); font-size: 15px; font-weight: 600; }
 .num { font-family: var(--t1-mono); font-size: 14.5px; white-space: nowrap; }
 .tableScroll { overflow-x: auto; }
+
+/* ---------- longest sector figure ---------- */
+.sector {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 24px 0 20px;
+}
+.sectorText { padding: 26px 28px; display: flex; flex-direction: column; gap: 6px; }
+.sectorEyebrow {
+  font-family: var(--t1-mono);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--sector-from);
+  margin: 0;
+}
+.sectorRoute {
+  font-family: var(--t1-head);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 4px 0 0;
+  text-wrap: balance;
+}
+.sectorMeta {
+  font-family: var(--t1-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0;
+}
+.sectorCaption { font-size: 14.5px; line-height: 1.55; color: var(--slate); margin: 10px 0 0; }
+
+.sectorPlot {
+  background: var(--hero-bg);
+  border-left: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 10px;
+}
+/* The arc is schematic and fixed, so it scales rather than reflows. */
+.sectorSvg { width: 100%; height: auto; max-width: 420px; display: block; }
+.sectorDistance {
+  font-family: var(--t1-mono);
+  font-size: 13px;
+  fill: var(--slate);
+}
+.sectorCode {
+  font-family: var(--t1-head);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  fill: var(--ink);
+}
 
 /* conflict flag */
 .conflict {
@@ -345,6 +413,9 @@
   .rail { position: static; }
   .plate { grid-template-columns: 1fr; align-items: start; }
   .module { padding: 26px 20px 28px; }
+  .sector { grid-template-columns: 1fr; }
+  .sectorPlot { border-left: 0; border-top: 1px solid var(--rule); }
+  .sectorText { padding: 22px 20px; }
   .module table { font-size: 14.5px; }
   .module th, .module td { padding: 10px 10px 10px 0; }
 }

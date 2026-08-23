@@ -18,70 +18,108 @@ accident.
 
 ## Shape
 
+Provenance is per **field**, not per module. A module-level source list lets a
+table publish a cell nobody sourced as long as the module cites something —
+which is rule 3 violated by construction.
+
 ```jsonc
 {
   "slug": "qantas",
+  "official_website": "https://www.qantas.com",   // required; validation uses it
   "modules": [
     {
-      "id": "baggage",              // baggage | carryon | fares | rights | checkin
-      "title": "Checked baggage",
-      "status": "verified",         // "verified" | "disputed"
-      "verifiedAt": "2026-08-24",   // YYYY-MM-DD — drives the module stamp
-      "statusNote": "…",            // shown instead of the date when disputed
-      "lede": "One-sentence opener.",
-      "body": ["Paragraph.", "Paragraph."],
-      "table": {
-        "caption": "Included checked allowance by route and cabin",
-        "columns": ["Cabin", "Domestic", "International"],
-        "rows": [["Economy", "1 × 23 kg", "30 kg total"]]   // cell 0 is the row header
+      "id": "contact",
+      "title": "Contact and the small print",
+      "required": ["phone_home_market"],          // all must be `official` to publish
+      "fields": {
+        "phone_home_market": {
+          "value": "13 13 13",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/help/contact-us",
+          "verified_at": "2026-08-24"
+        },
+        "phone_us": { "value": null, "status": "pending" }
       },
-      "rule":     { "key": "32 kg", "text": "One limit that cuts across every row." },
-      "conflicts": [{ "title": "Sources disagree", "text": "Say so; print neither number." }],
-      "sources":  [{ "label": "Qantas, Checked baggage", "url": "https://…", "note": "primary" }],
-      "reviewNote": "Next review Nov 2026"
+      "table": {
+        "caption": "Contact by market",
+        "columns": ["Market", "Number"],
+        "rows": [{ "label": "Australia", "cells": ["phone_home_market"] }]
+      }
     }
   ]
 }
 ```
 
-Every field except `id`, `title`, `status`, `verifiedAt` and `sources` is
-optional — a module that is only a table and a source is perfectly valid.
+Table cells name **field keys**, never strings, so no cell can reach the page
+without provenance attached.
 
-## Module ids the template lays out
+## Status
 
-| id        | Module                                | Comes from  |
-|-----------|---------------------------------------|-------------|
-| `baggage` | Checked baggage                       | this store  |
-| `carryon` | Carry-on                              | this store  |
-| `fares`   | What the cheapest fare includes       | this store  |
-| `cabins`  | Cabins and seating                    | route data  |
-| `rights`  | If your flight is delayed or cancelled| this store  |
-| `checkin` | Check-in and airport cutoffs          | this store  |
-| `network` | Where they fly                        | route data  |
-| `faq`     | Common questions                      | route data  |
+| Status | Meaning | Renders? |
+|---|---|---|
+| `official` | The carrier's own page, or a named regulator | Yes |
+| `third_party` | Aggregator, encyclopedia, blog. Plausible, unconfirmed | No |
+| `disputed` | Credible sources disagree | No — the conflict renders |
+| `pending` | Not yet researched, or the lookup failed | No |
+| `n/a` | Does not apply to this carrier | No |
 
-`cabins`, `network` and `faq` are built from the route-network dataset in
-`data/route-facts/` and cite it by name and `updated` stamp. Entries for those
-ids in a fact file are ignored.
+A module publishes only when every field in `required` is `official`. Otherwise
+it renders the unpublished state, naming which fields are missing.
+
+## Validation
+
+```
+npm run validate:facts            # the store — runs automatically as prebuild
+npm run validate:facts:fixtures   # the fixture suite
+```
+
+`prebuild` means a file that breaks the contract **fails the build** rather than
+reaching production. That is structural on purpose: a design mock has already
+been served publicly under green "Verified" stamps.
+
+Enforced:
+
+- Any file carrying `_warning`, or named `_*`, fails. Mock data cannot sit in
+  the store.
+- `official` requires `source_url`, `verified_at` and a non-empty `value`.
+- `disputed` requires both readings in `conflicting_values`.
+- `verified_at` must be `YYYY`, `YYYY-MM` or `YYYY-MM-DD`. **Precision is never
+  widened** — a year stays a year.
+- Every key in `required` must exist in `fields`.
+- **A `contact` field whose value looks like a phone number or postal address
+  must be sourced from the carrier's own registrable domain.** Anything else
+  fails.
+
+That last rule exists because contact numbers are the most poisoned field type
+in search: scam operations publish fake airline "customer service" numbers as
+PDFs on university and government domains, harvesting card details from callers.
+Domain authority is not a signal. Comparison uses the public suffix list
+(`tldts`), not label counting — under `.com.au` the last two labels *are* the
+suffix, so counting would treat every `*.com.au` host as one site — and not
+`endsWith`, which passes `qantas.com.attacker.example`.
+
+Fixtures live in `ops/fixtures/airline-facts/`, named `pass-*` or `fail-*`. A
+validator with no negative tests only proves it can say yes.
 
 ## Conventions
 
-- **`verifiedAt` is per module, not per page.** A module's stamp is its own
-  oldest fact. The page-level "last full review" in the ledger is the oldest
-  date across the modules that published.
-- **Cite the carrier, not an aggregator.** The source of record for an
-  allowance is the airline's own conditions of carriage. Duffel's
-  `conditions_of_carriage_url` gives that link for 57 of the 71 Tier 1 carriers.
-- **When sources disagree, use `conflicts` and print neither number.** A module
-  that silently picks one of two figures has guessed, and the reader has no way
-  to tell.
-- **Dimensions and weights carry their units in the cell** (`"1 × 23 kg"`,
-  `"140 cm total"`). The template does not add units or convert between them.
+- **`verified_at` is per field.** No inheriting a stamp from a sibling field, a
+  previous run, or another carrier.
+- **Cite the carrier, not an aggregator.** Duffel's `conditions_of_carriage_url`
+  gives that link for 57 of the 71 Tier 1 carriers.
+- **Where sources disagree, set `disputed` and publish neither.** A module that
+  silently picks one of two figures has guessed, and the reader cannot tell.
+- **Record the fetched URL per field.** Markets genuinely differ; an `en-au`
+  number and an `en-us` number are different facts, not one fact to normalise.
+- **Units live in the value** (`"1 × 23 kg"`, `"140 cm"`). The template does not
+  add units or convert between them.
+- **`correspondence_address`, never `registered_address`.** We publish where a
+  complaint can be sent. A registered office is public record and useless to a
+  traveller.
 
-## Sample file
+## No samples in the store
 
-`_sample.qantas.json` holds the content from the design mock so the template can
-be reviewed with populated modules. **Its figures are not verified.** It loads
-only behind `/preview/airlines/qantas?sample=1`, never on a live page, and the
-leading underscore keeps it from colliding with a real slug. Delete it once real
-data lands.
+There is deliberately no sample file here. One existed, was renamed off its
+underscore, and was served on production as verified fact. The validator now
+rejects `_*` filenames and any `_warning` key, so that cannot recur. Fixtures
+live in `ops/fixtures/airline-facts/` instead, outside the store entirely.

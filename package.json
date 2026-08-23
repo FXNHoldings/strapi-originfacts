@@ -2,12 +2,15 @@
   "name": "fxn-travel-blog",
   "version": "1.0.0",
   "private": true,
-  "description": "FXN Studio travel blog — Next.js frontend for Strapi CMS",
+  "description": "FXN Studio travel blog \u2014 Next.js frontend for Strapi CMS",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "next lint"
+    "lint": "next lint",
+    "validate:facts": "node ops/validate-airline-facts.mjs",
+    "validate:facts:fixtures": "node ops/validate-airline-facts.mjs --fixtures",
+    "prebuild": "node ops/validate-airline-facts.mjs"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
@@ -32,6 +35,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.18",
     "tailwindcss": "^3.4.17",
+    "tldts": "^7.4.10",
     "typescript": "^5.7.2"
   }
 }

@@ -1,8 +1,29 @@
 import Link from 'next/link';
 import type { StrapiAirline } from '@/lib/strapi';
 import type { RouteFacts } from '@/lib/route-facts';
-import type { AirlineFactsFile, FactCell, FactModule } from '@/lib/airline-facts';
-import { oldestVerifiedAt } from '@/lib/airline-facts';
+import type { AirlineFactsFile, FactField, FactFigure, ResolvedModule } from '@/lib/airline-facts';
+import { oldestVerifiedAt, resolveModule } from '@/lib/airline-facts';
+
+/**
+ * A module this component builds from a dataset the site already holds, rather
+ * than from a fact file. It carries dataset provenance — a name and a vintage —
+ * instead of per-field sources, because the whole module comes from one cited
+ * dataset and there is no per-field claim to make about it.
+ */
+type DerivedCell = string | { text: string; href: string };
+
+type DerivedModule = {
+  id: string;
+  title: string;
+  /** Always a data vintage; derived modules are never human-verified. */
+  verifiedAt: string;
+  lede?: string;
+  body?: string[];
+  table?: { caption: string; columns: string[]; rows: DerivedCell[][] };
+  conflicts?: { title: string; text: string }[];
+  figure?: FactFigure;
+  sources: { label: string; url?: string; note?: string }[];
+};
 import type { AirlineReviewFile } from '@/lib/airline-reviews';
 import { facetCounts, ratingBands, sourceLabel, SOURCE_META } from '@/lib/airline-reviews';
 import type { AirlineRef } from '@/lib/airline-refs';
@@ -88,9 +109,9 @@ export default function AirlineTier1({
    * source, no render. Restore the code once a verified ICAO lands.
    */
   const codes = airline.iataCode ?? '';
-  const factModules = new Map((facts?.modules ?? []).map((m) => [m.id, m]));
+  const sourced = new Map((facts?.modules ?? []).map((m) => [m.id, resolveModule(m)]));
 
-  const derived: Record<string, FactModule | null> = {
+  const derived: Record<string, DerivedModule | null> = {
     cabins: cabinsModule(airline, routeFacts),
     contact: contactModule(airline, airlineRef),
     network: networkModule(airline, routeFacts),
@@ -102,14 +123,18 @@ export default function AirlineTier1({
 
   const rendered = LAYOUT.map((entry) => ({
     ...entry,
-    module: entry.from === 'facts' ? factModules.get(entry.id) ?? null : derived[entry.id] ?? null,
+    sourced: entry.from === 'facts' ? sourced.get(entry.id) ?? null : null,
+    derived: entry.from === 'derived' ? derived[entry.id] ?? null : null,
   }));
 
-  const published = rendered.filter((r) => r.module).map((r) => r.module!);
-  const verifiedCount = published.filter((m) => m.status === 'verified').length;
-  const disputedCount = published.filter((m) => m.status === 'disputed').length;
-  const pendingCount = LAYOUT.length - published.length - (faqs.length ? 1 : 0);
-  const lastReview = oldestVerifiedAt(published);
+  // Verified counts only fact-file modules that actually published. Derived
+  // modules carry a dataset vintage, not a verification, and are counted apart
+  // so the ledger cannot imply someone checked them.
+  const publishedSourced = rendered.map((r) => r.sourced).filter((m): m is ResolvedModule => Boolean(m?.published));
+  const derivedCount = rendered.filter((r) => r.derived).length;
+  const disputedCount = rendered.filter((r) => r.sourced && r.sourced.disputes.length > 0).length;
+  const pendingCount = rendered.filter((r) => r.id !== 'faq' && !r.derived && !r.sourced?.published).length;
+  const lastReview = oldestVerifiedAt(publishedSourced);
 
   const hubs = (routeFacts?.topHubs ?? []).slice(0, 4).map((h) => h.city);
   const fleetTypes = routeFacts?.fleet ?? [];
@@ -174,7 +199,10 @@ export default function AirlineTier1({
       <div className={s.ledger}>
         <div className={`${s.wrap} ${s.ledgerInner}`}>
           <span className={s.ledgerLabel}>Data status</span>
-          {verifiedCount > 0 && <span className={`${s.pip} ${s.pipOk}`}>{verifiedCount} verified</span>}
+          {publishedSourced.length > 0 && (
+            <span className={`${s.pip} ${s.pipOk}`}>{publishedSourced.length} verified</span>
+          )}
+          {derivedCount > 0 && <span className={`${s.pip} ${s.pipPending}`}>{derivedCount} from data</span>}
           {disputedCount > 0 && <span className={`${s.pip} ${s.pipWarn}`}>{disputedCount} need re-check</span>}
           {pendingCount > 0 && <span className={`${s.pip} ${s.pipPending}`}>{pendingCount} unpublished</span>}
           {lastReview ? (
@@ -191,10 +219,12 @@ export default function AirlineTier1({
             {rendered.map((r) =>
               r.id === 'faq' ? (
                 <FaqModule key="faq" faqs={faqs} />
-              ) : r.module ? (
-                <Module key={r.id} id={r.id} module={r.module} />
+              ) : r.derived ? (
+                <DerivedModuleView key={r.id} module={r.derived} />
+              ) : r.sourced?.published ? (
+                <SourcedModuleView key={r.id} module={r.sourced} />
               ) : (
-                <PendingModule key={r.id} id={r.id} title={r.title} />
+                <PendingModule key={r.id} id={r.id} title={r.title} blockers={r.sourced?.blockers ?? []} />
               ),
             )}
           </div>
@@ -209,11 +239,13 @@ export default function AirlineTier1({
                     <li key={r.id}>
                       <a href={`#${r.id}`}>{r.title}</a>
                       <span className={s.when}>
-                        {r.module
-                          ? r.module.status === 'disputed'
-                            ? r.module.statusNote || 'disputed'
-                            : `${(r.module.dateKind ?? 'verified') === 'data' ? 'data ' : ''}${formatDate(r.module.verifiedAt)}`
-                          : 'pending'}
+                        {r.derived
+                          ? `data ${formatDate(r.derived.verifiedAt)}`
+                          : r.sourced?.published
+                            ? formatDate(r.sourced.verified_at ?? '')
+                            : r.sourced?.disputes.length
+                              ? 'disputed'
+                              : 'pending'}
                       </span>
                     </li>
                   ))}
@@ -272,18 +304,18 @@ export default function AirlineTier1({
  * Module renderers
  * ------------------------------------------------------------------ */
 
-function Module({ id, module: m }: { id: string; module: FactModule }) {
-  const disputed = m.status === 'disputed';
+/**
+ * A module built from a fact file. Reaches here only when every required field
+ * resolved `official`, so each cell already has its own source and date.
+ */
+function SourcedModuleView({ module: m }: { module: ResolvedModule }) {
+  const sources = collectSources(m);
   return (
-    <section className={s.module} id={id} data-testid={`t1-module-${id}`}>
+    <section className={s.module} id={m.id} data-testid={`t1-module-${m.id}`}>
       <div className={s.moduleHead}>
         <h2>{m.title}</h2>
-        <span className={`${s.stamp} ${disputed ? s.stampWarn : s.stampOk}`}>
-          {disputed
-            ? m.statusNote || 'Needs re-check'
-            : (m.dateKind ?? 'verified') === 'data'
-              ? `Data as of ${formatDate(m.verifiedAt)}`
-              : `Verified ${formatDate(m.verifiedAt)}`}
+        <span className={`${s.stamp} ${s.stampOk}`}>
+          {m.verified_at ? `Verified ${formatDate(m.verified_at)}` : 'Verified'}
         </span>
       </div>
 
@@ -308,17 +340,12 @@ function Module({ id, module: m }: { id: string; module: FactModule }) {
             <tbody>
               {m.table.rows.map((row, i) => (
                 <tr key={i}>
-                  {row.map((cell, j) =>
-                    j === 0 ? (
-                      <th key={j} scope="row">
-                        <Cell cell={cell} />
-                      </th>
-                    ) : (
-                      <td key={j} className={typeof cell === 'string' ? s.num : undefined}>
-                        <Cell cell={cell} />
-                      </td>
-                    ),
-                  )}
+                  <th scope="row">{row.label}</th>
+                  {row.cells.map((field, j) => (
+                    <td key={j} className={s.num}>
+                      <FieldValue field={field} />
+                    </td>
+                  ))}
                 </tr>
               ))}
             </tbody>
@@ -332,6 +359,112 @@ function Module({ id, module: m }: { id: string; module: FactModule }) {
           <p>{m.rule.text}</p>
         </div>
       )}
+
+      {/* Disagreements are stated, never resolved. Picking the more common
+          reading would hide from the reader that a choice was made at all. */}
+      {m.disputes.map((d) => (
+        <div key={d.key} className={s.conflict}>
+          <h4>Sources disagree — {d.label}</h4>
+          <p>
+            {d.field.notes ??
+              `Credible sources give different values${
+                d.field.conflicting_values?.length ? `: ${d.field.conflicting_values.join(' / ')}` : ''
+              }. Neither is published until it can be confirmed.`}
+          </p>
+        </div>
+      ))}
+
+      <div className={s.src}>
+        <strong>Sources</strong>
+        {sources.map((src, i) => (
+          <span key={i}>
+            <a href={src.url} target="_blank" rel="noopener noreferrer nofollow">
+              {src.host}
+            </a>
+            {` — ${src.fields.join(', ')}, verified ${formatDate(src.verified_at)}`}
+            <br />
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/** A field that is its own evidence renders as its link, not as text beside one. */
+function FieldValue({ field }: { field: FactField | null }) {
+  if (!field?.value) return <>—</>;
+  if (/^https?:\/\//.test(field.value)) {
+    return (
+      <a href={field.value} target="_blank" rel="noopener noreferrer nofollow">
+        {field.value.replace(/^https?:\/\//, '')}
+      </a>
+    );
+  }
+  return <>{field.value}</>;
+}
+
+/**
+ * One line per source URL, naming the fields that came from it.
+ *
+ * Grouped by URL rather than listed per field so a table of six values from one
+ * carrier page reads as one citation — while a value from a different page
+ * still stands out as its own line, which is the case that matters when
+ * markets differ per URL.
+ */
+function collectSources(m: ResolvedModule): { url: string; host: string; fields: string[]; verified_at: string }[] {
+  const byUrl = new Map<string, { url: string; host: string; fields: string[]; verified_at: string }>();
+  const all = [...(m.table?.rows.flatMap((r) => r.cells) ?? [])].filter((f): f is FactField => Boolean(f));
+
+  for (const [key, field] of Object.entries(fieldIndex(m, all))) {
+    if (!field.source_url || !field.verified_at) continue;
+    let host: string;
+    try {
+      host = new URL(field.source_url).host;
+    } catch {
+      host = field.source_url;
+    }
+    const entry = byUrl.get(field.source_url) ?? {
+      url: field.source_url,
+      host,
+      fields: [],
+      verified_at: field.verified_at,
+    };
+    entry.fields.push(key.replace(/_/g, ' '));
+    if (field.verified_at < entry.verified_at) entry.verified_at = field.verified_at;
+    byUrl.set(field.source_url, entry);
+  }
+  return [...byUrl.values()];
+}
+
+/** Table cells lose their key on resolve; recover labels from the row headers. */
+function fieldIndex(m: ResolvedModule, all: FactField[]): Record<string, FactField> {
+  const out: Record<string, FactField> = {};
+  m.table?.rows.forEach((row) => {
+    row.cells.forEach((cell) => {
+      if (cell) out[row.label] = cell;
+    });
+  });
+  all.forEach((f, i) => {
+    if (!Object.values(out).includes(f)) out[`value ${i + 1}`] = f;
+  });
+  return out;
+}
+
+/** A module built from a dataset the site holds, citing the dataset. */
+function DerivedModuleView({ module: m }: { module: DerivedModule }) {
+  return (
+    <section className={s.module} id={m.id} data-testid={`t1-module-${m.id}`}>
+      <div className={s.moduleHead}>
+        <h2>{m.title}</h2>
+        <span className={`${s.stamp} ${s.stampPending}`}>Data as of {formatDate(m.verifiedAt)}</span>
+      </div>
+
+      {m.lede && <p className={s.lede}>{m.lede}</p>}
+      {m.body?.map((para, i) => (
+        <p key={i}>{para}</p>
+      ))}
+
+      {m.figure && <Figure figure={m.figure} />}
 
       {m.conflicts?.map((c, i) => (
         <div key={i} className={s.conflict}>
@@ -355,13 +488,27 @@ function Module({ id, module: m }: { id: string; module: FactModule }) {
             <br />
           </span>
         ))}
-        {m.reviewNote}
       </div>
     </section>
   );
 }
 
-function PendingModule({ id, title }: { id: string; title: string }) {
+/**
+ * The unpublished state, naming what is missing.
+ *
+ * The blocker list is the point: "pending" alone tells a reader nothing and
+ * tells an editor less. Saying which fields are unverified turns the gap into
+ * a work item.
+ */
+function PendingModule({
+  id,
+  title,
+  blockers,
+}: {
+  id: string;
+  title: string;
+  blockers: { key: string; status: string }[];
+}) {
   return (
     <section className={`${s.module} ${s.isPending}`} id={id} data-testid={`t1-pending-${id}`}>
       <div className={s.moduleHead}>
@@ -369,8 +516,14 @@ function PendingModule({ id, title }: { id: string; title: string }) {
         <span className={`${s.stamp} ${s.stampPending}`}>Unpublished</span>
       </div>
       <p className={s.pendingNote}>
-        {PENDING_COPY[id] ?? 'This module has not been verified against a published source yet.'} It renders once every
-        field carries a source and a date — see <code>content/airline-facts/</code>.
+        {PENDING_COPY[id] ?? 'This module has not been verified against a published source yet.'}
+        {blockers.length > 0 && (
+          <>
+            {' '}
+            Waiting on: {blockers.map((b) => `${b.key.replace(/_/g, ' ')} (${b.status})`).join(', ')}.
+          </>
+        )}{' '}
+        It renders once every required field carries a source and a date — see <code>content/airline-facts/</code>.
       </p>
     </section>
   );
@@ -407,13 +560,11 @@ function factsSource(rf: RouteFacts) {
   return [{ label: `Originfacts route-network dataset, built from ${rf.source}`, note: `updated ${rf.updated}` }];
 }
 
-function cabinsModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | null {
+function cabinsModule(a: StrapiAirline, rf: RouteFacts | null): DerivedModule | null {
   if (!rf || rf.fleet.length === 0) return null;
   return {
     id: 'cabins',
     title: 'Cabins and seating',
-    status: 'verified',
-    dateKind: 'data',
     verifiedAt: `${rf.updated}-01`,
     body: [
       // Attributed to the dataset rather than asserted as current fact: the
@@ -436,7 +587,7 @@ function cabinsModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | nul
   };
 }
 
-function networkModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | null {
+function networkModule(a: StrapiAirline, rf: RouteFacts | null): DerivedModule | null {
   if (!rf || rf.destinationCount === 0) return null;
   const body: string[] = [
     `We track ${rf.routeCount.toLocaleString()} ${a.name} route${rf.routeCount === 1 ? '' : 's'} serving ${rf.destinationCount} destination${rf.destinationCount === 1 ? '' : 's'} across ${rf.countryCount} ${rf.countryCount === 1 ? 'country' : 'countries'}.`,
@@ -444,21 +595,27 @@ function networkModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | nu
   if (rf.topHubs.length) {
     body.push(`Its busiest airports by route count are ${listSentence(rf.topHubs.map((h) => `${h.city} (${h.routes})`))}.`);
   }
-  if (rf.longestRoute) {
-    body.push(
-      `The longest sector we track is ${rf.longestRoute.from} to ${rf.longestRoute.to} at ${rf.longestRoute.km.toLocaleString()} km.`,
-    );
-  }
+
   return {
     id: 'network',
     title: 'Where they fly',
-    status: 'verified',
-    dateKind: 'data',
     verifiedAt: `${rf.updated}-01`,
     lede: rf.keyDestinations.length
       ? `Best known for ${listSentence(rf.keyDestinations.slice(0, 6))}.`
       : undefined,
     body,
+    // The longest sector moves out of the prose and into the diagram below —
+    // repeating it in both would state the same fact twice on one screen.
+    figure: rf.longestRoute
+      ? {
+          kind: 'longest-sector',
+          fromCity: rf.longestRoute.from,
+          fromIata: rf.longestRoute.fromIata,
+          toCity: rf.longestRoute.to,
+          toIata: rf.longestRoute.toIata,
+          km: rf.longestRoute.km,
+        }
+      : undefined,
     sources: factsSource(rf),
   };
 }
@@ -495,8 +652,76 @@ function derivedFaqs(a: StrapiAirline, rf: RouteFacts | null, alliance: string |
   return faqs;
 }
 
+/**
+ * The longest sector, drawn.
+ *
+ * A great-circle sector is the one fact on these pages that a sentence
+ * genuinely under-serves — "13,400 km" means little until you see it as an arc
+ * across a hemisphere. The geometry is schematic, not a projection: the arc is
+ * a fixed curve, so it reads the same for every carrier and never implies a
+ * routing accuracy the dataset does not carry.
+ *
+ * Everything stated is in the data — both cities, both IATA codes, and a
+ * distance the upstream generator computes with a haversine over the two
+ * airports' coordinates, which is what makes "great-circle" accurate rather
+ * than decorative.
+ */
+function Figure({ figure }: { figure: FactFigure }) {
+  const { fromCity, fromIata, toCity, toIata, km } = figure;
+  const distance = `${km.toLocaleString()} km`;
+  const label = `${fromCity} (${fromIata}) to ${toCity} (${toIata}), ${distance} great-circle distance.`;
+
+  return (
+    <figure className={s.sector}>
+      <div className={s.sectorText}>
+        <p className={s.sectorEyebrow}>Longest nonstop route</p>
+        <p className={s.sectorRoute}>
+          {fromCity} <span aria-hidden>→</span> {toCity}
+        </p>
+        <p className={s.sectorMeta}>
+          {distance} · {fromIata} <span aria-hidden>→</span> {toIata}
+        </p>
+        <figcaption className={s.sectorCaption}>
+          The longest sector in this carrier’s network as recorded in our route dataset, measured as the great-circle
+          distance between the two airports.
+        </figcaption>
+      </div>
+
+      <div className={s.sectorPlot}>
+        <svg viewBox="0 0 420 190" className={s.sectorSvg} role="img" aria-label={label}>
+          <defs>
+            <linearGradient id="t1-sector-arc" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="var(--sector-from)" />
+              <stop offset="100%" stopColor="var(--sector-to)" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M 62 148 Q 210 34 358 148"
+            fill="none"
+            stroke="url(#t1-sector-arc)"
+            strokeWidth="2"
+            strokeDasharray="5 5"
+            strokeLinecap="round"
+          />
+          <text x="210" y="112" className={s.sectorDistance} textAnchor="middle">
+            {distance}
+          </text>
+          <circle cx="62" cy="148" r="6.5" fill="var(--sector-from)" />
+          <circle cx="358" cy="148" r="6.5" fill="var(--sector-to)" />
+          <text x="62" y="174" className={s.sectorCode} textAnchor="middle">
+            {fromIata}
+          </text>
+          <text x="358" y="174" className={s.sectorCode} textAnchor="middle">
+            {toIata}
+          </text>
+        </svg>
+      </div>
+    </figure>
+  );
+}
+
 /** A cell that is its own source renders as the link, not as text beside one. */
-function Cell({ cell }: { cell: FactCell }) {
+function Cell({ cell }: { cell: DerivedCell }) {
   if (typeof cell === 'string') return <>{cell}</>;
   return (
     <a href={cell.href} target="_blank" rel="noopener noreferrer nofollow">
@@ -513,8 +738,8 @@ function Cell({ cell }: { cell: FactCell }) {
  * many carriers, but nothing records where those came from — so they are named
  * as unverified rather than laid out as facts.
  */
-function contactModule(a: StrapiAirline, ref: AirlineRef | null): FactModule | null {
-  const rows: FactCell[][] = [];
+function contactModule(a: StrapiAirline, ref: AirlineRef | null): DerivedModule | null {
+  const rows: DerivedCell[][] = [];
   const website = a.website ? (a.website.startsWith('http') ? a.website : `https://${a.website}`) : null;
 
   if (website) rows.push(['Official website', { text: website.replace(/^https?:\/\//, ''), href: website }]);
@@ -529,7 +754,7 @@ function contactModule(a: StrapiAirline, ref: AirlineRef | null): FactModule | n
   }
   if (rows.length === 0) return null;
 
-  const sources: FactModule['sources'] = [{ label: `${a.name} official website`, note: 'linked above' }];
+  const sources: DerivedModule['sources'] = [{ label: `${a.name} official website`, note: 'linked above' }];
   if (ref?.conditionsOfCarriageUrl) {
     sources.push({ label: `${AIRLINE_REF_SOURCE.label()}`, note: `retrieved ${AIRLINE_REF_SOURCE.retrieved()}` });
   }
@@ -542,7 +767,6 @@ function contactModule(a: StrapiAirline, ref: AirlineRef | null): FactModule | n
   return {
     id: 'contact',
     title: 'Contact and the small print',
-    status: 'verified',
     verifiedAt: ref?.conditionsOfCarriageUrl ? AIRLINE_REF_SOURCE.retrieved() : '2026-08-24',
     body: [
       'Every row here is a link you can open and check for yourself, which is the only kind of contact detail worth printing on a reference page — numbers and addresses go stale quietly.',
@@ -568,7 +792,7 @@ function contactModule(a: StrapiAirline, ref: AirlineRef | null): FactModule | n
  * today's date over three-year-old reviews would be the kind of false freshness
  * this template exists to avoid.
  */
-function reviewsModule(a: StrapiAirline, file: AirlineReviewFile | null): FactModule | null {
+function reviewsModule(a: StrapiAirline, file: AirlineReviewFile | null): DerivedModule | null {
   if (!file || !file.reviews.length || file.stats.avgRating10 === null) return null;
   const { stats } = file;
 
@@ -590,9 +814,6 @@ function reviewsModule(a: StrapiAirline, file: AirlineReviewFile | null): FactMo
   return {
     id: 'reviews',
     title: 'What travellers rate it',
-    status: stale ? 'disputed' : 'verified',
-    statusNote: stale ? `Newest review ${formatDate(stats.lastReviewDate)}` : undefined,
-    dateKind: 'data',
     verifiedAt: stats.lastReviewDate,
     lede: `${stats.avgRating10}/10 across ${stats.reviewCount.toLocaleString()} collected review${stats.reviewCount === 1 ? '' : 's'}.`,
     body,
