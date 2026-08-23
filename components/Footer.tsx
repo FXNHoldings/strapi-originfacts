@@ -12,19 +12,19 @@ export default function Footer() {
     .filter((d): d is NonNullable<typeof d> => Boolean(d));
 
   return (
-    <footer className="mt-24 border-t border-primary-emphasis/10 bg-forest-950 text-white" data-testid="site-footer">
+    <footer className="border-t border-primary-emphasis/10 bg-white text-ink" data-testid="site-footer">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-[50fr_20fr_20fr_10fr]">
         <div>
           <Link href="/" aria-label="Originfacts home" className="inline-block" data-testid="footer-logo-link">
             <Image
-              src="/footer-logo.svg"
+              src="/brand/logo/logo.svg"
               alt="Originfacts"
               width={300}
               height={167}
               className="h-10 w-auto !rounded-none"
             />
           </Link>
-          <p className="mt-3 max-w-sm text-white/75">
+          <p className="mt-3 max-w-sm text-ink/75">
             The facts behind every place worth visiting — plus the latest on flights, hotels, airlines, airports and destinations.
           </p>
           <ul className="mt-5 flex items-center gap-3" data-testid="footer-social">
@@ -34,7 +34,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Originfacts on X"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-secondary-emphasis hover:text-secondary-emphasis"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition hover:border-primary-emphasis hover:text-primary-emphasis"
                 data-testid="footer-social-x"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
@@ -48,7 +48,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Originfacts on Facebook"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-secondary-emphasis hover:text-secondary-emphasis"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition hover:border-primary-emphasis hover:text-primary-emphasis"
                 data-testid="footer-social-facebook"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
@@ -62,7 +62,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Originfacts on LinkedIn"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-secondary-emphasis hover:text-secondary-emphasis"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition hover:border-primary-emphasis hover:text-primary-emphasis"
                 data-testid="footer-social-linkedin"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
@@ -76,7 +76,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Originfacts on Reddit"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-secondary-emphasis hover:text-secondary-emphasis"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition hover:border-primary-emphasis hover:text-primary-emphasis"
                 data-testid="footer-social-reddit"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
@@ -89,7 +89,7 @@ export default function Footer() {
                 href="/feed.xml"
                 aria-label="Originfacts RSS feed"
                 title="RSS feed"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-secondary-emphasis hover:text-secondary-emphasis"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 text-ink transition hover:border-primary-emphasis hover:text-primary-emphasis"
                 data-testid="footer-social-rss"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden>
@@ -100,46 +100,46 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h4 className="editorial-h text-lg capitalize tracking-normal text-secondary-emphasis">Company</h4>
-          <ul className="mt-3 space-y-2 text-sm text-white/80" data-testid="footer-company">
-            <li><Link href="/" className="hover:text-secondary">Home</Link></li>
-            <li><Link href="/about" className="hover:text-secondary">About</Link></li>
-            <li><Link href="/articles" className="hover:text-secondary">Blog</Link></li>
-            <li><Link href="/sitemap" className="hover:text-secondary">Site Map</Link></li>
-            <li><Link href="/contact" className="hover:text-secondary">Contact</Link></li>
+          <h4 className="editorial-h text-lg capitalize tracking-normal text-forest-900">Company</h4>
+          <ul className="mt-3 space-y-2 text-sm text-ink/80" data-testid="footer-company">
+            <li><Link href="/" className="hover:text-primary-emphasis">Home</Link></li>
+            <li><Link href="/about" className="hover:text-primary-emphasis">About</Link></li>
+            <li><Link href="/articles" className="hover:text-primary-emphasis">Blog</Link></li>
+            <li><Link href="/sitemap" className="hover:text-primary-emphasis">Site Map</Link></li>
+            <li><Link href="/contact" className="hover:text-primary-emphasis">Contact</Link></li>
           </ul>
         </div>
         <div>
-          <h4 className="editorial-h text-lg capitalize tracking-normal text-secondary-emphasis">Discover</h4>
-          <ul className="mt-3 space-y-2 text-sm text-white/80" data-testid="footer-travel-index">
-            <li><Link href="/flight-search" className="hover:text-secondary">Flight Search</Link></li>
-            <li><Link href="/hotels" className="hover:text-secondary">Hotels</Link></li>
-            <li><Link href="/countries" className="hover:text-secondary">Countries</Link></li>
-            <li><Link href="/airlines" className="hover:text-secondary">Airlines</Link></li>
-            <li><Link href="/airports" className="hover:text-secondary">Airports</Link></li>
-            <li><Link href="/flight-routes" className="hover:text-secondary">Flight Routes</Link></li>
+          <h4 className="editorial-h text-lg capitalize tracking-normal text-forest-900">Discover</h4>
+          <ul className="mt-3 space-y-2 text-sm text-ink/80" data-testid="footer-travel-index">
+            <li><Link href="/flight-search" className="hover:text-primary-emphasis">Flight Search</Link></li>
+            <li><Link href="/hotels" className="hover:text-primary-emphasis">Hotels</Link></li>
+            <li><Link href="/countries" className="hover:text-primary-emphasis">Countries</Link></li>
+            <li><Link href="/airlines" className="hover:text-primary-emphasis">Airlines</Link></li>
+            <li><Link href="/airports" className="hover:text-primary-emphasis">Airports</Link></li>
+            <li><Link href="/flight-routes" className="hover:text-primary-emphasis">Flight Routes</Link></li>
           </ul>
         </div>
         <div>
-          <h4 className="editorial-h text-lg capitalize tracking-normal text-secondary-emphasis">Topics</h4>
-          <ul className="mt-3 space-y-2 text-sm text-white/80" data-testid="footer-topics">
+          <h4 className="editorial-h text-lg capitalize tracking-normal text-forest-900">Topics</h4>
+          <ul className="mt-3 space-y-2 text-sm text-ink/80" data-testid="footer-topics">
             {SECTIONS.map((section) => (
               <li key={section.slug}>
-                <Link href={`/category/${section.slug}`} className="hover:text-secondary">
+                <Link href={`/category/${section.slug}`} className="hover:text-primary-emphasis">
                   {section.title}
                 </Link>
               </li>
             ))}
             <li>
-              <Link href="/hot-posts" className="hover:text-secondary">
+              <Link href="/hot-posts" className="hover:text-primary-emphasis">
                 Trending
               </Link>
             </li>
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-6 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-ink/10">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-6 text-xs text-ink/60 sm:flex-row sm:items-center sm:justify-between">
           <div>
             © {year} Originfacts. All rights reserved.
           </div>
@@ -147,7 +147,7 @@ export default function Footer() {
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
               {bottomLegal.map((doc) => (
                 <li key={doc.slug}>
-                  <Link href={`/legal/${doc.slug}`} className="hover:text-secondary">
+                  <Link href={`/legal/${doc.slug}`} className="hover:text-primary-emphasis">
                     {doc.title}
                   </Link>
                 </li>
