@@ -1,0 +1,449 @@
+import Link from 'next/link';
+import { Archivo, IBM_Plex_Mono, Newsreader } from 'next/font/google';
+import type { StrapiAirline } from '@/lib/strapi';
+import type { RouteFacts } from '@/lib/route-facts';
+import type { AirlineFactsFile, FactModule } from '@/lib/airline-facts';
+import { oldestVerifiedAt } from '@/lib/airline-facts';
+import s from './AirlineTier1.module.css';
+
+const archivo = Archivo({ subsets: ['latin'], weight: ['500', '600', '700', '800'], variable: '--font-archivo', display: 'swap' });
+const newsreader = Newsreader({ subsets: ['latin'], weight: ['300', '400', '500'], variable: '--font-newsreader', display: 'swap' });
+const plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--font-plex-mono', display: 'swap' });
+
+/**
+ * The module running order, and where each one's content comes from.
+ *
+ * `facts` modules render only when the airline's file in content/airline-facts/
+ * carries them — otherwise they render unpublished. `derived` modules are built
+ * here from data already on the site (route-network facts), and cite it.
+ */
+const LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived' }[] = [
+  { id: 'baggage', title: 'Checked baggage', nav: 'Baggage', from: 'facts' },
+  { id: 'carryon', title: 'Carry-on', nav: 'Carry-on', from: 'facts' },
+  { id: 'fares', title: 'What the cheapest fare includes', nav: 'Fares', from: 'facts' },
+  { id: 'cabins', title: 'Cabins and seating', nav: 'Cabins & seating', from: 'derived' },
+  { id: 'rights', title: 'If your flight is delayed or cancelled', nav: 'Passenger rights', from: 'facts' },
+  { id: 'checkin', title: 'Check-in and airport cutoffs', nav: 'Check-in', from: 'facts' },
+  { id: 'network', title: 'Where they fly', nav: 'Where they fly', from: 'derived' },
+  { id: 'faq', title: 'Common questions', nav: 'FAQ', from: 'derived' },
+];
+
+/** Why a `facts` module has nothing to show yet, in the reader's terms. */
+const PENDING_COPY: Record<string, string> = {
+  baggage:
+    'Checked allowances differ by route band and cabin, and none have been verified against this airline’s published conditions of carriage yet.',
+  carryon: 'Cabin-bag size and weight limits have not been verified against the airline’s current published allowance.',
+  fares: 'Fare-tier inclusions have not been verified against the airline’s published fare conditions.',
+  rights:
+    'Which delay and cancellation regime applies depends on where each flight departs. The mapping has not been verified for this carrier yet.',
+  checkin: 'Online check-in windows and airport bag-drop cutoffs have not been verified against the airline’s published times.',
+};
+
+export type AirlineTier1Props = {
+  airline: StrapiAirline;
+  routeFacts: RouteFacts | null;
+  facts: AirlineFactsFile | null;
+  alliance: string | null;
+  /** Rendered when the page is showing the design's unverified sample content. */
+  sampleNotice?: string | null;
+};
+
+export default function AirlineTier1({ airline, routeFacts, facts, alliance, sampleNotice }: AirlineTier1Props) {
+  const codes = [airline.iataCode, airline.icaoCode].filter(Boolean).join(' / ');
+  const factModules = new Map((facts?.modules ?? []).map((m) => [m.id, m]));
+
+  const derived: Record<string, FactModule | null> = {
+    cabins: cabinsModule(airline, routeFacts),
+    network: networkModule(airline, routeFacts),
+    faq: null, // rendered by its own component below
+  };
+
+  const faqs = derivedFaqs(airline, routeFacts, alliance);
+
+  const rendered = LAYOUT.map((entry) => ({
+    ...entry,
+    module: entry.from === 'facts' ? factModules.get(entry.id) ?? null : derived[entry.id] ?? null,
+  }));
+
+  const published = rendered.filter((r) => r.module).map((r) => r.module!);
+  const verifiedCount = published.filter((m) => m.status === 'verified').length;
+  const disputedCount = published.filter((m) => m.status === 'disputed').length;
+  const pendingCount = LAYOUT.length - published.length - (faqs.length ? 1 : 0);
+  const lastReview = oldestVerifiedAt(published);
+
+  const hubs = (routeFacts?.topHubs ?? []).slice(0, 4).map((h) => h.city);
+  const fleetTypes = routeFacts?.fleet ?? [];
+
+  const plate: { label: string; value: string }[] = [
+    airline.iataCode ? { label: 'IATA', value: airline.iataCode } : null,
+    airline.icaoCode ? { label: 'ICAO', value: airline.icaoCode } : null,
+    alliance ? { label: 'Alliance', value: alliance } : null,
+    airline.founded ? { label: 'Founded', value: String(airline.founded) } : null,
+    hubs.length ? { label: 'Top hubs', value: hubs.join(' · ') } : null,
+    // Route data lists the aircraft TYPES a carrier operates, not how many
+    // airframes it has — labelled accordingly rather than passed off as a
+    // fleet count.
+    fleetTypes.length ? { label: 'Fleet types', value: String(fleetTypes.length) } : null,
+    routeFacts?.destinationCount ? { label: 'Destinations', value: String(routeFacts.destinationCount) } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
+
+  const eyebrow = ['Airline reference', airline.country, airline.type].filter(Boolean).join(' · ');
+
+  return (
+    <div className={`${s.root} ${archivo.variable} ${newsreader.variable} ${plexMono.variable}`}>
+      {sampleNotice && (
+        <div className={s.sampleBanner}>
+          <div className={s.wrap}>{sampleNotice}</div>
+        </div>
+      )}
+
+      <header className={s.hero}>
+        <div className={s.wrap}>
+          <div className={s.plate}>
+            <div>
+              <div className={s.eyebrow}>{eyebrow}</div>
+              <h1>
+                {airline.name}
+                {codes && <span className={s.code}>{codes}</span>}
+              </h1>
+              {airline.shortDescription?.trim() && <p className={s.standfirst}>{airline.shortDescription.trim()}</p>}
+            </div>
+            {plate.length > 0 && (
+              <dl className={s.codes}>
+                {plate.map((row) => (
+                  <div key={row.label}>
+                    <dt>{row.label}</dt>
+                    <dd>{row.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </div>
+          <nav className={s.modnav}>
+            {rendered.map((r) => (
+              <a key={r.id} href={`#${r.id}`}>
+                {r.nav}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      <div className={s.ledger}>
+        <div className={`${s.wrap} ${s.ledgerInner}`}>
+          <span className={s.ledgerLabel}>Data status</span>
+          {verifiedCount > 0 && <span className={`${s.pip} ${s.pipOk}`}>{verifiedCount} verified</span>}
+          {disputedCount > 0 && <span className={`${s.pip} ${s.pipWarn}`}>{disputedCount} need re-check</span>}
+          {pendingCount > 0 && <span className={`${s.pip} ${s.pipPending}`}>{pendingCount} unpublished</span>}
+          {lastReview && <span className={`${s.ledgerLabel} ${s.ledgerRight}`}>Last full review {formatDate(lastReview)}</span>}
+        </div>
+      </div>
+
+      <main className={s.main}>
+        <div className={`${s.wrap} ${s.cols}`}>
+          <div>
+            {rendered.map((r) =>
+              r.id === 'faq' ? (
+                <FaqModule key="faq" faqs={faqs} />
+              ) : r.module ? (
+                <Module key={r.id} id={r.id} module={r.module} />
+              ) : (
+                <PendingModule key={r.id} id={r.id} title={r.title} />
+              ),
+            )}
+          </div>
+
+          <aside className={s.rail}>
+            <div className={s.railBlock}>
+              <h3>Verification ledger</h3>
+              <ul>
+                {rendered
+                  .filter((r) => r.id !== 'faq')
+                  .map((r) => (
+                    <li key={r.id}>
+                      <a href={`#${r.id}`}>{r.title}</a>
+                      <span className={s.when}>
+                        {r.module
+                          ? r.module.status === 'disputed'
+                            ? r.module.statusNote || 'disputed'
+                            : formatDate(r.module.verifiedAt)
+                          : 'pending'}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+
+            <div className={s.railBlock}>
+              <h3>Elsewhere on Originfacts</h3>
+              <ul>
+                <li>
+                  <Link href="/flight-routes">Flight routes</Link>
+                </li>
+                <li>
+                  <Link href="/airlines">Airline directory</Link>
+                </li>
+                {airline.country && (
+                  <li>
+                    <Link href="/destinations">Destinations</Link>
+                  </li>
+                )}
+              </ul>
+            </div>
+
+            <div className={s.railBlock}>
+              <h3>How we source this</h3>
+              <p className={s.byline}>
+                <strong>Originfacts Editorial</strong>
+                <br />
+                Every figure on this page comes from the airline’s own published conditions of carriage, a named regulator,
+                or a dataset we cite. Where sources disagree we say so and print neither number. Where a figure isn’t
+                verified, the module doesn’t publish.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </main>
+
+      <div className={s.pagefoot}>
+        <div className={s.wrap}>
+          Originfacts · Airline reference · Figures change without notice — always confirm on the airline’s own site before
+          you travel.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * Module renderers
+ * ------------------------------------------------------------------ */
+
+function Module({ id, module: m }: { id: string; module: FactModule }) {
+  const disputed = m.status === 'disputed';
+  return (
+    <section className={s.module} id={id} data-testid={`t1-module-${id}`}>
+      <div className={s.moduleHead}>
+        <h2>{m.title}</h2>
+        <span className={`${s.stamp} ${disputed ? s.stampWarn : s.stampOk}`}>
+          {disputed ? m.statusNote || 'Needs re-check' : `Verified ${formatDate(m.verifiedAt)}`}
+        </span>
+      </div>
+
+      {m.lede && <p className={s.lede}>{m.lede}</p>}
+      {m.body?.map((para, i) => (
+        <p key={i}>{para}</p>
+      ))}
+
+      {m.table && (
+        <div className={s.tableScroll}>
+          <table>
+            <caption>{m.table.caption}</caption>
+            <thead>
+              <tr>
+                {m.table.columns.map((c) => (
+                  <th key={c} scope="col">
+                    {c}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {m.table.rows.map((row, i) => (
+                <tr key={i}>
+                  {row.map((cell, j) =>
+                    j === 0 ? (
+                      <th key={j} scope="row">
+                        {cell}
+                      </th>
+                    ) : (
+                      <td key={j} className={s.num}>
+                        {cell}
+                      </td>
+                    ),
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {m.rule && (
+        <div className={s.ruleBox}>
+          <span className={s.ruleKey}>{m.rule.key}</span>
+          <p>{m.rule.text}</p>
+        </div>
+      )}
+
+      {m.conflicts?.map((c, i) => (
+        <div key={i} className={s.conflict}>
+          <h4>{c.title}</h4>
+          <p>{c.text}</p>
+        </div>
+      ))}
+
+      <div className={s.src}>
+        <strong>Sources</strong>
+        {m.sources.map((src, i) => (
+          <span key={i}>
+            {src.url ? (
+              <a href={src.url} target="_blank" rel="noopener noreferrer nofollow">
+                {src.label}
+              </a>
+            ) : (
+              src.label
+            )}
+            {src.note ? ` — ${src.note}` : ''}
+            <br />
+          </span>
+        ))}
+        {m.reviewNote}
+      </div>
+    </section>
+  );
+}
+
+function PendingModule({ id, title }: { id: string; title: string }) {
+  return (
+    <section className={`${s.module} ${s.isPending}`} id={id} data-testid={`t1-pending-${id}`}>
+      <div className={s.moduleHead}>
+        <h2>{title}</h2>
+        <span className={`${s.stamp} ${s.stampPending}`}>Unpublished</span>
+      </div>
+      <p className={s.pendingNote}>
+        {PENDING_COPY[id] ?? 'This module has not been verified against a published source yet.'} It renders once every
+        field carries a source and a date — see <code>content/airline-facts/</code>.
+      </p>
+    </section>
+  );
+}
+
+function FaqModule({ faqs }: { faqs: { q: string; a: string }[] }) {
+  if (!faqs.length) return null;
+  return (
+    <section className={s.module} id="faq" data-testid="t1-module-faq">
+      <div className={s.moduleHead}>
+        <h2>Common questions</h2>
+        <span className={`${s.stamp} ${s.stampOk}`}>Marked up as FAQPage</span>
+      </div>
+      {faqs.map((f, i) => (
+        <details key={i} open={i === 0}>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * Modules derived from route-network data
+ *
+ * Every sentence below is composed from a field that is present; nothing is
+ * asserted that the dataset does not carry. The dataset is cited by name and
+ * by its own `updated` stamp, so these modules meet the same bar as the file
+ * store rather than getting a free pass for being generated.
+ * ------------------------------------------------------------------ */
+
+function factsSource(rf: RouteFacts) {
+  return [{ label: `Originfacts route-network dataset, built from ${rf.source}`, note: `updated ${rf.updated}` }];
+}
+
+function cabinsModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | null {
+  if (!rf || rf.fleet.length === 0) return null;
+  return {
+    id: 'cabins',
+    title: 'Cabins and seating',
+    status: 'verified',
+    verifiedAt: `${rf.updated}-01`,
+    body: [
+      `${a.name} operates ${rf.fleet.length} aircraft type${rf.fleet.length === 1 ? '' : 's'} across the routes we track: ${listSentence(rf.fleet)}.`,
+      'Seat pitch is a property of the aircraft cabin rather than of the airline, so a single figure for this carrier’s legroom would be misleading. Pitch publishes per aircraft type once each figure is verified.',
+    ],
+    sources: factsSource(rf),
+    conflicts: [
+      {
+        title: 'Not yet published',
+        text: 'Seat pitch and cabin configuration per aircraft type are not verified for this carrier yet, so no numbers appear above.',
+      },
+    ],
+  };
+}
+
+function networkModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | null {
+  if (!rf || rf.destinationCount === 0) return null;
+  const body: string[] = [
+    `We track ${rf.routeCount.toLocaleString()} ${a.name} route${rf.routeCount === 1 ? '' : 's'} serving ${rf.destinationCount} destination${rf.destinationCount === 1 ? '' : 's'} across ${rf.countryCount} ${rf.countryCount === 1 ? 'country' : 'countries'}.`,
+  ];
+  if (rf.topHubs.length) {
+    body.push(`Its busiest airports by route count are ${listSentence(rf.topHubs.map((h) => `${h.city} (${h.routes})`))}.`);
+  }
+  if (rf.longestRoute) {
+    body.push(
+      `The longest sector we track is ${rf.longestRoute.from} to ${rf.longestRoute.to} at ${rf.longestRoute.km.toLocaleString()} km.`,
+    );
+  }
+  return {
+    id: 'network',
+    title: 'Where they fly',
+    status: 'verified',
+    verifiedAt: `${rf.updated}-01`,
+    lede: rf.keyDestinations.length
+      ? `Best known for ${listSentence(rf.keyDestinations.slice(0, 6))}.`
+      : undefined,
+    body,
+    sources: factsSource(rf),
+  };
+}
+
+function derivedFaqs(a: StrapiAirline, rf: RouteFacts | null, alliance: string | null): { q: string; a: string }[] {
+  const faqs: { q: string; a: string }[] = [];
+  if (rf?.destinationCount) {
+    faqs.push({
+      q: `How many destinations does ${a.name} fly to?`,
+      a: `Originfacts tracks ${rf.destinationCount} ${a.name} destination${rf.destinationCount === 1 ? '' : 's'} across ${rf.countryCount} ${rf.countryCount === 1 ? 'country' : 'countries'}, on ${rf.routeCount.toLocaleString()} route${rf.routeCount === 1 ? '' : 's'}.`,
+    });
+  }
+  if (rf?.topHubs.length) {
+    faqs.push({
+      q: `Where is ${a.name} based?`,
+      a: `By route count its busiest airport is ${rf.topHubs[0].city}${rf.topHubs.length > 1 ? `, followed by ${listSentence(rf.topHubs.slice(1, 4).map((h) => h.city))}` : ''}.`,
+    });
+  }
+  if (rf?.fleet.length) {
+    faqs.push({
+      q: `What aircraft does ${a.name} fly?`,
+      a: `Across the routes we track, ${a.name} operates ${listSentence(rf.fleet)}.`,
+    });
+  }
+  if (rf?.longestRoute) {
+    faqs.push({
+      q: `What is the longest ${a.name} route?`,
+      a: `${rf.longestRoute.from} to ${rf.longestRoute.to}, at ${rf.longestRoute.km.toLocaleString()} km.`,
+    });
+  }
+  if (alliance) {
+    faqs.push({ q: `Which alliance is ${a.name} in?`, a: `${a.name} is a member of ${alliance}.` });
+  }
+  return faqs;
+}
+
+/* ------------------------------------------------------------------ */
+
+function listSentence(items: string[]): string {
+  if (items.length === 0) return '';
+  if (items.length === 1) return items[0];
+  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+}
+
+/** "2026-08-24" → "24 Aug 2026"; "2026-07-01" from a YYYY-MM stamp → "Jul 2026". */
+function formatDate(iso: string): string {
+  const [y, m, d] = iso.split('-');
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const month = months[Number(m) - 1] ?? '';
+  if (!d || d === '01') return `${month} ${y}`;
+  return `${Number(d)} ${month} ${y}`;
+}
+
+export { derivedFaqs };
