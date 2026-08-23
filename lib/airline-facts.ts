@@ -56,13 +56,30 @@ export type FactRule = { key: string; text: string };
  */
 export type FactConflict = { title: string; text: string };
 
+/**
+ * What a module's date actually means.
+ *
+ * `verified` — someone checked this against a source on that date. Only these
+ * feed the page's "last reviewed" line, because only these describe an act of
+ * verification.
+ *
+ * `data` — the vintage of an underlying dataset, not a review of it. A route
+ * dump built in July or a review corpus whose newest entry is from 2023 is
+ * exactly that old, and saying so is the point — but rolling it into a
+ * page-level "last reviewed" would misreport an editorial claim the site has
+ * not made. Modules like these stamp "Data as of" instead.
+ */
+export type FactDateKind = 'verified' | 'data';
+
 export type FactModule = {
   /** Matches the module ids the page lays out; unknown ids are ignored. */
   id: string;
   title: string;
   status: FactStatus;
-  /** YYYY-MM-DD. Drives the module stamp and the verification ledger. */
+  /** YYYY-MM-DD. Drives the module stamp, and the ledger when kind is 'verified'. */
   verifiedAt: string;
+  /** Defaults to 'verified' — fact-store modules are checked by a person. */
+  dateKind?: FactDateKind;
   /** Short label shown instead of the date when status is 'disputed'. */
   statusNote?: string;
   lede?: string;
@@ -117,8 +134,22 @@ export function getSampleFacts(slug: string): AirlineFactsFile | null {
   }
 }
 
-/** Oldest verification date across the modules that did publish. */
+/**
+ * Oldest date across modules that were actually verified by a person.
+ *
+ * Dataset-vintage modules are excluded deliberately. Letting them in produced
+ * a page-wide "Last full review 6 Dec 2023" on the Qantas pilot — the newest
+ * TripAdvisor review date presented as the date the page was last checked,
+ * which reads as an abandoned page rather than an honest one.
+ *
+ * Returns null when nothing has been verified yet, and the caller renders no
+ * date at all rather than inventing one.
+ */
 export function oldestVerifiedAt(modules: FactModule[]): string | null {
-  const dates = modules.map((m) => m.verifiedAt).filter(Boolean).sort();
+  const dates = modules
+    .filter((m) => (m.dateKind ?? 'verified') === 'verified')
+    .map((m) => m.verifiedAt)
+    .filter(Boolean)
+    .sort();
   return dates[0] ?? null;
 }
