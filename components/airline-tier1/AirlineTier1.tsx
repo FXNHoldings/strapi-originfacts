@@ -16,6 +16,20 @@ import s from './AirlineTier1.module.css';
  * carries them — otherwise they render unpublished. `derived` modules are built
  * here from data already on the site (route-network facts), and cite it.
  */
+/**
+ * Traveller ratings are withheld from the template.
+ *
+ * The store holds 202 carriers' worth of TripAdvisor reviews, none newer than
+ * December 2023. Publishing a 4.3/10 aggregate about a named company off data
+ * that old is a reputational claim on stale evidence, and a caveat printed
+ * under the number does not undo the number. Separately, TripAdvisor's terms
+ * restrict scraping and republishing aggregate ratings to licensed partners
+ * with specific attribution — which this is not.
+ *
+ * Flip to true only when the corpus has a current, licensed source.
+ */
+const REVIEWS_MODULE_ENABLED = false;
+
 const LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived' }[] = [
   { id: 'baggage', title: 'Checked baggage', nav: 'Baggage', from: 'facts' },
   { id: 'carryon', title: 'Carry-on', nav: 'Carry-on', from: 'facts' },
@@ -25,7 +39,9 @@ const LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived
   { id: 'checkin', title: 'Check-in and airport cutoffs', nav: 'Check-in', from: 'facts' },
   { id: 'contact', title: 'Contact and the small print', nav: 'Contact', from: 'derived' },
   { id: 'network', title: 'Where they fly', nav: 'Where they fly', from: 'derived' },
-  { id: 'reviews', title: 'What travellers rate it', nav: 'Reviews', from: 'derived' },
+  ...(REVIEWS_MODULE_ENABLED
+    ? [{ id: 'reviews', title: 'What travellers rate it', nav: 'Reviews', from: 'derived' as const }]
+    : []),
   { id: 'faq', title: 'Common questions', nav: 'FAQ', from: 'derived' },
 ];
 
@@ -62,14 +78,23 @@ export default function AirlineTier1({
   airlineRef = null,
   sampleNotice,
 }: AirlineTier1Props) {
-  const codes = [airline.iataCode, airline.icaoCode].filter(Boolean).join(' / ');
+  /**
+   * IATA only. The directory's ICAO codes are not trustworthy: they were
+   * written by an enrichment pass that resolved Wikidata by IATA code, and an
+   * IATA code is shared across a carrier's group — "QF" returns Qantas Airways
+   * (QFA), Eastern Australia Airlines (EAQ), Qantas Freight, Jetconnect and
+   * others. Qantas was stamped EAQ, Singapore Airlines SQC (its cargo arm),
+   * Air New Zealand RLK (Air Nelson). Same rule as every module here: no
+   * source, no render. Restore the code once a verified ICAO lands.
+   */
+  const codes = airline.iataCode ?? '';
   const factModules = new Map((facts?.modules ?? []).map((m) => [m.id, m]));
 
   const derived: Record<string, FactModule | null> = {
     cabins: cabinsModule(airline, routeFacts),
     contact: contactModule(airline, airlineRef),
     network: networkModule(airline, routeFacts),
-    reviews: reviewsModule(airline, reviews),
+    reviews: REVIEWS_MODULE_ENABLED ? reviewsModule(airline, reviews) : null,
     faq: null, // rendered by its own component below
   };
 
@@ -91,7 +116,6 @@ export default function AirlineTier1({
 
   const plate: { label: string; value: string }[] = [
     airline.iataCode ? { label: 'IATA', value: airline.iataCode } : null,
-    airline.icaoCode ? { label: 'ICAO', value: airline.icaoCode } : null,
     alliance ? { label: 'Alliance', value: alliance } : null,
     airline.founded ? { label: 'Founded', value: String(airline.founded) } : null,
     hubs.length ? { label: 'Top hubs', value: hubs.join(' · ') } : null,
@@ -153,7 +177,11 @@ export default function AirlineTier1({
           {verifiedCount > 0 && <span className={`${s.pip} ${s.pipOk}`}>{verifiedCount} verified</span>}
           {disputedCount > 0 && <span className={`${s.pip} ${s.pipWarn}`}>{disputedCount} need re-check</span>}
           {pendingCount > 0 && <span className={`${s.pip} ${s.pipPending}`}>{pendingCount} unpublished</span>}
-          {lastReview && <span className={`${s.ledgerLabel} ${s.ledgerRight}`}>Last full review {formatDate(lastReview)}</span>}
+          {lastReview ? (
+            <span className={`${s.ledgerLabel} ${s.ledgerRight}`}>Last verified {formatDate(lastReview)}</span>
+          ) : (
+            <span className={`${s.ledgerLabel} ${s.ledgerRight}`}>No modules verified yet</span>
+          )}
         </div>
       </div>
 
@@ -184,7 +212,7 @@ export default function AirlineTier1({
                         {r.module
                           ? r.module.status === 'disputed'
                             ? r.module.statusNote || 'disputed'
-                            : formatDate(r.module.verifiedAt)
+                            : `${(r.module.dateKind ?? 'verified') === 'data' ? 'data ' : ''}${formatDate(r.module.verifiedAt)}`
                           : 'pending'}
                       </span>
                     </li>
@@ -251,7 +279,11 @@ function Module({ id, module: m }: { id: string; module: FactModule }) {
       <div className={s.moduleHead}>
         <h2>{m.title}</h2>
         <span className={`${s.stamp} ${disputed ? s.stampWarn : s.stampOk}`}>
-          {disputed ? m.statusNote || 'Needs re-check' : `Verified ${formatDate(m.verifiedAt)}`}
+          {disputed
+            ? m.statusNote || 'Needs re-check'
+            : (m.dateKind ?? 'verified') === 'data'
+              ? `Data as of ${formatDate(m.verifiedAt)}`
+              : `Verified ${formatDate(m.verifiedAt)}`}
         </span>
       </div>
 
@@ -381,6 +413,7 @@ function cabinsModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | nul
     id: 'cabins',
     title: 'Cabins and seating',
     status: 'verified',
+    dateKind: 'data',
     verifiedAt: `${rf.updated}-01`,
     body: [
       // Attributed to the dataset rather than asserted as current fact: the
@@ -420,6 +453,7 @@ function networkModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | nu
     id: 'network',
     title: 'Where they fly',
     status: 'verified',
+    dateKind: 'data',
     verifiedAt: `${rf.updated}-01`,
     lede: rf.keyDestinations.length
       ? `Best known for ${listSentence(rf.keyDestinations.slice(0, 6))}.`
@@ -558,6 +592,7 @@ function reviewsModule(a: StrapiAirline, file: AirlineReviewFile | null): FactMo
     title: 'What travellers rate it',
     status: stale ? 'disputed' : 'verified',
     statusNote: stale ? `Newest review ${formatDate(stats.lastReviewDate)}` : undefined,
+    dateKind: 'data',
     verifiedAt: stats.lastReviewDate,
     lede: `${stats.avgRating10}/10 across ${stats.reviewCount.toLocaleString()} collected review${stats.reviewCount === 1 ? '' : 's'}.`,
     body,
