@@ -1,26 +1,26 @@
 [
   {
-    "carrier_key": "qantas",
-    "locale": "en-au",
-    "pages": {
-      "baggage_checked": "",
-      "baggage_carryon": "",
-      "baggage_fees": "",
-      "fare_conditions": "",
-      "checkin": "",
-      "conditions_of_carriage": ""
-    }
-  },
+  "carrier_key": "qantas",
+  "locale": "en-au",
+  "pages": {
+    "baggage_checked": "https://www.qantas.com/en-au/baggage/checked",
+    "baggage_carryon": "https://www.qantas.com/en-au/baggage/carry-on",
+    "baggage_fees": "https://www.qantas.com/en-au/baggage/pre-purchase-additional",
+    "conditions_of_carriage": "https://www.qantas.com/gb/en/book-a-trip/flights/conditions-of-carriage.html",
+    "fare_conditions": "",
+    "checkin": ""
+  }
+},
   {
     "carrier_key": "ryanair",
-    "locale": "en-ie",
+    "locale": "en-gb",
     "pages": {
-      "baggage_checked": "",
-      "baggage_carryon": "",
+      "fare_conditions": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
+      "conditions_of_carriage": "https://help.ryanair.com/hc/en-gb/articles/12890911974289",
+      "baggage_checked": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+      "baggage_carryon": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
       "baggage_fees": "",
-      "fare_conditions": "",
-      "checkin": "",
-      "conditions_of_carriage": ""
+      "checkin": ""
     }
   }
 ]
