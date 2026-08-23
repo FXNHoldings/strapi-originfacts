@@ -10,6 +10,7 @@
  *   node ops/validate-airline-facts.mjs            # validate the store
  *   node ops/validate-airline-facts.mjs --fixtures # run the fixture suite
  */
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { parse as parseDomain } from 'tldts';
@@ -40,6 +41,37 @@ function sameSite(a, b) {
 function hostOf(url) {
   try {
     return new URL(url).hostname;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Fact files that git does not know about.
+ *
+ * Every real fact file is committed — it is reviewed, it is diffed, and it is
+ * how a value gets from a source into a page. An untracked .json in the store
+ * is therefore a leftover by definition: a scratch copy, a rename that was
+ * meant to be temporary, a file someone dropped in to see what it looked like.
+ *
+ * That is not hypothetical either. The design mock reached production as
+ * content/airline-facts/qantas.json, untracked the whole time, which is also
+ * why deleting it left no trace in any diff and why five people believing it
+ * was gone did not make it gone.
+ *
+ * Returns null when git cannot answer — not a repository, or git absent from
+ * the build image. The rest of the validation still runs; this one check is
+ * skipped with a warning rather than failing a build for a reason unrelated to
+ * the data.
+ */
+function trackedFactFiles() {
+  try {
+    const out = execFileSync('git', ['ls-files', '--', 'content/airline-facts'], {
+      cwd: process.cwd(),
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+    return new Set(out.split('\n').filter(Boolean).map((f) => path.basename(f)));
   } catch {
     return null;
   }
@@ -119,13 +151,25 @@ function validateFile(fileName, raw, errors) {
   }
 }
 
-function run(dir, { expectFailure = false } = {}) {
-  if (!fs.existsSync(dir)) return { errors: [], files: 0 };
+function run(dir) {
+  if (!fs.existsSync(dir)) return { errors: [], files: 0, gitChecked: false };
   const files = fs.readdirSync(dir).filter((f) => f.endsWith('.json'));
   const errors = [];
-  for (const f of files) validateFile(f, fs.readFileSync(path.join(dir, f), 'utf8'), errors);
-  void expectFailure;
-  return { errors, files: files.length };
+  const tracked = trackedFactFiles();
+
+  for (const f of files) {
+    if (tracked && !tracked.has(f)) {
+      errors.push(
+        `${f}: untracked in git. Every real fact file is committed; an untracked one is a ` +
+          'leftover. Commit it, or delete it.',
+      );
+      // Still validate its contents — one file can be wrong in several ways,
+      // and reporting them together saves a round trip.
+    }
+    validateFile(f, fs.readFileSync(path.join(dir, f), 'utf8'), errors);
+  }
+
+  return { errors, files: files.length, gitChecked: tracked !== null };
 }
 
 /**
@@ -168,7 +212,10 @@ if (wantFixtures) {
     process.exit(1);
   }
 } else {
-  const { errors, files } = run(STORE);
+  const { errors, files, gitChecked } = run(STORE);
+  if (!gitChecked) {
+    console.warn('Warning: git could not be consulted, so the untracked-file check was skipped.');
+  }
   if (errors.length) {
     console.error(`Fact store validation failed — ${errors.length} problem(s) across ${files} file(s):\n`);
     for (const e of errors) console.error(`  ${e}`);
