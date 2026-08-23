@@ -55,6 +55,27 @@ async function waitForHost(url: string): Promise<void> {
   lastRequestAt.set(host, Date.now());
 }
 
+/**
+ * Whether a string is a fetchable URL rather than leftover template text.
+ *
+ * Catches the ellipsis forms an editor or a chat client leaves behind, angle
+ * brackets, and documentation hostnames — all of which parse as valid URLs and
+ * would otherwise be fetched.
+ */
+function isRealUrl(raw: string): boolean {
+  const url = raw.trim();
+  if (/[…<>]|\.\.\./.test(url)) return false;
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return false;
+  }
+  if (!/^https?:$/.test(parsed.protocol)) return false;
+  if (/(^|\.)example\.(com|org|net)$/i.test(parsed.hostname)) return false;
+  return true;
+}
+
 async function loadCarriers(): Promise<Carrier[]> {
   const file = path.join(import.meta.dirname, 'carriers.json');
   const carriers = JSON.parse(await fs.readFile(file, 'utf8')) as Carrier[];
@@ -69,6 +90,24 @@ async function loadCarriers(): Promise<Carrier[]> {
         'Every carrier must assert its intended market.',
     );
   }
+
+  // Template text left in place is not a URL. It reads as filled-in at a glance,
+  // and fetching it would send a pointless 404 to the carrier — so it fails
+  // loudly here rather than quietly becoming a bad capture.
+  const placeholders: string[] = [];
+  for (const c of carriers) {
+    for (const [key, url] of Object.entries(c.pages)) {
+      if (!url || !url.trim()) continue;
+      if (!isRealUrl(url)) placeholders.push(`${c.carrier_key}/${key}: ${url}`);
+    }
+  }
+  if (placeholders.length) {
+    throw new Error(
+      `carriers.json still contains ${placeholders.length} placeholder URL(s):\n  ${placeholders.join('\n  ')}\n\n` +
+        'Replace them with the real page URLs, or clear them to "" to skip those pages.',
+    );
+  }
+
   return carriers;
 }
 
