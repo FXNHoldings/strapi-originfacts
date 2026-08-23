@@ -13,7 +13,8 @@
     "prebuild": "node ops/validate-airline-facts.mjs",
     "fetch": "yarn --cwd ops/fetch fetch",
     "reach": "yarn --cwd ops/fetch reach",
-    "ingest-manual": "yarn --cwd ops/fetch ingest-manual"
+    "ingest-manual": "yarn --cwd ops/fetch ingest-manual",
+    "extract": "yarn --cwd ops/fetch extract"
   },
   "dependencies": {
     "date-fns": "^4.1.0",

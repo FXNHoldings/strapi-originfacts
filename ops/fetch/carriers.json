@@ -7,8 +7,8 @@
     "baggage_carryon": "https://www.qantas.com/en-au/baggage/carry-on",
     "baggage_fees": "https://www.qantas.com/en-au/baggage/pre-purchase-additional",
     "conditions_of_carriage": "https://www.qantas.com/gb/en/book-a-trip/flights/conditions-of-carriage.html",
-    "fare_conditions": "",
-    "checkin": ""
+    "fare_conditions": "https://www.qantas.com/en-au/book/flights/fare-types",
+    "checkin": "https://www.qantas.com/en-au/manage-booking/check-in"
   }
 },
   {
@@ -19,8 +19,8 @@
       "conditions_of_carriage": "https://help.ryanair.com/hc/en-gb/articles/12890911974289",
       "baggage_checked": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
       "baggage_carryon": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
-      "baggage_fees": "",
-      "checkin": ""
+      "baggage_fees": "https://help.ryanair.com/hc/en-gb/categories/12503574130961-Fees",
+      "checkin": "https://help.ryanair.com/hc/en-gb/categories/12488813755537"
     }
   }
 ]

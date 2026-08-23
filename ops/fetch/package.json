@@ -6,7 +6,8 @@
   "scripts": {
     "fetch": "tsx run.ts",
     "reach": "tsx sweep.ts",
-    "ingest-manual": "tsx ingest-manual.ts"
+    "ingest-manual": "tsx ingest-manual.ts",
+    "extract": "tsx extract.ts"
   },
   "dependencies": {
     "playwright": "^1.49.0",
