@@ -71,6 +71,22 @@ export type FactConflict = { title: string; text: string };
  */
 export type FactDateKind = 'verified' | 'data';
 
+/**
+ * An optional diagram belonging to a module.
+ *
+ * Kept as a small tagged union rather than free-form markup so a fact file can
+ * never inject arbitrary HTML, and so every figure stays something the
+ * renderer knows how to caption and label for screen readers.
+ */
+export type FactFigure = {
+  kind: 'longest-sector';
+  fromCity: string;
+  fromIata: string;
+  toCity: string;
+  toIata: string;
+  km: number;
+};
+
 export type FactModule = {
   /** Matches the module ids the page lays out; unknown ids are ignored. */
   id: string;
@@ -87,6 +103,7 @@ export type FactModule = {
   table?: FactTable;
   rule?: FactRule;
   conflicts?: FactConflict[];
+  figure?: FactFigure;
   sources: FactSource[];
   /** Free-text footer under the sources, e.g. "next review Nov 2026". */
   reviewNote?: string;

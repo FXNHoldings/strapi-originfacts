@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { StrapiAirline } from '@/lib/strapi';
 import type { RouteFacts } from '@/lib/route-facts';
-import type { AirlineFactsFile, FactCell, FactModule } from '@/lib/airline-facts';
+import type { AirlineFactsFile, FactCell, FactFigure, FactModule } from '@/lib/airline-facts';
 import { oldestVerifiedAt } from '@/lib/airline-facts';
 import type { AirlineReviewFile } from '@/lib/airline-reviews';
 import { facetCounts, ratingBands, sourceLabel, SOURCE_META } from '@/lib/airline-reviews';
@@ -326,6 +326,8 @@ function Module({ id, module: m }: { id: string; module: FactModule }) {
         </div>
       )}
 
+      {m.figure && <Figure figure={m.figure} />}
+
       {m.rule && (
         <div className={s.ruleBox}>
           <span className={s.ruleKey}>{m.rule.key}</span>
@@ -444,11 +446,7 @@ function networkModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | nu
   if (rf.topHubs.length) {
     body.push(`Its busiest airports by route count are ${listSentence(rf.topHubs.map((h) => `${h.city} (${h.routes})`))}.`);
   }
-  if (rf.longestRoute) {
-    body.push(
-      `The longest sector we track is ${rf.longestRoute.from} to ${rf.longestRoute.to} at ${rf.longestRoute.km.toLocaleString()} km.`,
-    );
-  }
+
   return {
     id: 'network',
     title: 'Where they fly',
@@ -459,6 +457,18 @@ function networkModule(a: StrapiAirline, rf: RouteFacts | null): FactModule | nu
       ? `Best known for ${listSentence(rf.keyDestinations.slice(0, 6))}.`
       : undefined,
     body,
+    // The longest sector moves out of the prose and into the diagram below —
+    // repeating it in both would state the same fact twice on one screen.
+    figure: rf.longestRoute
+      ? {
+          kind: 'longest-sector',
+          fromCity: rf.longestRoute.from,
+          fromIata: rf.longestRoute.fromIata,
+          toCity: rf.longestRoute.to,
+          toIata: rf.longestRoute.toIata,
+          km: rf.longestRoute.km,
+        }
+      : undefined,
     sources: factsSource(rf),
   };
 }
@@ -493,6 +503,74 @@ function derivedFaqs(a: StrapiAirline, rf: RouteFacts | null, alliance: string |
     faqs.push({ q: `Which alliance is ${a.name} in?`, a: `${a.name} is a member of ${alliance}.` });
   }
   return faqs;
+}
+
+/**
+ * The longest sector, drawn.
+ *
+ * A great-circle sector is the one fact on these pages that a sentence
+ * genuinely under-serves — "13,400 km" means little until you see it as an arc
+ * across a hemisphere. The geometry is schematic, not a projection: the arc is
+ * a fixed curve, so it reads the same for every carrier and never implies a
+ * routing accuracy the dataset does not carry.
+ *
+ * Everything stated is in the data — both cities, both IATA codes, and a
+ * distance the upstream generator computes with a haversine over the two
+ * airports' coordinates, which is what makes "great-circle" accurate rather
+ * than decorative.
+ */
+function Figure({ figure }: { figure: FactFigure }) {
+  const { fromCity, fromIata, toCity, toIata, km } = figure;
+  const distance = `${km.toLocaleString()} km`;
+  const label = `${fromCity} (${fromIata}) to ${toCity} (${toIata}), ${distance} great-circle distance.`;
+
+  return (
+    <figure className={s.sector}>
+      <div className={s.sectorText}>
+        <p className={s.sectorEyebrow}>Longest nonstop route</p>
+        <p className={s.sectorRoute}>
+          {fromCity} <span aria-hidden>→</span> {toCity}
+        </p>
+        <p className={s.sectorMeta}>
+          {distance} · {fromIata} <span aria-hidden>→</span> {toIata}
+        </p>
+        <figcaption className={s.sectorCaption}>
+          The longest sector in this carrier’s network as recorded in our route dataset, measured as the great-circle
+          distance between the two airports.
+        </figcaption>
+      </div>
+
+      <div className={s.sectorPlot}>
+        <svg viewBox="0 0 420 190" className={s.sectorSvg} role="img" aria-label={label}>
+          <defs>
+            <linearGradient id="t1-sector-arc" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="var(--sector-from)" />
+              <stop offset="100%" stopColor="var(--sector-to)" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M 62 148 Q 210 34 358 148"
+            fill="none"
+            stroke="url(#t1-sector-arc)"
+            strokeWidth="2"
+            strokeDasharray="5 5"
+            strokeLinecap="round"
+          />
+          <text x="210" y="112" className={s.sectorDistance} textAnchor="middle">
+            {distance}
+          </text>
+          <circle cx="62" cy="148" r="6.5" fill="var(--sector-from)" />
+          <circle cx="358" cy="148" r="6.5" fill="var(--sector-to)" />
+          <text x="62" y="174" className={s.sectorCode} textAnchor="middle">
+            {fromIata}
+          </text>
+          <text x="358" y="174" className={s.sectorCode} textAnchor="middle">
+            {toIata}
+          </text>
+        </svg>
+      </div>
+    </figure>
+  );
 }
 
 /** A cell that is its own source renders as the link, not as text beside one. */
