@@ -43,6 +43,41 @@ without me saying so explicitly in the session.
    new verification date.** Changing the value while keeping the old stamp is
    worse than leaving it stale.
 
+## IATA codes are not entity identifiers
+
+**Never join, dedupe or enrich on an IATA code alone.** Not in a script, not in
+a query, not in a spreadsheet lookup.
+
+A 2-letter IATA code is a route-marketing designator, not an identity. It is
+recycled to a new carrier after the previous holder folds, and it is shared
+across a group's subsidiaries, cargo arms and franchise partners. Wikidata
+holds every one of those as a separate entity under the same `P229`.
+
+This is not hypothetical — it is how the current airline table was corrupted:
+
+- `QF` returns Qantas Airways **and** Eastern Australia Airlines, Qantas
+  Freight, Sunstate, Jetconnect and National Jet Systems. Qantas was stamped
+  ICAO `EAQ` — Eastern Australia's real code.
+- `AB` was Air Berlin's before it was Bonza's; Bonza got `airberlin.com`.
+  `US` was US Airways' before Silk Avia's. `UN` was Transaero's before United
+  Nigeria's. `7H` was Era Aviation's before New Pacific's.
+- **791 of 1,096 airlines share their IATA code with another Wikidata entity.**
+  Country was overwritten with a different country on 151 of them — Scoot as
+  United States, Vanilla Air as Australia, Porter as Canada.
+
+Recycled codes produce obviously wrong values. **Group siblings produce
+plausible ones**, and those do not announce themselves: `EAQ` is a real ICAO
+for a real airline that really does operate QF services. Any carrier with a
+cargo arm, a regional subsidiary or a franchise partner is exposed.
+
+Join on something that identifies an entity — a **Wikidata QID** or an **ICAO
+code**. Use IATA to display, and to key datasets we control end to end. Never
+to resolve who a company is.
+
+Fuzzy name matching is not a substitute. It fails closed on correct matches
+("Qantas" against "Qantas Airways" scores 0.5) while still guessing on wrong
+ones, and it is a string comparison standing in for an identity check.
+
 ## Status vocabulary
 
 | Status | Meaning | Renders? |
