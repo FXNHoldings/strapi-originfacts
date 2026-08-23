@@ -1,26 +1,2263 @@
 [
   {
-  "carrier_key": "qantas",
-  "locale": "en-au",
-  "pages": {
-    "baggage_checked": "https://www.qantas.com/en-au/baggage/checked",
-    "baggage_carryon": "https://www.qantas.com/en-au/baggage/carry-on",
-    "baggage_fees": "https://www.qantas.com/en-au/baggage/pre-purchase-additional",
-    "conditions_of_carriage": "https://www.qantas.com/gb/en/book-a-trip/flights/conditions-of-carriage.html",
-    "fare_conditions": "https://www.qantas.com/en-au/book/flights/fare-types",
-    "checkin": "https://www.qantas.com/en-au/manage-booking/check-in"
-  }
-},
+    "carrier_key": "qantas",
+    "name": "Qantas",
+    "iata": "QF",
+    "locale": "en-au",
+    "band": "1a",
+    "region": "Australia/Pacific",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.qantas.com/en-au/baggage/checked"
+      },
+      "baggage_carryon": {
+        "url": "https://www.qantas.com/en-au/baggage/carry-on"
+      },
+      "baggage_fees": {
+        "url": "https://www.qantas.com/en-au/baggage/pre-purchase-additional"
+      },
+      "fare_conditions": {
+        "url": "https://www.qantas.com/en-au/book/flights/fare-types"
+      },
+      "checkin": {
+        "url": "https://www.qantas.com/en-au/manage-booking/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.qantas.com/gb/en/book-a-trip/flights/conditions-of-carriage.html",
+        "locale": "en-gb",
+        "note": "serves a different market than the carrier locale \u2014 recorded, not normalised"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "jetstar",
+    "name": "Jetstar",
+    "iata": "JQ",
+    "locale": "en-au",
+    "band": "1a",
+    "region": "Australia/Pacific",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.jetstar.com/au/en/help/articles/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.jetstar.com/au/en/help/articles/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.jetstar.com/au/en/help/articles/fees-and-charges"
+      },
+      "fare_conditions": {
+        "url": "https://www.jetstar.com/au/en/help/articles/fares"
+      },
+      "checkin": {
+        "url": "https://www.jetstar.com/au/en/help/articles/online-check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.jetstar.com/au/en/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "virgin-australia",
+    "name": "Virgin Australia",
+    "iata": "VA",
+    "locale": "en-au",
+    "band": "1a",
+    "region": "Australia/Pacific",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.virginaustralia.com/au/en/travel-info/baggage/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.virginaustralia.com/au/en/travel-info/baggage/carry-on-baggage/"
+      },
+      "baggage_fees": {
+        "url": "https://www.virginaustralia.com/au/en/travel-info/baggage/additional-baggage/"
+      },
+      "fare_conditions": {
+        "url": "https://www.virginaustralia.com/au/en/travel-info/flying-with-us/fare-types/"
+      },
+      "checkin": {
+        "url": "https://www.virginaustralia.com/au/en/travel-info/check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.virginaustralia.com/au/en/about-us/policies/legal/conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "air-new-zealand",
+    "name": "Air New Zealand",
+    "iata": "NZ",
+    "locale": "en-nz",
+    "band": "1a",
+    "region": "Australia/Pacific",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.airnewzealand.com/en-nz/travel-info/baggage",
+        "shared_source": "anz_baggage_hub",
+        "note": "One page covers checked, carry-on and excess; the sub-topics are anchors (#baggage-allowances, #excess-baggage-fees), not separate documents. Verified 2026-08-24: 15,905 chars, 19 mentions of 'checked', 9 of 'carry-on', 22 of 'excess'."
+      },
+      "baggage_carryon": {
+        "url": "https://www.airnewzealand.com/en-nz/travel-info/baggage",
+        "shared_source": "anz_baggage_hub",
+        "note": "Same document as baggage_checked."
+      },
+      "baggage_fees": {
+        "url": "https://www.airnewzealand.com/en-nz/travel-info/baggage",
+        "shared_source": "anz_baggage_hub",
+        "note": "Same document as baggage_checked."
+      },
+      "fare_conditions": {
+        "url": "https://www.airnewzealand.com/en-nz/book/fare-rules",
+        "note": "Resolved destination of the previous /fare-rules URL, which redirected here."
+      },
+      "checkin": {
+        "url": "",
+        "note": "UNSET. The previous URL 302'd to a malformed /check-in- (trailing hyphen) which then failed. No verified destination \u2014 needs a real one rather than a guess."
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.airnewzealand.com/en-nz/conditions-of-carriage",
+        "note": "Resolved destination of the previous airnewzealand.co.nz URL."
+      }
+    },
+    "_status": "5/6 urls, baggage is one shared page"
+  },
+  {
+    "carrier_key": "rex",
+    "name": "Rex (Regional Express)",
+    "iata": "ZL",
+    "locale": "en-au",
+    "band": "1b",
+    "region": "Australia/Pacific",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.rex.com.au/FlightInfo/BaggageAllowance.aspx"
+      },
+      "baggage_carryon": {
+        "url": "https://www.rex.com.au/FlightInfo/CabinBaggage.aspx"
+      },
+      "baggage_fees": {
+        "url": "https://www.rex.com.au/FlightInfo/ExcessBaggage.aspx"
+      },
+      "fare_conditions": {
+        "url": "https://www.rex.com.au/FlightInfo/FareRules.aspx"
+      },
+      "checkin": {
+        "url": "https://www.rex.com.au/FlightInfo/CheckIn.aspx"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.rex.com.au/FlightInfo/ConditionsOfCarriage.aspx"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "fiji-airways",
+    "name": "Fiji Airways",
+    "iata": "FJ",
+    "locale": "en-fj",
+    "band": "1b",
+    "region": "Australia/Pacific",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.fijiairways.com/en-fj/manage/baggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.fijiairways.com/en-fj/manage/baggage/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.fijiairways.com/en-fj/manage/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.fijiairways.com/en-fj/book/fare-types"
+      },
+      "checkin": {
+        "url": "https://www.fijiairways.com/en-fj/manage/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.fijiairways.com/en-fj/about-fiji-airways/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "singapore-airlines",
+    "name": "Singapore Airlines",
+    "iata": "SQ",
+    "locale": "en-sg",
+    "band": "1a",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.singaporeair.com/en_UK/sg/travel-info/baggage/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.singaporeair.com/en_UK/sg/travel-info/baggage/cabin-baggage/"
+      },
+      "baggage_fees": {
+        "url": "https://www.singaporeair.com/en_UK/sg/travel-info/baggage/additional-baggage-charges/"
+      },
+      "fare_conditions": {
+        "url": "https://www.singaporeair.com/en_UK/sg/plan-travel/local-promotions/fare-types/"
+      },
+      "checkin": {
+        "url": "https://www.singaporeair.com/en_UK/sg/travel-info/check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.singaporeair.com/en_UK/sg/travel-info/conditions-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "scoot",
+    "name": "Scoot",
+    "iata": "TR",
+    "locale": "en-sg",
+    "band": "1a",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.flyscoot.com/en/plan/booking-your-flight/baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.flyscoot.com/en/plan/booking-your-flight/baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.flyscoot.com/en/plan/booking-your-flight/fees-chart"
+      },
+      "fare_conditions": {
+        "url": "https://www.flyscoot.com/en/plan/booking-your-flight/fare-bundles"
+      },
+      "checkin": {
+        "url": "https://www.flyscoot.com/en/plan/your-trip/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.flyscoot.com/en/terms-and-conditions/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "thai-airways",
+    "name": "Thai Airways",
+    "iata": "TG",
+    "locale": "en-th",
+    "band": "1a",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.thaiairways.com/en_TH/plan/travel_information/baggage.page"
+      },
+      "baggage_carryon": {
+        "url": "https://www.thaiairways.com/en_TH/plan/travel_information/carry_on_baggage.page"
+      },
+      "baggage_fees": {
+        "url": "https://www.thaiairways.com/en_TH/plan/travel_information/excess_baggage.page"
+      },
+      "fare_conditions": {
+        "url": "https://www.thaiairways.com/en_TH/plan/travel_information/fare_rules.page"
+      },
+      "checkin": {
+        "url": "https://www.thaiairways.com/en_TH/plan/travel_information/check_in.page"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.thaiairways.com/en_TH/terms_condition/conditions_of_carriage.page"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "airasia",
+    "name": "AirAsia",
+    "iata": "AK",
+    "locale": "en-my",
+    "band": "1a",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://support.airasia.com/s/article/Checked-baggage-en"
+      },
+      "baggage_carryon": {
+        "url": "https://support.airasia.com/s/article/Cabin-baggage-en"
+      },
+      "baggage_fees": {
+        "url": "https://www.airasia.com/aa/about-us/en/gb/fees-and-charges.html"
+      },
+      "fare_conditions": {
+        "url": "https://support.airasia.com/s/article/Fares-and-fare-rules-en"
+      },
+      "checkin": {
+        "url": "https://support.airasia.com/s/article/Check-in-en"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.airasia.com/aa/about-us/en/gb/terms-and-conditions-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "malaysia-airlines",
+    "name": "Malaysia Airlines",
+    "iata": "MH",
+    "locale": "en-my",
+    "band": "1a",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.malaysiaairlines.com/my/en/plan-your-trip/baggage/checked-baggage.html"
+      },
+      "baggage_carryon": {
+        "url": "https://www.malaysiaairlines.com/my/en/plan-your-trip/baggage/cabin-baggage.html"
+      },
+      "baggage_fees": {
+        "url": "https://www.malaysiaairlines.com/my/en/plan-your-trip/baggage/excess-baggage.html"
+      },
+      "fare_conditions": {
+        "url": "https://www.malaysiaairlines.com/my/en/plan-your-trip/fare-family.html"
+      },
+      "checkin": {
+        "url": "https://www.malaysiaairlines.com/my/en/plan-your-trip/check-in.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.malaysiaairlines.com/my/en/footer/conditions-of-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "thai-airasia",
+    "name": "Thai AirAsia",
+    "iata": "FD",
+    "locale": "en-th",
+    "band": "1b",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://support.airasia.com/s/article/Checked-baggage-en"
+      },
+      "baggage_carryon": {
+        "url": "https://support.airasia.com/s/article/Cabin-baggage-en"
+      },
+      "baggage_fees": {
+        "url": "https://www.airasia.com/aa/about-us/en/gb/fees-and-charges.html"
+      },
+      "fare_conditions": {
+        "url": "https://support.airasia.com/s/article/Fares-and-fare-rules-en"
+      },
+      "checkin": {
+        "url": "https://support.airasia.com/s/article/Check-in-en"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.airasia.com/aa/about-us/en/gb/terms-and-conditions-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "airasia-x",
+    "name": "AirAsia X",
+    "iata": "D7",
+    "locale": "en-my",
+    "band": "1b",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://support.airasia.com/s/article/Checked-baggage-en"
+      },
+      "baggage_carryon": {
+        "url": "https://support.airasia.com/s/article/Cabin-baggage-en"
+      },
+      "baggage_fees": {
+        "url": "https://www.airasia.com/aa/about-us/en/gb/fees-and-charges.html"
+      },
+      "fare_conditions": {
+        "url": "https://support.airasia.com/s/article/Fares-and-fare-rules-en"
+      },
+      "checkin": {
+        "url": "https://support.airasia.com/s/article/Check-in-en"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.airasia.com/aa/about-us/en/gb/terms-and-conditions-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "bangkok-airways",
+    "name": "Bangkok Airways",
+    "iata": "PG",
+    "locale": "en-th",
+    "band": "1b",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.bangkokair.com/baggage-allowance"
+      },
+      "baggage_carryon": {
+        "url": "https://www.bangkokair.com/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.bangkokair.com/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.bangkokair.com/fare-rules"
+      },
+      "checkin": {
+        "url": "https://www.bangkokair.com/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.bangkokair.com/conditions-of-carriage"
+      }
+    },
+    "_status": "parked \u2014 403 on all six paths, blocked rather than a URL problem"
+  },
+  {
+    "carrier_key": "garuda-indonesia",
+    "name": "Garuda Indonesia",
+    "iata": "GA",
+    "locale": "en-id",
+    "band": "1b",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.garuda-indonesia.com/id/en/garuda-indonesia-experience/on-ground/baggage/index"
+      },
+      "baggage_carryon": {
+        "url": "https://www.garuda-indonesia.com/id/en/garuda-indonesia-experience/on-ground/baggage/cabin-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.garuda-indonesia.com/id/en/garuda-indonesia-experience/on-ground/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.garuda-indonesia.com/id/en/booking/fare-rules"
+      },
+      "checkin": {
+        "url": "https://www.garuda-indonesia.com/id/en/garuda-indonesia-experience/on-ground/check-in/index"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.garuda-indonesia.com/id/en/terms-and-conditions/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "vietnam-airlines",
+    "name": "Vietnam Airlines",
+    "iata": "VN",
+    "locale": "en-vn",
+    "band": "1b",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.vietnamairlines.com/vn/en/travel-information/baggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.vietnamairlines.com/vn/en/travel-information/baggage/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.vietnamairlines.com/vn/en/travel-information/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.vietnamairlines.com/vn/en/plan-book/fares/fare-conditions"
+      },
+      "checkin": {
+        "url": "https://www.vietnamairlines.com/vn/en/travel-information/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.vietnamairlines.com/vn/en/legal/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "vietjet",
+    "name": "VietJet Air",
+    "iata": "VJ",
+    "locale": "en-vn",
+    "band": "1b",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.vietjetair.com/en/pages/baggage-1608369253776"
+      },
+      "baggage_carryon": {
+        "url": "https://www.vietjetair.com/en/pages/baggage-1608369253776"
+      },
+      "baggage_fees": {
+        "url": "https://www.vietjetair.com/en/pages/fees-and-charges-1608369255494"
+      },
+      "fare_conditions": {
+        "url": "https://www.vietjetair.com/en/pages/fare-rules-1608369253589"
+      },
+      "checkin": {
+        "url": "https://www.vietjetair.com/en/checkin"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.vietjetair.com/en/pages/conditions-of-carriage-1608369252148"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "philippine-airlines",
+    "name": "Philippine Airlines",
+    "iata": "PR",
+    "locale": "en-ph",
+    "band": "1b",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.philippineairlines.com/before-you-fly/baggage-information/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.philippineairlines.com/before-you-fly/baggage-information/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.philippineairlines.com/before-you-fly/baggage-information/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.philippineairlines.com/en/fares-and-promos/fare-families"
+      },
+      "checkin": {
+        "url": "https://www.philippineairlines.com/before-you-fly/at-the-airport/check-in-online"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.philippineairlines.com/about-us/legal-notices/general-conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "cebu-pacific",
+    "name": "Cebu Pacific",
+    "iata": "5J",
+    "locale": "en-ph",
+    "band": "1b",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.cebupacificair.com/en-PH/pages/travel-info/baggage-information/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.cebupacificair.com/en-PH/pages/travel-info/baggage-information/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.cebupacificair.com/en-PH/pages/travel-info/fees-summary"
+      },
+      "fare_conditions": {
+        "url": "https://www.cebupacificair.com/en-PH/pages/plan-trip/fare-bundles"
+      },
+      "checkin": {
+        "url": "https://www.cebupacificair.com/en-PH/pages/manage/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.cebupacificair.com/en-PH/pages/about/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "lion-air",
+    "name": "Lion Air",
+    "iata": "JT",
+    "locale": "en-id",
+    "band": "1b",
+    "region": "Southeast Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.lionair.co.id/en/prepare-your-trip/baggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.lionair.co.id/en/prepare-your-trip/baggage/cabin-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.lionair.co.id/en/prepare-your-trip/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.lionair.co.id/en/terms-and-conditions"
+      },
+      "checkin": {
+        "url": "https://www.lionair.co.id/en/prepare-your-trip/web-check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.lionair.co.id/en/terms-and-conditions"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "cathay-pacific",
+    "name": "Cathay Pacific",
+    "iata": "CX",
+    "locale": "en-hk",
+    "band": "1a",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.cathaypacific.com/cx/en_HK/baggage/checked-baggage.html"
+      },
+      "baggage_carryon": {
+        "url": "https://www.cathaypacific.com/cx/en_HK/baggage/cabin-baggage.html"
+      },
+      "baggage_fees": {
+        "url": "https://www.cathaypacific.com/cx/en_HK/baggage/extra-baggage-charges.html"
+      },
+      "fare_conditions": {
+        "url": "https://www.cathaypacific.com/cx/en_HK/book-a-trip/fare-types.html"
+      },
+      "checkin": {
+        "url": "https://www.cathaypacific.com/cx/en_HK/manage-booking/check-in.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.cathaypacific.com/cx/en_HK/legal-and-privacy/conditions-of-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "japan-airlines",
+    "name": "Japan Airlines",
+    "iata": "JL",
+    "locale": "en-jp",
+    "band": "1a",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.jal.co.jp/jp/en/inter/baggage/checked/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.jal.co.jp/jp/en/inter/baggage/inflight/"
+      },
+      "baggage_fees": {
+        "url": "https://www.jal.co.jp/jp/en/inter/baggage/over/"
+      },
+      "fare_conditions": {
+        "url": "https://www.jal.co.jp/jp/en/inter/fare/"
+      },
+      "checkin": {
+        "url": "https://www.jal.co.jp/jp/en/inter/boarding/online-checkin/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.jal.co.jp/jp/en/inter/carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "ana",
+    "name": "All Nippon Airways",
+    "iata": "NH",
+    "locale": "en-jp",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.ana.co.jp/en/jp/guide/boarding-procedures/baggage/international/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.ana.co.jp/en/jp/guide/boarding-procedures/baggage/international/carry-on/"
+      },
+      "baggage_fees": {
+        "url": "https://www.ana.co.jp/en/jp/guide/boarding-procedures/baggage/international/excess-baggage/"
+      },
+      "fare_conditions": {
+        "url": "https://www.ana.co.jp/en/jp/plan-book/fares/international/"
+      },
+      "checkin": {
+        "url": "https://www.ana.co.jp/en/jp/guide/boarding-procedures/checkin/international/online-checkin/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.ana.co.jp/en/jp/site-help/share/conditions/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "korean-air",
+    "name": "Korean Air",
+    "iata": "KE",
+    "locale": "en-kr",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.koreanair.com/contents/plan-your-travel/baggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.koreanair.com/contents/plan-your-travel/baggage/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.koreanair.com/contents/plan-your-travel/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.koreanair.com/booking/booking-guide/fare-rules"
+      },
+      "checkin": {
+        "url": "https://www.koreanair.com/contents/plan-your-travel/at-the-airport/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.koreanair.com/contents/footer/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "asiana",
+    "name": "Asiana Airlines",
+    "iata": "OZ",
+    "locale": "en-kr",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://flyasiana.com/C/US/EN/contents/free-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://flyasiana.com/C/US/EN/contents/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://flyasiana.com/C/US/EN/contents/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://flyasiana.com/C/US/EN/contents/fare-rules"
+      },
+      "checkin": {
+        "url": "https://flyasiana.com/C/US/EN/contents/online-check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://flyasiana.com/C/US/EN/contents/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "china-airlines",
+    "name": "China Airlines",
+    "iata": "CI",
+    "locale": "en-tw",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.china-airlines.com/au/en/fly/prepare-for-the-fly/baggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.china-airlines.com/au/en/fly/prepare-for-the-fly/baggage/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.china-airlines.com/au/en/fly/prepare-for-the-fly/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.china-airlines.com/au/en/booking/book-flights/fare-family"
+      },
+      "checkin": {
+        "url": "https://www.china-airlines.com/au/en/fly/at-the-airport/online-check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.china-airlines.com/au/en/terms-and-conditions/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "eva-air",
+    "name": "EVA Air",
+    "iata": "BR",
+    "locale": "en-tw",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.evaair.com/en-global/fly-prepare/baggage/free-baggage/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.evaair.com/en-global/fly-prepare/baggage/free-baggage/carry-on-baggage/"
+      },
+      "baggage_fees": {
+        "url": "https://www.evaair.com/en-global/fly-prepare/baggage/extra-baggage/"
+      },
+      "fare_conditions": {
+        "url": "https://www.evaair.com/en-global/plan-and-book/fare-family/"
+      },
+      "checkin": {
+        "url": "https://www.evaair.com/en-global/fly-prepare/check-in/online-check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.evaair.com/en-global/customer-services/tariffs-and-conditions/conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "starlux",
+    "name": "STARLUX Airlines",
+    "iata": "JX",
+    "locale": "en-tw",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.starlux-airlines.com/en-TW/check-in-fly/baggage-information/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.starlux-airlines.com/en-TW/check-in-fly/baggage-information/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.starlux-airlines.com/en-TW/check-in-fly/baggage-information/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.starlux-airlines.com/en-TW/booking/fare-family"
+      },
+      "checkin": {
+        "url": "https://www.starlux-airlines.com/en-TW/check-in-fly/online-check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.starlux-airlines.com/en-TW/about-us/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "air-china",
+    "name": "Air China",
+    "iata": "CA",
+    "locale": "en-cn",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.airchina.com.cn/en/info/travel-prep/baggage/checked-baggage.shtml"
+      },
+      "baggage_carryon": {
+        "url": "https://www.airchina.com.cn/en/info/travel-prep/baggage/carry-on-baggage.shtml"
+      },
+      "baggage_fees": {
+        "url": "https://www.airchina.com.cn/en/info/travel-prep/baggage/excess-baggage.shtml"
+      },
+      "fare_conditions": {
+        "url": "https://www.airchina.com.cn/en/info/travel-prep/fare-rules.shtml"
+      },
+      "checkin": {
+        "url": "https://www.airchina.com.cn/en/info/online-check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.airchina.com.cn/en/info/travel-prep/conditions-of-carriage.shtml"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "china-eastern",
+    "name": "China Eastern",
+    "iata": "MU",
+    "locale": "en-cn",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://us.ceair.com/newCMS/us/en/content/en_Header/headerBottom/service/baggage/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://us.ceair.com/newCMS/us/en/content/en_Header/headerBottom/service/baggage/carry-on-baggage/"
+      },
+      "baggage_fees": {
+        "url": "https://us.ceair.com/newCMS/us/en/content/en_Header/headerBottom/service/baggage/excess-baggage/"
+      },
+      "fare_conditions": {
+        "url": "https://us.ceair.com/newCMS/us/en/content/en_Header/headerBottom/service/booking/fare-rules/"
+      },
+      "checkin": {
+        "url": "https://us.ceair.com/newCMS/us/en/content/en_Header/headerBottom/service/check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://us.ceair.com/newCMS/us/en/content/en_Header/headerBottom/service/conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "china-southern",
+    "name": "China Southern",
+    "iata": "CZ",
+    "locale": "en-cn",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.csair.com/en/tourguide/luggage_service/checked_luggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.csair.com/en/tourguide/luggage_service/carryon_luggage/"
+      },
+      "baggage_fees": {
+        "url": "https://www.csair.com/en/tourguide/luggage_service/excess_luggage/"
+      },
+      "fare_conditions": {
+        "url": "https://www.csair.com/en/tourguide/booking/orders/fare_rules/"
+      },
+      "checkin": {
+        "url": "https://www.csair.com/en/tourguide/airport_service/checkin/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.csair.com/en/tourguide/notice/conditions/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "hk-express",
+    "name": "HK Express",
+    "iata": "UO",
+    "locale": "en-hk",
+    "band": "1b",
+    "region": "East Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.hkexpress.com/en-hk/plan/travel-information/baggage/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.hkexpress.com/en-hk/plan/travel-information/baggage/cabin-baggage/"
+      },
+      "baggage_fees": {
+        "url": "https://www.hkexpress.com/en-hk/plan/travel-information/fees-and-charges/"
+      },
+      "fare_conditions": {
+        "url": "https://www.hkexpress.com/en-hk/plan/fare-types/"
+      },
+      "checkin": {
+        "url": "https://www.hkexpress.com/en-hk/plan/travel-information/check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.hkexpress.com/en-hk/about-us/conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "emirates",
+    "name": "Emirates",
+    "iata": "EK",
+    "locale": "en-ae",
+    "band": "1a",
+    "region": "Middle East",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.emirates.com/ae/english/before-you-fly/baggage/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.emirates.com/ae/english/before-you-fly/baggage/cabin-baggage-rules/"
+      },
+      "baggage_fees": {
+        "url": "https://www.emirates.com/ae/english/before-you-fly/baggage/purchase-additional-baggage-allowance/"
+      },
+      "fare_conditions": {
+        "url": "https://www.emirates.com/ae/english/book/fare-types/"
+      },
+      "checkin": {
+        "url": "https://www.emirates.com/ae/english/manage-booking/online-check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.emirates.com/ae/english/before-you-fly/rules-and-notices/conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "qatar-airways",
+    "name": "Qatar Airways",
+    "iata": "QR",
+    "locale": "en-qa",
+    "band": "1a",
+    "region": "Middle East",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.qatarairways.com/en/baggage/allowance.html"
+      },
+      "baggage_carryon": {
+        "url": "https://www.qatarairways.com/en/baggage/allowance.html"
+      },
+      "baggage_fees": {
+        "url": "https://www.qatarairways.com/en/baggage/excess.html"
+      },
+      "fare_conditions": {
+        "url": "https://www.qatarairways.com/en/fare-families.html"
+      },
+      "checkin": {
+        "url": "https://www.qatarairways.com/en/services-checking-in.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.qatarairways.com/en/legal/conditions-of-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "etihad",
+    "name": "Etihad Airways",
+    "iata": "EY",
+    "locale": "en-ae",
+    "band": "1a",
+    "region": "Middle East",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.etihad.com/en/fly-etihad/baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.etihad.com/en/fly-etihad/baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.etihad.com/en/fly-etihad/baggage/excess"
+      },
+      "fare_conditions": {
+        "url": "https://www.etihad.com/en/book/fare-choices"
+      },
+      "checkin": {
+        "url": "https://www.etihad.com/en/manage/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.etihad.com/en/legal/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "turkish-airlines",
+    "name": "Turkish Airlines",
+    "iata": "TK",
+    "locale": "en-tr",
+    "band": "1b",
+    "region": "Middle East",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.turkishairlines.com/en-int/any-questions/free-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.turkishairlines.com/en-int/any-questions/carry-on-baggage/"
+      },
+      "baggage_fees": {
+        "url": "https://www.turkishairlines.com/en-int/any-questions/excess-baggage/"
+      },
+      "fare_conditions": {
+        "url": "https://www.turkishairlines.com/en-int/any-questions/fare-rules/"
+      },
+      "checkin": {
+        "url": "https://www.turkishairlines.com/en-int/flights/manage-booking/online-check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.turkishairlines.com/en-int/legal-notice/general-conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "flydubai",
+    "name": "flydubai",
+    "iata": "FZ",
+    "locale": "en-ae",
+    "band": "1b",
+    "region": "Middle East",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.flydubai.com/en/flying-with-us/baggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.flydubai.com/en/flying-with-us/baggage/hand-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.flydubai.com/en/flying-with-us/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.flydubai.com/en/flying-with-us/fare-types"
+      },
+      "checkin": {
+        "url": "https://www.flydubai.com/en/flying-with-us/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.flydubai.com/en/information/legal/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "saudia",
+    "name": "Saudia",
+    "iata": "SV",
+    "locale": "en-sa",
+    "band": "1b",
+    "region": "Middle East",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.saudia.com/pages/before-flying/baggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.saudia.com/pages/before-flying/baggage/hand-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.saudia.com/pages/before-flying/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.saudia.com/pages/before-flying/fare-families"
+      },
+      "checkin": {
+        "url": "https://www.saudia.com/pages/before-flying/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.saudia.com/pages/legal/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "pegasus",
+    "name": "Pegasus Airlines",
+    "iata": "PC",
+    "locale": "en-tr",
+    "band": "1b",
+    "region": "Middle East",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.flypgs.com/en/useful-info/info-about-flights/baggage-allowance"
+      },
+      "baggage_carryon": {
+        "url": "https://www.flypgs.com/en/useful-info/info-about-flights/cabin-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.flypgs.com/en/useful-info/info-about-flights/baggage-fees"
+      },
+      "fare_conditions": {
+        "url": "https://www.flypgs.com/en/useful-info/info-about-flights/fare-rules"
+      },
+      "checkin": {
+        "url": "https://www.flypgs.com/en/useful-info/info-about-flights/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.flypgs.com/en/useful-info/pegasus-general-rules/general-rules"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "air-india",
+    "name": "Air India",
+    "iata": "AI",
+    "locale": "en-in",
+    "band": "1b",
+    "region": "South Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.airindia.com/in/en/travel-information/baggage-guidelines/checked-baggage.html"
+      },
+      "baggage_carryon": {
+        "url": "https://www.airindia.com/in/en/travel-information/baggage-guidelines/cabin-baggage.html"
+      },
+      "baggage_fees": {
+        "url": "https://www.airindia.com/in/en/travel-information/baggage-guidelines/excess-baggage.html"
+      },
+      "fare_conditions": {
+        "url": "https://www.airindia.com/in/en/book/fare-rules.html"
+      },
+      "checkin": {
+        "url": "https://www.airindia.com/in/en/manage/check-in.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.airindia.com/in/en/terms-and-conditions/conditions-of-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "indigo",
+    "name": "IndiGo",
+    "iata": "6E",
+    "locale": "en-in",
+    "band": "1b",
+    "region": "South Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.goindigo.in/baggage/checked-baggage.html"
+      },
+      "baggage_carryon": {
+        "url": "https://www.goindigo.in/baggage/hand-baggage.html"
+      },
+      "baggage_fees": {
+        "url": "https://www.goindigo.in/baggage/excess-baggage.html"
+      },
+      "fare_conditions": {
+        "url": "https://www.goindigo.in/information/fare-rules.html"
+      },
+      "checkin": {
+        "url": "https://www.goindigo.in/check-in.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.goindigo.in/information/conditions-of-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "srilankan",
+    "name": "SriLankan Airlines",
+    "iata": "UL",
+    "locale": "en-lk",
+    "band": "1b",
+    "region": "South Asia",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.srilankan.com/en_uk/flying-with-us/baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.srilankan.com/en_uk/flying-with-us/baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.srilankan.com/en_uk/flying-with-us/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.srilankan.com/en_uk/plan-and-book/fare-rules"
+      },
+      "checkin": {
+        "url": "https://www.srilankan.com/en_uk/flying-with-us/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.srilankan.com/en_uk/corporate/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "british-airways",
+    "name": "British Airways",
+    "iata": "BA",
+    "locale": "en-gb",
+    "band": "1a",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.britishairways.com/content/information/baggage-essentials/checked-baggage-allowances"
+      },
+      "baggage_carryon": {
+        "url": "https://www.britishairways.com/content/information/baggage-essentials/hand-baggage-allowances"
+      },
+      "baggage_fees": {
+        "url": "https://www.britishairways.com/content/information/baggage-essentials/extra-overweight-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.britishairways.com/content/information/terms-and-conditions/conditions-of-carriage"
+      },
+      "checkin": {
+        "url": "https://www.britishairways.com/content/information/checking-in-and-boarding"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.britishairways.com/content/information/terms-and-conditions/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
   {
     "carrier_key": "ryanair",
+    "name": "Ryanair",
+    "iata": "FR",
     "locale": "en-gb",
+    "band": "1a",
+    "region": "Europe",
+    "help_root": "",
     "pages": {
-      "fare_conditions": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
-      "conditions_of_carriage": "https://help.ryanair.com/hc/en-gb/articles/12890911974289",
-      "baggage_checked": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
-      "baggage_carryon": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
-      "baggage_fees": "https://help.ryanair.com/hc/en-gb/categories/12503574130961-Fees",
-      "checkin": "https://help.ryanair.com/hc/en-gb/categories/12488813755537"
-    }
+      "baggage_checked": {
+        "url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy"
+      },
+      "baggage_carryon": {
+        "url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy"
+      },
+      "baggage_fees": {
+        "url": "https://help.ryanair.com/hc/en-gb/categories/12503574130961-Fees"
+      },
+      "fare_conditions": {
+        "url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options"
+      },
+      "checkin": {
+        "url": "https://help.ryanair.com/hc/en-gb/categories/12488813755537"
+      },
+      "conditions_of_carriage": {
+        "url": "https://help.ryanair.com/hc/en-gb/articles/12890911974289"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "easyjet",
+    "name": "easyJet",
+    "iata": "U2",
+    "locale": "en-gb",
+    "band": "1a",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.easyjet.com/en/help/baggage/hold-luggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.easyjet.com/en/help/baggage/cabin-bag-and-hold-luggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.easyjet.com/en/help/booking-and-check-in/fees-and-charges"
+      },
+      "fare_conditions": {
+        "url": "https://www.easyjet.com/en/terms-and-conditions"
+      },
+      "checkin": {
+        "url": "https://www.easyjet.com/en/help/booking-and-check-in/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.easyjet.com/en/terms-and-conditions"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "wizz-air",
+    "name": "Wizz Air",
+    "iata": "W6",
+    "locale": "en-gb",
+    "band": "1a",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://wizzair.com/en-gb/information-and-services/travel-information/baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://wizzair.com/en-gb/information-and-services/travel-information/baggage"
+      },
+      "baggage_fees": {
+        "url": "https://wizzair.com/en-gb/information-and-services/prices-discounts/all-services-fees"
+      },
+      "fare_conditions": {
+        "url": "https://wizzair.com/en-gb/information-and-services/booking-information/fare-lock"
+      },
+      "checkin": {
+        "url": "https://wizzair.com/en-gb/information-and-services/booking-information/check-in-and-boarding"
+      },
+      "conditions_of_carriage": {
+        "url": "https://wizzair.com/en-gb/information-and-services/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "lufthansa",
+    "name": "Lufthansa",
+    "iata": "LH",
+    "locale": "en-de",
+    "band": "1a",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.lufthansa.com/de/en/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.lufthansa.com/de/en/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.lufthansa.com/de/en/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.lufthansa.com/de/en/fares-and-classes"
+      },
+      "checkin": {
+        "url": "https://www.lufthansa.com/de/en/online-check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.lufthansa.com/de/en/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "air-france",
+    "name": "Air France",
+    "iata": "AF",
+    "locale": "en-fr",
+    "band": "1a",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://wwws.airfrance.fr/en/information/bagages/bagage-cabine-soute"
+      },
+      "baggage_carryon": {
+        "url": "https://wwws.airfrance.fr/en/information/bagages/bagage-cabine-soute"
+      },
+      "baggage_fees": {
+        "url": "https://wwws.airfrance.fr/en/information/bagages/bagages-supplementaires"
+      },
+      "fare_conditions": {
+        "url": "https://wwws.airfrance.fr/en/information/legal/edito-cg-transport"
+      },
+      "checkin": {
+        "url": "https://wwws.airfrance.fr/en/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://wwws.airfrance.fr/en/information/legal/edito-cg-transport"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "klm",
+    "name": "KLM",
+    "iata": "KL",
+    "locale": "en-nl",
+    "band": "1a",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.klm.nl/en/information/baggage/checked-baggage-allowance"
+      },
+      "baggage_carryon": {
+        "url": "https://www.klm.nl/en/information/baggage/hand-baggage-allowance"
+      },
+      "baggage_fees": {
+        "url": "https://www.klm.nl/en/information/baggage/extra-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.klm.nl/en/information/legal/conditions-carriage"
+      },
+      "checkin": {
+        "url": "https://www.klm.nl/en/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.klm.nl/en/information/legal/conditions-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "virgin-atlantic",
+    "name": "Virgin Atlantic",
+    "iata": "VS",
+    "locale": "en-gb",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://help.virginatlantic.com/gb/en/baggage/checked-baggage.html"
+      },
+      "baggage_carryon": {
+        "url": "https://help.virginatlantic.com/gb/en/baggage/hand-baggage.html"
+      },
+      "baggage_fees": {
+        "url": "https://help.virginatlantic.com/gb/en/baggage/excess-baggage.html"
+      },
+      "fare_conditions": {
+        "url": "https://help.virginatlantic.com/gb/en/policies/conditions-of-carriage.html"
+      },
+      "checkin": {
+        "url": "https://help.virginatlantic.com/gb/en/at-the-airport/check-in.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://help.virginatlantic.com/gb/en/policies/conditions-of-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "jet2",
+    "name": "Jet2.com",
+    "iata": "LS",
+    "locale": "en-gb",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.jet2.com/en/faqs/baggage-and-sports-equipment"
+      },
+      "baggage_carryon": {
+        "url": "https://www.jet2.com/en/faqs/baggage-and-sports-equipment"
+      },
+      "baggage_fees": {
+        "url": "https://www.jet2.com/en/faqs/baggage-and-sports-equipment"
+      },
+      "fare_conditions": {
+        "url": "https://www.jet2.com/en/terms-and-conditions"
+      },
+      "checkin": {
+        "url": "https://www.jet2.com/en/faqs/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.jet2.com/en/terms-and-conditions"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "tui-airways",
+    "name": "TUI Airways",
+    "iata": "BY",
+    "locale": "en-gb",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.tui.co.uk/flight/information/baggage-allowance"
+      },
+      "baggage_carryon": {
+        "url": "https://www.tui.co.uk/flight/information/baggage-allowance"
+      },
+      "baggage_fees": {
+        "url": "https://www.tui.co.uk/flight/information/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.tui.co.uk/destinations/info/booking-conditions"
+      },
+      "checkin": {
+        "url": "https://www.tui.co.uk/flight/information/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.tui.co.uk/destinations/info/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "aer-lingus",
+    "name": "Aer Lingus",
+    "iata": "EI",
+    "locale": "en-ie",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.aerlingus.com/prepare/bags/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.aerlingus.com/prepare/bags/carry-on-baggage/"
+      },
+      "baggage_fees": {
+        "url": "https://www.aerlingus.com/prepare/bags/checked-baggage/"
+      },
+      "fare_conditions": {
+        "url": "https://www.aerlingus.com/legal/conditions-of-carriage/"
+      },
+      "checkin": {
+        "url": "https://www.aerlingus.com/prepare/check-in-options/online/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.aerlingus.com/legal/conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "swiss",
+    "name": "SWISS",
+    "iata": "LX",
+    "locale": "en-ch",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.swiss.com/ch/en/prepare/baggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.swiss.com/ch/en/prepare/baggage/hand-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.swiss.com/ch/en/prepare/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.swiss.com/ch/en/book-and-manage/fare-conditions"
+      },
+      "checkin": {
+        "url": "https://www.swiss.com/ch/en/prepare/check-in/online-check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.swiss.com/ch/en/terms-conditions/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "austrian",
+    "name": "Austrian Airlines",
+    "iata": "OS",
+    "locale": "en-at",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.austrian.com/at/en/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.austrian.com/at/en/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.austrian.com/at/en/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.austrian.com/at/en/fares"
+      },
+      "checkin": {
+        "url": "https://www.austrian.com/at/en/online-check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.austrian.com/at/en/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "eurowings",
+    "name": "Eurowings",
+    "iata": "EW",
+    "locale": "en-de",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.eurowings.com/en/information/luggage/checked-luggage.html"
+      },
+      "baggage_carryon": {
+        "url": "https://www.eurowings.com/en/information/luggage/hand-luggage.html"
+      },
+      "baggage_fees": {
+        "url": "https://www.eurowings.com/en/information/luggage/excess-luggage.html"
+      },
+      "fare_conditions": {
+        "url": "https://www.eurowings.com/en/information/at-the-airport/fares.html"
+      },
+      "checkin": {
+        "url": "https://www.eurowings.com/en/information/at-the-airport/check-in.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.eurowings.com/en/information/legal/conditions-of-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "iberia",
+    "name": "Iberia",
+    "iata": "IB",
+    "locale": "en-es",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.iberia.com/es/baggage/allowance-in-hold/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.iberia.com/es/baggage/hand-luggage/"
+      },
+      "baggage_fees": {
+        "url": "https://www.iberia.com/es/baggage/excess-baggage/"
+      },
+      "fare_conditions": {
+        "url": "https://www.iberia.com/es/fares/"
+      },
+      "checkin": {
+        "url": "https://www.iberia.com/es/online-checkin/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.iberia.com/es/general-conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "vueling",
+    "name": "Vueling",
+    "iata": "VY",
+    "locale": "en-es",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.vueling.com/en/vueling-services/prepare-your-trip/luggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.vueling.com/en/vueling-services/prepare-your-trip/luggage/hand-luggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.vueling.com/en/vueling-services/prepare-your-trip/luggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.vueling.com/en/vueling-services/choose-your-fare"
+      },
+      "checkin": {
+        "url": "https://www.vueling.com/en/vueling-services/check-in-online"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.vueling.com/en/vueling-services/more-vueling-services/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "tap-portugal",
+    "name": "TAP Air Portugal",
+    "iata": "TP",
+    "locale": "en-pt",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.flytap.com/en-pt/baggage/hold-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.flytap.com/en-pt/baggage/hand-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.flytap.com/en-pt/baggage/excess-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.flytap.com/en-pt/fly-with-us/tap-products/fares"
+      },
+      "checkin": {
+        "url": "https://www.flytap.com/en-pt/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.flytap.com/en-pt/legal/general-conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "ita-airways",
+    "name": "ITA Airways",
+    "iata": "AZ",
+    "locale": "en-it",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.ita-airways.com/en_en/fly-ita/baggage/checked-baggage.html"
+      },
+      "baggage_carryon": {
+        "url": "https://www.ita-airways.com/en_en/fly-ita/baggage/hand-baggage.html"
+      },
+      "baggage_fees": {
+        "url": "https://www.ita-airways.com/en_en/fly-ita/baggage/excess-baggage.html"
+      },
+      "fare_conditions": {
+        "url": "https://www.ita-airways.com/en_en/fly-ita/fare-rules.html"
+      },
+      "checkin": {
+        "url": "https://www.ita-airways.com/en_en/fly-ita/check-in.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.ita-airways.com/en_en/footer/terms-and-conditions/conditions-of-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "sas",
+    "name": "SAS Scandinavian",
+    "iata": "SK",
+    "locale": "en-se",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.flysas.com/en/travel-info/baggage/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.flysas.com/en/travel-info/baggage/carry-on/"
+      },
+      "baggage_fees": {
+        "url": "https://www.flysas.com/en/travel-info/baggage/excess-baggage/"
+      },
+      "fare_conditions": {
+        "url": "https://www.flysas.com/en/travel-info/ticket-options/"
+      },
+      "checkin": {
+        "url": "https://www.flysas.com/en/check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.flysas.com/en/legal-info/conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "norwegian",
+    "name": "Norwegian Air Shuttle",
+    "iata": "DY",
+    "locale": "en-no",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.norwegian.com/en/travel-info/baggage/checked-baggage/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.norwegian.com/en/travel-info/baggage/hand-baggage/"
+      },
+      "baggage_fees": {
+        "url": "https://www.norwegian.com/en/travel-info/baggage/excess-baggage/"
+      },
+      "fare_conditions": {
+        "url": "https://www.norwegian.com/en/booking/booking-information/fare-types/"
+      },
+      "checkin": {
+        "url": "https://www.norwegian.com/en/travel-info/check-in-and-boarding/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.norwegian.com/en/ipr/conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "finnair",
+    "name": "Finnair",
+    "iata": "AY",
+    "locale": "en-fi",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees"
+      },
+      "fare_conditions": {
+        "url": "https://www.finnair.com/fi-en/booking-flights/fare-types"
+      },
+      "checkin": {
+        "url": "https://www.finnair.com/fi-en/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.finnair.com/fi-en/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "transavia",
+    "name": "Transavia",
+    "iata": "HV",
+    "locale": "en-nl",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.transavia.com/help/en-eu/luggage/hold-luggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.transavia.com/help/en-eu/luggage/hand-luggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.transavia.com/help/en-eu/luggage/hold-luggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.transavia.com/help/en-eu/booking/fares"
+      },
+      "checkin": {
+        "url": "https://www.transavia.com/help/en-eu/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.transavia.com/en-EU/terms-and-conditions/conditions-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "norse-atlantic",
+    "name": "Norse Atlantic Airways",
+    "iata": "N0",
+    "locale": "en-no",
+    "band": "1b",
+    "region": "Europe",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://flynorse.com/en-US/support/baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://flynorse.com/en-US/support/baggage"
+      },
+      "baggage_fees": {
+        "url": "https://flynorse.com/en-US/support/optional-services-and-fees"
+      },
+      "fare_conditions": {
+        "url": "https://flynorse.com/en-US/support/fare-types"
+      },
+      "checkin": {
+        "url": "https://flynorse.com/en-US/support/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://flynorse.com/en-US/legal/conditions-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "american-airlines",
+    "name": "American Airlines",
+    "iata": "AA",
+    "locale": "en-us",
+    "band": "1a",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp"
+      },
+      "baggage_carryon": {
+        "url": "https://www.aa.com/i18n/travel-info/baggage/carry-on-baggage.jsp"
+      },
+      "baggage_fees": {
+        "url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp"
+      },
+      "fare_conditions": {
+        "url": "https://www.aa.com/i18n/customer-service/support/conditions-of-carriage.jsp"
+      },
+      "checkin": {
+        "url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.aa.com/i18n/customer-service/support/conditions-of-carriage.jsp"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "delta",
+    "name": "Delta Air Lines",
+    "iata": "DL",
+    "locale": "en-us",
+    "band": "1a",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.delta.com/us/en/baggage/checked-baggage/overview"
+      },
+      "baggage_carryon": {
+        "url": "https://www.delta.com/us/en/baggage/carry-on-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.delta.com/us/en/baggage/overview"
+      },
+      "fare_conditions": {
+        "url": "https://www.delta.com/us/en/legal/contract-of-carriage-dgr"
+      },
+      "checkin": {
+        "url": "https://www.delta.com/us/en/check-in-security/check-in-time-requirements/overview"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.delta.com/us/en/legal/contract-of-carriage-dgr"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "united",
+    "name": "United Airlines",
+    "iata": "UA",
+    "locale": "en-us",
+    "band": "1a",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.united.com/en/us/fly/baggage/checked-bags.html"
+      },
+      "baggage_carryon": {
+        "url": "https://www.united.com/en/us/fly/baggage/carry-on-bags.html"
+      },
+      "baggage_fees": {
+        "url": "https://www.united.com/en/us/fly/baggage/checked-bags.html"
+      },
+      "fare_conditions": {
+        "url": "https://www.united.com/en/us/fly/contract-of-carriage.html"
+      },
+      "checkin": {
+        "url": "https://www.united.com/en/us/fly/travel/airport/check-in.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.united.com/en/us/fly/contract-of-carriage.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "southwest",
+    "name": "Southwest Airlines",
+    "iata": "WN",
+    "locale": "en-us",
+    "band": "1b",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.southwest.com/help/baggage/checked-baggage"
+      },
+      "baggage_carryon": {
+        "url": "https://www.southwest.com/help/baggage/carryon-baggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.southwest.com/help/baggage/checked-baggage"
+      },
+      "fare_conditions": {
+        "url": "https://www.southwest.com/airfare-types-benefits/"
+      },
+      "checkin": {
+        "url": "https://www.southwest.com/help/day-of-travel/boarding-process"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.southwest.com/conditions-of-contract/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "alaska-airlines",
+    "name": "Alaska Airlines",
+    "iata": "AS",
+    "locale": "en-us",
+    "band": "1b",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.alaskaair.com/content/travel-info/baggage/checked-bags"
+      },
+      "baggage_carryon": {
+        "url": "https://www.alaskaair.com/content/travel-info/baggage/carry-on-luggage"
+      },
+      "baggage_fees": {
+        "url": "https://www.alaskaair.com/content/travel-info/baggage/checked-bags"
+      },
+      "fare_conditions": {
+        "url": "https://www.alaskaair.com/content/travel-info/flight-experience/fare-types"
+      },
+      "checkin": {
+        "url": "https://www.alaskaair.com/content/travel-info/at-the-airport/airport-check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.alaskaair.com/content/legal/contract-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "jetblue",
+    "name": "JetBlue",
+    "iata": "B6",
+    "locale": "en-us",
+    "band": "1b",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.jetblue.com/help/checked-bags"
+      },
+      "baggage_carryon": {
+        "url": "https://www.jetblue.com/help/carry-on-bags"
+      },
+      "baggage_fees": {
+        "url": "https://www.jetblue.com/at-the-airport/baggage-information"
+      },
+      "fare_conditions": {
+        "url": "https://www.jetblue.com/flying-with-us/our-fares"
+      },
+      "checkin": {
+        "url": "https://www.jetblue.com/help/checking-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.jetblue.com/legal/contract-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "spirit",
+    "name": "Spirit Airlines",
+    "iata": "NK",
+    "locale": "en-us",
+    "band": "1b",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://customersupport.spirit.com/en-US/category/article/KA-01143"
+      },
+      "baggage_carryon": {
+        "url": "https://customersupport.spirit.com/en-US/category/article/KA-01143"
+      },
+      "baggage_fees": {
+        "url": "https://www.spirit.com/optional-services"
+      },
+      "fare_conditions": {
+        "url": "https://www.spirit.com/contract-of-carriage"
+      },
+      "checkin": {
+        "url": "https://customersupport.spirit.com/en-US/category/article/KA-01139"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.spirit.com/contract-of-carriage"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "frontier",
+    "name": "Frontier Airlines",
+    "iata": "F9",
+    "locale": "en-us",
+    "band": "1b",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.flyfrontier.com/travel/travel-info/bag-options/"
+      },
+      "baggage_carryon": {
+        "url": "https://www.flyfrontier.com/travel/travel-info/bag-options/"
+      },
+      "baggage_fees": {
+        "url": "https://www.flyfrontier.com/travel/travel-info/bag-options/"
+      },
+      "fare_conditions": {
+        "url": "https://www.flyfrontier.com/legal/contract-of-carriage/"
+      },
+      "checkin": {
+        "url": "https://www.flyfrontier.com/travel/my-trips/check-in/"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.flyfrontier.com/legal/contract-of-carriage/"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "air-canada",
+    "name": "Air Canada",
+    "iata": "AC",
+    "locale": "en-ca",
+    "band": "1b",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/checked.html"
+      },
+      "baggage_carryon": {
+        "url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/carry-on.html"
+      },
+      "baggage_fees": {
+        "url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/checked.html"
+      },
+      "fare_conditions": {
+        "url": "https://www.aircanada.com/ca/en/aco/home/book/fare-options-and-fees.html"
+      },
+      "checkin": {
+        "url": "https://www.aircanada.com/ca/en/aco/home/plan/check-in-information.html"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.aircanada.com/ca/en/aco/home/legal/conditions-carriage-tariffs.html"
+      }
+    },
+    "_status": "6/6 urls"
+  },
+  {
+    "carrier_key": "westjet",
+    "name": "WestJet",
+    "iata": "WS",
+    "locale": "en-ca",
+    "band": "1b",
+    "region": "North America",
+    "help_root": "",
+    "pages": {
+      "baggage_checked": {
+        "url": "https://www.westjet.com/en-ca/baggage/checked-bags"
+      },
+      "baggage_carryon": {
+        "url": "https://www.westjet.com/en-ca/baggage/carry-on"
+      },
+      "baggage_fees": {
+        "url": "https://www.westjet.com/en-ca/baggage/checked-bags"
+      },
+      "fare_conditions": {
+        "url": "https://www.westjet.com/en-ca/flights/fares"
+      },
+      "checkin": {
+        "url": "https://www.westjet.com/en-ca/manage/check-in"
+      },
+      "conditions_of_carriage": {
+        "url": "https://www.westjet.com/en-ca/legal/tariffs"
+      }
+    },
+    "_status": "6/6 urls"
   }
 ]
