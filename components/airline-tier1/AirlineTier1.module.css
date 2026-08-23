@@ -14,10 +14,19 @@
   --ink-soft: #33415f;
   --slate: #5a6a88;
   --slate-light: #8d99b0;
-  --paper: #f0f2f4;        /* colors.paper */
+  /* Three distinct values, not two.
+     The card border carries the layout, so it is a structural boundary and
+     WCAG 1.4.11 wants 3:1 for those. It was #d9dee7 at 1.35:1 against the card
+     — a hairline doing a job it could not see to do. #7f8ea6 measures 3.32:1.
+     The ground then needs a third value: at the old --paper it sat 2.96:1 from
+     the border and 1.12:1 from the card, so the card barely separated from the
+     page while the border nearly matched the ground. #e4e8ef pulls the ground
+     away from the card (1.23:1) without crowding the border (2.70:1). */
+  --paper: #e4e8ef;
   --card: #ffffff;
-  --rule: #d9dee7;
-  --rule-strong: #b3bed2;
+  --rule: #7f8ea6;
+  --rule-soft: #ccd3de;    /* interior hairlines — table rows, source rules */
+  --rule-strong: #5f7089;
   --verified: #03721e;     /* success.emphasis */
   --verified-bg: #e4f1e7;
   --check: #983e00;        /* attention.emphasis */
@@ -212,7 +221,7 @@
   padding-bottom: 10px;
 }
 .module th,
-.module td { text-align: left; padding: 11px 14px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.module td { text-align: left; padding: 11px 14px 11px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
 .module thead th {
   font-family: var(--t1-head);
   font-size: 11.5px;
@@ -335,7 +344,7 @@
 .src {
   margin-top: 24px;
   padding-top: 16px;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid var(--rule-soft);
   font-family: var(--t1-mono);
   font-size: 11.5px;
   line-height: 1.75;
@@ -353,7 +362,7 @@
 }
 
 /* faq */
-.module details { border-bottom: 1px solid var(--rule); padding: 15px 0; }
+.module details { border-bottom: 1px solid var(--rule-soft); padding: 15px 0; }
 .module details:last-of-type { border-bottom: 0; }
 .module summary {
   font-family: var(--t1-head);
@@ -381,7 +390,7 @@
   margin-bottom: 14px;
 }
 .rail ul { list-style: none; margin: 0; padding: 0; }
-.rail li { padding: 8px 0; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 12px; }
+.rail li { padding: 8px 0; border-bottom: 1px solid var(--rule-soft); display: flex; justify-content: space-between; gap: 12px; }
 .rail li:last-child { border-bottom: 0; }
 .rail a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
 .rail a:hover { border-bottom-color: var(--ink); }
