@@ -40,16 +40,18 @@ data/captures/*
 # and diff against, and a capture archive is not the same kind of thing as a
 # measurement of whether capturing is possible at all.
 !data/captures/reachability.json
-# Manual captures are NOT reproducible — nobody can re-run a person saving a
-# page from a browser they were sitting at. The provenance is therefore
-# versioned even though the bytes are not: manifests and meta stay tracked, the
-# HTML itself does not. Raise this if the bytes should be versioned too; it is a
-# size-versus-evidence trade and the archive is the only copy either way.
+# Manual captures are tracked in full, bytes included.
+#
+# An automated capture is reproducible — re-run the fetcher and you get it back.
+# A manual one is not: nobody can re-run a person saving a page from a browser
+# they were sitting at, on a date that has passed, from a carrier that refuses
+# this host. The bytes ARE the evidence, so they are versioned.
+#
+# Gotcha, hit twice while writing these rules: git will not descend into an
+# excluded directory, so a negation for a file inside one is silently inert.
+# That is why the parent is `data/captures/*` rather than `data/captures/`, and
+# why both the directory and its children are re-included below. Verify any
+# change here with `git check-ignore -v`, not by reading it.
 !data/captures/manual/
-!data/captures/manual/**/
-!data/captures/manual/**/manifest.json
-!data/captures/manual/**/*.meta.json
-# ...but not the saved HTML itself. The directory negations above are needed so
-# git will descend at all; without this line they would re-include everything.
-data/captures/manual/**/*.html
+!data/captures/manual/**
 ops/fetch/node_modules
