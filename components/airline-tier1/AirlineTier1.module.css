@@ -163,9 +163,7 @@
 .ledgerRight { margin-left: auto; }
 
 /* ---------- layout ---------- */
-/* White rather than the --paper ground. The module cards are also white, so
-   their 1px --rule border is now what separates them from the page. */
-.main { background: var(--card); padding: 48px 0 88px; }
+.main { padding: 48px 0 88px; }
 .cols { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 64px; align-items: start; }
 
 .module {
@@ -311,6 +309,14 @@
 .ruleBox { border: 1px solid var(--ink); padding: 18px 22px; margin: 22px 0; display: flex; gap: 18px; align-items: flex-start; }
 .ruleKey { font-family: var(--t1-mono); font-size: 26px; font-weight: 600; line-height: 1; white-space: nowrap; padding-top: 2px; }
 .ruleBox p { font-size: 15.5px; }
+
+/* Sources disagree — solid and amber-ruled, so it never reads as "not done". */
+.isDisputed {
+  border-color: var(--check);
+  border-left-width: 3px;
+  background: var(--card);
+}
+.isDisputed .moduleHead { border-bottom-color: var(--check); }
 
 /* unpublished module */
 .isPending { border-style: dashed; background: transparent; }
