@@ -163,7 +163,9 @@
 .ledgerRight { margin-left: auto; }
 
 /* ---------- layout ---------- */
-.main { padding: 48px 0 88px; }
+/* White rather than the --paper ground. The module cards are also white, so
+   their 1px --rule border is now what separates them from the page. */
+.main { background: var(--card); padding: 48px 0 88px; }
 .cols { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 64px; align-items: start; }
 
 .module {
