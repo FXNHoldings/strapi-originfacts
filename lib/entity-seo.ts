@@ -187,6 +187,26 @@ export function countryHasData(c: Pick<StrapiCountry, 'code' | 'about'>): boolea
  */
 export const AIRPORTS_INDEXABLE = false;
 
+/**
+ * Airline pages are temporarily noindexed, the same way airport pages are.
+ *
+ * At directory scale the current pages are thin and identically shaped — 1,096
+ * carriers, most with no data beyond identity codes and a generated profile —
+ * which is the signature Google's spam policy describes as "scaled content
+ * abuse", and what a monetisation reviewer pattern-matches on. Holding the
+ * whole set out of the index while the Tier 1 template and the fact store are
+ * built is cheaper than being caught mid-rebuild.
+ *
+ * `noindex, follow` rather than a robots.txt disallow: a disallowed URL is
+ * never fetched, so Google would never read the directive and the pages would
+ * linger in the index as bare URLs.
+ *
+ * Flipping this back to true restores both the page-level robots tag and the
+ * sitemap entries — the tier gate in lib/airline-tier.ts then decides which
+ * airlines return, rather than all of them.
+ */
+export const AIRLINES_INDEXABLE = false;
+
 export const robotsFor = (indexable: boolean) =>
   indexable
     ? { index: true, follow: true }
