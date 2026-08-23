@@ -29,11 +29,18 @@ export type FactSource = {
   note?: string;
 };
 
+/**
+ * A table cell. Plain text in the common case; `{ text, href }` where the value
+ * IS its own source — a link the reader can click to check the claim, such as a
+ * carrier's conditions of carriage or a fee schedule.
+ */
+export type FactCell = string | { text: string; href: string };
+
 export type FactTable = {
   caption: string;
   columns: string[];
   /** First cell is the row header; the rest line up with `columns`. */
-  rows: string[][];
+  rows: FactCell[][];
 };
 
 /**

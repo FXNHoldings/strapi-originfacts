@@ -17,6 +17,10 @@ import {
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import { airlineIsIndexable } from '@/lib/airline-tier';
 import { getFlySfoAirlineProfile } from '@/lib/flysfo-airline';
+import { getAirlineFacts } from '@/lib/airline-facts';
+import { getAirlineReviews } from '@/lib/airline-reviews';
+import { getAirlineRef } from '@/lib/airline-refs';
+import AirlineTier1, { derivedFaqs } from '@/components/airline-tier1/AirlineTier1';
 import { breadcrumbJsonLd } from '@/lib/jsonld';
 import AirlineReviews from '@/components/AirlineReviews';
 import AirlineShowcase from '@/components/AirlineShowcase';
@@ -25,6 +29,13 @@ import AboutParagraphs from '@/components/AboutParagraphs';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
+
+/**
+ * The single airline currently served by the Tier 1 template. Kept as a
+ * constant rather than a bare string so widening the pilot is one edit, and so
+ * it is obvious this is a pilot rather than a permanent special case.
+ */
+const TIER1_PILOT_SLUG = 'qantas';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -137,6 +148,39 @@ export default async function AirlinePage({ params }: Props) {
     { label: 'Alliance', value: alliance },
     { label: 'Popular routes', value: routes.length ? String(routes.length) : undefined },
   ].filter((fact) => fact.value);
+
+  // Tier 1 template — piloted on Qantas only. Unlike the showcase below this
+  // is not a reskin: modules render only where a source backs them, so the
+  // page shows what is verified and says so where nothing is. Every other
+  // airline keeps its existing layout. Preview any carrier on this template at
+  // /preview/airlines/<slug> without switching it live.
+  if (slug === TIER1_PILOT_SLUG) {
+    const tier1Faqs = derivedFaqs(airline, routeFacts, alliance);
+    const tier1AirlineLd: Record<string, unknown> = { ...airlineJsonLd(airline, url), '@id': `${url}#airline` };
+    if (airline.founded) tier1AirlineLd.foundingDate = String(airline.founded);
+    if (alliance) tier1AirlineLd.memberOf = { '@type': 'Organization', name: alliance };
+
+    return (
+      <>
+        <JsonLd data={tier1AirlineLd} />
+        {tier1Faqs.length > 0 && <JsonLd data={faqJsonLd(tier1Faqs)} />}
+        <JsonLd
+          data={breadcrumbJsonLd([
+            { name: 'Airlines', url: '/airlines' },
+            { name: airline.name, url: `/airlines/${airline.slug}` },
+          ])}
+        />
+        <AirlineTier1
+          airline={airline}
+          routeFacts={routeFacts}
+          facts={getAirlineFacts(airline.slug)}
+          alliance={alliance}
+          reviews={getAirlineReviews(airline.slug)}
+          airlineRef={getAirlineRef(airline.iataCode)}
+        />
+      </>
+    );
+  }
 
   // Redesigned "showcase" layout — currently piloted on Aircalin only. All
   // other airlines keep the original layout below. Content/JSON-LD identical.
