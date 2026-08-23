@@ -9,7 +9,7 @@ import {
 } from '@/lib/strapi';
 import { SECTIONS } from '@/lib/sections';
 import { LEGAL_DOCS } from '@/lib/legal';
-import { airportIsSubstantive, airlineIsSubstantive } from '@/lib/entity-seo';
+import { airlineIsIndexable } from '@/lib/airline-tier';
 
 const SITE_URL = 'https://www.originfacts.com';
 
@@ -66,7 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
   const airlinePaths: MetadataRoute.Sitemap = airlines
-    .filter((a) => a.slug && airlineIsSubstantive(a, coverage.carrierSlugs.has(a.slug)))
+    .filter((a) => a.slug && airlineIsIndexable(a, coverage.carrierSlugs.has(a.slug)))
     .map((a) => ({
       url: `${SITE_URL}/airlines/${a.slug}`,
       lastModified: now,

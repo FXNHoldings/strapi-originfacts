@@ -5,7 +5,6 @@ import RouteNetwork from '@/components/RouteNetwork';
 import { getRouteFacts } from '@/lib/route-facts';
 import {
   SITE_URL,
-  airlineIsSubstantive,
   airlineIntro,
   airlineAbout,
   airlineExpectations,
@@ -16,6 +15,7 @@ import {
   summariseRoutes,
 } from '@/lib/entity-seo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
+import { airlineIsIndexable } from '@/lib/airline-tier';
 import { getFlySfoAirlineProfile } from '@/lib/flysfo-airline';
 import { breadcrumbJsonLd } from '@/lib/jsonld';
 import AirlineReviews from '@/components/AirlineReviews';
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: a.name,
     description: desc,
     alternates: { canonical: `${SITE_URL}/airlines/${a.slug}` },
-    robots: robotsFor(airlineIsSubstantive(a, routes.length > 0)),
+    robots: robotsFor(airlineIsIndexable(a, routes.length > 0)),
   };
 }
 
