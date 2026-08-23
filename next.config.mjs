@@ -14,6 +14,7 @@ const nextConfig = {
   // build serving pages with no airline reviews and no legal text.
   outputFileTracingIncludes: {
     '/**': [
+      './content/airline-facts/**',
       './content/airline-reviews/**',
       './content/legal/**',
       './content/pages/**',

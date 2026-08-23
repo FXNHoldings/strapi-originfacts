@@ -1,0 +1,117 @@
+/**
+ * Provenance-backed fact store for Tier 1 airline pages.
+ *
+ * One file per airline at content/airline-facts/<slug>.json. Every module in a
+ * file carries its own sources and its own verification date, because a module
+ * is only as fresh as its stalest field — a page-level "last updated" stamp
+ * printed by the template is decoration, not evidence.
+ *
+ * The rule the renderer enforces: a module with no file, or no sources, does
+ * not render its content. It renders as unpublished instead. There is no
+ * fallback prose, because a plausible-looking paragraph with nothing behind it
+ * is exactly what this store exists to keep off the page.
+ *
+ * Shapes here mirror the module anatomy of the Tier 1 design — lede, body,
+ * table, hard rule, conflicts, sources — so an ingest script (the airline
+ * spreadsheet) has a single obvious target to write into.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+
+/** A module is verified, or it is flagged, or it does not publish. */
+export type FactStatus = 'verified' | 'disputed';
+
+export type FactSource = {
+  /** Publisher plus document, e.g. "Qantas, Checked baggage allowances". */
+  label: string;
+  url?: string;
+  /** "primary", "fee change dates" — why this source is cited. */
+  note?: string;
+};
+
+export type FactTable = {
+  caption: string;
+  columns: string[];
+  /** First cell is the row header; the rest line up with `columns`. */
+  rows: string[][];
+};
+
+/**
+ * A single figure that overrides everything around it — the design's rule box.
+ * Used where one limit cuts across every row of a table.
+ */
+export type FactRule = { key: string; text: string };
+
+/**
+ * Where sources disagree. Rendering the disagreement is the point: a module
+ * that prints one of two conflicting numbers has guessed, and a reader has no
+ * way to know it happened.
+ */
+export type FactConflict = { title: string; text: string };
+
+export type FactModule = {
+  /** Matches the module ids the page lays out; unknown ids are ignored. */
+  id: string;
+  title: string;
+  status: FactStatus;
+  /** YYYY-MM-DD. Drives the module stamp and the verification ledger. */
+  verifiedAt: string;
+  /** Short label shown instead of the date when status is 'disputed'. */
+  statusNote?: string;
+  lede?: string;
+  body?: string[];
+  table?: FactTable;
+  rule?: FactRule;
+  conflicts?: FactConflict[];
+  sources: FactSource[];
+  /** Free-text footer under the sources, e.g. "next review Nov 2026". */
+  reviewNote?: string;
+};
+
+export type AirlineFactsFile = {
+  slug: string;
+  modules: FactModule[];
+};
+
+const DIR = path.join(process.cwd(), 'content', 'airline-facts');
+
+/**
+ * A module without at least one source is dropped rather than rendered, so a
+ * half-filled spreadsheet row cannot reach the page by accident.
+ */
+function usable(m: FactModule): boolean {
+  return Boolean(m && m.id && m.title && m.verifiedAt && Array.isArray(m.sources) && m.sources.length > 0);
+}
+
+export function getAirlineFacts(slug: string): AirlineFactsFile | null {
+  try {
+    const raw = fs.readFileSync(path.join(DIR, `${slug}.json`), 'utf8');
+    const parsed = JSON.parse(raw) as AirlineFactsFile;
+    const modules = Array.isArray(parsed.modules) ? parsed.modules.filter(usable) : [];
+    return { slug: parsed.slug || slug, modules };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The design's sample content, kept under a leading underscore so it can never
+ * collide with a real slug. Loaded only behind the preview's ?sample=1 flag —
+ * these figures came from the design mock and are NOT verified.
+ */
+export function getSampleFacts(slug: string): AirlineFactsFile | null {
+  try {
+    const raw = fs.readFileSync(path.join(DIR, `_sample.${slug}.json`), 'utf8');
+    const parsed = JSON.parse(raw) as AirlineFactsFile;
+    const modules = Array.isArray(parsed.modules) ? parsed.modules.filter(usable) : [];
+    return { slug: parsed.slug || slug, modules };
+  } catch {
+    return null;
+  }
+}
+
+/** Oldest verification date across the modules that did publish. */
+export function oldestVerifiedAt(modules: FactModule[]): string | null {
+  const dates = modules.map((m) => m.verifiedAt).filter(Boolean).sort();
+  return dates[0] ?? null;
+}
