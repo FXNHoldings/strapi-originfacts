@@ -1,0 +1,97 @@
+{
+  "slug": "ryanair",
+  "official_website": "https://www.ryanair.com",
+  "modules": [
+    {
+      "id": "carryon",
+      "title": "Carry-on",
+      "required": ["personal_item_dimensions", "priority_cabin_bag_dimensions", "priority_cabin_bag_weight"],
+      "fields": {
+        "personal_item_dimensions": {
+          "value": null,
+          "status": "disputed",
+          "conflicting_values": ["40 x 30 x 20 cm", "40 x 20 x 30 cm"],
+          "notes": "Ryanair states the same small cabin bag in two axis orders on two of its own pages. Bag Policy: \"All fares include one small personal bag (40 x 30 x 20 cm) that must fit under the seat.\" Fare bundles: \"It's our cheapest fare and includes 1 Small Cabin Bag (40x20x30cm), which must fit under the seat in front of you.\" Same three measurements, different order — so probably one bag described inconsistently rather than two bags. NOT normalised, because which face is the height decides whether a given case fits a sizer. Resolve against a sizer diagram or the booking flow, or report it to Ryanair. Sources: https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy and https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options"
+        },
+        "priority_cabin_bag_dimensions": {
+          "value": null,
+          "status": "pending",
+          "notes": "CANDIDATE 55x40x20cm — \"This allows you to carry a small personal bag (40 x 30 x 20 cm), which must fit under the seat in front of you and a 10kg bag (55x40x20cm) onboard, to be stored in the overhead locker.\" Appears identically on the fare bundles page. Source: https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy"
+        },
+        "priority_cabin_bag_weight": {
+          "value": null,
+          "status": "pending",
+          "notes": "CANDIDATE 10kg — \"Priority boarding with a second 10kg cabin bag.\" AMBIGUOUS: 10kg also appears as a checked-bag tier in the same sentence (\"checked bags of 10kg, 20kg (up to 3), or 23kg\"), so this candidate is listed under checked_bag_tiers as well. Deciding which is which is a judgement about Ryanair's product, not a parse. Source: https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy"
+        },
+        "infant_allowance": {
+          "value": null,
+          "status": "pending",
+          "notes": "CANDIDATE 5kg — \"Infants have no cabin allowance but may bring a 5kg baby bag and two baby equipment items free.\" The \"two baby equipment items\" count was not extracted (written as a word, not a digit) — worth capturing by hand. Source: https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy"
+        }
+      }
+    },
+    {
+      "id": "baggage",
+      "title": "Checked baggage",
+      "required": ["checked_bag_tiers", "checked_max_per_booking"],
+      "fields": {
+        "checked_bag_tiers": {
+          "value": null,
+          "status": "pending",
+          "notes": "CANDIDATES 10kg, 20kg, 23kg — \"Additional options include Priority boarding with a second 10kg cabin bag, checked bags of 10kg, 20kg (up to 3), or 23kg (1 allowed).\" AMBIGUOUS on two counts. (1) 10kg is also the priority cabin bag weight in the same sentence and is listed under priority_cabin_bag_weight too. (2) These are PURCHASABLE tiers, not an included allowance — \"Passengers can purchase up to 1 checked bags of 23kg on their booking\" — which is a materially different shape from a carrier whose fare includes a bag, and may belong in the fares module rather than here. Not resolved. Source: https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy"
+        },
+        "checked_max_per_booking": {
+          "value": null,
+          "status": "pending",
+          "notes": "CANDIDATES \"up to 3\" and \"up to 1\" — \"checked bags of 10kg, 20kg (up to 3), or 23kg (1 allowed)\" and \"Passengers can purchase up to 1 checked bags of 23kg on their booking.\" These are per-tier limits, not one overall limit, so this may need to be several fields rather than one. Left as a single pending field so the shape is decided rather than assumed. Source: https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy"
+        },
+        "excess_fees": {
+          "value": null,
+          "status": "pending",
+          "notes": "No candidates. The baggage_fees capture returned too_short (748 chars) — the URL points at a category index rather than an article. Needs a real fees article URL before anything can be extracted."
+        }
+      }
+    },
+    {
+      "id": "fares",
+      "title": "What the cheapest fare includes",
+      "required": ["basic_fare_inclusions"],
+      "fields": {
+        "basic_fare_inclusions": {
+          "value": null,
+          "status": "pending",
+          "notes": "CANDIDATES 40x20x30cm (see the personal_item_dimensions dispute), 55x40x20cm, 10kg, 20kg. \"It's our cheapest fare and includes 1 Small Cabin Bag (40x20x30cm), which must fit under the seat in front of you, with no additional baggage allowance.\" and \"This fare includes a standard seat and gives you a baggage allowance of 1 Small Cabin Bag onboard and 1 20kg Check-in bag.\" The fare TIER NAMES were not extracted — they are prose, not measurements — so which bundle each figure belongs to still has to be read off the page. Source: https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options"
+        }
+      }
+    },
+    {
+      "id": "checkin",
+      "title": "Check-in and airport cutoffs",
+      "required": ["online_checkin_window", "airport_bag_drop_cutoff"],
+      "fields": {
+        "online_checkin_window": {
+          "value": null,
+          "status": "pending",
+          "notes": "No candidates. The checkin capture is a help-centre category index; the article selector matched nothing and extraction was skipped rather than yielding an empty result. Needs the underlying article URLs."
+        },
+        "airport_bag_drop_cutoff": {
+          "value": null,
+          "status": "pending",
+          "notes": "No candidates — same category-index problem as online_checkin_window."
+        }
+      }
+    },
+    {
+      "id": "rights",
+      "title": "If your flight is delayed or cancelled",
+      "required": ["governing_regime"],
+      "fields": {
+        "governing_regime": {
+          "value": null,
+          "status": "pending",
+          "notes": "Not sourced. The conditions_of_carriage capture returned too_short (1,408 chars) and redirects to a landing page rather than the terms document. Ryanair is an EU carrier so EU261 and UK261 both apply depending on departure point — but that is reasoning, not a source, and it stays pending until a document says it."
+        }
+      }
+    }
+  ]
+}
