@@ -32,5 +32,12 @@ scripts
 .*.swp
 
 # Stage 1 capture archive — large, and reproducible by re-running the fetcher.
-data/captures/
+# Excluded per-entry, not as a directory: git cannot re-include a file inside
+# an excluded directory, so `data/captures/` would have made the negation below
+# silently inert.
+data/captures/*
+# ...except the reachability report. It is small, it is the artifact we re-run
+# and diff against, and a capture archive is not the same kind of thing as a
+# measurement of whether capturing is possible at all.
+!data/captures/reachability.json
 ops/fetch/node_modules
