@@ -12,7 +12,8 @@
     "validate:facts:fixtures": "node ops/validate-airline-facts.mjs --fixtures",
     "prebuild": "node ops/validate-airline-facts.mjs",
     "fetch": "yarn --cwd ops/fetch fetch",
-    "reach": "yarn --cwd ops/fetch reach"
+    "reach": "yarn --cwd ops/fetch reach",
+    "ingest-manual": "yarn --cwd ops/fetch ingest-manual"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
