@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Archivo, IBM_Plex_Mono, Newsreader } from 'next/font/google';
 import type { StrapiAirline } from '@/lib/strapi';
 import type { RouteFacts } from '@/lib/route-facts';
 import type { AirlineFactsFile, FactCell, FactModule } from '@/lib/airline-facts';
@@ -9,10 +8,6 @@ import { facetCounts, ratingBands, sourceLabel, SOURCE_META } from '@/lib/airlin
 import type { AirlineRef } from '@/lib/airline-refs';
 import { AIRLINE_REF_SOURCE } from '@/lib/airline-refs';
 import s from './AirlineTier1.module.css';
-
-const archivo = Archivo({ subsets: ['latin'], weight: ['500', '600', '700', '800'], variable: '--font-archivo', display: 'swap' });
-const newsreader = Newsreader({ subsets: ['latin'], weight: ['300', '400', '500'], variable: '--font-newsreader', display: 'swap' });
-const plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--font-plex-mono', display: 'swap' });
 
 /**
  * The module running order, and where each one's content comes from.
@@ -110,7 +105,10 @@ export default function AirlineTier1({
   const eyebrow = ['Airline reference', airline.country, airline.type].filter(Boolean).join(' · ');
 
   return (
-    <div className={`${s.root} ${archivo.variable} ${newsreader.variable} ${plexMono.variable}`}>
+    // `airline-page-<slug>` is what globals.css keys off to hide the fixed
+    // left/right rails on airline pages — the old layout and the showcase both
+    // set it, so this template matches rather than adding a second mechanism.
+    <div className={s.root} data-testid={`airline-page-${airline.slug}`}>
       {sampleNotice && (
         <div className={s.sampleBanner}>
           <div className={s.wrap}>{sampleNotice}</div>

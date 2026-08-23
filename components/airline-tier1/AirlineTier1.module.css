@@ -6,40 +6,58 @@
  * Tailwind and its own tokens.
  */
 .root {
-  --ink: #111823;
-  --ink-soft: #2C3746;
-  --slate: #5C6878;
-  --slate-light: #8A94A2;
-  --paper: #F4F6F8;
-  --card: #FFFFFF;
-  --rule: #DCE2E8;
-  --rule-strong: #B9C3CD;
-  --verified: #0E6B4C;
-  --verified-bg: #E7F2ED;
-  --check: #8A5A00;
-  --check-bg: #FBF1DD;
-  --band: #1B2635;
+  /* Site tokens, not a palette of this template's own — forest/sand from
+     tailwind.config.ts, ink and paper from the same map. Kept as local custom
+     properties so the module stays self-contained, but every value here is the
+     site's. */
+  --ink: #07142b;          /* colors.ink */
+  --ink-soft: #33415f;
+  --slate: #5a6a88;
+  --slate-light: #8d99b0;
+  --paper: #f0f2f4;        /* colors.paper */
+  --card: #ffffff;
+  --rule: #d9dee7;
+  --rule-strong: #b3bed2;
+  --verified: #03721e;     /* success.emphasis */
+  --verified-bg: #e4f1e7;
+  --check: #983e00;        /* attention.emphasis */
+  --check-bg: #fff6d1;     /* sand.100 */
+  --band: #092d74;         /* forest.900 — the site's primary dark */
+  --band-rule: #23458c;
+  --band-text: #c9d8f5;
+  --band-dim: #8fa6d8;
+
+  /* Typography follows the site: Plus Jakarta Sans for body, Figtree for
+     headings (globals.css enforces that with !important, so declaring it here
+     matches what actually renders rather than being silently overridden).
+     Labels and figures use a system monospace stack — the site ships no mono
+     webfont and this template does not add one. */
+  --t1-body: var(--font-jakarta), system-ui, sans-serif;
+  --t1-head: var(--font-figtree), system-ui, sans-serif;
+  --t1-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-newsreader), Georgia, serif;
-  font-size: 17px;
-  line-height: 1.62;
+  font-family: var(--t1-body);
+  font-size: 16.5px;
+  line-height: 1.65;
   font-weight: 400;
 }
+
 
 .root h1,
 .root h2,
 .root h3,
 .root h4 {
-  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-family: var(--t1-head);
   margin: 0;
   line-height: 1.12;
   letter-spacing: -0.02em;
 }
-.mono { font-family: var(--font-plex-mono), ui-monospace, monospace; }
+.mono { font-family: var(--t1-mono); }
 
-.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+/* Site default container: maxWidth 6xl/7xl (1420px) with px-6 gutters. */
+.wrap { max-width: 1420px; margin: 0 auto; padding: 0 24px; }
 
 /* ---------- hero: the data plate ---------- */
 .hero { background: var(--band); color: #fff; padding: 40px 0 0; }
@@ -51,11 +69,11 @@
   padding-bottom: 36px;
 }
 .eyebrow {
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 11px;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: #8FA3BC;
+  color: var(--band-dim);
   margin-bottom: 18px;
 }
 .root h1 {
@@ -65,19 +83,19 @@
   margin-bottom: 14px;
 }
 .code {
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: .42em;
   font-weight: 500;
   letter-spacing: .04em;
   vertical-align: .42em;
-  color: #7E93AD;
+  color: var(--band-dim);
   margin-left: 14px;
 }
-.standfirst { font-size: 19px; color: #C6D2E0; max-width: 52ch; font-weight: 300; margin: 0; }
+.standfirst { font-size: 19px; color: var(--band-text); max-width: 52ch; font-weight: 300; margin: 0; }
 
 .codes {
-  border: 1px solid #35455A;
-  font-family: var(--font-plex-mono), monospace;
+  border: 1px solid var(--band-rule);
+  font-family: var(--t1-mono);
   font-size: 12px;
   min-width: 236px;
   margin: 0;
@@ -87,17 +105,17 @@
   justify-content: space-between;
   gap: 20px;
   padding: 9px 14px;
-  border-bottom: 1px solid #35455A;
+  border-bottom: 1px solid var(--band-rule);
 }
 .codes > div:last-child { border-bottom: 0; }
-.codes dt { color: #7E93AD; letter-spacing: .1em; text-transform: uppercase; font-size: 10px; }
+.codes dt { color: var(--band-dim); letter-spacing: .1em; text-transform: uppercase; font-size: 10px; }
 .codes dd { margin: 0; color: #fff; text-align: right; }
 
 .modnav {
-  border-top: 1px solid #35455A;
+  border-top: 1px solid var(--band-rule);
   display: flex;
   overflow-x: auto;
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -105,7 +123,7 @@
 }
 .modnav::-webkit-scrollbar { display: none; }
 .modnav a {
-  color: #A9B9CB;
+  color: var(--band-text);
   text-decoration: none;
   padding: 15px 20px 15px 0;
   white-space: nowrap;
@@ -122,7 +140,7 @@
   flex-wrap: wrap;
   padding-top: 11px;
   padding-bottom: 11px;
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 11.5px;
 }
 .ledgerLabel { letter-spacing: .14em; text-transform: uppercase; color: var(--slate-light); }
@@ -155,7 +173,7 @@
 }
 .moduleHead h2 { font-size: 25px; font-weight: 700; }
 .stamp {
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 10.5px;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -175,7 +193,7 @@
 .module table { width: 100%; border-collapse: collapse; margin: 6px 0 20px; font-size: 15.5px; }
 .module caption {
   text-align: left;
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 11px;
   letter-spacing: .13em;
   text-transform: uppercase;
@@ -185,7 +203,7 @@
 .module th,
 .module td { text-align: left; padding: 11px 14px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 .module thead th {
-  font-family: var(--font-archivo), sans-serif;
+  font-family: var(--t1-head);
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: .09em;
@@ -193,8 +211,8 @@
   color: var(--slate);
   border-bottom: 1px solid var(--rule-strong);
 }
-.module tbody th { font-family: var(--font-archivo), sans-serif; font-size: 15px; font-weight: 600; }
-.num { font-family: var(--font-plex-mono), monospace; font-size: 14.5px; white-space: nowrap; }
+.module tbody th { font-family: var(--t1-head); font-size: 15px; font-weight: 600; }
+.num { font-family: var(--t1-mono); font-size: 14.5px; white-space: nowrap; }
 .tableScroll { overflow-x: auto; }
 
 /* conflict flag */
@@ -211,13 +229,13 @@
   text-transform: uppercase;
   color: var(--check);
   margin-bottom: 8px;
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-weight: 600;
 }
 
 /* hard rule callout */
 .ruleBox { border: 1px solid var(--ink); padding: 18px 22px; margin: 22px 0; display: flex; gap: 18px; align-items: flex-start; }
-.ruleKey { font-family: var(--font-plex-mono), monospace; font-size: 26px; font-weight: 600; line-height: 1; white-space: nowrap; padding-top: 2px; }
+.ruleKey { font-family: var(--t1-mono); font-size: 26px; font-weight: 600; line-height: 1; white-space: nowrap; padding-top: 2px; }
 .ruleBox p { font-size: 15.5px; }
 
 /* unpublished module */
@@ -226,7 +244,7 @@
 .isPending h2 { color: var(--slate); }
 .pendingNote { color: var(--slate); font-size: 15.5px; }
 .pendingNote code {
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 13px;
   background: var(--card);
   padding: 2px 6px;
@@ -238,7 +256,7 @@
   margin-top: 24px;
   padding-top: 16px;
   border-top: 1px solid var(--rule);
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 11.5px;
   line-height: 1.75;
   color: var(--slate);
@@ -258,7 +276,7 @@
 .module details { border-bottom: 1px solid var(--rule); padding: 15px 0; }
 .module details:last-of-type { border-bottom: 0; }
 .module summary {
-  font-family: var(--font-archivo), sans-serif;
+  font-family: var(--t1-head);
   font-weight: 600;
   font-size: 16.5px;
   cursor: pointer;
@@ -268,7 +286,7 @@
   gap: 16px;
 }
 .module summary::-webkit-details-marker { display: none; }
-.module summary::after { content: "+"; font-family: var(--font-plex-mono), monospace; color: var(--slate); }
+.module summary::after { content: "+"; font-family: var(--t1-mono); color: var(--slate); }
 .module details[open] summary::after { content: "–"; }
 .module details p { margin-top: 12px; font-size: 16px; color: var(--ink-soft); }
 
@@ -276,7 +294,7 @@
 .rail { position: sticky; top: 56px; font-size: 14.5px; }
 .railBlock { border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 34px; }
 .railBlock h3 {
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -287,19 +305,19 @@
 .rail li:last-child { border-bottom: 0; }
 .rail a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
 .rail a:hover { border-bottom-color: var(--ink); }
-.when { font-family: var(--font-plex-mono), monospace; font-size: 11.5px; color: var(--slate-light); white-space: nowrap; }
+.when { font-family: var(--t1-mono); font-size: 11.5px; color: var(--slate-light); white-space: nowrap; }
 
-.byline { font-family: var(--font-plex-mono), monospace; font-size: 11.5px; color: var(--slate); line-height: 1.8; margin: 0; }
+.byline { font-family: var(--t1-mono); font-size: 11.5px; color: var(--slate); line-height: 1.8; margin: 0; }
 .byline strong { color: var(--ink); font-weight: 600; }
 
 .pagefoot {
   background: var(--band);
-  color: #93A5BA;
+  color: var(--band-text);
   padding: 30px 0;
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 11.5px;
 }
-.pagefoot a { color: #C6D2E0; }
+.pagefoot a { color: var(--band-text); }
 
 .root a:focus-visible,
 .root summary:focus-visible { outline: 2px solid var(--check); outline-offset: 3px; }
@@ -309,7 +327,7 @@
   background: var(--check-bg);
   border-bottom: 1px solid var(--check);
   color: var(--check);
-  font-family: var(--font-plex-mono), monospace;
+  font-family: var(--t1-mono);
   font-size: 12px;
   line-height: 1.6;
   padding: 12px 0;
