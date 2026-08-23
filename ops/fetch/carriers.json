@@ -1,0 +1,26 @@
+[
+  {
+    "carrier_key": "qantas",
+    "locale": "en-au",
+    "pages": {
+      "baggage_checked": "",
+      "baggage_carryon": "",
+      "baggage_fees": "",
+      "fare_conditions": "",
+      "checkin": "",
+      "conditions_of_carriage": ""
+    }
+  },
+  {
+    "carrier_key": "ryanair",
+    "locale": "en-ie",
+    "pages": {
+      "baggage_checked": "",
+      "baggage_carryon": "",
+      "baggage_fees": "",
+      "fare_conditions": "",
+      "checkin": "",
+      "conditions_of_carriage": ""
+    }
+  }
+]

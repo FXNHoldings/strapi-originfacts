@@ -30,3 +30,7 @@ scripts
 
 # Editor swap files
 .*.swp
+
+# Stage 1 capture archive — large, and reproducible by re-running the fetcher.
+data/captures/
+ops/fetch/node_modules

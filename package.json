@@ -10,7 +10,8 @@
     "lint": "next lint",
     "validate:facts": "node ops/validate-airline-facts.mjs",
     "validate:facts:fixtures": "node ops/validate-airline-facts.mjs --fixtures",
-    "prebuild": "node ops/validate-airline-facts.mjs"
+    "prebuild": "node ops/validate-airline-facts.mjs",
+    "fetch": "yarn --cwd ops/fetch fetch"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
