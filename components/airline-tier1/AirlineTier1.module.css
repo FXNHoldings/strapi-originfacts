@@ -22,10 +22,16 @@
   --verified-bg: #e4f1e7;
   --check: #983e00;        /* attention.emphasis */
   --check-bg: #fff6d1;     /* sand.100 */
-  --band: #092d74;         /* forest.900 — the site's primary dark */
-  --band-rule: #23458c;
-  --band-text: #c9d8f5;
-  --band-dim: #8fa6d8;
+  /* Hero and the closing note are both light surfaces. They stay distinct
+     from each other and from the page: the hero takes forest.100 so it reads
+     as its own band against the neutral --paper ground, the closing note is
+     plain white with a rule above it so it does not float. */
+  --hero-bg: #e7f4ff;      /* forest.100 */
+  --hero-rule: #b6d5ef;
+  --hero-text: #33415f;
+  --hero-dim: #4a5b78;
+  --foot-bg: #ffffff;
+  --foot-text: #33415f;
 
   /* Typography follows the site: Plus Jakarta Sans for body, Figtree for
      headings (globals.css enforces that with !important, so declaring it here
@@ -60,7 +66,7 @@
 .wrap { max-width: 1420px; margin: 0 auto; padding: 0 24px; }
 
 /* ---------- hero: the data plate ---------- */
-.hero { background: var(--band); color: #fff; padding: 40px 0 0; }
+.hero { background: var(--hero-bg); color: var(--ink); padding: 40px 0 0; }
 .plate {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -73,7 +79,7 @@
   font-size: 11px;
   letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--band-dim);
+  color: var(--hero-dim);
   margin-bottom: 18px;
 }
 .root h1 {
@@ -88,13 +94,13 @@
   font-weight: 500;
   letter-spacing: .04em;
   vertical-align: .42em;
-  color: var(--band-dim);
+  color: var(--hero-dim);
   margin-left: 14px;
 }
-.standfirst { font-size: 19px; color: var(--band-text); max-width: 52ch; font-weight: 300; margin: 0; }
+.standfirst { font-size: 19px; color: var(--hero-text); max-width: 52ch; font-weight: 300; margin: 0; }
 
 .codes {
-  border: 1px solid var(--band-rule);
+  border: 1px solid var(--hero-rule);
   font-family: var(--t1-mono);
   font-size: 12px;
   min-width: 236px;
@@ -105,14 +111,14 @@
   justify-content: space-between;
   gap: 20px;
   padding: 9px 14px;
-  border-bottom: 1px solid var(--band-rule);
+  border-bottom: 1px solid var(--hero-rule);
 }
 .codes > div:last-child { border-bottom: 0; }
-.codes dt { color: var(--band-dim); letter-spacing: .1em; text-transform: uppercase; font-size: 10px; }
-.codes dd { margin: 0; color: #fff; text-align: right; }
+.codes dt { color: var(--hero-dim); letter-spacing: .1em; text-transform: uppercase; font-size: 10px; }
+.codes dd { margin: 0; color: var(--ink); text-align: right; }
 
 .modnav {
-  border-top: 1px solid var(--band-rule);
+  border-top: 1px solid var(--hero-rule);
   display: flex;
   overflow-x: auto;
   font-family: var(--t1-mono);
@@ -123,13 +129,13 @@
 }
 .modnav::-webkit-scrollbar { display: none; }
 .modnav a {
-  color: var(--band-text);
+  color: var(--hero-text);
   text-decoration: none;
   padding: 15px 20px 15px 0;
   white-space: nowrap;
   border-bottom: 2px solid transparent;
 }
-.modnav a:hover { color: #fff; border-bottom-color: #fff; }
+.modnav a:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
 /* ---------- verification ledger ---------- */
 .ledger { background: var(--card); border-bottom: 1px solid var(--rule); position: sticky; top: 0; z-index: 20; }
@@ -311,13 +317,14 @@
 .byline strong { color: var(--ink); font-weight: 600; }
 
 .pagefoot {
-  background: var(--band);
-  color: var(--band-text);
+  background: var(--foot-bg);
+  color: var(--foot-text);
+  border-top: 1px solid var(--rule);
   padding: 30px 0;
   font-family: var(--t1-mono);
   font-size: 11.5px;
 }
-.pagefoot a { color: var(--band-text); }
+.pagefoot a { color: var(--ink); }
 
 .root a:focus-visible,
 .root summary:focus-visible { outline: 2px solid var(--check); outline-offset: 3px; }
