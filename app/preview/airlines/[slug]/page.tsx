@@ -4,6 +4,8 @@ import { getAirline } from '@/lib/strapi';
 import { getRouteFacts } from '@/lib/route-facts';
 import { getAirlineFacts, getSampleFacts } from '@/lib/airline-facts';
 import { getFlySfoAirlineProfile } from '@/lib/flysfo-airline';
+import { getAirlineReviews } from '@/lib/airline-reviews';
+import { getAirlineRef } from '@/lib/airline-refs';
 import { SITE_URL, faqJsonLd } from '@/lib/entity-seo';
 import { JsonLd } from '@/components/SeoBlocks';
 import AirlineTier1, { derivedFaqs } from '@/components/airline-tier1/AirlineTier1';
@@ -48,12 +50,13 @@ export default async function AirlineTier1Preview({ params, searchParams }: Prop
   if (!airline) notFound();
 
   const useSample = sample === '1';
-  const [alliance, routeFacts] = await Promise.all([
-    getFlySfoAirlineProfile(airline)
-      .then((p) => p?.alliance ?? null)
-      .catch(() => null),
-    Promise.resolve(getRouteFacts(airline.iataCode)),
-  ]);
+  const alliance = await getFlySfoAirlineProfile(airline)
+    .then((p) => p?.alliance ?? null)
+    .catch(() => null);
+
+  const routeFacts = getRouteFacts(airline.iataCode);
+  const reviews = getAirlineReviews(airline.slug);
+  const airlineRef = getAirlineRef(airline.iataCode);
 
   // Real facts always win. Sample content only fills in when the flag is set
   // AND no real file exists, so a genuine file can never be shadowed by a mock.
@@ -91,6 +94,8 @@ export default async function AirlineTier1Preview({ params, searchParams }: Prop
         routeFacts={routeFacts}
         facts={facts}
         alliance={alliance}
+        reviews={reviews}
+        airlineRef={airlineRef}
         sampleNotice={showingSample ? SAMPLE_NOTICE : null}
       />
     </>
