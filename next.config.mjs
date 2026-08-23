@@ -18,6 +18,7 @@ const nextConfig = {
       './content/airline-reviews/**',
       './content/legal/**',
       './content/pages/**',
+      './data/airline-refs/**',
       './data/route-facts/**',
     ],
   },
