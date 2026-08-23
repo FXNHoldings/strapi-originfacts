@@ -5,6 +5,7 @@ import RouteNetwork from '@/components/RouteNetwork';
 import { getRouteFacts } from '@/lib/route-facts';
 import {
   SITE_URL,
+  AIRLINES_INDEXABLE,
   airlineIntro,
   airlineAbout,
   airlineExpectations,
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: a.name,
     description: desc,
     alternates: { canonical: `${SITE_URL}/airlines/${a.slug}` },
-    robots: robotsFor(airlineIsIndexable(a, routes.length > 0)),
+    robots: robotsFor(AIRLINES_INDEXABLE && airlineIsIndexable(a, routes.length > 0)),
   };
 }
 
