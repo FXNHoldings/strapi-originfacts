@@ -118,8 +118,18 @@ function validateFile(fileName, raw, errors) {
         }
       }
 
-      if (field.status === 'disputed' && (field.conflicting_values ?? []).length < 2) {
-        fail(`${at}: status disputed must record both values in conflicting_values`);
+      // `disputed` means sources actively conflict — not "unconfirmed". Without
+      // this, an unverified field gets marked disputed and the page renders a
+      // "sources disagree" block for a disagreement that never happened, which
+      // is a false claim about the sources themselves.
+      if (field.status === 'disputed') {
+        const competing = [...new Set((field.conflicting_values ?? []).map((v) => String(v).trim()).filter(Boolean))];
+        if (competing.length < 2) {
+          fail(
+            `${at}: status disputed requires at least two distinct competing values in conflicting_values ` +
+              `(found ${competing.length}). An unconfirmed value is "pending", not "disputed".`,
+          );
+        }
       }
 
       // Never widen precision: a year stays a year.

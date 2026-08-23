@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { StrapiAirline } from '@/lib/strapi';
 import type { RouteFacts } from '@/lib/route-facts';
-import type { AirlineFactsFile, FactField, FactFigure, ResolvedModule } from '@/lib/airline-facts';
+import type { AirlineFactsFile, FactField, FactFigure, ResolvedField, ResolvedModule } from '@/lib/airline-facts';
 import { oldestVerifiedAt, resolveModule } from '@/lib/airline-facts';
 
 /**
@@ -224,7 +224,13 @@ export default function AirlineTier1({
               ) : r.sourced?.published ? (
                 <SourcedModuleView key={r.id} module={r.sourced} />
               ) : (
-                <PendingModule key={r.id} id={r.id} title={r.title} blockers={r.sourced?.blockers ?? []} />
+                <PendingModule
+                  key={r.id}
+                  id={r.id}
+                  title={r.title}
+                  blockers={r.sourced?.blockers ?? []}
+                  disputes={r.sourced?.disputes ?? []}
+                />
               ),
             )}
           </div>
@@ -494,26 +500,63 @@ function DerivedModuleView({ module: m }: { module: DerivedModule }) {
 }
 
 /**
- * The unpublished state, naming what is missing.
+ * The two ways a module can fail to publish, rendered as visibly different
+ * states rather than one shared block.
  *
- * The blocker list is the point: "pending" alone tells a reader nothing and
- * tells an editor less. Saying which fields are unverified turns the gap into
- * a work item.
+ * Not yet verified and sources actively disagree are different facts about the
+ * world, and collapsing them tells the reader something untrue in one direction
+ * or the other — either that we checked and found a conflict when we never
+ * checked, or that we simply have not got to it when in fact the sources fight.
+ *
+ * Unpublished is a dashed, grey, quiet box: work not done.
+ * Disputed is a solid, amber-ruled box naming both readings: work done, and the
+ * answer is that there is no single answer.
  */
 function PendingModule({
   id,
   title,
   blockers,
+  disputes,
 }: {
   id: string;
   title: string;
   blockers: { key: string; status: string }[];
+  disputes: ResolvedField[];
 }) {
+  if (disputes.length > 0) {
+    return (
+      <section className={`${s.module} ${s.isDisputed}`} id={id} data-testid={`t1-disputed-${id}`}>
+        <div className={s.moduleHead}>
+          <h2>{title}</h2>
+          <span className={`${s.stamp} ${s.stampWarn}`}>Sources disagree</span>
+        </div>
+        <p className={s.pendingNote}>
+          Credible sources give different answers here, so nothing is published. Both readings are below — we would
+          rather show you the disagreement than pick one and let it look settled.
+        </p>
+        {disputes.map((d) => (
+          <div key={d.key} className={s.conflict}>
+            <h4>{d.label}</h4>
+            <p>
+              {d.field.conflicting_values?.length ? (
+                <>
+                  <strong>{d.field.conflicting_values.join('  ·  ')}</strong>
+                  <br />
+                </>
+              ) : null}
+              {d.field.notes ?? 'Neither value is published until it can be confirmed against the carrier’s own page.'}
+            </p>
+          </div>
+        ))}
+      </section>
+    );
+  }
+
   return (
     <section className={`${s.module} ${s.isPending}`} id={id} data-testid={`t1-pending-${id}`}>
       <div className={s.moduleHead}>
         <h2>{title}</h2>
-        <span className={`${s.stamp} ${s.stampPending}`}>Unpublished</span>
+        <span className={`${s.stamp} ${s.stampPending}`}>Not yet verified</span>
       </div>
       <p className={s.pendingNote}>
         {PENDING_COPY[id] ?? 'This module has not been verified against a published source yet.'}
