@@ -9,6 +9,17 @@
  * not when it is pushed, not when a PR is open, and not when a PR that used to
  * contain it has merged.
  *
+ * Reachability is checked by hash first, then by patch-id via `git cherry`,
+ * because rebasing and cherry-picking rewrite hashes. Hash-only reporting cried
+ * wolf on four commits within an hour of this script being written — and a
+ * checker nobody believes is worse than no checker at all.
+ *
+ * Patch-id still misses a commit whose content changed during a rebase — a
+ * conflict resolution alters the patch, so nothing upstream matches it. That is
+ * left as STRANDED on purpose. The two failure directions are not symmetric:
+ * a false STRANDED costs a manual check, a false ON MAIN is the exact mistake
+ * this exists to prevent.
+ *
  * This exists because "pushed" was mistaken for "done" three times in one week:
  *
  *   - Six CMS commits ran in production while main described a system that ran
@@ -59,15 +70,29 @@ for (const sha of shas) {
   } catch {
     known = false;
   }
+  let via = 'sha';
   if (known) {
     try {
       execFileSync('git', ['merge-base', '--is-ancestor', sha, base], { stdio: 'ignore' });
       shipped = true;
     } catch {
-      shipped = false;
+      // Rebase and cherry-pick rewrite SHAs, so an exact-hash check reports a
+      // false STRANDED for work that did ship. `git cherry` compares patch-ids:
+      // a leading '-' means an equivalent change is already upstream. Without
+      // this the tool cries wolf on every rebased branch, and a checker nobody
+      // believes is worse than no checker.
+      try {
+        const out = git(['cherry', base, sha, `${sha}^`]);
+        if (out.startsWith('-')) {
+          shipped = true;
+          via = 'patch';
+        }
+      } catch {
+        /* Root commit, or an unreachable parent — leave it stranded. */
+      }
     }
   }
-  rows.push({ sha: sha.slice(0, 9), subject, shipped, known });
+  rows.push({ sha: sha.slice(0, 9), subject, shipped, known, via });
 }
 
 const width = Math.max(...rows.map((r) => r.subject.length), 20);
@@ -76,7 +101,8 @@ for (const r of rows) {
     console.log(`  ${r.sha}  UNKNOWN    (not an object in this repository)`);
     continue;
   }
-  console.log(`  ${r.sha}  ${r.shipped ? 'ON ' + base : 'STRANDED'.padEnd(base.length + 3)}  ${r.subject.slice(0, width)}`);
+  const state = r.shipped ? (r.via === 'patch' ? `ON ${base} (rebased)` : `ON ${base}`) : 'STRANDED';
+  console.log(`  ${r.sha}  ${state.padEnd(base.length + 13)}  ${r.subject.slice(0, width)}`);
 }
 
 const stranded = rows.filter((r) => r.known && !r.shipped);

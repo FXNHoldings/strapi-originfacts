@@ -58,6 +58,12 @@ It compares against `origin/main` rather than a local ref, because a local main
 lagging behind origin is exactly how this looks fine and is not. Exit code 1 if
 anything is stranded.
 
+It matches by hash first, then by patch-id, so a rebased commit still reports as
+shipped. A commit whose content changed during a rebase — a conflict resolution
+alters the patch — will still read STRANDED. That is deliberate: a false
+STRANDED costs a manual check, a false ON MAIN is the mistake this exists to
+prevent.
+
 This is written down because "pushed" was mistaken for "done" three times in one
 week:
 
