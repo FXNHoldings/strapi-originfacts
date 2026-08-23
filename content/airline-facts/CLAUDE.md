@@ -43,6 +43,36 @@ without me saying so explicitly in the session.
    new verification date.** Changing the value while keeping the old stamp is
    worse than leaving it stale.
 
+## Done means on main
+
+**A change is done when it is reachable from `main`.** Not when it is
+committed, not when it is pushed, not when a PR is open, and not when a PR that
+used to contain it has merged.
+
+Verify before reporting anything complete:
+
+    node ops/verify-shipped.mjs <sha> [<sha>...]
+    git log --format=%H -5 feat/my-branch | xargs node ops/verify-shipped.mjs
+
+It compares against `origin/main` rather than a local ref, because a local main
+lagging behind origin is exactly how this looks fine and is not. Exit code 1 if
+anything is stranded.
+
+This is written down because "pushed" was mistaken for "done" three times in one
+week:
+
+- Six CMS commits ran in production while `main` described a system that ran
+  nowhere — including a divergent `docker-compose.yml`.
+- Three commits were pushed to a branch *after* the PR containing it had
+  merged, so they went nowhere while being reported as shipped. One was a
+  contrast fix described as live.
+- A mock data file survived five separate deletions because everyone believed
+  it was already gone.
+
+Each was recoverable, and none was noticed by whoever caused it. A push
+succeeds loudly and lands nowhere quietly, which is the worst shape a mistake
+can have.
+
 ## IATA codes are not entity identifiers
 
 **Never join, dedupe or enrich on an IATA code alone.** Not in a script, not in
