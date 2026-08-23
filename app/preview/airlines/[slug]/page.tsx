@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getAirline } from '@/lib/strapi';
 import { getRouteFacts } from '@/lib/route-facts';
-import { getAirlineFacts, getSampleFacts } from '@/lib/airline-facts';
+import { getAirlineFacts } from '@/lib/airline-facts';
 import { getFlySfoAirlineProfile } from '@/lib/flysfo-airline';
 import { getAirlineReviews } from '@/lib/airline-reviews';
 import { getAirlineRef } from '@/lib/airline-refs';
@@ -17,17 +17,12 @@ import AirlineTier1, { derivedFaqs } from '@/components/airline-tier1/AirlineTie
  * layout until this one is signed off, so the two can be compared side by side
  * on the same data.
  *
- * Always noindex — `?sample=1` renders the design mock's own placeholder
- * figures, which are NOT verified and must never reach the index. noindex is
- * used rather than a robots disallow because a disallowed path is never
- * crawled, so the directive on the page would never be read.
+ * Always noindex. It renders the same data as the live route with no editorial
+ * gate in front of it, and preview URLs have no business in an index.
  */
 export const revalidate = 60;
 
-type Props = {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ sample?: string }>;
-};
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
@@ -39,17 +34,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const SAMPLE_NOTICE =
-  'Sample mode — the figures in the published modules below come from the design mock, not from a verified source. ' +
-  'They are here to show the layout only. This page is noindex and is never linked from the site.';
-
-export default async function AirlineTier1Preview({ params, searchParams }: Props) {
+export default async function AirlineTier1Preview({ params }: Props) {
   const { slug } = await params;
-  const { sample } = await searchParams;
   const airline = await getAirline(slug);
   if (!airline) notFound();
 
-  const useSample = sample === '1';
   const alliance = await getFlySfoAirlineProfile(airline)
     .then((p) => p?.alliance ?? null)
     .catch(() => null);
@@ -58,11 +47,7 @@ export default async function AirlineTier1Preview({ params, searchParams }: Prop
   const reviews = getAirlineReviews(airline.slug);
   const airlineRef = getAirlineRef(airline.iataCode);
 
-  // Real facts always win. Sample content only fills in when the flag is set
-  // AND no real file exists, so a genuine file can never be shadowed by a mock.
-  const real = getAirlineFacts(airline.slug);
-  const facts = real ?? (useSample ? getSampleFacts(airline.slug) : null);
-  const showingSample = !real && useSample && Boolean(facts);
+  const facts = getAirlineFacts(airline.slug);
 
   const url = `${SITE_URL}/airlines/${airline.slug}`;
   const faqs = derivedFaqs(airline, routeFacts, alliance);
@@ -96,7 +81,6 @@ export default async function AirlineTier1Preview({ params, searchParams }: Prop
         alliance={alliance}
         reviews={reviews}
         airlineRef={airlineRef}
-        sampleNotice={showingSample ? SAMPLE_NOTICE : null}
       />
     </>
   );

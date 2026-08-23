@@ -1,82 +1,64 @@
 /**
  * Provenance-backed fact store for Tier 1 airline pages.
  *
- * One file per airline at content/airline-facts/<slug>.json. Every module in a
- * file carries its own sources and its own verification date, because a module
- * is only as fresh as its stalest field — a page-level "last updated" stamp
- * printed by the template is decoration, not evidence.
+ * One file per airline at content/airline-facts/<slug>.json.
  *
- * The rule the renderer enforces: a module with no file, or no sources, does
- * not render its content. It renders as unpublished instead. There is no
- * fallback prose, because a plausible-looking paragraph with nothing behind it
- * is exactly what this store exists to keep off the page.
+ * Provenance is per FIELD, not per module. A module-level source list lets a
+ * table publish a cell nobody sourced as long as the module cites something —
+ * which is rule 3 of the fact-store contract violated by construction. Every
+ * published value carries its own `source_url` and `verified_at`, and a module
+ * publishes only when every field it declares required is `official`.
  *
- * Shapes here mirror the module anatomy of the Tier 1 design — lede, body,
- * table, hard rule, conflicts, sources — so an ingest script (the airline
- * spreadsheet) has a single obvious target to write into.
+ * Statuses are deliberately five, not two:
+ *   official     the carrier's own page or a named regulator          → renders
+ *   third_party  aggregator, encyclopedia, blog — plausible, unconfirmed
+ *   disputed     credible sources disagree                            → conflict shown
+ *   pending      not researched, or the lookup failed
+ *   n/a          does not apply to this carrier
+ *
+ * Only `official` renders. Everything else leaves the module in its unpublished
+ * state, which is a visible gap rather than a plausible-looking paragraph with
+ * nothing behind it.
+ *
+ * Field names and dates are snake_case here and in the files, matching the
+ * fact-store contract rather than the surrounding TypeScript. The files are the
+ * artefact a person edits and a validator checks; consistency with the contract
+ * matters more than consistency with the codebase's casing.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 
-/** A module is verified, or it is flagged, or it does not publish. */
-export type FactStatus = 'verified' | 'disputed';
+export type FieldStatus = 'official' | 'third_party' | 'disputed' | 'pending' | 'n/a';
 
-export type FactSource = {
-  /** Publisher plus document, e.g. "Qantas, Checked baggage allowances". */
-  label: string;
-  url?: string;
-  /** "primary", "fee change dates" — why this source is cited. */
-  note?: string;
+export type FactField = {
+  /** Null whenever the status is not `official` — nothing to show. */
+  value: string | null;
+  status: FieldStatus;
+  /** Required for `official`. The page the value was read from. */
+  source_url?: string;
+  /**
+   * Required for `official`. Never widened: if the source gives a year, this
+   * holds a year. Padding 1985 to 1985-01-01 invents precision.
+   */
+  verified_at?: string;
+  notes?: string;
+  /** Required for `disputed` — both readings, so neither is silently chosen. */
+  conflicting_values?: string[];
 };
 
-/**
- * A table cell. Plain text in the common case; `{ text, href }` where the value
- * IS its own source — a link the reader can click to check the claim, such as a
- * carrier's conditions of carriage or a fee schedule.
- */
-export type FactCell = string | { text: string; href: string };
-
+/** Cells name field keys, so no cell can reach the page without provenance. */
 export type FactTable = {
   caption: string;
   columns: string[];
-  /** First cell is the row header; the rest line up with `columns`. */
-  rows: FactCell[][];
+  rows: { label: string; cells: string[] }[];
 };
 
-/**
- * A single figure that overrides everything around it — the design's rule box.
- * Used where one limit cuts across every row of a table.
- */
 export type FactRule = { key: string; text: string };
 
 /**
- * Where sources disagree. Rendering the disagreement is the point: a module
- * that prints one of two conflicting numbers has guessed, and a reader has no
- * way to know it happened.
- */
-export type FactConflict = { title: string; text: string };
-
-/**
- * What a module's date actually means.
- *
- * `verified` — someone checked this against a source on that date. Only these
- * feed the page's "last reviewed" line, because only these describe an act of
- * verification.
- *
- * `data` — the vintage of an underlying dataset, not a review of it. A route
- * dump built in July or a review corpus whose newest entry is from 2023 is
- * exactly that old, and saying so is the point — but rolling it into a
- * page-level "last reviewed" would misreport an editorial claim the site has
- * not made. Modules like these stamp "Data as of" instead.
- */
-export type FactDateKind = 'verified' | 'data';
-
-/**
- * An optional diagram belonging to a module.
- *
- * Kept as a small tagged union rather than free-form markup so a fact file can
- * never inject arbitrary HTML, and so every figure stays something the
- * renderer knows how to caption and label for screen readers.
+ * An optional diagram belonging to a module. A small tagged union rather than
+ * free-form markup, so a fact file can never inject arbitrary HTML and every
+ * figure stays something the renderer can caption and label.
  */
 export type FactFigure = {
   kind: 'longest-sector';
@@ -87,86 +69,132 @@ export type FactFigure = {
   km: number;
 };
 
-export type FactModule = {
-  /** Matches the module ids the page lays out; unknown ids are ignored. */
+export type SourcedModule = {
   id: string;
   title: string;
-  status: FactStatus;
-  /** YYYY-MM-DD. Drives the module stamp, and the ledger when kind is 'verified'. */
-  verifiedAt: string;
-  /** Defaults to 'verified' — fact-store modules are checked by a person. */
-  dateKind?: FactDateKind;
-  /** Short label shown instead of the date when status is 'disputed'. */
-  statusNote?: string;
   lede?: string;
   body?: string[];
+  fields?: Record<string, FactField>;
+  /** Field keys that must all be `official` before the module publishes. */
+  required?: string[];
   table?: FactTable;
   rule?: FactRule;
-  conflicts?: FactConflict[];
-  figure?: FactFigure;
-  sources: FactSource[];
-  /** Free-text footer under the sources, e.g. "next review Nov 2026". */
-  reviewNote?: string;
 };
 
 export type AirlineFactsFile = {
   slug: string;
-  modules: FactModule[];
+  /**
+   * The carrier's own site. Top-level so validation is self-contained — the
+   * rule that a contact phone or address must be sourced from the carrier's own
+   * domain cannot depend on Strapi being reachable at build time.
+   */
+  official_website: string;
+  modules: SourcedModule[];
 };
+
+/* ------------------------------------------------------------------ *
+ * Resolving a module for render
+ * ------------------------------------------------------------------ */
+
+export type ResolvedField = { key: string; label: string; field: FactField };
+
+export type ResolvedModule = {
+  id: string;
+  title: string;
+  /** False when any required field is not `official`. */
+  published: boolean;
+  /** Field keys that blocked publication, with the status that blocked them. */
+  blockers: { key: string; status: FieldStatus }[];
+  /** Oldest `verified_at` among the official fields. */
+  verified_at: string | null;
+  lede?: string;
+  body?: string[];
+  table?: { caption: string; columns: string[]; rows: { label: string; cells: (FactField | null)[] }[] };
+  rule?: FactRule;
+  /** Disputed fields, rendered as stated conflicts rather than resolved. */
+  disputes: ResolvedField[];
+};
+
+const isOfficial = (f: FactField | undefined): f is FactField => f?.status === 'official';
+
+export function resolveModule(m: SourcedModule): ResolvedModule {
+  const fields = m.fields ?? {};
+  const required = m.required ?? Object.keys(fields);
+
+  const blockers = required
+    .map((key) => ({ key, status: fields[key]?.status ?? ('pending' as FieldStatus) }))
+    .filter((b) => b.status !== 'official');
+
+  const officialDates = Object.values(fields)
+    .filter(isOfficial)
+    .map((f) => f.verified_at)
+    .filter((d): d is string => Boolean(d))
+    .sort();
+
+  const disputes = Object.entries(fields)
+    .filter(([, f]) => f.status === 'disputed')
+    .map(([key, field]) => ({ key, label: key.replace(/_/g, ' '), field }));
+
+  return {
+    id: m.id,
+    title: m.title,
+    published: blockers.length === 0,
+    blockers,
+    verified_at: officialDates[0] ?? null,
+    lede: m.lede,
+    body: m.body,
+    rule: m.rule,
+    disputes,
+    table: m.table
+      ? {
+          caption: m.table.caption,
+          columns: m.table.columns,
+          rows: m.table.rows.map((row) => ({
+            label: row.label,
+            // An unresolvable or non-official cell renders as absent. It cannot
+            // reach the page as text, and a required field would already have
+            // blocked the whole module.
+            cells: row.cells.map((key) => (isOfficial(fields[key]) ? fields[key] : null)),
+          })),
+        }
+      : undefined,
+  };
+}
+
+/* ------------------------------------------------------------------ *
+ * Loading
+ * ------------------------------------------------------------------ */
 
 const DIR = path.join(process.cwd(), 'content', 'airline-facts');
 
 /**
- * A module without at least one source is dropped rather than rendered, so a
- * half-filled spreadsheet row cannot reach the page by accident.
+ * Files whose name begins with an underscore are fixtures and samples. They are
+ * never loadable by slug, and the validator fails the build on them — mock data
+ * has reached production once already, stamped "Verified", and the fix for that
+ * is structural rather than procedural.
  */
-function usable(m: FactModule): boolean {
-  return Boolean(m && m.id && m.title && m.verifiedAt && Array.isArray(m.sources) && m.sources.length > 0);
-}
-
 export function getAirlineFacts(slug: string): AirlineFactsFile | null {
+  if (slug.startsWith('_')) return null;
   try {
-    const raw = fs.readFileSync(path.join(DIR, `${slug}.json`), 'utf8');
-    const parsed = JSON.parse(raw) as AirlineFactsFile;
-    const modules = Array.isArray(parsed.modules) ? parsed.modules.filter(usable) : [];
-    return { slug: parsed.slug || slug, modules };
+    const parsed = JSON.parse(fs.readFileSync(path.join(DIR, `${slug}.json`), 'utf8')) as AirlineFactsFile & {
+      _warning?: unknown;
+    };
+    // Belt to the validator's braces: a file still carrying a mock warning does
+    // not render, whatever else is true of it.
+    if (parsed._warning !== undefined) return null;
+    if (!parsed.official_website || !Array.isArray(parsed.modules)) return null;
+    return { slug: parsed.slug || slug, official_website: parsed.official_website, modules: parsed.modules };
   } catch {
     return null;
   }
 }
 
-/**
- * The design's sample content, kept under a leading underscore so it can never
- * collide with a real slug. Loaded only behind the preview's ?sample=1 flag —
- * these figures came from the design mock and are NOT verified.
- */
-export function getSampleFacts(slug: string): AirlineFactsFile | null {
-  try {
-    const raw = fs.readFileSync(path.join(DIR, `_sample.${slug}.json`), 'utf8');
-    const parsed = JSON.parse(raw) as AirlineFactsFile;
-    const modules = Array.isArray(parsed.modules) ? parsed.modules.filter(usable) : [];
-    return { slug: parsed.slug || slug, modules };
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Oldest date across modules that were actually verified by a person.
- *
- * Dataset-vintage modules are excluded deliberately. Letting them in produced
- * a page-wide "Last full review 6 Dec 2023" on the Qantas pilot — the newest
- * TripAdvisor review date presented as the date the page was last checked,
- * which reads as an abandoned page rather than an honest one.
- *
- * Returns null when nothing has been verified yet, and the caller renders no
- * date at all rather than inventing one.
- */
-export function oldestVerifiedAt(modules: FactModule[]): string | null {
+/** Oldest verification date across modules that actually published. */
+export function oldestVerifiedAt(modules: ResolvedModule[]): string | null {
   const dates = modules
-    .filter((m) => (m.dateKind ?? 'verified') === 'verified')
-    .map((m) => m.verifiedAt)
-    .filter(Boolean)
+    .filter((m) => m.published)
+    .map((m) => m.verified_at)
+    .filter((d): d is string => Boolean(d))
     .sort();
   return dates[0] ?? null;
 }
