@@ -5,12 +5,19 @@
     {
       "id": "carryon",
       "title": "Carry-on",
-      "required": ["personal_item_dimensions", "priority_cabin_bag_dimensions", "priority_cabin_bag_weight"],
+      "required": [
+        "personal_item_dimensions",
+        "priority_cabin_bag_dimensions",
+        "priority_cabin_bag_weight"
+      ],
       "fields": {
         "personal_item_dimensions": {
           "value": null,
           "status": "disputed",
-          "conflicting_values": ["40 x 30 x 20 cm", "40 x 20 x 30 cm"],
+          "conflicting_values": [
+            "40 x 30 x 20 cm",
+            "40 x 20 x 30 cm"
+          ],
           "notes": "Ryanair states the same small cabin bag in two axis orders on two of its own pages. Bag Policy: \"All fares include one small personal bag (40 x 30 x 20 cm) that must fit under the seat.\" Fare bundles: \"It's our cheapest fare and includes 1 Small Cabin Bag (40x20x30cm), which must fit under the seat in front of you.\" Same three measurements, different order — so probably one bag described inconsistently rather than two bags. NOT normalised, because which face is the height decides whether a given case fits a sizer. Resolve against a sizer diagram or the booking flow, or report it to Ryanair. Sources: https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy and https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options"
         },
         "priority_cabin_bag_dimensions": {
@@ -33,29 +40,38 @@
     {
       "id": "baggage",
       "title": "Checked baggage",
-      "required": ["checked_bag_tiers", "checked_max_per_booking"],
+      "required": [
+        "included_checked_allowance",
+        "purchasable_tiers"
+      ],
       "fields": {
-        "checked_bag_tiers": {
-          "value": null,
-          "status": "pending",
-          "notes": "CANDIDATES 10kg, 20kg, 23kg — \"Additional options include Priority boarding with a second 10kg cabin bag, checked bags of 10kg, 20kg (up to 3), or 23kg (1 allowed).\" AMBIGUOUS on two counts. (1) 10kg is also the priority cabin bag weight in the same sentence and is listed under priority_cabin_bag_weight too. (2) These are PURCHASABLE tiers, not an included allowance — \"Passengers can purchase up to 1 checked bags of 23kg on their booking\" — which is a materially different shape from a carrier whose fare includes a bag, and may belong in the fares module rather than here. Not resolved. Source: https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy"
+        "included_checked_allowance": {
+          "value": "None — no checked bag is included in any fare",
+          "status": "official",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+          "verified_at": "2026-08-24",
+          "notes": "Every tier is described as an addition: 'you can add a 10kg Check-in Bag to your booking'. No fare includes checked baggage."
         },
-        "checked_max_per_booking": {
-          "value": null,
-          "status": "pending",
-          "notes": "CANDIDATES \"up to 3\" and \"up to 1\" — \"checked bags of 10kg, 20kg (up to 3), or 23kg (1 allowed)\" and \"Passengers can purchase up to 1 checked bags of 23kg on their booking.\" These are per-tier limits, not one overall limit, so this may need to be several fields rather than one. Left as a single pending field so the shape is decided rather than assumed. Source: https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy"
+        "purchasable_tiers": {
+          "value": "10 kg · 20 kg (up to 3 per booking) · 23 kg (up to 1 per booking)",
+          "status": "official",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+          "verified_at": "2026-08-24",
+          "notes": "Verbatim: '20kg Check-in Bag… Passengers can purchase up to 3 checked bags of 20kg on their booking. 23kg Check-in Bag… up to 1 checked bags of 23kg.' No per-booking limit is stated for the 10kg tier."
         },
         "excess_fees": {
           "value": null,
           "status": "pending",
-          "notes": "No candidates. The baggage_fees capture returned too_short (748 chars) — the URL points at a category index rather than an article. Needs a real fees article URL before anything can be extracted."
+          "notes": "No source. The baggage_fees URL is a help-centre category index, not an article — captured at 748 chars, below the threshold. Needs a real fees article URL."
         }
       }
     },
     {
       "id": "fares",
       "title": "What the cheapest fare includes",
-      "required": ["basic_fare_inclusions"],
+      "required": [
+        "basic_fare_inclusions"
+      ],
       "fields": {
         "basic_fare_inclusions": {
           "value": null,
@@ -67,7 +83,10 @@
     {
       "id": "checkin",
       "title": "Check-in and airport cutoffs",
-      "required": ["online_checkin_window", "airport_bag_drop_cutoff"],
+      "required": [
+        "online_checkin_window",
+        "airport_bag_drop_cutoff"
+      ],
       "fields": {
         "online_checkin_window": {
           "value": null,
@@ -84,7 +103,9 @@
     {
       "id": "rights",
       "title": "If your flight is delayed or cancelled",
-      "required": ["governing_regime"],
+      "required": [
+        "governing_regime"
+      ],
       "fields": {
         "governing_regime": {
           "value": null,
