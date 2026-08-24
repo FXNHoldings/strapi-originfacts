@@ -86,6 +86,19 @@
   align-items: end;
   padding-bottom: 36px;
 }
+.identity { display: flex; align-items: center; gap: 24px; min-width: 0; }
+.logo {
+  width: 88px;
+  height: 88px;
+  flex: 0 0 88px;
+  border: 1px solid var(--hero-rule);
+  border-radius: 18px;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+}
+.logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .eyebrow {
   font-family: var(--t1-mono);
   font-size: 11px;
@@ -172,6 +185,35 @@
 /* ---------- layout ---------- */
 .main { padding: 48px 0 88px; }
 .cols { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 64px; align-items: start; }
+
+.intro {
+  padding: 4px 2px 36px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--rule);
+}
+.intro .kicker {
+  margin: 0 0 8px;
+  color: var(--sector-from);
+  font-family: var(--t1-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.intro h2 { font-size: clamp(27px, 4vw, 40px); max-width: 22ch; margin-bottom: 14px; }
+.intro > p:not(.kicker) { max-width: 72ch; color: var(--ink-soft); font-size: 17px; }
+.introLinks { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.introLinks a {
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  color: var(--ink);
+  font-family: var(--t1-head);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 13px;
+  text-decoration: none;
+}
+.introLinks a:hover { background: var(--hero-bg); border-color: var(--sector-from); }
 
 .module {
   background: var(--card);
@@ -455,6 +497,12 @@
   .sectorText { padding: 22px 20px; }
   .module table { font-size: 14.5px; }
   .module th, .module td { padding: 10px 10px 10px 0; }
+}
+
+@media (max-width: 620px) {
+  .identity { align-items: flex-start; gap: 14px; }
+  .logo { width: 58px; height: 58px; flex-basis: 58px; border-radius: 12px; padding: 9px; }
+  .root h1 { font-size: 38px; }
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { StrapiAirline } from '@/lib/strapi';
+import { mediaUrl } from '@/lib/strapi';
 import type { RouteFacts } from '@/lib/route-facts';
 import type { AirlineFactsFile, FactField, FactFigure, ResolvedField, ResolvedModule } from '@/lib/airline-facts';
 import { oldestVerifiedAt, resolveModule } from '@/lib/airline-facts';
@@ -51,9 +52,9 @@ import s from './AirlineTier1.module.css';
  */
 const REVIEWS_MODULE_ENABLED = false;
 
-const LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived' | 'either' }[] = [
-  { id: 'baggage', title: 'Checked baggage', nav: 'Baggage', from: 'facts' },
-  { id: 'carryon', title: 'Carry-on', nav: 'Carry-on', from: 'facts' },
+const PREVIEW_LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived' | 'either' }[] = [
+  { id: 'carryon', title: 'Cabin bags and personal items', nav: 'Baggage', from: 'facts' },
+  { id: 'baggage', title: 'Checked baggage', nav: 'Checked bags', from: 'facts' },
   { id: 'fares', title: 'What the cheapest fare includes', nav: 'Fares', from: 'facts' },
   // Same precedence as contact: a sourced, dated fact file beats a dataset
   // that can only describe which aircraft have appeared on the routes we hold.
@@ -70,6 +71,12 @@ const LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived
     ? [{ id: 'reviews', title: 'What travellers rate it', nav: 'Reviews', from: 'derived' as const }]
     : []),
   { id: 'faq', title: 'Common questions', nav: 'FAQ', from: 'derived' },
+];
+
+const LAYOUT: typeof PREVIEW_LAYOUT = [
+  { id: 'baggage', title: 'Checked baggage', nav: 'Baggage', from: 'facts' },
+  { id: 'carryon', title: 'Carry-on', nav: 'Carry-on', from: 'facts' },
+  ...PREVIEW_LAYOUT.slice(2),
 ];
 
 /** Why a `facts` module has nothing to show yet, in the reader's terms. */
@@ -94,6 +101,7 @@ export type AirlineTier1Props = {
   airlineRef?: AirlineRef | null;
   /** Rendered when the page is showing the design's unverified sample content. */
   sampleNotice?: string | null;
+  previewRedesign?: boolean;
 };
 
 export default function AirlineTier1({
@@ -104,6 +112,7 @@ export default function AirlineTier1({
   reviews = null,
   airlineRef = null,
   sampleNotice,
+  previewRedesign = false,
 }: AirlineTier1Props) {
   /**
    * IATA only. The directory's ICAO codes are not trustworthy: they were
@@ -120,14 +129,14 @@ export default function AirlineTier1({
   const derived: Record<string, DerivedModule | null> = {
     cabins: cabinsModule(airline, routeFacts),
     contact: contactModule(airline, airlineRef),
-    network: networkModule(airline, routeFacts),
+    network: networkModule(airline, routeFacts, previewRedesign),
     reviews: REVIEWS_MODULE_ENABLED ? reviewsModule(airline, reviews) : null,
     faq: null, // rendered by its own component below
   };
 
-  const faqs = derivedFaqs(airline, routeFacts, alliance);
+  const faqs = derivedFaqs(airline, routeFacts, alliance, previewRedesign);
 
-  const rendered = LAYOUT.map((entry) => {
+  const rendered = (previewRedesign ? PREVIEW_LAYOUT : LAYOUT).map((entry) => {
     const fromFile = entry.from !== 'derived' ? sourced.get(entry.id) ?? null : null;
     // 'either' prefers the fact file and falls back to the derived module, so a
     // carrier without a contact entry still gets what Strapi and Duffel know.
@@ -145,17 +154,17 @@ export default function AirlineTier1({
   const lastReview = oldestVerifiedAt(publishedSourced);
 
   const hubs = (routeFacts?.topHubs ?? []).slice(0, 4).map((h) => h.city);
-  const fleetTypes = routeFacts?.fleet ?? [];
+  const logo = mediaUrl(airline.logo ?? null);
 
   const plate: { label: string; value: string }[] = [
     airline.iataCode ? { label: 'IATA', value: airline.iataCode } : null,
+    previewRedesign && airline.country ? { label: 'Home country', value: airline.country } : null,
     alliance ? { label: 'Alliance', value: alliance } : null,
     airline.founded ? { label: 'Founded', value: String(airline.founded) } : null,
-    hubs.length ? { label: 'Top hubs', value: hubs.join(' · ') } : null,
-      // Route data names the aircraft TYPES seen on a carrier's routes, not how
-    // many airframes it has, and it accumulates retired equipment — labelled
-    // as types on record rather than passed off as a fleet count.
-    fleetTypes.length ? { label: 'Types on record', value: String(fleetTypes.length) } : null,
+    hubs.length ? { label: previewRedesign ? 'Busiest markets' : 'Top hubs', value: hubs.join(' · ') } : null,
+    !previewRedesign && routeFacts?.fleet.length
+      ? { label: 'Types on record', value: String(routeFacts.fleet.length) }
+      : null,
     routeFacts?.destinationCount ? { label: 'Destinations', value: String(routeFacts.destinationCount) } : null,
   ].filter(Boolean) as { label: string; value: string }[];
 
@@ -175,13 +184,20 @@ export default function AirlineTier1({
       <header className={s.hero}>
         <div className={s.wrap}>
           <div className={s.plate}>
-            <div>
-              <div className={s.eyebrow}>{eyebrow}</div>
-              <h1>
-                {airline.name}
-                {codes && <span className={s.code}>{codes}</span>}
-              </h1>
-              {airline.shortDescription?.trim() && <p className={s.standfirst}>{airline.shortDescription.trim()}</p>}
+            <div className={previewRedesign ? s.identity : undefined}>
+              {previewRedesign && logo && (
+                <div className={s.logo}>
+                  <img src={logo} alt={`${airline.name} logo`} />
+                </div>
+              )}
+              <div>
+                <div className={s.eyebrow}>{eyebrow}</div>
+                <h1>
+                  {airline.name}
+                  {codes && <span className={s.code}>{codes}</span>}
+                </h1>
+                {airline.shortDescription?.trim() && <p className={s.standfirst}>{airline.shortDescription.trim()}</p>}
+              </div>
             </div>
             {plate.length > 0 && (
               <dl className={s.codes}>
@@ -224,13 +240,28 @@ export default function AirlineTier1({
       <main className={s.main}>
         <div className={`${s.wrap} ${s.cols}`}>
           <div>
+            {previewRedesign && <section className={s.intro} aria-labelledby="guide-title">
+              <p className={s.kicker}>Plan with verified facts</p>
+              <h2 id="guide-title">The practical guide to flying with {airline.name}</h2>
+              <p>
+                Start with baggage and fare inclusions, then check the time-sensitive rules for check-in and disruption
+                support. Airline policies change, so each researched section includes the official source and the date it
+                was checked.
+              </p>
+              <div className={s.introLinks}>
+                <a href="#carryon">Check cabin bags</a>
+                <a href="#fares">Compare fares</a>
+                <a href="#checkin">Plan check-in</a>
+                <a href="#rights">Get disruption help</a>
+              </div>
+            </section>}
             {rendered.map((r) =>
               r.id === 'faq' ? (
-                <FaqModule key="faq" faqs={faqs} />
+                <FaqModule key="faq" faqs={faqs} travellerFacing={previewRedesign} />
               ) : r.derived ? (
                 <DerivedModuleView key={r.id} module={r.derived} />
               ) : r.sourced?.isPublished ? (
-                <SourcedModuleView key={r.id} module={r.sourced} />
+                <SourcedModuleView key={r.id} module={r.sourced} hideResearchNotes={previewRedesign} />
               ) : (
                 <PendingModule
                   key={r.id}
@@ -245,7 +276,7 @@ export default function AirlineTier1({
 
           <aside className={s.rail}>
             <div className={s.railBlock}>
-              <h3>Verification ledger</h3>
+              <h3>{previewRedesign ? 'Page contents' : 'Verification ledger'}</h3>
               <ul>
                 {rendered
                   .filter((r) => r.id !== 'faq')
@@ -284,13 +315,13 @@ export default function AirlineTier1({
             </div>
 
             <div className={s.railBlock}>
-              <h3>How we source this</h3>
+              <h3>{previewRedesign ? 'Checked, not guessed' : 'How we source this'}</h3>
               <p className={s.byline}>
                 <strong>Originfacts Editorial</strong>
                 <br />
-                Every figure on this page comes from the airline’s own published conditions of carriage, a named regulator,
-                or a dataset we cite. Where sources disagree we say so and print neither number. Where a figure isn’t
-                verified, the module doesn’t publish.
+                {previewRedesign
+                  ? 'Practical policies come from the airline’s published help pages or a named regulator. Network statistics come from the dated Originfacts route dataset. Unverified values stay unpublished.'
+                  : 'Every figure on this page comes from the airline’s own published conditions of carriage, a named regulator, or a dataset we cite. Where sources disagree we say so and print neither number. Where a figure isn’t verified, the module doesn’t publish.'}
               </p>
               {airlineRef?.conditionsOfCarriageUrl && (
                 <p className={s.byline}>
@@ -322,7 +353,7 @@ export default function AirlineTier1({
  * A module built from a fact file. Reaches here only when every required field
  * resolved `official`, so each cell already has its own source and date.
  */
-function SourcedModuleView({ module: m }: { module: ResolvedModule }) {
+function SourcedModuleView({ module: m, hideResearchNotes = false }: { module: ResolvedModule; hideResearchNotes?: boolean }) {
   const sources = collectSources(m);
   return (
     <section className={s.module} id={m.id} data-testid={`t1-module-${m.id}`}>
@@ -380,7 +411,7 @@ function SourcedModuleView({ module: m }: { module: ResolvedModule }) {
               <dt>{f.label}</dt>
               <dd>
                 <FieldValue field={f.field} />
-                {f.field.notes && <span className={s.fieldNote}>{f.field.notes}</span>}
+                {!hideResearchNotes && f.field.notes && <span className={s.fieldNote}>{f.field.notes}</span>}
               </dd>
             </div>
           ))}
@@ -622,13 +653,13 @@ function PendingModule({
   );
 }
 
-function FaqModule({ faqs }: { faqs: { q: string; a: string }[] }) {
+function FaqModule({ faqs, travellerFacing = false }: { faqs: { q: string; a: string }[]; travellerFacing?: boolean }) {
   if (!faqs.length) return null;
   return (
     <section className={s.module} id="faq" data-testid="t1-module-faq">
       <div className={s.moduleHead}>
         <h2>Common questions</h2>
-        <span className={`${s.stamp} ${s.stampOk}`}>Marked up as FAQPage</span>
+        <span className={`${s.stamp} ${s.stampOk}`}>{travellerFacing ? 'Quick answers' : 'Marked up as FAQPage'}</span>
       </div>
       {faqs.map((f, i) => (
         <details key={i} open={i === 0}>
@@ -694,13 +725,17 @@ function cabinsModule(a: StrapiAirline, rf: RouteFacts | null): DerivedModule | 
   };
 }
 
-function networkModule(a: StrapiAirline, rf: RouteFacts | null): DerivedModule | null {
+function networkModule(a: StrapiAirline, rf: RouteFacts | null, travellerFacing = false): DerivedModule | null {
   if (!rf || rf.destinationCount === 0) return null;
   const body: string[] = [
     `We track ${rf.routeCount.toLocaleString()} ${a.name} route${rf.routeCount === 1 ? '' : 's'} serving ${rf.destinationCount} destination${rf.destinationCount === 1 ? '' : 's'} across ${rf.countryCount} ${rf.countryCount === 1 ? 'country' : 'countries'}.`,
   ];
   if (rf.topHubs.length) {
-    body.push(`Its busiest airports by route count are ${listSentence(rf.topHubs.map((h) => `${h.city} (${h.routes})`))}.`);
+    body.push(
+      travellerFacing
+        ? `Its busiest markets by route count are ${listSentence(rf.topHubs.map((h) => `${h.city} (${h.routes})`))}. A market may include more than one airport.`
+        : `Its busiest airports by route count are ${listSentence(rf.topHubs.map((h) => `${h.city} (${h.routes})`))}.`,
+    );
   }
 
   return {
@@ -727,7 +762,12 @@ function networkModule(a: StrapiAirline, rf: RouteFacts | null): DerivedModule |
   };
 }
 
-function derivedFaqs(a: StrapiAirline, rf: RouteFacts | null, alliance: string | null): { q: string; a: string }[] {
+function derivedFaqs(
+  a: StrapiAirline,
+  rf: RouteFacts | null,
+  alliance: string | null,
+  travellerFacing = false,
+): { q: string; a: string }[] {
   const faqs: { q: string; a: string }[] = [];
   if (rf?.destinationCount) {
     faqs.push({
@@ -738,7 +778,9 @@ function derivedFaqs(a: StrapiAirline, rf: RouteFacts | null, alliance: string |
   if (rf?.topHubs.length) {
     faqs.push({
       q: `Where is ${a.name} based?`,
-      a: `By route count its busiest airport is ${rf.topHubs[0].city}${rf.topHubs.length > 1 ? `, followed by ${listSentence(rf.topHubs.slice(1, 4).map((h) => h.city))}` : ''}.`,
+      a: travellerFacing
+        ? `${a.name} is based in ${a.country ?? 'its home market'}. In the Originfacts route dataset, its busiest market is ${rf.topHubs[0].city}${rf.topHubs.length > 1 ? `, followed by ${listSentence(rf.topHubs.slice(1, 4).map((h) => h.city))}` : ''}.`
+        : `By route count its busiest airport is ${rf.topHubs[0].city}${rf.topHubs.length > 1 ? `, followed by ${listSentence(rf.topHubs.slice(1, 4).map((h) => h.city))}` : ''}.`,
     });
   }
   if (rf?.fleet.length) {

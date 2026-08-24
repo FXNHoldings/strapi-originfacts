@@ -29,6 +29,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const airline = await getAirline(slug);
   return {
     title: airline ? `${airline.name} — Tier 1 template preview` : 'Preview',
+    description: airline
+      ? `Check ${airline.name} baggage rules, fare inclusions, check-in information, seating, passenger rights and route-network facts, with links to official sources.`
+      : undefined,
     robots: { index: false, follow: false },
     alternates: { canonical: `${SITE_URL}/airlines/${slug}` },
   };
@@ -50,7 +53,7 @@ export default async function AirlineTier1Preview({ params }: Props) {
   const facts = getAirlineFacts(airline.slug);
 
   const url = `${SITE_URL}/airlines/${airline.slug}`;
-  const faqs = derivedFaqs(airline, routeFacts, alliance);
+  const faqs = derivedFaqs(airline, routeFacts, alliance, true);
 
   const airlineLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -61,7 +64,7 @@ export default async function AirlineTier1Preview({ params }: Props) {
   };
   if (airline.iataCode) airlineLd.iataCode = airline.iataCode;
   if (airline.legalName) airlineLd.legalName = airline.legalName;
-  if (airline.country) airlineLd.areaServed = airline.country;
+  if (airline.country) airlineLd.address = { '@type': 'PostalAddress', addressCountry: airline.country };
   if (airline.founded) airlineLd.foundingDate = String(airline.founded);
   if (alliance) airlineLd.memberOf = { '@type': 'Organization', name: alliance };
   if (airline.website) {
@@ -81,6 +84,7 @@ export default async function AirlineTier1Preview({ params }: Props) {
         alliance={alliance}
         reviews={reviews}
         airlineRef={airlineRef}
+        previewRedesign
       />
     </>
   );
