@@ -42,7 +42,14 @@ type CandidateFile = {
   extracted_at: string;
   /** The capture set this was read from, so a re-run can be compared. */
   capture_date: string;
-  pages: { page_key: string; source_url: string; content_hash: string; article_chars: number }[];
+  pages: {
+    page_key: string;
+    source_url: string;
+    content_hash: string;
+    article_chars: number;
+    /** Which capture set these bytes came from — a date folder, or "manual". */
+    capture_set: string;
+  }[];
   candidates: Candidate[];
   /** Pages that had a capture but yielded nothing, and why. */
   skipped: { page_key: string; reason: string }[];
@@ -115,16 +122,60 @@ function printReport(file: CandidateFile): void {
   }
 }
 
-/** Most recent capture folder containing this carrier. */
-async function latestCaptureDate(carrier: string): Promise<string | null> {
+type PageSource = { page_key: string; set: string; dir: string; meta: any };
+
+/**
+ * Every page of this carrier we hold usable bytes for, and where each came from.
+ *
+ * Manual captures live in `captures/manual/<carrier>` rather than a dated
+ * folder, because a human-saved page is evidence that cannot be regenerated —
+ * a dated folder is a re-runnable snapshot and would be overwritten. That split
+ * is deliberate, but it means neither location holds the whole picture for a
+ * carrier that is partly blocked: Qantas answers robots.txt with an HTTP/2
+ * reset from this host, so all six of its dated entries are `robots_unavailable`
+ * while all six manual captures are good. Reading one directory found the
+ * failures and reported nothing to extract.
+ *
+ * So resolve per page, not per carrier. An automated `ok` capture wins where
+ * one exists — it is fresher and its provenance is machine-recorded end to end
+ * — and a manual capture fills in where automation could not reach. A failed
+ * automated probe never shadows good manual bytes, which is the same rule the
+ * archiver already applies within a page's own history.
+ */
+async function resolvePageSources(carrier: string): Promise<PageSource[]> {
   const dates = (await fs.readdir(CAPTURES).catch(() => []))
     .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
     .sort()
     .reverse();
+  // Newest dated folder holding this carrier, then the manual set.
+  const sets: { set: string; dir: string }[] = [];
   for (const d of dates) {
-    if (await fs.stat(path.join(CAPTURES, d, carrier)).then(() => true).catch(() => false)) return d;
+    const dir = path.join(CAPTURES, d, carrier);
+    if (await fs.stat(dir).then(() => true).catch(() => false)) {
+      sets.push({ set: d, dir });
+      break;
+    }
   }
-  return null;
+  const manualDir = path.join(CAPTURES, 'manual', carrier);
+  if (await fs.stat(manualDir).then(() => true).catch(() => false)) {
+    sets.push({ set: 'manual', dir: manualDir });
+  }
+
+  const byPage = new Map<string, PageSource>();
+  for (const { set, dir } of sets) {
+    const metas = (await fs.readdir(dir)).filter((f) => f.endsWith('.meta.json'));
+    for (const metaFile of metas) {
+      const meta = JSON.parse(await fs.readFile(path.join(dir, metaFile), 'utf8'));
+      const pageKey = meta.page_key as string;
+      const existing = byPage.get(pageKey);
+      const usable = ['ok', 'manual'].includes(meta.capture_status);
+      // First usable capture wins; otherwise keep the first seen so the skip
+      // reason still names a real status rather than disappearing.
+      if (existing && (['ok', 'manual'].includes(existing.meta.capture_status) || !usable)) continue;
+      byPage.set(pageKey, { page_key: pageKey, set, dir, meta });
+    }
+  }
+  return [...byPage.values()].sort((a, b) => a.page_key.localeCompare(b.page_key));
 }
 
 async function main(): Promise<void> {
@@ -150,15 +201,21 @@ async function main(): Promise<void> {
     return;
   }
 
-  const date = args.date ?? (await latestCaptureDate(args.carrier));
-  if (!date) {
+  const allSources = await resolvePageSources(args.carrier);
+  const sources = args.date
+    ? allSources.filter((s) => s.set === args.date)
+    : allSources;
+  if (!sources.length) {
     console.error(`No captures for ${args.carrier}. Run the fetcher, or ingest manual captures, first.`);
     process.exitCode = 1;
     return;
   }
 
-  const dir = path.join(CAPTURES, date, args.carrier);
-  const metas = (await fs.readdir(dir)).filter((f) => f.endsWith('.meta.json'));
+  // Candidates are written beside the freshest set the run actually read, so a
+  // re-run of the same set overwrites rather than accumulating.
+  const setsUsed = [...new Set(sources.map((s) => s.set))].sort().reverse();
+  const date = setsUsed.join('+');
+  const dir = sources.find((s) => s.set === setsUsed[0])!.dir;
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
@@ -172,16 +229,15 @@ async function main(): Promise<void> {
   };
 
   try {
-    for (const metaFile of metas.sort()) {
-      const meta = JSON.parse(await fs.readFile(path.join(dir, metaFile), 'utf8'));
-      const pageKey = meta.page_key as string;
+    for (const source of sources) {
+      const { meta, page_key: pageKey } = source;
 
       if (!['ok', 'manual'].includes(meta.capture_status)) {
         out.skipped.push({ page_key: pageKey, reason: `capture_status is "${meta.capture_status}"` });
         continue;
       }
 
-      const htmlPath = path.join(dir, `${pageKey}.html`);
+      const htmlPath = path.join(source.dir, `${pageKey}.html`);
       const html = await fs.readFile(htmlPath, 'utf8').catch(() => null);
       if (html === null) {
         out.skipped.push({ page_key: pageKey, reason: 'no archived HTML beside the meta' });
@@ -209,6 +265,7 @@ async function main(): Promise<void> {
         source_url: meta.url,
         content_hash: meta.content_hash,
         article_chars: text.length,
+        capture_set: source.set,
       });
 
       const seen = new Set<string>();
@@ -239,7 +296,10 @@ async function main(): Promise<void> {
   console.log(`${args.carrier} — captures from ${date}\n`);
   for (const p of out.pages) {
     const n = out.candidates.filter((c) => c.page_key === p.page_key).length;
-    console.log(`  ${p.page_key.padEnd(24)}${String(p.article_chars).padStart(6)} chars article  ${n} candidate(s)`);
+    console.log(
+      `  ${p.page_key.padEnd(24)}${String(p.article_chars).padStart(6)} chars article  ` +
+        `${String(n).padStart(2)} candidate(s)  [${p.capture_set}]`,
+    );
   }
   for (const s of out.skipped) console.log(`  ${s.page_key.padEnd(24)}skipped — ${s.reason}`);
 

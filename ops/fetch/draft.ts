@@ -39,7 +39,8 @@ type Candidate = { kind: string; raw: string; sentence: string; page_key: string
 type CandidateFile = {
   carrier_key: string;
   capture_date: string;
-  pages: { page_key: string; source_url: string; article_chars: number }[];
+  extracted_at?: string;
+  pages: { page_key: string; source_url: string; article_chars: number; capture_set?: string }[];
   candidates: Candidate[];
   skipped: { page_key: string; reason: string }[];
 };
@@ -50,21 +51,39 @@ function parseArgs(argv: string[]): { carrier?: string } {
   return out;
 }
 
+/**
+ * The most recently *extracted* candidate set for this carrier.
+ *
+ * Ordering by folder name and taking the first that parses was wrong twice
+ * over. Manual captures live in `captures/manual/<carrier>`, which no date
+ * regex matches, so a carrier whose only usable bytes were human-saved looked
+ * like it had no candidates at all. And a dated folder can hold a stale
+ * `candidates.json` written by an earlier run that found nothing — Qantas had
+ * exactly that, an empty file dated today sitting in front of 179 real
+ * candidates — so "newest folder that parses" is not the same question as
+ * "newest extraction".
+ *
+ * Rank on `extracted_at`, which is the thing actually being asked about.
+ */
 async function latestCandidates(carrier: string): Promise<{ file: CandidateFile; date: string } | null> {
   const capturesDir = path.join(ROOT, 'data', 'captures');
-  const dates = (await fs.readdir(capturesDir).catch(() => []))
-    .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
-    .sort()
-    .reverse();
-  for (const d of dates) {
+  const sets = (await fs.readdir(capturesDir).catch(() => [])).filter(
+    (d) => /^\d{4}-\d{2}-\d{2}$/.test(d) || d === 'manual',
+  );
+
+  const found: { file: CandidateFile; date: string }[] = [];
+  for (const d of sets) {
     const f = path.join(capturesDir, d, carrier, 'candidates.json');
     try {
-      return { file: JSON.parse(await fs.readFile(f, 'utf8')) as CandidateFile, date: d };
+      found.push({ file: JSON.parse(await fs.readFile(f, 'utf8')) as CandidateFile, date: d });
     } catch {
-      /* try the next date */
+      /* no candidates in this set */
     }
   }
-  return null;
+  if (!found.length) return null;
+
+  found.sort((a, b) => (a.file.extracted_at ?? '').localeCompare(b.file.extracted_at ?? ''));
+  return found[found.length - 1];
 }
 
 /** Distinct by kind+value, keeping the first sentence that produced it. */
