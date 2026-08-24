@@ -6,14 +6,111 @@
       "id": "carryon",
       "title": "Carry-on",
       "required": [
-        "unassigned_evidence"
+        "domestic_economy_business"
       ],
       "fields": {
-        "unassigned_evidence": {
-          "value": null,
-          "status": "pending",
-          "notes": "7 candidate measurement(s) extracted from baggage_carryon. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  • 14 kg  — \"14 kg (30lb) with a max of 10kg (22lb) per item Domestic Qantas Link Dash 8 - Q400 1 overhead bag and 1 personal item Weight:\"\n  • 30lb  — \"14 kg (30lb) with a max of 10kg (22lb) per item Domestic Qantas Link Dash 8 - Q400 1 overhead bag and 1 personal item Weight:\"\n  • 10kg  — \"14 kg (30lb) with a max of 10kg (22lb) per item Domestic Qantas Link Dash 8 - Q400 1 overhead bag and 1 personal item Weight:\"\n  • 22lb  — \"14 kg (30lb) with a max of 10kg (22lb) per item Domestic Qantas Link Dash 8 - Q400 1 overhead bag and 1 personal item Weight:\"\n  • 7kg  — \"7kg (15lb) maximum Note:\"\n  • 15lb  — \"7kg (15lb) maximum Note:\"\n  • 14kg  — \"14kg (30lb) total across 2 items (max of 10kg (22lb) per single item) Flights from 02 February 2027 Priority Carry-on:\""
+        "domestic_economy_business": {
+          "value": "1 overhead bag, 1 underseat bag and 1 personal item — 14kg (30lb) total, max 10kg (22lb) per item",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/carry-on",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "domestic_dash8": {
+          "value": "1 overhead bag and 1 personal item — 7kg (15lb) maximum",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/carry-on",
+          "verified_at": "2026-08-24",
+          "notes": "QantasLink Dash 8 – Q400 services. Small wheelie bags don’t fit overhead on this aircraft and are gate-checked."
+        },
+        "international_economy": {
+          "value": "1 overhead bag and 1 personal item — 7kg (15lb) maximum",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/carry-on",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "international_premium": {
+          "value": "1 overhead bag, 1 underseat bag and 1 personal item — 14kg (30lb) total, max 10kg (22lb) per item",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/carry-on",
+          "verified_at": "2026-08-24",
+          "notes": "First, Business and Premium Economy."
+        },
+        "india_economy": {
+          "value": "1 overhead bag — 7kg (15lb) maximum",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/carry-on",
+          "verified_at": "2026-08-24",
+          "notes": "All flights departing India. Additional personal items are not permitted on these flights."
+        },
+        "india_business": {
+          "value": "1 overhead bag — 10kg (22lb) maximum",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/carry-on",
+          "verified_at": "2026-08-24",
+          "notes": "All flights departing India. Additional personal items are not permitted on these flights."
+        },
+        "overhead_bag_size": {
+          "value": "56cm (22in) height × 36cm (14in) width × 23cm (9in) depth",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/carry-on",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "underseat_bag_size": {
+          "value": "34cm (13in) height × 48cm (18in) width × 23cm (9in) depth",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/carry-on",
+          "verified_at": "2026-08-24",
+          "notes": null
         }
+      },
+      "lede": "Allowance depends on route and cabin. Figures below are for Qantas-operated flights; Jetstar-operated and partner-airline services can differ and are not yet covered here.",
+      "table": {
+        "caption": "Carry-on allowance by route and cabin",
+        "columns": [
+          "Route and cabin",
+          "Allowance"
+        ],
+        "rows": [
+          {
+            "label": "Domestic — Economy & Business",
+            "cells": [
+              "domestic_economy_business"
+            ]
+          },
+          {
+            "label": "Domestic — Dash 8 (Q400)",
+            "cells": [
+              "domestic_dash8"
+            ]
+          },
+          {
+            "label": "International — Economy",
+            "cells": [
+              "international_economy"
+            ]
+          },
+          {
+            "label": "International — First, Business & Premium Economy",
+            "cells": [
+              "international_premium"
+            ]
+          },
+          {
+            "label": "Departing India — Economy",
+            "cells": [
+              "india_economy"
+            ]
+          },
+          {
+            "label": "Departing India — Business",
+            "cells": [
+              "india_business"
+            ]
+          }
+        ]
       }
     },
     {
