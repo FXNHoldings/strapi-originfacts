@@ -54,4 +54,9 @@ data/captures/*
 # change here with `git check-ignore -v`, not by reading it.
 !data/captures/manual/
 !data/captures/manual/**
+# ...but not the extraction output that lands beside them. candidates.json is
+# derived from the tracked bytes by a tracked script, so it is reproducible in
+# the way the HTML is not, and versioning it would dirty the tree on every
+# re-extract.
+data/captures/manual/**/candidates.json
 ops/fetch/node_modules

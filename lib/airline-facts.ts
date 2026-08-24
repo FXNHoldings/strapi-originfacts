@@ -141,8 +141,16 @@ export function resolveModule(m: SourcedModule): ResolvedModule {
     .filter(([, f]) => f.status === 'disputed')
     .map(([key, field]) => ({ key, label: key.replace(/_/g, ' '), field }));
 
+  // A field spent as a table cell is excluded here. Qantas's checked-baggage
+  // matrix is the case that forced this: the cabin×region grid is a table, but
+  // the page also states limits that don't belong in any cell — no single
+  // piece over 32kg regardless of cabin, a 65kg total cap after purchases, a
+  // Dash 8 exception to the domestic Economy row. Those need to render as
+  // ordinary fields on the same module. Without this exclusion they would
+  // render twice: once as a cell, once again in the list below.
+  const tableFieldKeys = new Set(m.table?.rows.flatMap((row) => row.cells) ?? []);
   const published = Object.entries(fields)
-    .filter(([, f]) => isOfficial(f))
+    .filter(([key, f]) => isOfficial(f) && !tableFieldKeys.has(key))
     .map(([key, field]) => ({ key, label: key.replace(/_/g, ' '), field }));
 
   return {
@@ -163,8 +171,10 @@ export function resolveModule(m: SourcedModule): ResolvedModule {
           rows: m.table.rows.map((row) => ({
             label: row.label,
             // An unresolvable or non-official cell renders as absent. It cannot
-            // reach the page as text, and a required field would already have
-            // blocked the whole module.
+            // reach the page as text. A `required` cell would already have
+            // blocked the whole module — but a cell can be official and NOT
+            // required (Qantas's First-domestic cell is `n/a`, not blocking),
+            // so this still has to check status per cell rather than assume it.
             cells: row.cells.map((key) => (isOfficial(fields[key]) ? fields[key] : null)),
           })),
         }

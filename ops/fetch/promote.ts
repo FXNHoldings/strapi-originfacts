@@ -56,11 +56,20 @@ type FactFile = {
   modules: { id: string; title: string; required?: string[]; fields?: Record<string, Field> }[];
 };
 
-function parseArgs(argv: string[]): { carrier?: string; dryRun: boolean } {
-  const out = { carrier: undefined as string | undefined, dryRun: false };
+function parseArgs(argv: string[]): { carrier?: string; dryRun: boolean; recheck: boolean } {
+  const out = { carrier: undefined as string | undefined, dryRun: false, recheck: false };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--carrier') out.carrier = argv[++i];
     else if (argv[i] === '--dry-run') out.dryRun = true;
+    // Re-run the citation proof against fields that are already `official` and
+    // were stamped by this tool. Reports only, never writes: a field that no
+    // longer verifies needs a person to look at it, not an automatic demotion.
+    //
+    // This exists because the proof itself has been wrong twice. Both times the
+    // fix silently changed what the tool would accept today without saying
+    // anything about what it had already accepted, and the only way to find out
+    // was to ask.
+    else if (argv[i] === '--recheck') out.recheck = true;
   }
   return out;
 }
@@ -123,7 +132,7 @@ async function articlesByUrl(carrier: string): Promise<Map<string, { text: strin
 type Outcome = { module: string; field: string; action: string; detail: string };
 
 async function main(): Promise<void> {
-  const { carrier, dryRun } = parseArgs(process.argv.slice(2));
+  const { carrier, dryRun, recheck } = parseArgs(process.argv.slice(2));
   if (!carrier) {
     console.error('Usage: npm run promote -- --carrier <carrier_key> [--dry-run]');
     process.exitCode = 1;
@@ -141,7 +150,15 @@ async function main(): Promise<void> {
   for (const mod of doc.modules) {
     for (const [key, field] of Object.entries(mod.fields ?? {})) {
       const where = { module: mod.id, field: key };
-      if (field.status !== 'pending') continue;
+      if (recheck) {
+        // Every official field, not only the ones this tool stamped. The
+        // hand-verified ones are the oldest in the store and were checked
+        // against a page rather than against captured bytes, which is the
+        // weaker of the two proofs, not the stronger.
+        if (field.status !== 'official') continue;
+      } else if (field.status !== 'pending') {
+        continue;
+      }
       if (!field.value) {
         outcomes.push({ ...where, action: 'skip', detail: 'no value yet — a person still has to decide what this field says' });
         continue;
@@ -182,12 +199,27 @@ async function main(): Promise<void> {
         continue;
       }
 
-      const missing = measurements.filter((m) => !article.text.includes(m));
+      // A plain substring check confirms "68kg" against a page that only says
+      // "22.68kg", which would stamp a fabricated figure as sourced. The match
+      // must not begin inside a longer number.
+      const presentInSource = (m: string) => {
+        const escaped = m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        // Guard both ends of the number. The lookbehind stops "68 kg" matching the
+    // tail of "22.68 kg"; the lookahead stops "EUR161" matching the head of
+    // "EUR161,593". Both fragments genuinely occur in the source, which is
+    // precisely why a plain substring test confirms them.
+    return new RegExp(`(?<![\\d.,])${escaped}(?![\\d,]|\\.\\d)`).test(article.text);
+      };
+      const missing = measurements.filter((m) => !presentInSource(m));
       if (missing.length) {
         outcomes.push({ ...where, action: 'refuse', detail: `not found in the cited page: ${missing.join(', ')}` });
         continue;
       }
 
+      if (recheck) {
+        outcomes.push({ ...where, action: 'recheck-ok', detail: `still verbatim: ${measurements.join(', ')}` });
+        continue;
+      }
       field.status = 'official';
       field.verified_at = article.date;
       field.verified_by = 'auto';
@@ -199,7 +231,31 @@ async function main(): Promise<void> {
 
   const width = Math.max(...outcomes.map((o) => `${o.module}/${o.field}`.length), 20);
   for (const o of outcomes) {
-    console.log(`  ${o.action.toUpperCase().padEnd(9)}${`${o.module}/${o.field}`.padEnd(width + 2)}${o.detail}`);
+    console.log(`  ${o.action.toUpperCase().padEnd(11)}${`${o.module}/${o.field}`.padEnd(width + 2)}${o.detail}`);
+  }
+
+  if (recheck) {
+    // Three outcomes, and conflating them would be its own kind of dishonesty.
+    // A prose field has no measurement to match. A field citing a page we never
+    // captured cannot be checked at all — which is not the same as failing, and
+    // reporting it as a failure would train people to ignore the failures.
+    const held = outcomes.filter((o) => o.action === 'recheck-ok');
+    const prose = outcomes.filter((o) => o.action === 'manual');
+    const uncheckable = outcomes.filter((o) => o.action === 'refuse' && o.detail.startsWith('no capture'));
+    const broken = outcomes.filter(
+      (o) => !['recheck-ok', 'manual'].includes(o.action) && !uncheckable.includes(o),
+    );
+
+    console.log('');
+    console.log(`  ${String(held.length).padStart(3)} citation(s) still verbatim in the captured page`);
+    if (prose.length) console.log(`  ${String(prose.length).padStart(3)} prose field(s) — nothing to match, a person's call`);
+    if (uncheckable.length) {
+      console.log(`  ${String(uncheckable.length).padStart(3)} field(s) cite a page that is not in the archive — unproven, not wrong`);
+    }
+    if (broken.length) console.log(`  ${String(broken.length).padStart(3)} field(s) NO LONGER HOLD`);
+    console.log(broken.length ? '\nNothing was changed — look at them.' : '\nNothing was changed.');
+    if (broken.length) process.exitCode = 1;
+    return;
   }
 
   if (dryRun) {
