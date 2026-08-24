@@ -109,8 +109,18 @@ function validateFile(fileName, raw, errors) {
   if (!officialHost) return fail(`official_website is not a URL: ${doc.official_website}`);
   if (!Array.isArray(doc.modules)) return fail('`modules` must be an array');
 
+  // Two modules with one id is invisible at render: the page keys them by id
+  // in a Map, so the later one silently replaces the earlier and whatever was
+  // in the first is simply gone. A hand edit and a scripted append produced
+  // exactly this, with both copies passing every other check.
+  const seenIds = new Set();
   for (const mod of doc.modules) {
     if (!mod?.id) { fail('a module has no id'); continue; }
+    if (seenIds.has(mod.id)) {
+      fail(`duplicate module id "${mod.id}" — the renderer keeps only one, silently`);
+      continue;
+    }
+    seenIds.add(mod.id);
     const where = `module "${mod.id}"`;
 
     for (const [key, field] of Object.entries(mod.fields ?? {})) {
