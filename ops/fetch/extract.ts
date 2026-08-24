@@ -29,7 +29,7 @@ type Selectors = Record<string, { article: string | null; note?: string }>;
 
 /** One measurement, with enough context for a person to judge it. */
 type Candidate = {
-  kind: 'dimensions' | 'weight' | 'count' | 'money';
+  kind: 'dimensions' | 'weight' | 'count' | 'money' | 'duration';
   raw: string;
   /** The sentence it appeared in — the thing that makes it judgeable. */
   sentence: string;
@@ -85,6 +85,17 @@ const PATTERNS: { kind: Candidate['kind']; re: RegExp }[] = [
   // carries both, three sentences apart. Dropping the prefix produced "$210"
   // for each — a value that cannot be published because it no longer says what
   // it is worth.
+  // Durations are excluded from `count` above, because "up to 2.5 hours" was
+  // being read as a bag count. That guard was right and is kept — but it left
+  // check-in unextractable for every carrier, since a check-in rule IS a
+  // duration. Qantas's page carries eight of them (24 hours online, 30/45/60
+  // minutes at the airport by flight type, 90 before an international
+  // departure) and yielded no candidates at all. A separate kind keeps the two
+  // apart instead of making one pattern serve both badly.
+  {
+    kind: 'duration',
+    re: /(?<![\d.,])\d{1,3}(?:\.\d{1,2})?\s*(?:hours?|hrs?|minutes?|mins?|days?)\b(?![\d,])/gi,
+  },
   {
     kind: 'money',
     re: /(?<![A-Za-z0-9])(?:(?:A|US|NZ|CA|HK|SG)?[£€$]|EUR|GBP|AUD|USD|NZD|CAD)\s?(?:\d{1,3}(?:,\d{3})+|\d{1,6})(?:\.\d{1,2})?(?![\d,])/gi,
