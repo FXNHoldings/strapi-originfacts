@@ -6,13 +6,30 @@
       "id": "carryon",
       "title": "Carry-on",
       "required": [
-        "unassigned_evidence"
+        "personal_item_dimensions",
+        "standard_carryon_dimensions"
       ],
       "fields": {
         "unassigned_evidence": {
           "value": null,
           "status": "pending",
           "notes": "6 candidate measurement(s) extracted from baggage_carryon. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  • 23 x 40 x 55 cm  — \"23 x 40 x 55 cm/9 x 15.5 x 21.5 in Personal item Maximum dimensions (D x W x H):\"\n  • 33 x 43 x 16 cm  — \"33 x 43 x 16 cm/13 x 17 x 6 in Maximum dimensions include wheels and handles.\"\n  • 13 x 17 x 6 in  — \"33 x 43 x 16 cm/13 x 17 x 6 in Maximum dimensions include wheels and handles.\"\n  • 25 x 30 x 14cm  — \"25 x 30 x 14cm (10 x 12 x 5.5 in) Larger purses will be included in your carry-on allowance.\"\n  • $65  — \"If you’re checking in online or at a kiosk, you’ll need to provide a credit card for pre-authorization of gate handling fees of CA/US $65-$78 (tax inclusive).\"\n  • $78  — \"If you’re checking in online or at a kiosk, you’ll need to provide a credit card for pre-authorization of gate handling fees of CA/US $65-$78 (tax inclusive).\""
+        },
+        "personal_item_dimensions": {
+          "value": "33 x 43 x 16 cm",
+          "status": "official",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/carry-on.html",
+          "notes": "Human assignment: the smaller of the two carry-on sizes, the under-seat item. Auto-verified: 33x43x16 found verbatim in the captured article at this URL, and the URL is on aircanada.com.",
+          "verified_at": "2026-08-24",
+          "verified_by": "auto"
+        },
+        "standard_carryon_dimensions": {
+          "value": "23 x 40 x 55 cm",
+          "status": "official",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/carry-on.html",
+          "notes": "Human assignment: the overhead-locker bag. Auto-verified: 23x40x55 found verbatim in the captured article at this URL, and the URL is on aircanada.com.",
+          "verified_at": "2026-08-24",
+          "verified_by": "auto"
         }
       }
     },

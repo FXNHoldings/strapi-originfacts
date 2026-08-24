@@ -9,7 +9,8 @@
     "ingest-manual": "tsx ingest-manual.ts",
     "extract": "tsx extract.ts",
     "preflight": "tsx preflight.ts",
-    "draft": "tsx draft.ts"
+    "draft": "tsx draft.ts",
+    "promote": "tsx promote.ts"
   },
   "dependencies": {
     "playwright": "^1.49.0",
