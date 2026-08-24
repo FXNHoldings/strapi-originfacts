@@ -293,6 +293,48 @@
 .num { font-family: var(--t1-mono); font-size: 14.5px; white-space: nowrap; }
 .tableScroll { overflow-x: auto; }
 
+/* Preview contact panel: high-signal details become scannable cards instead
+   of another dense two-column table. */
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px 0 20px;
+}
+.contactCard {
+  min-height: 112px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  background: linear-gradient(145deg, #fff 55%, var(--hero-bg));
+}
+.contactIcon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--hero-bg);
+  color: var(--sector-from);
+}
+.contactIcon svg { display: block; }
+.contactLabel {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--slate);
+  font-family: var(--t1-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.contactValue { display: block; color: var(--ink); font-size: 14.5px; line-height: 1.5; }
+.contactValue a { color: var(--sector-from); font-weight: 600; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
 /* ---------- longest sector figure ---------- */
 .sector {
   display: grid;
@@ -522,6 +564,7 @@
   .logo { width: 58px; height: 58px; flex-basis: 58px; border-radius: 12px; padding: 9px; }
   .root h1 { font-size: 38px; }
   .root.preview h1 { font-size: 3.5rem; }
+  .contactGrid { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: no-preference) {

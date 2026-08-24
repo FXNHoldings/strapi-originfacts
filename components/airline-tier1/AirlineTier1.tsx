@@ -267,7 +267,7 @@ export default function AirlineTier1({
               r.id === 'faq' ? (
                 <FaqModule key="faq" faqs={faqs} travellerFacing={previewRedesign} />
               ) : r.derived ? (
-                <DerivedModuleView key={r.id} module={r.derived} />
+                <DerivedModuleView key={r.id} module={r.derived} showContactCards={previewRedesign} />
               ) : r.sourced?.isPublished ? (
                 <SourcedModuleView key={r.id} module={r.sourced} hideResearchNotes={previewRedesign} />
               ) : (
@@ -512,7 +512,13 @@ function collectSources(m: ResolvedModule): { url: string; host: string; fields:
 }
 
 /** A module built from a dataset the site holds, citing the dataset. */
-function DerivedModuleView({ module: m }: { module: DerivedModule }) {
+function DerivedModuleView({
+  module: m,
+  showContactCards = false,
+}: {
+  module: DerivedModule;
+  showContactCards?: boolean;
+}) {
   return (
     <section className={s.module} id={m.id} data-testid={`t1-module-${m.id}`}>
       <div className={s.moduleHead}>
@@ -525,7 +531,9 @@ function DerivedModuleView({ module: m }: { module: DerivedModule }) {
         <p key={i}>{para}</p>
       ))}
 
-      {m.table && (
+      {m.table && showContactCards && m.id === 'contact' ? (
+        <ContactCards rows={m.table.rows} />
+      ) : m.table ? (
         <div className={s.tableScroll}>
           <table>
             <caption>{m.table.caption}</caption>
@@ -557,7 +565,7 @@ function DerivedModuleView({ module: m }: { module: DerivedModule }) {
             </tbody>
           </table>
         </div>
-      )}
+      ) : null}
 
       {m.figure && <Figure figure={m.figure} />}
 
@@ -586,6 +594,50 @@ function DerivedModuleView({ module: m }: { module: DerivedModule }) {
       </div>
     </section>
   );
+}
+
+function ContactCards({ rows }: { rows: DerivedCell[][] }) {
+  return (
+    <div className={s.contactGrid}>
+      {rows.map((row, i) => {
+        const label = typeof row[0] === 'string' ? row[0] : row[0].text;
+        const detail = row[1];
+        return (
+          <div className={s.contactCard} key={`${label}-${i}`}>
+            <span className={s.contactIcon} aria-hidden="true">
+              <ContactIcon label={label} />
+            </span>
+            <div>
+              <span className={s.contactLabel}>{label}</span>
+              <span className={s.contactValue}>
+                <Cell cell={detail} />
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ContactIcon({ label }: { label: string }) {
+  const common = { width: 22, height: 22, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.8 };
+  if (/address/i.test(label)) {
+    return <svg {...common}><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></svg>;
+  }
+  if (/phone|customer service/i.test(label)) {
+    return <svg {...common}><path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-4-2-2 2c-3.5-1.5-6.5-4.5-8-8l2-2-2-4Z" /></svg>;
+  }
+  if (/hours/i.test(label)) {
+    return <svg {...common}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>;
+  }
+  if (/website/i.test(label)) {
+    return <svg {...common}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18" /></svg>;
+  }
+  if (/support/i.test(label)) {
+    return <svg {...common}><path d="M4 5h16v11H8l-4 4V5Z" /><path d="M8 9h8M8 12h5" /></svg>;
+  }
+  return <svg {...common}><path d="M6 3h9l3 3v15H6V3Z" /><path d="M14 3v4h4M9 12h6M9 16h6" /></svg>;
 }
 
 /**
