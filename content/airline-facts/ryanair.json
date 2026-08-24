@@ -42,6 +42,40 @@
       }
     },
     {
+      "id": "cabins",
+      "title": "Cabins and seating",
+      "required": [
+        "seat_assignment",
+        "seat_selection"
+      ],
+      "fields": {
+        "seat_assignment": {
+          "value": "Randomly assigned at online check-in unless a seat is purchased or included in the fare",
+          "status": "official",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
+          "verified_at": "2026-08-24",
+          "notes": "Verbatim, under Basic Fare: 'Online check-in opens 24 hours before your flight departure time and your seat will be randomly assigned to you during this time.'"
+        },
+        "seat_selection": {
+          "value": "Standard seat with Plus; any seating option reserved with Flexi Plus; front rows 1–5 with Time Saver",
+          "status": "official",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
+          "verified_at": "2026-08-24",
+          "notes": "Time Saver is 'front row reserved seating (in rows 1-5). Once these rows are sold-out, remaining seats on the plane will become available' — so the front-row guarantee is subject to availability rather than absolute."
+        },
+        "seat_pitch": {
+          "value": null,
+          "status": "pending",
+          "notes": "Not published by Ryanair on any page we hold. Would need a seating or fleet page added to carriers.json."
+        },
+        "cabin_classes": {
+          "value": null,
+          "status": "pending",
+          "notes": "Ryanair operates a single cabin, but no captured page states it — the fare bundles differ in seating and baggage, not in cabin. Inference, not a source."
+        }
+      }
+    },
+    {
       "id": "baggage",
       "title": "Checked baggage",
       "required": [
