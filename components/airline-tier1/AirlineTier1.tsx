@@ -174,7 +174,7 @@ export default function AirlineTier1({
     // `airline-page-<slug>` is what globals.css keys off to hide the fixed
     // left/right rails on airline pages — the old layout and the showcase both
     // set it, so this template matches rather than adding a second mechanism.
-    <div className={s.root} data-testid={`airline-page-${airline.slug}`}>
+    <div className={`${s.root} ${previewRedesign ? s.preview : ''}`} data-testid={`airline-page-${airline.slug}`}>
       {sampleNotice && (
         <div className={s.sampleBanner}>
           <div className={s.wrap}>{sampleNotice}</div>

@@ -62,6 +62,24 @@
   font-weight: 400;
 }
 
+/* Preview-only refinements. The production Tier 1 renderer shares this
+   stylesheet, so the preview class is the isolation boundary. */
+.preview {
+  --rule: #d9dee7;
+  --rule-strong: #b8c2d0;
+}
+.root.preview h1 { font-size: 3.5rem; }
+.root.preview h2 { font-size: 2rem; }
+.preview .module,
+.preview .codes,
+.preview .sector,
+.preview .ruleBox,
+.preview .conflict { border-radius: 8px; }
+.preview .codes,
+.preview .sector { overflow: hidden; }
+.preview .rail a,
+.preview .rail a:hover { border-bottom: 0; }
+
 
 .root h1,
 .root h2,
@@ -503,6 +521,7 @@
   .identity { align-items: flex-start; gap: 14px; }
   .logo { width: 58px; height: 58px; flex-basis: 58px; border-radius: 12px; padding: 9px; }
   .root h1 { font-size: 38px; }
+  .root.preview h1 { font-size: 3.5rem; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
