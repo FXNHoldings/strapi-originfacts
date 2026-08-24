@@ -55,7 +55,9 @@ const LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived
   { id: 'baggage', title: 'Checked baggage', nav: 'Baggage', from: 'facts' },
   { id: 'carryon', title: 'Carry-on', nav: 'Carry-on', from: 'facts' },
   { id: 'fares', title: 'What the cheapest fare includes', nav: 'Fares', from: 'facts' },
-  { id: 'cabins', title: 'Cabins and seating', nav: 'Cabins & seating', from: 'derived' },
+  // Same precedence as contact: a sourced, dated fact file beats a dataset
+  // that can only describe which aircraft have appeared on the routes we hold.
+  { id: 'cabins', title: 'Cabins and seating', nav: 'Cabins & seating', from: 'either' },
   { id: 'rights', title: 'If your flight is delayed or cancelled', nav: 'Passenger rights', from: 'facts' },
   { id: 'checkin', title: 'Check-in and airport cutoffs', nav: 'Check-in', from: 'facts' },
   // Contact is derived from Strapi and the Duffel snapshot by default, but a
@@ -648,28 +650,42 @@ function factsSource(rf: RouteFacts) {
   return [{ label: `Originfacts route-network dataset, built from ${rf.source}`, note: `updated ${rf.updated}` }];
 }
 
+/**
+ * Cabins and seating, from the route dataset.
+ *
+ * Only renders when the fleet list is substantial enough to be worth the
+ * caveats it needs. For Ryanair the dataset named ONE aircraft type and the
+ * module drew two warning blocks around it — a reader got more disclaimer than
+ * fact, which is the module failing at its job while technically behaving.
+ *
+ * Below the threshold it returns null and the module falls through to its
+ * unpublished state, which says "not yet verified" plainly instead of
+ * publishing a thin fact wrapped in apologies.
+ */
+const MIN_FLEET_TYPES_TO_PUBLISH = 3;
+
 function cabinsModule(a: StrapiAirline, rf: RouteFacts | null): DerivedModule | null {
-  if (!rf || rf.fleet.length === 0) return null;
+  if (!rf || rf.fleet.length < MIN_FLEET_TYPES_TO_PUBLISH) return null;
+
+  // Labelled with the IATA code the data is scoped to. A carrier's flights are
+  // often operated by several AOC holders under different codes — Ryanair sells
+  // as "Ryanair" but flies as FR, RK, RR and Malta Air — so naming the group
+  // while describing one operator's routes overclaims.
+  const scope = a.iataCode ? `${a.name} (${a.iataCode})` : a.name;
+
   return {
     id: 'cabins',
     title: 'Cabins and seating',
     verifiedAt: `${rf.updated}-01`,
     body: [
-      // Attributed to the dataset rather than asserted as current fact: the
-      // route data is cumulative and lists equipment carriers have since
-      // retired, so "X operates these types" would frequently be wrong.
-      `The routes we hold for ${a.name} name ${rf.fleet.length} aircraft type${rf.fleet.length === 1 ? '' : 's'}: ${listSentence(rf.fleet)}.`,
+      `The routes we hold for ${scope} name ${rf.fleet.length} aircraft types: ${listSentence(rf.fleet)}.`,
       'Seat pitch is a property of the aircraft cabin rather than of the airline, so a single figure for this carrier’s legroom would be misleading. Pitch publishes per aircraft type once each figure is verified.',
     ],
     sources: factsSource(rf),
     conflicts: [
       {
-        title: 'Read this list as history, not as a current fleet',
-        text: `The route dataset accumulates equipment over time and is not a fleet register — it can name types ${a.name} has since retired, and it will miss recent additions. A verified current fleet is a separate piece of sourcing.`,
-      },
-      {
-        title: 'Not yet published',
-        text: 'Seat pitch and cabin configuration per aircraft type are not verified for this carrier yet, so no numbers appear above.',
+        title: 'A record of what has flown, not a current fleet',
+        text: `The route dataset accumulates equipment over time and is not a fleet register: it can name types ${a.name} has retired, miss recent additions, and it covers only flights sold under ${a.iataCode ?? 'this code'}. Seat pitch and cabin configuration are not verified for this carrier.`,
       },
     ],
   };
