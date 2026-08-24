@@ -2,13 +2,14 @@
   "name": "originfacts-fetch",
   "private": true,
   "type": "module",
-  "description": "Stage 1 of the airline data pipeline — archival fetcher. Deliberately separate from the site's package.json so Playwright never installs on a production deploy.",
+  "description": "Stage 1 of the airline data pipeline \u2014 archival fetcher. Deliberately separate from the site's package.json so Playwright never installs on a production deploy.",
   "scripts": {
     "fetch": "tsx run.ts",
     "reach": "tsx sweep.ts",
     "ingest-manual": "tsx ingest-manual.ts",
     "extract": "tsx extract.ts",
-    "preflight": "tsx preflight.ts"
+    "preflight": "tsx preflight.ts",
+    "draft": "tsx draft.ts"
   },
   "dependencies": {
     "playwright": "^1.49.0",

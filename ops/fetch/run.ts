@@ -17,6 +17,7 @@
  * kind — a page behind a bot wall is recorded and left for manual capture.
  */
 import fs from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import type { Browser, BrowserContext } from 'playwright';
 import { openBrowser, loadPage, extractText, readHtmlLang } from './browser.js';
@@ -31,14 +32,42 @@ const MIN_HOST_DELAY_MS = 3_000;
 const MAX_ATTEMPTS = 3; // the first try plus two retries
 const BACKOFF_MS = [4_000, 8_000];
 
-type Args = { carrier?: string; band?: string; dryRun: boolean };
+type Args = { carrier?: string; band?: string; dryRun: boolean; fromPreflight: boolean };
+
+/**
+ * URLs the pre-flight found reachable with no structural problem.
+ *
+ * Re-requesting a URL that returned a hard 404 an hour ago is not politeness,
+ * it is noise — 122 of the 449 are known dead, and asking again teaches us
+ * nothing while costing the carrier a request. Returns null when no pre-flight
+ * exists, in which case everything is attempted as before.
+ */
+function preflightAllowlist(): Set<string> | null {
+  const file = path.resolve(import.meta.dirname, '..', '..', 'data', 'captures', 'preflight.json');
+  try {
+    const doc = JSON.parse(readFileSync(file, 'utf8')) as {
+      rows: { carrier_key: string; page_key: string; resolved_by: string; findings: string[] }[];
+    };
+    const ok = new Set<string>();
+    for (const r of doc.rows) {
+      // blocked_to_http is about the carrier's defences, not the URL, and the
+      // fetcher uses a browser anyway — so it does not disqualify.
+      const structural = r.findings.filter((f) => f !== 'blocked_to_http');
+      if (r.resolved_by !== 'neither' && structural.length === 0) ok.add(`${r.carrier_key}/${r.page_key}`);
+    }
+    return ok;
+  } catch {
+    return null;
+  }
+}
 
 function parseArgs(argv: string[]): Args {
-  const args: Args = { dryRun: false };
+  const args: Args = { dryRun: false, fromPreflight: false };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--dry-run') args.dryRun = true;
     else if (argv[i] === '--carrier') args.carrier = argv[++i];
     else if (argv[i].startsWith('--carrier=')) args.carrier = argv[i].split('=')[1];
+    else if (argv[i] === '--from-preflight') args.fromPreflight = true;
     else if (argv[i] === '--band') args.band = argv[++i];
     else if (argv[i].startsWith('--band=')) args.band = argv[i].split('=')[1];
   }
@@ -286,7 +315,11 @@ async function main(): Promise<void> {
   const all = await loadCarriers();
   let carriers = all;
   if (args.band) carriers = carriers.filter((c) => c.band === args.band);
-  if (args.carrier) carriers = carriers.filter((c) => c.carrier_key === args.carrier);
+  // Comma-separated, so a shortlist from the pre-flight can be run in one go.
+  if (args.carrier) {
+    const wanted = new Set(args.carrier.split(',').map((s) => s.trim()).filter(Boolean));
+    carriers = carriers.filter((c) => wanted.has(c.carrier_key));
+  }
 
   if (args.band && carriers.length === 0) {
     console.error(`No carriers in band "${args.band}". Bands present: ${[...new Set(all.map((c) => c.band).filter(Boolean))].sort().join(', ')}`);
@@ -300,12 +333,28 @@ async function main(): Promise<void> {
   }
 
   const dateStamp = utcDateStamp();
-  const planned = carriers.flatMap((c) =>
+  let planned = carriers.flatMap((c) =>
     Object.entries(c.pages)
       .map(([pageKey, raw]) => ({ pageKey, entry: pageEntry(raw) }))
       .filter((p): p is { pageKey: string; entry: NonNullable<ReturnType<typeof pageEntry>> } => p.entry !== null)
       .map(({ pageKey, entry }) => ({ carrier: c, pageKey, url: entry.url, locale: entry.locale ?? c.locale })),
   );
+
+  let skippedByPreflight: string[] = [];
+  if (args.fromPreflight) {
+    const allow = preflightAllowlist();
+    if (allow === null) {
+      console.error('--from-preflight given, but no data/captures/preflight.json exists. Run `npm run preflight` first.');
+      process.exitCode = 1;
+      return;
+    }
+    const before = planned.length;
+    skippedByPreflight = planned
+      .filter((p) => !allow.has(`${p.carrier.carrier_key}/${p.pageKey}`))
+      .map((p) => `${p.carrier.carrier_key}/${p.pageKey}`);
+    planned = planned.filter((p) => allow.has(`${p.carrier.carrier_key}/${p.pageKey}`));
+    console.log(`Pre-flight filter: ${planned.length} of ${before} pages are reachable and unflagged.\n`);
+  }
   const unset = carriers.flatMap((c) =>
     Object.entries(c.pages).filter(([, raw]) => pageEntry(raw) === null).map(([k]) => `${c.carrier_key}/${k}`),
   );
@@ -348,6 +397,9 @@ async function main(): Promise<void> {
 
   printSummary(rows);
   if (unset.length) console.log(`\nSkipped ${unset.length} page(s) with no URL set: ${unset.join(', ')}`);
+  if (skippedByPreflight.length) {
+    console.log(`\nSkipped ${skippedByPreflight.length} page(s) the pre-flight found dead or flagged.`);
+  }
   console.log(`\nThreshold for too_short is ${MIN_TEXT_LENGTH} characters of extracted text.`);
 }
 

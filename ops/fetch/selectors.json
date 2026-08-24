@@ -1,11 +1,27 @@
 {
-  "_comment": "Per-carrier CSS selector for the article body within a captured page. Stage 2 extracts ONLY from this container. Page chrome is most of the text on these sites — on Ryanair's help centre the article is 1,906 characters and the surrounding navigation is another 578, including a 40-language country picker. Extracting from whole-page text would pull dimensions and weights out of navigation, and a wrong figure is worse than a missing one. A selector that matches nothing is a hard failure, never a fallback to the whole page.",
+  "_comment": "Per-carrier CSS selector for the article body within a captured page. Stage 2 extracts ONLY from this container. Page chrome is most of the text on these sites \u2014 on Ryanair's help centre the article is 1,906 characters and the surrounding navigation is another 578, including a 40-language country picker. Extracting from whole-page text would pull dimensions and weights out of navigation, and a wrong figure is worse than a missing one. A selector that matches nothing is a hard failure, never a fallback to the whole page. Selectors are derived empirically from captured HTML \u2014 scored across all of a carrier's pages for presence and text coverage \u2014 never guessed from class names.",
   "ryanair": {
     "article": ".article-content",
     "note": "Zendesk help centre. Stable across all six captured pages."
   },
   "qantas": {
     "article": null,
-    "note": "Unknown — Qantas is unreachable from this host, so no capture exists to derive a selector from. Fill this in from the manual captures once they land."
+    "note": "Unknown \u2014 Qantas is unreachable from this host, so no capture exists to derive a selector from. Fill this in from the manual captures once they land."
+  },
+  "air-canada": {
+    "article": "main",
+    "note": "Scored 65% of page text across 4 pages; [role=main] is the same element. .content is a 5% fragment."
+  },
+  "finnair": {
+    "article": "main",
+    "note": "88% across 3 pages. .main-content is equivalent; main is the stabler choice."
+  },
+  "jetblue": {
+    "article": "main",
+    "note": "88% across 4 pages. The only candidate present on every page."
+  },
+  "westjet": {
+    "article": "main",
+    "note": "85%. .cmp-container scored 100%, which is the whole page including nav \u2014 coverage that high means the selector is not isolating anything."
   }
 }
