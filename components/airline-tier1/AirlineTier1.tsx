@@ -51,14 +51,18 @@ import s from './AirlineTier1.module.css';
  */
 const REVIEWS_MODULE_ENABLED = false;
 
-const LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived' }[] = [
+const LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived' | 'either' }[] = [
   { id: 'baggage', title: 'Checked baggage', nav: 'Baggage', from: 'facts' },
   { id: 'carryon', title: 'Carry-on', nav: 'Carry-on', from: 'facts' },
   { id: 'fares', title: 'What the cheapest fare includes', nav: 'Fares', from: 'facts' },
   { id: 'cabins', title: 'Cabins and seating', nav: 'Cabins & seating', from: 'derived' },
   { id: 'rights', title: 'If your flight is delayed or cancelled', nav: 'Passenger rights', from: 'facts' },
   { id: 'checkin', title: 'Check-in and airport cutoffs', nav: 'Check-in', from: 'facts' },
-  { id: 'contact', title: 'Contact and the small print', nav: 'Contact', from: 'derived' },
+  // Contact is derived from Strapi and the Duffel snapshot by default, but a
+  // fact file can override it. Neither source carries provenance — Strapi's
+  // fields have no recorded origin and the snapshot is a third party — so a
+  // sourced, dated entry in the fact file should win over both.
+  { id: 'contact', title: 'Contact and the small print', nav: 'Contact', from: 'either' },
   { id: 'network', title: 'Where they fly', nav: 'Where they fly', from: 'derived' },
   ...(REVIEWS_MODULE_ENABLED
     ? [{ id: 'reviews', title: 'What travellers rate it', nav: 'Reviews', from: 'derived' as const }]
@@ -121,11 +125,13 @@ export default function AirlineTier1({
 
   const faqs = derivedFaqs(airline, routeFacts, alliance);
 
-  const rendered = LAYOUT.map((entry) => ({
-    ...entry,
-    sourced: entry.from === 'facts' ? sourced.get(entry.id) ?? null : null,
-    derived: entry.from === 'derived' ? derived[entry.id] ?? null : null,
-  }));
+  const rendered = LAYOUT.map((entry) => {
+    const fromFile = entry.from !== 'derived' ? sourced.get(entry.id) ?? null : null;
+    // 'either' prefers the fact file and falls back to the derived module, so a
+    // carrier without a contact entry still gets what Strapi and Duffel know.
+    const fromCode = entry.from !== 'facts' && !fromFile?.isPublished ? derived[entry.id] ?? null : null;
+    return { ...entry, sourced: fromFile, derived: fromCode };
+  });
 
   // Verified counts only fact-file modules that actually published. Derived
   // modules carry a dataset vintage, not a verification, and are counted apart
@@ -474,6 +480,40 @@ function DerivedModuleView({ module: m }: { module: DerivedModule }) {
       {m.body?.map((para, i) => (
         <p key={i}>{para}</p>
       ))}
+
+      {m.table && (
+        <div className={s.tableScroll}>
+          <table>
+            <caption>{m.table.caption}</caption>
+            <thead>
+              <tr>
+                {m.table.columns.map((c, i) => (
+                  <th key={i} scope="col">
+                    {c}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {m.table.rows.map((row, i) => (
+                <tr key={i}>
+                  {row.map((cell, j) =>
+                    j === 0 ? (
+                      <th key={j} scope="row">
+                        <Cell cell={cell} />
+                      </th>
+                    ) : (
+                      <td key={j}>
+                        <Cell cell={cell} />
+                      </td>
+                    ),
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {m.figure && <Figure figure={m.figure} />}
 

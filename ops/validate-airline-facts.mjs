@@ -38,6 +38,17 @@ function sameSite(a, b) {
   return Boolean(da) && da === db;
 }
 
+/** A source_url a reader could actually open. */
+function isHttpUrl(raw) {
+  const v = String(raw).trim();
+  if (/[…<>]|\.\.\./.test(v)) return false;
+  try {
+    return /^https?:$/.test(new URL(v).protocol);
+  } catch {
+    return false;
+  }
+}
+
 function hostOf(url) {
   try {
     return new URL(url).hostname;
@@ -112,6 +123,15 @@ function validateFile(fileName, raw, errors) {
 
       if (field.status === 'official') {
         if (!field.source_url) fail(`${at}: status official with no source_url`);
+        // Presence was never enough. An official field asserts a citation, and
+        // "…" left in from a template asserts one that cannot be opened —
+        // which is a broken promise in every module, not only contact. The
+        // fetcher rejects placeholder URLs in carriers.json for exactly this
+        // reason; the fact store had no equivalent until a real promotion
+        // shipped four fields citing an ellipsis.
+        else if (!isHttpUrl(field.source_url)) {
+          fail(`${at}: source_url is not an http(s) URL — ${JSON.stringify(field.source_url)}`);
+        }
         if (!field.verified_at) fail(`${at}: status official with no verified_at`);
         if (field.value === null || field.value === undefined || field.value === '') {
           fail(`${at}: status official with no value`);
