@@ -20,14 +20,163 @@
       "id": "baggage",
       "title": "Checked baggage",
       "required": [
-        "unassigned_evidence"
+        "economy_domestic"
       ],
       "fields": {
-        "unassigned_evidence": {
+        "economy_domestic": {
+          "value": "1 piece, up to 23kg (50lb)",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": "The source lists three exceptions to this row — Dash 8 services, Lord Howe Island, and Christmas and Cocos (Keeling) Islands. Dash 8 and Lord Howe are sourced below as separate fields; a figure for Christmas/Cocos was not in this capture and is not represented here."
+        },
+        "economy_americas": {
+          "value": "1 piece, up to 32kg (70lb)",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": "Qantas-operated flights, North and South America."
+        },
+        "economy_row": {
+          "value": "1 piece, up to 30kg (66lb)",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": "Qantas-operated flights, rest of the world."
+        },
+        "premium_economy_domestic": {
+          "value": "2 pieces, up to 23kg (50lb) each",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "premium_economy_americas": {
+          "value": "2 pieces, up to 32kg (70lb) each",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "premium_economy_row": {
+          "value": "2 pieces, up to 40kg (88lb) total — no single piece over 32kg (70lb)",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "business_domestic": {
+          "value": "2 pieces, up to 32kg (70lb) each",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "business_americas": {
+          "value": "2 pieces, up to 32kg (70lb) each",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "business_row": {
+          "value": "2 pieces, up to 40kg (88lb) total — no single piece over 32kg (70lb)",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "first_domestic": {
           "value": null,
-          "status": "pending",
-          "notes": "52 candidate measurement(s) extracted from baggage_checked, baggage_fees. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  • 32kg  — \"Your baggage needs to fit within maximum size, and ensure no single piece exceeds 32kg (70lb).\"\n  • 70lb  — \"Your baggage needs to fit within maximum size, and ensure no single piece exceeds 32kg (70lb).\"\n  • 23kg  — \"Your allowance on Qantas-operated flights in Economy Australian domestic 1 piece Up to 23kg (50lb) Exceptions apply to Dash 8 services, Lord Howe, Christmas and Cocos (Keeling) Islands North and South America 1 piece Up to 32kg (70lb) Rest …\"\n  • 50lb  — \"Your allowance on Qantas-operated flights in Economy Australian domestic 1 piece Up to 23kg (50lb) Exceptions apply to Dash 8 services, Lord Howe, Christmas and Cocos (Keeling) Islands North and South America 1 piece Up to 32kg (70lb) Rest …\"\n  • 30kg  — \"Your allowance on Qantas-operated flights in Economy Australian domestic 1 piece Up to 23kg (50lb) Exceptions apply to Dash 8 services, Lord Howe, Christmas and Cocos (Keeling) Islands North and South America 1 piece Up to 32kg (70lb) Rest …\"\n  • 66lb  — \"Your allowance on Qantas-operated flights in Economy Australian domestic 1 piece Up to 23kg (50lb) Exceptions apply to Dash 8 services, Lord Howe, Christmas and Cocos (Keeling) Islands North and South America 1 piece Up to 32kg (70lb) Rest …\"\n  • 40kg  — \"Your allowance on Qantas-operated flights in Premium Economy Australian domestic 2 pieces Up to 23kg (50lb) each Exceptions apply to Dash 8 services, Lord Howe, Christmas and Cocos (Keeling) Islands North and South America 2 pieces Up to 32…\"\n  • 88lb  — \"Your allowance on Qantas-operated flights in Premium Economy Australian domestic 2 pieces Up to 23kg (50lb) each Exceptions apply to Dash 8 services, Lord Howe, Christmas and Cocos (Keeling) Islands North and South America 2 pieces Up to 32…\"\n  • 50kg  — \"Your allowance on Qantas-operated flights in First International - North and South America 3 pieces Up to 32kg (70lb) each International - rest of the world Up to 50kg (110lb) No single piece being greater than 32kg (70lb) Frequent Flyer?\"\n  • 110lb  — \"Your allowance on Qantas-operated flights in First International - North and South America 3 pieces Up to 32kg (70lb) each International - rest of the world Up to 50kg (110lb) No single piece being greater than 32kg (70lb) Frequent Flyer?\"\n  • 42kg  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 92lb  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 46kg  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 101lb  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 52kg  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 114lb  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 56kg  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 123lb  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 60kg  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 132lb  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 62kg  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 136lb  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 66kg  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 145lb  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 70kg  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 154lb  — \"Economy baggage allowances on Qantas flights Economy baggage allowance on Qantas flights Bronze Frequent Flyers Silver Frequent Flyers and Qantas Club members Gold Frequent Flyers Platinum and Platinum One Frequent Flyers Australian domesti…\"\n  • 14kg  — \"1st piece up to 14kg (30lb) and 2nd piece up to 9kg (20lb).\"\n  • 30lb  — \"1st piece up to 14kg (30lb) and 2nd piece up to 9kg (20lb).\"\n  • 9kg  — \"1st piece up to 14kg (30lb) and 2nd piece up to 9kg (20lb).\"\n  • 20lb  — \"1st piece up to 14kg (30lb) and 2nd piece up to 9kg (20lb).\"\n  • 65kg  — \"Your checked baggage allowance, plus any additional baggage purchased, can't exceed 65kg (143lb) per person.\"\n  • 143lb  — \"Your checked baggage allowance, plus any additional baggage purchased, can't exceed 65kg (143lb) per person.\"\n  • 10kg  — \"Outlines infant allowance by travel destination Allowance Additional items Australian domestic None Three infant items[2] International – North and South America 1 piece up to 10kg (22lb), with total dimensions not exceeding 115cm (45in) Th…\"\n  • 22lb  — \"Outlines infant allowance by travel destination Allowance Additional items Australian domestic None Three infant items[2] International – North and South America 1 piece up to 10kg (22lb), with total dimensions not exceeding 115cm (45in) Th…\"\n  • 45kg  — \"Outlines infant allowance by travel destination Allowance Additional items Australian domestic Same as standard adult allowance Two child items[2] International – North and South America Same as standard adult allowance Two child items[2] I…\"\n  • 100lb  — \"Outlines infant allowance by travel destination Allowance Additional items Australian domestic Same as standard adult allowance Two child items[2] International – North and South America Same as standard adult allowance Two child items[2] I…\"\n  • 50lbs  — \"If you have any piece of baggage over 23kgs (50lbs), you may also have to pay a heavy charge at the airport depending on your allowance.\"\n  • 35kg  — \"For bookings made prior to 1 October 2026, the option to purchase additional baggage up to 35kg (77lb) applies.\"\n  • 77lb  — \"For bookings made prior to 1 October 2026, the option to purchase additional baggage up to 35kg (77lb) applies.\"\n  • 70lbs  — \"International flights – North and South America Up to five pieces of additional baggage may be pre-purchased before you travel, at up to 32kg (70lbs) per piece.\"\n  • 5kg  — \"International flights –rest of world Up to 100kgs of additional baggage may be pre-purchased before you travel, available in increments of 5kg, 10kg, 15kg, 25kg or 35kg.\"\n  • 15kg  — \"International flights –rest of world Up to 100kgs of additional baggage may be pre-purchased before you travel, available in increments of 5kg, 10kg, 15kg, 25kg or 35kg.\"\n  • 25kg  — \"International flights –rest of world Up to 100kgs of additional baggage may be pre-purchased before you travel, available in increments of 5kg, 10kg, 15kg, 25kg or 35kg.\"\n  • A$161  — \"The following charges are for Qantas operated flights, and vary depending on your destination.[2] Charges on Australian domestic flights A$161 for each extra piece of baggage beyond your allowance.\"\n  • A$64  — \"A$64 heavy charge for each piece weighing over 23kg (50lbs).\"\n  • A$315  — \"Charges on international flights – North and South America To North and South America A$315 for each extra piece of baggage beyond your allowance.\"\n  • US$210  — \"From North and South America US$210 for each extra piece beyond your allowance.\"\n  • A$21  — \"A$21 per kg Between Australia and Asia Excess baggage fees:\"\n  • A$37  — \"A$37 per kg Between Asia, the United Kingdom, and Europe Excess baggage fees:\"\n  • A$63  — \"A$63 per kg Between Australia and Europe, South Africa and the United Kingdom Excess baggage fees:\"\n  • A$84  — \"A$84 per kg How we measure excess baggage Excess baggage is measured by either the number of pieces or the total weight of your baggage, based on your destination.\"\n  • 24 hours  — \"Additional baggage is not available for flights operated by another carrier (such as codeshare or interline flights) or if you are connecting to or from a flight operated by another airline within 24 hours of your Qantas operated flight.\""
+          "status": "n/a",
+          "notes": "Qantas First does not operate on Australian domestic routes."
+        },
+        "first_americas": {
+          "value": "3 pieces, up to 32kg (70lb) each",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "first_row": {
+          "value": "Up to 50kg (110lb) total — no single piece over 32kg (70lb). The source does not state a piece count for this row, unlike the others.",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "max_single_piece_weight": {
+          "value": "No single piece can exceed 32kg (70lb), regardless of your total baggage allowance.",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": "Applies across every cabin and region in the table above."
+        },
+        "total_purchased_cap": {
+          "value": "Your checked baggage allowance, plus any additional baggage purchased, can't exceed 65kg (143lb) per person.",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "dash8_domestic_exception": {
+          "value": "Only one piece of baggage to 23kg (50lb) can be taken on Dash 8 flights, due to weight restrictions.",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": "Exception to the Economy Australian-domestic row."
+        },
+        "lord_howe_exception": {
+          "value": "Two pieces, combined total up to 23kg (50lb): 1st piece up to 14kg (30lb), 2nd piece up to 9kg (20lb).",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/baggage/checked",
+          "verified_at": "2026-08-24",
+          "notes": "Exception to the Economy Australian-domestic row, for Lord Howe Island."
         }
+      },
+      "lede": "Allowance depends on cabin and destination. Figures below are for Qantas-operated flights; codeshare and Jetstar-operated services can differ and are not yet covered here.",
+      "table": {
+        "caption": "Checked baggage allowance by cabin and destination",
+        "columns": [
+          "Cabin",
+          "Australian domestic",
+          "North & South America",
+          "Rest of world"
+        ],
+        "rows": [
+          {
+            "label": "Economy",
+            "cells": [
+              "economy_domestic",
+              "economy_americas",
+              "economy_row"
+            ]
+          },
+          {
+            "label": "Premium Economy",
+            "cells": [
+              "premium_economy_domestic",
+              "premium_economy_americas",
+              "premium_economy_row"
+            ]
+          },
+          {
+            "label": "Business",
+            "cells": [
+              "business_domestic",
+              "business_americas",
+              "business_row"
+            ]
+          },
+          {
+            "label": "First",
+            "cells": [
+              "first_domestic",
+              "first_americas",
+              "first_row"
+            ]
+          }
+        ]
       }
     },
     {

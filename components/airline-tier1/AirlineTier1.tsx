@@ -369,8 +369,11 @@ function SourcedModuleView({ module: m }: { module: ResolvedModule }) {
 
       {/* Fields not laid out in a table still have to render. Most modules
           carry a handful of values and no table at all, and before this they
-          drew a header and a verified stamp over an empty body. */}
-      {m.published.length > 0 && !m.table && (
+          drew a header and a verified stamp over an empty body. `published`
+          already excludes anything used as a table cell (see resolveModule),
+          so a module can carry both a matrix and standalone exceptions below
+          it without a value appearing twice. */}
+      {m.published.length > 0 && (
         <dl className={s.fieldList}>
           {m.published.map((f) => (
             <div key={f.key}>
