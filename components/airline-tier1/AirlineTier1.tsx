@@ -128,7 +128,7 @@ export default function AirlineTier1({
 
   const derived: Record<string, DerivedModule | null> = {
     cabins: cabinsModule(airline, routeFacts),
-    contact: contactModule(airline, airlineRef),
+    contact: contactModule(airline, airlineRef, previewRedesign),
     network: networkModule(airline, routeFacts, previewRedesign),
     reviews: REVIEWS_MODULE_ENABLED ? reviewsModule(airline, reviews) : null,
     faq: null, // rendered by its own component below
@@ -137,7 +137,15 @@ export default function AirlineTier1({
   const faqs = derivedFaqs(airline, routeFacts, alliance, previewRedesign);
 
   const rendered = (previewRedesign ? PREVIEW_LAYOUT : LAYOUT).map((entry) => {
-    const fromFile = entry.from !== 'derived' ? sourced.get(entry.id) ?? null : null;
+    // The preview contact card intentionally combines directory contact fields
+    // with official links. The live page retains its stricter sourced-module
+    // precedence until the redesigned treatment is approved.
+    const fromFile =
+      previewRedesign && entry.id === 'contact'
+        ? null
+        : entry.from !== 'derived'
+          ? sourced.get(entry.id) ?? null
+          : null;
     // 'either' prefers the fact file and falls back to the derived module, so a
     // carrier without a contact entry still gets what Strapi and Duffel know.
     const fromCode = entry.from !== 'facts' && !fromFile?.isPublished ? derived[entry.id] ?? null : null;
@@ -872,6 +880,7 @@ function Figure({ figure }: { figure: FactFigure }) {
 /** A cell that is its own source renders as the link, not as text beside one. */
 function Cell({ cell }: { cell: DerivedCell }) {
   if (typeof cell === 'string') return <>{cell}</>;
+  if (cell.href.startsWith('tel:')) return <a href={cell.href}>{cell.text}</a>;
   return (
     <a href={cell.href} target="_blank" rel="noopener noreferrer nofollow">
       {cell.text}
@@ -887,10 +896,14 @@ function Cell({ cell }: { cell: DerivedCell }) {
  * many carriers, but nothing records where those came from — so they are named
  * as unverified rather than laid out as facts.
  */
-function contactModule(a: StrapiAirline, ref: AirlineRef | null): DerivedModule | null {
+function contactModule(a: StrapiAirline, ref: AirlineRef | null, includeDirectoryContacts = false): DerivedModule | null {
   const rows: DerivedCell[][] = [];
   const website = a.website ? (a.website.startsWith('http') ? a.website : `https://${a.website}`) : null;
 
+  if (includeDirectoryContacts && a.address?.trim()) rows.push(['Address', a.address.trim()]);
+  if (includeDirectoryContacts && a.phone?.trim()) {
+    rows.push(['Phone', { text: a.phone.trim(), href: `tel:${a.phone.replace(/[^+\d]/g, '')}` }]);
+  }
   if (website) rows.push(['Official website', { text: website.replace(/^https?:\/\//, ''), href: website }]);
   if (ref?.conditionsOfCarriageUrl) {
     rows.push(['Conditions of carriage', { text: 'Published terms', href: ref.conditionsOfCarriageUrl }]);
@@ -908,19 +921,28 @@ function contactModule(a: StrapiAirline, ref: AirlineRef | null): DerivedModule 
     sources.push({ label: `${AIRLINE_REF_SOURCE.label()}`, note: `retrieved ${AIRLINE_REF_SOURCE.retrieved()}` });
   }
 
-  const unverified = [
-    a.phone ? 'a customer-service number' : '',
-    a.address ? 'a registered address' : '',
-  ].filter((v): v is string => v.length > 0);
+  const unverified = includeDirectoryContacts
+    ? []
+    : [a.phone ? 'a customer-service number' : '', a.address ? 'a registered address' : ''].filter(
+        (v): v is string => v.length > 0,
+      );
 
   return {
     id: 'contact',
     title: 'Contact and the small print',
     verifiedAt: ref?.conditionsOfCarriageUrl ? AIRLINE_REF_SOURCE.retrieved() : '2026-08-24',
-    body: [
-      'Every row here is a link you can open and check for yourself, which is the only kind of contact detail worth printing on a reference page — numbers and addresses go stale quietly.',
-    ],
-    table: { caption: 'Where to check the airline’s own terms', columns: ['', 'Link'], rows },
+    body: includeDirectoryContacts
+      ? [
+          `Use these details to contact ${a.name} or check its official policies. Phone numbers and addresses can change, so confirm time-sensitive information on the airline’s website before travelling.`,
+        ]
+      : [
+          'Every row here is a link you can open and check for yourself, which is the only kind of contact detail worth printing on a reference page — numbers and addresses go stale quietly.',
+        ],
+    table: {
+      caption: includeDirectoryContacts ? `${a.name} contact details and official links` : 'Where to check the airline’s own terms',
+      columns: ['', 'Details'],
+      rows,
+    },
     conflicts: unverified.length
       ? [
           {
