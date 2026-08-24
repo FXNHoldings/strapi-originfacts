@@ -172,22 +172,6 @@
           "notes": "Not sourced, and cannot be a single value \u2014 see contracting_parties. Four documents govern four operators. EU261 and UK261 apply by departure point regardless, but that is reasoning rather than a source."
         }
       }
-    },
-    {
-      "id": "contact",
-      "title": "Contact and the small print",
-      "required": [
-        "conditions_of_carriage_url"
-      ],
-      "fields": {
-        "conditions_of_carriage_url": {
-          "value": "https://www.ryanair.com/gb/en/useful-info/help-centre/terms-and-conditions",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12890911974289-General-Terms-Conditions-of-Carriage",
-          "verified_at": "2026-08-24",
-          "notes": "The terms governing FR-operated flights. Ryanair UK (RK), Buzz (RR) and Malta Air publish separate documents \u2014 see contracting_parties in the rights module. The source is the disambiguation page that links here, which is where the URL was read, not the document itself."
-        }
-      }
     }
   ]
 }
