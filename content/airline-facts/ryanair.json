@@ -156,6 +156,30 @@
         "conditions_of_carriage_url"
       ],
       "fields": {
+        "registered_address": {
+          "value": "Ryanair DAC, Corporate Head Office, Airside Business Park, Swords, Co. Dublin, Ireland",
+          "status": "official",
+          "source_url": "https://help.ryanair.com/hc/en-us/categories/12504593426961-Contact-Us",
+          "verified_at": "2026-08-24"
+        },
+        "international_customer_service": {
+          "value": "+353 1 697 1368",
+          "status": "official",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/13263255371537-Call-Us-International",
+          "verified_at": "2026-08-24"
+        },
+        "phone_support_hours": {
+          "value": "Monday–Friday 08:00–20:00 GMT; Saturday–Sunday 09:00–18:00 GMT",
+          "status": "official",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/13263255371537-Call-Us-International",
+          "verified_at": "2026-08-24"
+        },
+        "contact_help_centre": {
+          "value": "https://help.ryanair.com/hc/en-gb/sections/12504616835857-Contact-Us",
+          "status": "official",
+          "source_url": "https://help.ryanair.com/hc/en-gb/sections/12504616835857-Contact-Us",
+          "verified_at": "2026-08-24"
+        },
         "conditions_of_carriage_url": {
           "value": "https://www.ryanair.com/gb/en/useful-info/help-centre/terms-and-conditions",
           "status": "official",

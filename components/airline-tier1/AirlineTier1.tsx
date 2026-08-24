@@ -128,7 +128,7 @@ export default function AirlineTier1({
 
   const derived: Record<string, DerivedModule | null> = {
     cabins: cabinsModule(airline, routeFacts),
-    contact: contactModule(airline, airlineRef, previewRedesign),
+    contact: contactModule(airline, airlineRef, previewRedesign, sourced.get('contact') ?? null),
     network: networkModule(airline, routeFacts, previewRedesign),
     reviews: REVIEWS_MODULE_ENABLED ? reviewsModule(airline, reviews) : null,
     faq: null, // rendered by its own component below
@@ -896,17 +896,36 @@ function Cell({ cell }: { cell: DerivedCell }) {
  * many carriers, but nothing records where those came from — so they are named
  * as unverified rather than laid out as facts.
  */
-function contactModule(a: StrapiAirline, ref: AirlineRef | null, includeDirectoryContacts = false): DerivedModule | null {
+function contactModule(
+  a: StrapiAirline,
+  ref: AirlineRef | null,
+  includeDirectoryContacts = false,
+  verifiedContact: ResolvedModule | null = null,
+): DerivedModule | null {
   const rows: DerivedCell[][] = [];
   const website = a.website ? (a.website.startsWith('http') ? a.website : `https://${a.website}`) : null;
+  const verified = new Map((verifiedContact?.published ?? []).map((field) => [field.key, field.field]));
+  const verifiedAddress = verified.get('registered_address')?.value?.trim();
+  const verifiedPhone = verified.get('international_customer_service')?.value?.trim();
+  const supportHours = verified.get('phone_support_hours')?.value?.trim();
+  const helpCentre = verified.get('contact_help_centre')?.value?.trim();
+  const verifiedTerms = verified.get('conditions_of_carriage_url')?.value?.trim();
 
-  if (includeDirectoryContacts && a.address?.trim()) rows.push(['Address', a.address.trim()]);
-  if (includeDirectoryContacts && a.phone?.trim()) {
-    rows.push(['Phone', { text: a.phone.trim(), href: `tel:${a.phone.replace(/[^+\d]/g, '')}` }]);
+  if (includeDirectoryContacts && (verifiedAddress || a.address?.trim())) {
+    rows.push(['Registered address', verifiedAddress || a.address!.trim()]);
   }
+  if (includeDirectoryContacts && (verifiedPhone || a.phone?.trim())) {
+    const phone = verifiedPhone || a.phone!.trim();
+    rows.push(['International customer service', { text: phone, href: `tel:${phone.replace(/[^+\d]/g, '')}` }]);
+  }
+  if (includeDirectoryContacts && supportHours) rows.push(['Phone support hours', supportHours]);
   if (website) rows.push(['Official website', { text: website.replace(/^https?:\/\//, ''), href: website }]);
-  if (ref?.conditionsOfCarriageUrl) {
-    rows.push(['Conditions of carriage', { text: 'Published terms', href: ref.conditionsOfCarriageUrl }]);
+  if (includeDirectoryContacts && helpCentre) {
+    rows.push(['Customer support', { text: 'Contact options and live chat', href: helpCentre }]);
+  }
+  const terms = verifiedTerms || ref?.conditionsOfCarriageUrl;
+  if (terms) {
+    rows.push(['Conditions of carriage', { text: 'Published terms', href: terms }]);
   }
   if (a.frequentFlyerProgram) {
     rows.push([
@@ -917,6 +936,9 @@ function contactModule(a: StrapiAirline, ref: AirlineRef | null, includeDirector
   if (rows.length === 0) return null;
 
   const sources: DerivedModule['sources'] = [{ label: `${a.name} official website`, note: 'linked above' }];
+  if (includeDirectoryContacts && verifiedContact?.verified_at) {
+    sources.push({ label: `${a.name} official help centre`, note: `verified ${formatDate(verifiedContact.verified_at)}` });
+  }
   if (ref?.conditionsOfCarriageUrl) {
     sources.push({ label: `${AIRLINE_REF_SOURCE.label()}`, note: `retrieved ${AIRLINE_REF_SOURCE.retrieved()}` });
   }
