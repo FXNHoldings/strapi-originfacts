@@ -182,7 +182,14 @@ async function main(): Promise<void> {
         continue;
       }
 
-      const missing = measurements.filter((m) => !article.text.includes(m));
+      // A plain substring check confirms "68kg" against a page that only says
+      // "22.68kg", which would stamp a fabricated figure as sourced. The match
+      // must not begin inside a longer number.
+      const presentInSource = (m: string) => {
+        const escaped = m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return new RegExp(`(?<![\\d.,])${escaped}`).test(article.text);
+      };
+      const missing = measurements.filter((m) => !presentInSource(m));
       if (missing.length) {
         outcomes.push({ ...where, action: 'refuse', detail: `not found in the cited page: ${missing.join(', ')}` });
         continue;

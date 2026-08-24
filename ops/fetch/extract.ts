@@ -50,8 +50,12 @@ type CandidateFile = {
 
 const PATTERNS: { kind: Candidate['kind']; re: RegExp }[] = [
   // 40 x 30 x 20 cm  /  55x40x20cm
-  { kind: 'dimensions', re: /\b\d{1,3}\s*[x×]\s*\d{1,3}\s*[x×]\s*\d{1,3}\s*(?:cm|mm|in|inches)\b/gi },
-  { kind: 'weight', re: /\b\d{1,3}(?:\.\d)?\s*(?:kg|kilograms?|lbs?|pounds?)\b/gi },
+  { kind: 'dimensions', re: /(?<![\d.,])\d{1,3}\s*[x×]\s*\d{1,3}\s*[x×]\s*\d{1,3}\s*(?:cm|mm|in|inches)\b/gi },
+  // The negative lookbehind is load-bearing. Without it "50 pounds (22.68 kg)"
+  // yields "68 kg" — the fractional tail of a decimal read as a whole number —
+  // and because that substring genuinely occurs in the page, auto-verification
+  // would confirm a figure the carrier never published.
+  { kind: 'weight', re: /(?<![\d.,])\d{1,3}(?:\.\d{1,2})?\s*(?:kg|kilograms?|lbs?|pounds?)\b/gi },
   // Counts must be bare integers about things, not the leading digits of a
   // duration. "up to 2.5 hours pre-departure" was yielding "up to 2", and a
   // change-deadline masquerading as a bag count is exactly the kind of wrong

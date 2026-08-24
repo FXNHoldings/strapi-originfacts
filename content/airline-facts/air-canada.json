@@ -10,11 +10,6 @@
         "standard_carryon_dimensions"
       ],
       "fields": {
-        "unassigned_evidence": {
-          "value": null,
-          "status": "pending",
-          "notes": "6 candidate measurement(s) extracted from baggage_carryon. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  • 23 x 40 x 55 cm  — \"23 x 40 x 55 cm/9 x 15.5 x 21.5 in Personal item Maximum dimensions (D x W x H):\"\n  • 33 x 43 x 16 cm  — \"33 x 43 x 16 cm/13 x 17 x 6 in Maximum dimensions include wheels and handles.\"\n  • 13 x 17 x 6 in  — \"33 x 43 x 16 cm/13 x 17 x 6 in Maximum dimensions include wheels and handles.\"\n  • 25 x 30 x 14cm  — \"25 x 30 x 14cm (10 x 12 x 5.5 in) Larger purses will be included in your carry-on allowance.\"\n  • $65  — \"If you’re checking in online or at a kiosk, you’ll need to provide a credit card for pre-authorization of gate handling fees of CA/US $65-$78 (tax inclusive).\"\n  • $78  — \"If you’re checking in online or at a kiosk, you’ll need to provide a credit card for pre-authorization of gate handling fees of CA/US $65-$78 (tax inclusive).\""
-        },
         "personal_item_dimensions": {
           "value": "33 x 43 x 16 cm",
           "status": "official",
@@ -30,34 +25,91 @@
           "notes": "Human assignment: the overhead-locker bag. Auto-verified: 23x40x55 found verbatim in the captured article at this URL, and the URL is on aircanada.com.",
           "verified_at": "2026-08-24",
           "verified_by": "auto"
+        },
+        "economy_basic_restriction": {
+          "value": "Economy Basic fares bought on or after 3 January 2025 allow only one personal item on some itineraries",
+          "status": "pending",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/carry-on.html",
+          "notes": "Verbatim: 'Economy Basic fares purchased on or after January 3, 2025, allow for only one (1) personal item on board when travelling on some itineraries.' No measurement to match, so this needs human verification."
+        }
+      }
+    },
+    {
+      "id": "baggage",
+      "title": "Checked baggage",
+      "required": [
+        "economy_checked_weight",
+        "business_checked_weight",
+        "max_linear_dimensions",
+        "absolute_refusal_limits"
+      ],
+      "fields": {
+        "economy_checked_weight": {
+          "value": "23 kg (50 lb) per bag",
+          "status": "official",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/legal/conditions-carriage-tariffs.html",
+          "notes": "Tariff table: 'Economy Class \u2026 158 cm 62 in 23 kg 50 lb'. Auto-verified: 23kg, 50lb found verbatim in the captured article at this URL, and the URL is on aircanada.com.",
+          "verified_at": "2026-08-24",
+          "verified_by": "auto"
+        },
+        "business_checked_weight": {
+          "value": "32 kg (70 lb) per bag",
+          "status": "official",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/legal/conditions-carriage-tariffs.html",
+          "notes": "Tariff table: 'Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb'. Auto-verified: 32kg, 70lb found verbatim in the captured article at this URL, and the URL is on aircanada.com.",
+          "verified_at": "2026-08-24",
+          "verified_by": "auto"
+        },
+        "business_checked_count": {
+          "value": "Up to 3 bags",
+          "status": "pending",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/legal/conditions-carriage-tariffs.html",
+          "notes": "Tariff table, Business Class row."
+        },
+        "max_linear_dimensions": {
+          "value": "158 cm (62 in) length + width + height",
+          "status": "official",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/legal/conditions-carriage-tariffs.html",
+          "notes": "Applies to both cabins in the tariff table. Auto-verified: 158cm, 62in found verbatim in the captured article at this URL, and the URL is on aircanada.com.",
+          "verified_at": "2026-08-24",
+          "verified_by": "auto"
+        },
+        "absolute_refusal_limits": {
+          "value": "Not accepted over 32 kg (70 lb), over 292 cm (115 in) linear, or over 203 cm (80 in) long",
+          "status": "official",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/legal/conditions-carriage-tariffs.html",
+          "notes": "Verbatim: 'Bags exceeding 32 kg (70 lb) in weight, 292 cm (115 in) in linear dimensions \u2026 or 203 cm (80 in) in length will not be accepted as checked baggage.' Auto-verified: 32kg, 70lb, 292cm, 115in, 203cm, 80in found verbatim in the captured article at this URL, and the URL is on aircanada.com.",
+          "verified_at": "2026-08-24",
+          "verified_by": "auto"
+        },
+        "economy_included_count": {
+          "value": null,
+          "status": "pending",
+          "notes": "The tariff gives per-bag limits but never states how many bags Economy includes \u2014 only Business's 'Up to 3'. Allowance varies by route and fare, and the linked complete-allowance page is not in our captures."
         }
       }
     },
     {
       "id": "rights",
       "title": "If your flight is delayed or cancelled",
-      "required": [
-        "unassigned_evidence"
-      ],
+      "required": [],
       "fields": {
         "unassigned_evidence": {
           "value": null,
           "status": "pending",
-          "notes": "15 candidate measurement(s) extracted from conditions_of_carriage. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  • $400  — \"Compensation for delays and cancellations is calculated based on your arrival time at final destination and is $400 CAD (for delays at arrival between 3 and 6 hours), $700 CAD (for delays at arrival between 6 and 9 hours), and $1,000 CAD (f…\"\n  • $700  — \"Compensation for delays and cancellations is calculated based on your arrival time at final destination and is $400 CAD (for delays at arrival between 3 and 6 hours), $700 CAD (for delays at arrival between 6 and 9 hours), and $1,000 CAD (f…\"\n  • $1  — \"Compensation for delays and cancellations is calculated based on your arrival time at final destination and is $400 CAD (for delays at arrival between 3 and 6 hours), $700 CAD (for delays at arrival between 6 and 9 hours), and $1,000 CAD (f…\"\n  • $900  — \"Denied boarding compensation is calculated based on your arrival time at destination and is $900 CAD (if delayed between 0 and 6 hours), $1,800 CAD (if delayed between 6 and 9 hours), and $2,400 CAD (if delayed by 9 hours and more).\"\n  • $2  — \"Denied boarding compensation is calculated based on your arrival time at destination and is $900 CAD (if delayed between 0 and 6 hours), $1,800 CAD (if delayed between 6 and 9 hours), and $2,400 CAD (if delayed by 9 hours and more).\"\n  • 16 x 33 x 43 cm  — \"16 x 33 x 43 cm (6 in x 13 in x 17 in) Maximum weight Your carry-on baggage must be light enough that you can store it in the overhead bin unassisted.\"\n  • 23 kg  — \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c…\"\n  • 50 lb  — \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c…\"\n  • 32 kg  — \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c…\"\n  • 70 lb  — \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c…\"\n  • Up to 3  — \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c…\"\n  • EUR 1  — \"In respect of destruction, loss of, or damage or delay to baggage 1,519 Special Drawing Rights (approximately EUR 1,900; US $2,000) per passenger in most cases.\"\n  • EUR 7  — \"In respect of damage occasioned by delay in the carriage of persons 6,303 Special Drawing Rights (approximately EUR 7,700; US $8,300) per passenger in most cases.\"\n  • $8  — \"In respect of damage occasioned by delay in the carriage of persons 6,303 Special Drawing Rights (approximately EUR 7,700; US $8,300) per passenger in most cases.\"\n  • $75  — \"Many carriers have voluntarily waived these limits in their entirety, and U.S. regulations require that, for journeys to, from or with an agreed stopping place in the U.S., the limit may not be inferior to U.S. $75,000.\""
+          "notes": "15 candidate measurement(s) extracted from conditions_of_carriage. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  \u2022 $400  \u2014 \"Compensation for delays and cancellations is calculated based on your arrival time at final destination and is $400 CAD (for delays at arrival between 3 and 6 hours), $700 CAD (for delays at arrival between 6 and 9 hours), and $1,000 CAD (f\u2026\"\n  \u2022 $700  \u2014 \"Compensation for delays and cancellations is calculated based on your arrival time at final destination and is $400 CAD (for delays at arrival between 3 and 6 hours), $700 CAD (for delays at arrival between 6 and 9 hours), and $1,000 CAD (f\u2026\"\n  \u2022 $1  \u2014 \"Compensation for delays and cancellations is calculated based on your arrival time at final destination and is $400 CAD (for delays at arrival between 3 and 6 hours), $700 CAD (for delays at arrival between 6 and 9 hours), and $1,000 CAD (f\u2026\"\n  \u2022 $900  \u2014 \"Denied boarding compensation is calculated based on your arrival time at destination and is $900 CAD (if delayed between 0 and 6 hours), $1,800 CAD (if delayed between 6 and 9 hours), and $2,400 CAD (if delayed by 9 hours and more).\"\n  \u2022 $2  \u2014 \"Denied boarding compensation is calculated based on your arrival time at destination and is $900 CAD (if delayed between 0 and 6 hours), $1,800 CAD (if delayed between 6 and 9 hours), and $2,400 CAD (if delayed by 9 hours and more).\"\n  \u2022 16 x 33 x 43 cm  \u2014 \"16 x 33 x 43 cm (6 in x 13 in x 17 in) Maximum weight Your carry-on baggage must be light enough that you can store it in the overhead bin unassisted.\"\n  \u2022 23 kg  \u2014 \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c\u2026\"\n  \u2022 50 lb  \u2014 \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c\u2026\"\n  \u2022 32 kg  \u2014 \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c\u2026\"\n  \u2022 70 lb  \u2014 \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c\u2026\"\n  \u2022 Up to 3  \u2014 \"Maximum Overall Measurement (Length + Width + Height) Maximum Weight Economy Class (view complete baggage allowance) 158 cm 62 in 23 kg 50 lb Business Class Up to 3 bags 158 cm 62 in 32 kg 70 lb Bags exceeding 32 kg (70 lb) in weight, 292 c\u2026\"\n  \u2022 EUR 1  \u2014 \"In respect of destruction, loss of, or damage or delay to baggage 1,519 Special Drawing Rights (approximately EUR 1,900; US $2,000) per passenger in most cases.\"\n  \u2022 EUR 7  \u2014 \"In respect of damage occasioned by delay in the carriage of persons 6,303 Special Drawing Rights (approximately EUR 7,700; US $8,300) per passenger in most cases.\"\n  \u2022 $8  \u2014 \"In respect of damage occasioned by delay in the carriage of persons 6,303 Special Drawing Rights (approximately EUR 7,700; US $8,300) per passenger in most cases.\"\n  \u2022 $75  \u2014 \"Many carriers have voluntarily waived these limits in their entirety, and U.S. regulations require that, for journeys to, from or with an agreed stopping place in the U.S., the limit may not be inferior to U.S. $75,000.\""
         }
       }
     },
     {
       "id": "fares",
       "title": "What the cheapest fare includes",
-      "required": [
-        "unassigned_evidence"
-      ],
+      "required": [],
       "fields": {
         "unassigned_evidence": {
           "value": null,
           "status": "pending",
-          "notes": "13 candidate measurement(s) extracted from fare_conditions. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  • $100  — \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal…\"\n  • $120  — \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal…\"\n  • $1  — \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal…\"\n  • $79.00  — \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal…\"\n  • $94.80  — \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal…\"\n  • $59.00  — \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal…\"\n  • $49.00  — \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal…\"\n  • $35  — \"CA$35 - $42 2nd bag:\"\n  • $42  — \"CA$35 - $42 2nd bag:\"\n  • $50  — \"CA$50 - $60 1st bag:\"\n  • $60  — \"CA$50 - $60 1st bag:\"\n  • $10.49  — \"CA$50 - $60 2 bags 2 bags Exemption from sports equipment handling fee (for 1 item) More details Not available Not available Not available Not available Included Advance seat selection (fees are per flight segment) More details A fee applie…\"\n  • $12.50  — \"CA$50 - $60 2 bags 2 bags Exemption from sports equipment handling fee (for 1 item) More details Not available Not available Not available Not available Included Advance seat selection (fees are per flight segment) More details A fee applie…\""
+          "notes": "13 candidate measurement(s) extracted from fare_conditions. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  \u2022 $100  \u2014 \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal\u2026\"\n  \u2022 $120  \u2014 \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal\u2026\"\n  \u2022 $1  \u2014 \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal\u2026\"\n  \u2022 $79.00  \u2014 \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal\u2026\"\n  \u2022 $94.80  \u2014 \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal\u2026\"\n  \u2022 $59.00  \u2014 \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal\u2026\"\n  \u2022 $49.00  \u2014 \"The names of our premium fare options have changed Business Class (flexible) and Premium Economy (flexible) are now called Business Class Latitude and Premium Economy Latitude Business Class (lowest) and Premium Economy (lowest) are now cal\u2026\"\n  \u2022 $35  \u2014 \"CA$35 - $42 2nd bag:\"\n  \u2022 $42  \u2014 \"CA$35 - $42 2nd bag:\"\n  \u2022 $50  \u2014 \"CA$50 - $60 1st bag:\"\n  \u2022 $60  \u2014 \"CA$50 - $60 1st bag:\"\n  \u2022 $10.49  \u2014 \"CA$50 - $60 2 bags 2 bags Exemption from sports equipment handling fee (for 1 item) More details Not available Not available Not available Not available Included Advance seat selection (fees are per flight segment) More details A fee applie\u2026\"\n  \u2022 $12.50  \u2014 \"CA$50 - $60 2 bags 2 bags Exemption from sports equipment handling fee (for 1 item) More details Not available Not available Not available Not available Included Advance seat selection (fees are per flight segment) More details A fee applie\u2026\""
         }
       }
     }
