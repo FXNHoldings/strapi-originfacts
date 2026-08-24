@@ -71,7 +71,24 @@ const PATTERNS: { kind: Candidate['kind']; re: RegExp }[] = [
     kind: 'count',
     re: /\b(?:up to|maximum of|max(?:imum)?|no more than)\s+\d{1,2}\b(?![.,]\d)(?!\s*(?:hours?|hrs?|h\b|minutes?|mins?|days?|weeks?|months?|years?|%|cm|kg|mm))/gi,
   },
-  { kind: 'money', re: /(?:[£€$]|EUR|GBP|AUD|USD)\s?\d{1,4}(?:\.\d{2})?\b/gi },
+  // Two guards, both load-bearing, both learned the hard way.
+  //
+  // Thousands separators: `\d{1,4}` stopped at the comma, so Qantas's Montreal
+  // Convention limit of EUR161,593 was read as "EUR161" and its Australian
+  // domestic limit of A$265,785 as "$265". A leading fragment of a number is
+  // the mirror of the decimal tail above, and it is worse in one way — the
+  // fragment is a genuine substring of the source, so citation checking
+  // confirms it. Match the whole grouped number, and refuse to stop in the
+  // middle of one.
+  //
+  // Currency prefix: A$210 and US$210 are different amounts and this page
+  // carries both, three sentences apart. Dropping the prefix produced "$210"
+  // for each — a value that cannot be published because it no longer says what
+  // it is worth.
+  {
+    kind: 'money',
+    re: /(?<![A-Za-z0-9])(?:(?:A|US|NZ|CA|HK|SG)?[£€$]|EUR|GBP|AUD|USD|NZD|CAD)\s?(?:\d{1,3}(?:,\d{3})+|\d{1,6})(?:\.\d{1,2})?(?![\d,])/gi,
+  },
 ];
 
 function sentencesOf(text: string): string[] {
