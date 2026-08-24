@@ -130,10 +130,10 @@ export default function AirlineTier1({
   // Verified counts only fact-file modules that actually published. Derived
   // modules carry a dataset vintage, not a verification, and are counted apart
   // so the ledger cannot imply someone checked them.
-  const publishedSourced = rendered.map((r) => r.sourced).filter((m): m is ResolvedModule => Boolean(m?.published));
+  const publishedSourced = rendered.map((r) => r.sourced).filter((m): m is ResolvedModule => Boolean(m?.isPublished));
   const derivedCount = rendered.filter((r) => r.derived).length;
   const disputedCount = rendered.filter((r) => r.sourced && r.sourced.disputes.length > 0).length;
-  const pendingCount = rendered.filter((r) => r.id !== 'faq' && !r.derived && !r.sourced?.published).length;
+  const pendingCount = rendered.filter((r) => r.id !== 'faq' && !r.derived && !r.sourced?.isPublished).length;
   const lastReview = oldestVerifiedAt(publishedSourced);
 
   const hubs = (routeFacts?.topHubs ?? []).slice(0, 4).map((h) => h.city);
@@ -221,7 +221,7 @@ export default function AirlineTier1({
                 <FaqModule key="faq" faqs={faqs} />
               ) : r.derived ? (
                 <DerivedModuleView key={r.id} module={r.derived} />
-              ) : r.sourced?.published ? (
+              ) : r.sourced?.isPublished ? (
                 <SourcedModuleView key={r.id} module={r.sourced} />
               ) : (
                 <PendingModule
@@ -247,7 +247,7 @@ export default function AirlineTier1({
                       <span className={s.when}>
                         {r.derived
                           ? `data ${formatDate(r.derived.verifiedAt)}`
-                          : r.sourced?.published
+                          : r.sourced?.isPublished
                             ? formatDate(r.sourced.verified_at ?? '')
                             : r.sourced?.disputes.length
                               ? 'disputed'
@@ -359,6 +359,23 @@ function SourcedModuleView({ module: m }: { module: ResolvedModule }) {
         </div>
       )}
 
+      {/* Fields not laid out in a table still have to render. Most modules
+          carry a handful of values and no table at all, and before this they
+          drew a header and a verified stamp over an empty body. */}
+      {m.published.length > 0 && !m.table && (
+        <dl className={s.fieldList}>
+          {m.published.map((f) => (
+            <div key={f.key}>
+              <dt>{f.label}</dt>
+              <dd>
+                <FieldValue field={f.field} />
+                {f.field.notes && <span className={s.fieldNote}>{f.field.notes}</span>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )}
+
       {m.rule && (
         <div className={s.ruleBox}>
           <span className={s.ruleKey}>{m.rule.key}</span>
@@ -419,9 +436,11 @@ function FieldValue({ field }: { field: FactField | null }) {
  */
 function collectSources(m: ResolvedModule): { url: string; host: string; fields: string[]; verified_at: string }[] {
   const byUrl = new Map<string, { url: string; host: string; fields: string[]; verified_at: string }>();
-  const all = [...(m.table?.rows.flatMap((r) => r.cells) ?? [])].filter((f): f is FactField => Boolean(f));
 
-  for (const [key, field] of Object.entries(fieldIndex(m, all))) {
+  // Every official field, however it renders. Reading only table cells left a
+  // module with fields and no table showing an empty "Sources" block, which is
+  // worse than showing none — it claims a citation exists and shows nothing.
+  for (const { label, field } of m.published) {
     if (!field.source_url || !field.verified_at) continue;
     let host: string;
     try {
@@ -435,25 +454,11 @@ function collectSources(m: ResolvedModule): { url: string; host: string; fields:
       fields: [],
       verified_at: field.verified_at,
     };
-    entry.fields.push(key.replace(/_/g, ' '));
+    entry.fields.push(label);
     if (field.verified_at < entry.verified_at) entry.verified_at = field.verified_at;
     byUrl.set(field.source_url, entry);
   }
   return [...byUrl.values()];
-}
-
-/** Table cells lose their key on resolve; recover labels from the row headers. */
-function fieldIndex(m: ResolvedModule, all: FactField[]): Record<string, FactField> {
-  const out: Record<string, FactField> = {};
-  m.table?.rows.forEach((row) => {
-    row.cells.forEach((cell) => {
-      if (cell) out[row.label] = cell;
-    });
-  });
-  all.forEach((f, i) => {
-    if (!Object.values(out).includes(f)) out[`value ${i + 1}`] = f;
-  });
-  return out;
 }
 
 /** A module built from a dataset the site holds, citing the dataset. */

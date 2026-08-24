@@ -102,7 +102,7 @@ export type ResolvedModule = {
   id: string;
   title: string;
   /** False when any required field is not `official`. */
-  published: boolean;
+  isPublished: boolean;
   /** Field keys that blocked publication, with the status that blocked them. */
   blockers: { key: string; status: FieldStatus }[];
   /** Oldest `verified_at` among the official fields. */
@@ -113,6 +113,12 @@ export type ResolvedModule = {
   rule?: FactRule;
   /** Disputed fields, rendered as stated conflicts rather than resolved. */
   disputes: ResolvedField[];
+  /**
+   * Official fields, in file order. A module can carry facts without a table —
+   * most do — and before this existed those values had nowhere to render: the
+   * module drew its header and green stamp over an empty body.
+   */
+  published: ResolvedField[];
 };
 
 const isOfficial = (f: FactField | undefined): f is FactField => f?.status === 'official';
@@ -135,10 +141,15 @@ export function resolveModule(m: SourcedModule): ResolvedModule {
     .filter(([, f]) => f.status === 'disputed')
     .map(([key, field]) => ({ key, label: key.replace(/_/g, ' '), field }));
 
+  const published = Object.entries(fields)
+    .filter(([, f]) => isOfficial(f))
+    .map(([key, field]) => ({ key, label: key.replace(/_/g, ' '), field }));
+
   return {
     id: m.id,
     title: m.title,
-    published: blockers.length === 0,
+    published,
+    isPublished: blockers.length === 0,
     blockers,
     verified_at: officialDates[0] ?? null,
     lede: m.lede,
@@ -192,7 +203,7 @@ export function getAirlineFacts(slug: string): AirlineFactsFile | null {
 /** Oldest verification date across modules that actually published. */
 export function oldestVerifiedAt(modules: ResolvedModule[]): string | null {
   const dates = modules
-    .filter((m) => m.published)
+    .filter((m) => m.isPublished)
     .map((m) => m.verified_at)
     .filter((d): d is string => Boolean(d))
     .sort();
