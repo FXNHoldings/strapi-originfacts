@@ -20,6 +20,15 @@ export type CaptureStatus =
   | 'redirected_locale'
   /** Under the text threshold — a consent shell or an empty page, not content. */
   | 'too_short'
+  /**
+   * HTTP 200, but not the document that was asked for. Carriers routinely
+   * answer an unknown path with a catch-all redirect to a hub page or a
+   * homepage rather than a 404, so "it returned 200" is not evidence the page
+   * exists. Named separately for the same reason robots_unavailable is not
+   * blocked: "we got something that is not it" and "we got nothing" call for
+   * different fixes.
+   */
+  | 'soft_404'
   /** Network failure, or a non-200 that is not a block, after retries. */
   | 'error';
 
@@ -50,9 +59,31 @@ export type BlockSignal =
  */
 export type ConsentAction = 'none_found' | 'rejected' | 'reject_unavailable' | 'dismiss_failed';
 
+/**
+ * One page entry. `locale` overrides the carrier's when a page genuinely serves
+ * a different market — Qantas publishes its conditions of carriage on a /gb/en/
+ * path while the rest of the carrier is en-au, and recording that honestly beats
+ * forcing agreement.
+ */
+export type CarrierPage = {
+  url: string;
+  locale?: string;
+  note?: string;
+  /**
+   * Set when several page_keys deliberately share one document — Air New
+   * Zealand covers checked, carry-on and excess on a single page with the
+   * sub-topics as anchors. Pre-flight still flags the collapse: a declared
+   * shared source and a catch-all redirect are indistinguishable from the
+   * outside, and each is worth confirming rather than assuming.
+   */
+  shared_source?: string;
+};
+
 /** One carrier in carriers.json. */
 export type Carrier = {
   carrier_key: string;
+  name?: string;
+  iata?: string;
   /**
    * The market this capture is meant to represent, asserted by the operator.
    * The fetcher does not validate it against the page — it records what the
@@ -60,8 +91,19 @@ export type Carrier = {
    * locale-shaped URL segment changed, and leaves interpretation to stage 2.
    */
   locale: string;
-  pages: Record<string, string>;
+  band?: string;
+  region?: string;
+  help_root?: string;
+  /** Accepts the object form, or a bare URL string for older files. */
+  pages: Record<string, CarrierPage | string>;
 };
+
+/** Normalise either page form to the object form. */
+export function pageEntry(v: CarrierPage | string | undefined | null): CarrierPage | null {
+  if (!v) return null;
+  if (typeof v === 'string') return v.trim() ? { url: v.trim() } : null;
+  return v.url && v.url.trim() ? { ...v, url: v.url.trim() } : null;
+}
 
 export type CaptureMeta = {
   carrier_key: string;

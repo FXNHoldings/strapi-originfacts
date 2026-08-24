@@ -14,7 +14,10 @@
     "fetch": "yarn --cwd ops/fetch fetch",
     "reach": "yarn --cwd ops/fetch reach",
     "ingest-manual": "yarn --cwd ops/fetch ingest-manual",
-    "extract": "yarn --cwd ops/fetch extract"
+    "extract": "yarn --cwd ops/fetch extract",
+    "preflight": "yarn --cwd ops/fetch preflight",
+    "draft": "yarn --cwd ops/fetch draft",
+    "promote": "yarn --cwd ops/fetch promote"
   },
   "dependencies": {
     "date-fns": "^4.1.0",

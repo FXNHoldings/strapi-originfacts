@@ -7,15 +7,19 @@
     "fetch": "tsx run.ts",
     "reach": "tsx sweep.ts",
     "ingest-manual": "tsx ingest-manual.ts",
-    "extract": "tsx extract.ts"
+    "extract": "tsx extract.ts",
+    "preflight": "tsx preflight.ts",
+    "draft": "tsx draft.ts",
+    "promote": "tsx promote.ts"
   },
   "dependencies": {
     "playwright": "^1.49.0",
-    "robots-parser": "^3.0.1"
+    "robots-parser": "^3.0.1",
+    "tldts": "^7.4.10"
   },
   "devDependencies": {
+    "@types/node": "^22.10.1",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
-    "@types/node": "^22.10.1"
+    "typescript": "^5.7.2"
   }
 }
