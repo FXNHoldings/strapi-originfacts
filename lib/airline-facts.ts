@@ -114,11 +114,24 @@ export type ResolvedModule = {
   /** Disputed fields, rendered as stated conflicts rather than resolved. */
   disputes: ResolvedField[];
   /**
-   * Official fields, in file order. A module can carry facts without a table —
-   * most do — and before this existed those values had nowhere to render: the
-   * module drew its header and green stamp over an empty body.
+   * Official fields, in file order, EXCLUDING anything used as a table cell.
+   * This is the display list for the standalone-fields block — a module can
+   * carry facts without a table, most do, and before this existed those
+   * values had nowhere to render: the module drew its header and green stamp
+   * over an empty body.
    */
   published: ResolvedField[];
+  /**
+   * Every official field, INCLUDING table cells. Citation needs every sourced
+   * value, not just the ones with somewhere of their own to render — a module
+   * that is entirely a table (Qantas's cabins module, three cells, no
+   * standalone field) produced an empty Sources block when this list was the
+   * same as `published`, which reads as "nothing here is sourced" about a
+   * module that is fully sourced. Kept separate from `published` rather than
+   * removing that filter, because the two lists answer different questions:
+   * what has its own place to render, versus what was actually verified.
+   */
+  citedFields: ResolvedField[];
 };
 
 const isOfficial = (f: FactField | undefined): f is FactField => f?.status === 'official';
@@ -149,14 +162,16 @@ export function resolveModule(m: SourcedModule): ResolvedModule {
   // ordinary fields on the same module. Without this exclusion they would
   // render twice: once as a cell, once again in the list below.
   const tableFieldKeys = new Set(m.table?.rows.flatMap((row) => row.cells) ?? []);
-  const published = Object.entries(fields)
-    .filter(([key, f]) => isOfficial(f) && !tableFieldKeys.has(key))
+  const citedFields = Object.entries(fields)
+    .filter(([, f]) => isOfficial(f))
     .map(([key, field]) => ({ key, label: key.replace(/_/g, ' '), field }));
+  const published = citedFields.filter((f) => !tableFieldKeys.has(f.key));
 
   return {
     id: m.id,
     title: m.title,
     published,
+    citedFields,
     isPublished: blockers.length === 0,
     blockers,
     verified_at: officialDates[0] ?? null,

@@ -33,6 +33,7 @@ const PAGE_TO_MODULE: Record<string, { id: string; title: string }> = {
   fare_conditions: { id: 'fares', title: 'What the cheapest fare includes' },
   checkin: { id: 'checkin', title: 'Check-in and airport cutoffs' },
   conditions_of_carriage: { id: 'rights', title: 'If your flight is delayed or cancelled' },
+  fleet_seatmaps: { id: 'cabins', title: 'Cabins and seating' },
 };
 
 type Candidate = { kind: string; raw: string; sentence: string; page_key: string; source_url: string };

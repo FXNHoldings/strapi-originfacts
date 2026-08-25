@@ -585,6 +585,66 @@
           }
         ]
       }
+    },
+    {
+      "id": "cabins",
+      "title": "Cabins and seating",
+      "lede": "Qantas’s current fleet, grouped by the route type it flies. Seat pitch and cabin configuration are not yet sourced for this carrier — each aircraft type has its own seat map on qantas.com, and this module currently draws only from the fleet index, not those individual pages.",
+      "required": [
+        "international_fleet",
+        "domestic_fleet",
+        "regional_fleet"
+      ],
+      "fields": {
+        "international_fleet": {
+          "value": "Airbus A380, Airbus A350 (arriving soon), Airbus A330, Airbus A321XLR, Airbus A220, Boeing 787, Boeing 737",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/onboard/fleet",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "domestic_fleet": {
+          "value": "Airbus A330, Airbus A321XLR, Airbus A220, Boeing 737",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/onboard/fleet",
+          "verified_at": "2026-08-24",
+          "notes": null
+        },
+        "regional_fleet": {
+          "value": "Airbus A320, Airbus A319, Airbus A220, Dash 8, Embraer E190, Fokker 100",
+          "status": "official",
+          "source_url": "https://www.qantas.com/en-au/onboard/fleet",
+          "verified_at": "2026-08-24",
+          "notes": null
+        }
+      },
+      "table": {
+        "caption": "Current Qantas fleet by route type",
+        "columns": [
+          "Route type",
+          "Aircraft"
+        ],
+        "rows": [
+          {
+            "label": "International",
+            "cells": [
+              "international_fleet"
+            ]
+          },
+          {
+            "label": "Australian domestic",
+            "cells": [
+              "domestic_fleet"
+            ]
+          },
+          {
+            "label": "Australian regional",
+            "cells": [
+              "regional_fleet"
+            ]
+          }
+        ]
+      }
     }
   ]
 }

@@ -448,10 +448,13 @@ function FieldValue({ field }: { field: FactField | null }) {
 function collectSources(m: ResolvedModule): { url: string; host: string; fields: string[]; verified_at: string }[] {
   const byUrl = new Map<string, { url: string; host: string; fields: string[]; verified_at: string }>();
 
-  // Every official field, however it renders. Reading only table cells left a
-  // module with fields and no table showing an empty "Sources" block, which is
-  // worse than showing none — it claims a citation exists and shows nothing.
-  for (const { label, field } of m.published) {
+  // citedFields, not published: published deliberately excludes table cells
+  // so a value doesn't render twice. Sources needs the opposite — every
+  // official field regardless of where it renders. Using `published` here
+  // left a table-only module (Qantas's cabins: three cells, no standalone
+  // field) with a fully sourced table and an empty Sources line underneath
+  // it, which reads as "nothing here is cited" about a module that is.
+  for (const { label, field } of m.citedFields) {
     if (!field.source_url || !field.verified_at) continue;
     let host: string;
     try {
