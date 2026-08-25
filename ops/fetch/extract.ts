@@ -56,8 +56,11 @@ type CandidateFile = {
 };
 
 const PATTERNS: { kind: Candidate['kind']; re: RegExp }[] = [
-  // 40 x 30 x 20 cm  /  55x40x20cm
-  { kind: 'dimensions', re: /(?<![\d.,])\d{1,3}\s*[x×]\s*\d{1,3}\s*[x×]\s*\d{1,3}\s*(?:cm|mm|in|inches)\b/gi },
+  // 40 x 30 x 20 cm  /  55x40x20cm  /  18in by 14in by 8in
+  {
+    kind: 'dimensions',
+    re: /(?<![\d.,])(?:\d{1,3}\s*[x×]\s*\d{1,3}\s*[x×]\s*\d{1,3}\s*(?:cm|mm|in|inches)|\d{1,3}\s*(?:cm|mm|in|inches)\s+by\s+\d{1,3}\s*(?:cm|mm|in|inches)\s+by\s+\d{1,3}\s*(?:cm|mm|in|inches))\b/gi,
+  },
   // The negative lookbehind is load-bearing. Without it "50 pounds (22.68 kg)"
   // yields "68 kg" — the fractional tail of a decimal read as a whole number —
   // and because that substring genuinely occurs in the page, auto-verification

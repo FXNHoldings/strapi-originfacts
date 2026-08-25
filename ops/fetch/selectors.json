@@ -23,5 +23,25 @@
   "westjet": {
     "article": "main",
     "note": "85%. .cmp-container scored 100%, which is the whole page including nav — coverage that high means the selector is not isolating anything."
+  },
+  "american-airlines": {
+    "article": "#main-content",
+    "note": "Derived from all six successful 2026-08-24 captures. The same main#main-content container is present on every page and covers 84–99% of body text while excluding the site header and footer."
+  },
+  "frontier": {
+    "article": ".main-torso",
+    "note": "Derived from all six successful 2026-08-24 captures. Frontier splits article content across sibling article blocks, so the stable section.main-torso parent is required; it excludes navigation, footer, and the large email-signup form."
+  },
+  "tap-portugal": {
+    "article": "#main-content",
+    "note": "Derived from both successful 2026-08-24 captures. The stable main#main-content container covers 79–87% of body text and excludes site navigation and footer content."
+  },
+  "malaysia-airlines": {
+    "article": "main",
+    "note": "Derived from the successful 2026-08-24 baggage capture. The main element isolates the 942-character baggage landing-page body from navigation, alerts, and footer content; the capture links to detail pages rather than embedding their rules."
+  },
+  "rex": {
+    "article": "#BaggageTab",
+    "note": "Derived from the successful 2026-08-24 baggage capture. The legacy page has no semantic main element; #BaggageTab isolates the cabin, checked, excess, and prohibited-baggage panels while excluding the large site menus."
   }
 }
