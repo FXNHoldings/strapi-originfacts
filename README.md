@@ -50,6 +50,13 @@ docker ps
 - `/flight-routes` and `/flight-routes/[slug]` — Route pages
 - `/flights-from-perth*` — Perth travel landing pages
 
+## Airline content implementation
+
+The complete airline-page content workflow—source configuration, respectful
+fetching, selector review, offline extraction, interpretation, preview, approval,
+and controlled publication—is documented in
+[`docs/AIRLINE_PAGE_CONTENT_IMPLEMENTATION.md`](docs/AIRLINE_PAGE_CONTENT_IMPLEMENTATION.md).
+
 ## Local development
 
 ```bash
