@@ -107,11 +107,13 @@ function analyse(requested: string, finalUrl: string | null, status: number | nu
   return findings;
 }
 
-function parseArgs(argv: string[]): { band?: string; carrier?: string } {
-  const out: { band?: string; carrier?: string } = {};
+function parseArgs(argv: string[]): { band?: string; carrier?: string; input?: string; output?: string } {
+  const out: { band?: string; carrier?: string; input?: string; output?: string } = {};
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--band') out.band = argv[++i];
     else if (argv[i] === '--carrier') out.carrier = argv[++i];
+    else if (argv[i] === '--input') out.input = argv[++i];
+    else if (argv[i] === '--output') out.output = argv[++i];
   }
   return out;
 }
@@ -163,7 +165,9 @@ async function probeBrowser(ctx: BrowserContext, url: string): Promise<Probe> {
 
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
-  const file = path.resolve(import.meta.dirname, 'carriers.json');
+  const file = args.input
+    ? path.resolve(process.cwd(), args.input)
+    : path.resolve(import.meta.dirname, 'carriers.json');
   let carriers = JSON.parse(await fs.readFile(file, 'utf8')) as Carrier[];
   if (args.band) carriers = carriers.filter((c) => c.band === args.band);
   if (args.carrier) carriers = carriers.filter((c) => c.carrier_key === args.carrier);
@@ -245,7 +249,9 @@ async function main(): Promise<void> {
     }
   }
 
-  const out = path.resolve(import.meta.dirname, '..', '..', 'data', 'captures', 'preflight.json');
+  const out = args.output
+    ? path.resolve(process.cwd(), args.output)
+    : path.resolve(import.meta.dirname, '..', '..', 'data', 'captures', 'preflight.json');
   await fs.mkdir(path.dirname(out), { recursive: true });
   await fs.writeFile(out, `${JSON.stringify({ checked_at: `${new Date().toISOString().slice(0, 19)}Z`, rows }, null, 2)}\n`, 'utf8');
 

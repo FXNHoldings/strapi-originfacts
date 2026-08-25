@@ -55,6 +55,7 @@ export const PUBLISHED_AIRLINE_GUIDES = new Set([
   'american-airlines',
   'frontier-airlines',
   'jetblue',
+  'westjet',
 ]);
 
 export function airlineGuideIsPublished(slug: string): boolean {

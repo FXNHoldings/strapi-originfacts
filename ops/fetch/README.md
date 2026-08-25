@@ -13,6 +13,13 @@ npm run fetch -- --carrier qantas   # one carrier
 npm run fetch -- --dry-run          # print the plan and robots verdicts, fetch nothing
 ```
 
+Preflight can audit a separate carrier manifest without changing the approved
+registry, and can preserve its report at a separate path:
+
+```bash
+npm run preflight -- --input /path/to/candidates.json --output data/captures/preflight-candidates.json
+```
+
 From the repo root. The root script delegates to `yarn --cwd ops/fetch fetch`,
 which is why Playwright lives in `ops/fetch/package.json` and never enters the
 site's dependency tree — `deploy-originfacts.sh` runs `yarn install

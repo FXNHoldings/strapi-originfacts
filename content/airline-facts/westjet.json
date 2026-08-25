@@ -3,6 +3,62 @@
   "official_website": "https://www.westjet.com",
   "modules": [
     {
+      "id": "carryon",
+      "title": "Carry-on",
+      "required": ["personal_item_dimensions", "standard_carryon_dimensions", "standard_allowance", "ultrabasic_allowance"],
+      "fields": {
+        "personal_item_dimensions": {
+          "value": "41 x 15 x 33 cm (16 x 6 x 13 in)",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/baggage/carry-on",
+          "verified_at": "2026-08-25",
+          "notes": "Official WestJet carry-on page, under-seat personal-item limit."
+        },
+        "standard_carryon_dimensions": {
+          "value": "56 x 23 x 36 cm (22 x 9 x 14 in)",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/baggage/carry-on",
+          "verified_at": "2026-08-25",
+          "notes": "Official WestJet carry-on page, overhead-bin bag limit."
+        },
+        "standard_allowance": {
+          "value": "One carry-on bag and one personal item on Econo, Member Exclusive, EconoFlex, Premium, PremiumFlex, Business and BusinessFlex",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/baggage/carry-on",
+          "verified_at": "2026-08-25",
+          "notes": "Applies to WestJet and WestJet Encore operated flights."
+        },
+        "ultrabasic_allowance": {
+          "value": "UltraBasic includes one personal item only, except specified Europe/Asia or Extended Comfort itineraries",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/baggage/carry-on",
+          "verified_at": "2026-08-25",
+          "notes": "The official page describes the route and purchased-seat exceptions."
+        }
+      }
+    },
+    {
+      "id": "baggage",
+      "title": "Checked baggage",
+      "required": ["standard_piece_weight", "purchase_timing"],
+      "fields": {
+        "standard_piece_weight": {
+          "value": "Under 50 lb (23 kg) per standard checked bag",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/baggage",
+          "verified_at": "2026-08-25",
+          "notes": "Official WestJet baggage hub. Included pieces and prices depend on fare and itinerary."
+        },
+        "purchase_timing": {
+          "value": "Prepay first or second checked bags online up to 24 hours before departure for the lowest price",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/baggage",
+          "verified_at": "2026-08-25",
+          "notes": "WestJet states airport bag fees are higher."
+        }
+      }
+    },
+    {
       "id": "checkin",
       "title": "Check-in and airport cutoffs",
       "required": ["checkin_opens", "domestic_cutoff", "international_cutoff"],
