@@ -1,5 +1,8 @@
 # Airline fact store
 
+For the page-by-page content plan, rationale, full fetch workflow, and release
+process, see [`docs/AIRLINE_PAGE_CONTENT_IMPLEMENTATION.md`](../../docs/AIRLINE_PAGE_CONTENT_IMPLEMENTATION.md).
+
 One file per airline: `content/airline-facts/<slug>.json`, where `<slug>` matches
 the airline slug in Strapi (the same one `/airlines/<slug>` uses).
 
