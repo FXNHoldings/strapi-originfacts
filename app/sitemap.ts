@@ -10,7 +10,7 @@ import {
 import { SECTIONS } from '@/lib/sections';
 import { LEGAL_DOCS } from '@/lib/legal';
 import { AIRLINES_INDEXABLE } from '@/lib/entity-seo';
-import { airlineIsIndexable } from '@/lib/airline-tier';
+import { airlineGuideIsPublished, airlineIsIndexable } from '@/lib/airline-tier';
 
 const SITE_URL = 'https://www.originfacts.com';
 
@@ -66,20 +66,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }));
 
-  // Airline pages are temporarily noindexed while the Tier 1 template is built
-  // — see AIRLINES_INDEXABLE in lib/entity-seo.ts. A sitemap advertising URLs
-  // that answer `noindex` is a contradictory signal, so they come out together
-  // and go back together, at which point the tier gate decides which return.
-  const airlinePaths: MetadataRoute.Sitemap = !AIRLINES_INDEXABLE
-    ? []
-    : airlines
-        .filter((a) => a.slug && airlineIsIndexable(a, coverage.carrierSlugs.has(a.slug)))
-        .map((a) => ({
-          url: `${SITE_URL}/airlines/${a.slug}`,
-          lastModified: now,
-          changeFrequency: 'monthly' as const,
-          priority: 0.5,
-        }));
+  // Reviewed Tier 1 guides enter the sitemap individually while the broad
+  // directory hold remains in place. If that hold is later lifted, the normal
+  // tier gate adds other substantive airlines without duplicating these URLs.
+  const airlinePaths: MetadataRoute.Sitemap = airlines
+    .filter(
+      (a) =>
+        a.slug &&
+        (airlineGuideIsPublished(a.slug) ||
+          (AIRLINES_INDEXABLE && airlineIsIndexable(a, coverage.carrierSlugs.has(a.slug)))),
+    )
+    .map((a) => ({
+      url: `${SITE_URL}/airlines/${a.slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    }));
 
   // Airport pages are temporarily noindexed and out of the sitemap for the
   // AdSense review — see AIRPORTS_INDEXABLE in lib/entity-seo.ts.

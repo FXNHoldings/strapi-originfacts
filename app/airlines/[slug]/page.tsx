@@ -16,7 +16,7 @@ import {
   summariseRoutes,
 } from '@/lib/entity-seo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
-import { airlineIsIndexable } from '@/lib/airline-tier';
+import { airlineGuideIsPublished, airlineIsIndexable } from '@/lib/airline-tier';
 import { getFlySfoAirlineProfile } from '@/lib/flysfo-airline';
 import { getAirlineFacts } from '@/lib/airline-facts';
 import { getAirlineReviews } from '@/lib/airline-reviews';
@@ -31,13 +31,6 @@ import type { Metadata } from 'next';
 
 export const revalidate = 60;
 
-/**
- * The single airline currently served by the Tier 1 template. Kept as a
- * constant rather than a bare string so widening the pilot is one edit, and so
- * it is obvious this is a pilot rather than a permanent special case.
- */
-const TIER1_PILOT_SLUG = 'qantas';
-
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -50,7 +43,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: a.name,
     description: desc,
     alternates: { canonical: `${SITE_URL}/airlines/${a.slug}` },
-    robots: robotsFor(AIRLINES_INDEXABLE && airlineIsIndexable(a, routes.length > 0)),
+    robots: robotsFor(
+      airlineGuideIsPublished(a.slug) || (AIRLINES_INDEXABLE && airlineIsIndexable(a, routes.length > 0)),
+    ),
   };
 }
 
@@ -150,12 +145,11 @@ export default async function AirlinePage({ params }: Props) {
     { label: 'Popular routes', value: routes.length ? String(routes.length) : undefined },
   ].filter((fact) => fact.value);
 
-  // Tier 1 template — piloted on Qantas only. Unlike the showcase below this
-  // is not a reskin: modules render only where a source backs them, so the
-  // page shows what is verified and says so where nothing is. Every other
-  // airline keeps its existing layout. Preview any carrier on this template at
-  // /preview/airlines/<slug> without switching it live.
-  if (slug === TIER1_PILOT_SLUG) {
+  // Published Tier 1 guides. Unlike the showcase below this is not a reskin:
+  // modules render only where a source backs them, so the page shows what is
+  // verified and says so where nothing is. Every other airline keeps its
+  // existing layout and remains under the directory-wide noindex hold.
+  if (airlineGuideIsPublished(slug)) {
     const tier1Faqs = derivedFaqs(airline, routeFacts, alliance);
     const tier1AirlineLd: Record<string, unknown> = { ...airlineJsonLd(airline, url), '@id': `${url}#airline` };
     if (airline.founded) tier1AirlineLd.foundingDate = String(airline.founded);
@@ -178,6 +172,7 @@ export default async function AirlinePage({ params }: Props) {
           alliance={alliance}
           reviews={getAirlineReviews(airline.slug)}
           airlineRef={getAirlineRef(airline.iataCode)}
+          previewRedesign
         />
       </>
     );

@@ -39,6 +39,25 @@ export const TIER1_REVIEWED_MIN_DESTINATIONS = 40;
 /** Below this a carrier has too little network to describe. Tunable knob. */
 export const TIER2_MIN_DESTINATIONS = 5;
 
+/**
+ * Airline guides that have passed the sourced-content publication gate.
+ *
+ * The directory-wide AIRLINES_INDEXABLE switch remains off while the rebuild
+ * continues. This allowlist lets reviewed guides use the Tier 1 template,
+ * become indexable, and enter the sitemap without exposing hundreds of thin
+ * directory entries at the same time.
+ */
+export const PUBLISHED_AIRLINE_GUIDES = new Set([
+  'qantas',
+  'ryanair',
+  'air-canada',
+  'finnair',
+]);
+
+export function airlineGuideIsPublished(slug: string): boolean {
+  return PUBLISHED_AIRLINE_GUIDES.has(slug);
+}
+
 export type AirlineTierInput = Pick<StrapiAirline, 'slug' | 'iataCode'>;
 
 /**
