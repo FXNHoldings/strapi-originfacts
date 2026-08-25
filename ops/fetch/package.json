@@ -8,8 +8,11 @@
     "reach": "tsx sweep.ts",
     "ingest-manual": "tsx ingest-manual.ts",
     "extract": "tsx extract.ts",
+    "extract:batch": "tsx extract-batch.ts",
+    "selectors:discover": "tsx discover-selectors.ts",
     "preflight": "tsx preflight.ts",
     "draft": "tsx draft.ts",
+    "draft:batch": "tsx draft-batch.ts",
     "promote": "tsx promote.ts"
   },
   "dependencies": {

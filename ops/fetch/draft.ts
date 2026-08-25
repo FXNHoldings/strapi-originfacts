@@ -4,8 +4,8 @@
  *
  *   npm run draft -- --carrier finnair
  *
- * Writes content/airline-facts/<slug>.json with EVERY field pending and every
- * candidate recorded as evidence, with the sentence it came from.
+ * Writes data/proposals/airline-facts/<slug>.json with EVERY field pending and
+ * every candidate recorded as evidence, with the sentence it came from.
  *
  * It does not invent field names, and that restraint is the whole design. A
  * generator that split "23 kg" into `checked_allowance_economy` would be
@@ -180,8 +180,19 @@ async function main(): Promise<void> {
     });
   }
 
-  const out = { slug: carrier, official_website: officialWebsite, modules };
-  const dest = path.join(ROOT, 'content', 'airline-facts', `${carrier}.json`);
+  const existingPath = path.join(ROOT, 'content', 'airline-facts', `${carrier}.json`);
+  const existing = await fs.readFile(existingPath, 'utf8').then((raw) => JSON.parse(raw)).catch(() => null);
+  const out = {
+    proposal_version: 1,
+    generated_at: `${new Date().toISOString().slice(0, 19)}Z`,
+    capture_date: file.capture_date,
+    action: existing ? 'review_and_merge' : 'review_and_create',
+    target: `content/airline-facts/${carrier}.json`,
+    existing_file_present: Boolean(existing),
+    proposed: { slug: carrier, official_website: officialWebsite, modules },
+  };
+  const dest = path.join(ROOT, 'data', 'proposals', 'airline-facts', `${carrier}.json`);
+  await fs.mkdir(path.dirname(dest), { recursive: true });
   await fs.writeFile(dest, `${JSON.stringify(out, null, 2)}\n`, 'utf8');
 
   console.log(`${carrier}: ${modules.length} module(s), all pending, from ${file.capture_date} captures`);
@@ -189,8 +200,9 @@ async function main(): Promise<void> {
     const n = (m.fields.unassigned_evidence.notes.match(/\n  • /g) ?? []).length;
     console.log(`  ${m.id.padEnd(10)}${n} candidate(s)`);
   }
-  console.log(`\nWritten to ${dest}`);
-  console.log('Nothing is official. Split the evidence into fields, then promote what you can source.');
+  console.log(`\nProposal written to ${dest}`);
+  console.log(`Existing fact file ${existing ? 'was detected and left unchanged' : 'does not exist'}.`);
+  console.log('Nothing is official or published. Review and merge explicitly, then promote sourced fields.');
 }
 
 main().catch((err) => {

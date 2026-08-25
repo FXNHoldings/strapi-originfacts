@@ -59,4 +59,8 @@ data/captures/*
 # the way the HTML is not, and versioning it would dirty the tree on every
 # re-extract.
 data/captures/manual/**/candidates.json
+
+# Generated review artifacts. These are reproducible and must never be read by
+# the live site as published airline facts.
+data/proposals/
 ops/fetch/node_modules

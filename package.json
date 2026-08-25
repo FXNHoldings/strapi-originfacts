@@ -15,8 +15,11 @@
     "reach": "yarn --cwd ops/fetch reach",
     "ingest-manual": "yarn --cwd ops/fetch ingest-manual",
     "extract": "yarn --cwd ops/fetch extract",
+    "extract:batch": "yarn --cwd ops/fetch extract:batch",
+    "selectors:discover": "yarn --cwd ops/fetch selectors:discover",
     "preflight": "yarn --cwd ops/fetch preflight",
     "draft": "yarn --cwd ops/fetch draft",
+    "draft:batch": "yarn --cwd ops/fetch draft:batch",
     "promote": "yarn --cwd ops/fetch promote"
   },
   "dependencies": {
