@@ -1,0 +1,76 @@
+{
+  "slug": "american-airlines",
+  "official_website": "https://www.aa.com",
+  "modules": [
+    {
+      "id": "carryon",
+      "title": "Carry-on",
+      "required": ["standard_carryon_dimensions"],
+      "fields": {
+        "standard_carryon_dimensions": {
+          "value": "22 x 14 x 9 in (56 x 36 x 23 cm), including handles and wheels",
+          "status": "official",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/carry-on-baggage.jsp",
+          "verified_at": "2026-08-24",
+          "notes": "Official carry-on page: the bag must fit the airport sizer and cannot exceed these dimensions. Verified against the archived article body."
+        }
+      }
+    },
+    {
+      "id": "baggage",
+      "title": "Checked baggage",
+      "required": ["standard_piece_weight", "premium_piece_weight", "max_linear_dimensions"],
+      "fields": {
+        "standard_piece_weight": {
+          "value": "50 lb (23 kg) per bag",
+          "status": "official",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "verified_at": "2026-08-24",
+          "notes": "Official checked-baggage policy standard weight limit. Allowance and fees still vary by fare and itinerary."
+        },
+        "premium_piece_weight": {
+          "value": "70 lb (32 kg) per free bag in First and Business",
+          "status": "official",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "verified_at": "2026-08-24",
+          "notes": "Official checked-baggage policy. Excess charged bags retain the standard 50 lb / 23 kg threshold."
+        },
+        "max_linear_dimensions": {
+          "value": "62 in (158 cm) length + width + height",
+          "status": "official",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "verified_at": "2026-08-24",
+          "notes": "Official checked-baggage policy dimension limit."
+        }
+      }
+    },
+    {
+      "id": "checkin",
+      "title": "Check-in and airport cutoffs",
+      "required": ["online_checkin_window", "us_checkin_cutoff", "international_checkin_cutoff"],
+      "fields": {
+        "online_checkin_window": {
+          "value": "Online or app check-in opens 24 hours before departure",
+          "status": "official",
+          "source_url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
+          "verified_at": "2026-08-24",
+          "notes": "The closing time depends on itinerary and airport; use the separate cutoff fields."
+        },
+        "us_checkin_cutoff": {
+          "value": "45 minutes before departure for most flights within the US",
+          "status": "official",
+          "source_url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
+          "verified_at": "2026-08-24",
+          "notes": "Some named airports require earlier check-in."
+        },
+        "international_checkin_cutoff": {
+          "value": "60 minutes before departure for most flights to or from destinations outside the US",
+          "status": "official",
+          "source_url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
+          "verified_at": "2026-08-24",
+          "notes": "Some named airports require 75, 90 or 120 minutes."
+        }
+      }
+    }
+  ]
+}

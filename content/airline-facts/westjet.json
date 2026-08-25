@@ -1,0 +1,34 @@
+{
+  "slug": "westjet",
+  "official_website": "https://www.westjet.com",
+  "modules": [
+    {
+      "id": "checkin",
+      "title": "Check-in and airport cutoffs",
+      "required": ["checkin_opens", "domestic_cutoff", "international_cutoff"],
+      "fields": {
+        "checkin_opens": {
+          "value": "Check-in opens 24 hours before departure for most flights",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
+          "verified_at": "2026-08-24",
+          "notes": "Official WestJet check-in page."
+        },
+        "domestic_cutoff": {
+          "value": "Domestic check-in closes 60 minutes before departure",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
+          "verified_at": "2026-08-24",
+          "notes": "Some Canadian airports require 75 minutes."
+        },
+        "international_cutoff": {
+          "value": "US and international check-in closes 60 minutes before departure",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
+          "verified_at": "2026-08-24",
+          "notes": "Official WestJet check-in page. Airport-specific exceptions may require more time."
+        }
+      }
+    }
+  ]
+}

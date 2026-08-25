@@ -1,0 +1,76 @@
+{
+  "slug": "frontier-airlines",
+  "official_website": "https://www.flyfrontier.com",
+  "modules": [
+    {
+      "id": "carryon",
+      "title": "Carry-on",
+      "required": ["personal_item_dimensions", "standard_carryon_dimensions", "carryon_weight_limit"],
+      "fields": {
+        "personal_item_dimensions": {
+          "value": "18 x 14 x 8 in, including handles, wheels and straps",
+          "status": "official",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "verified_at": "2026-08-24",
+          "notes": "Official bag-options page, Personal Item section."
+        },
+        "standard_carryon_dimensions": {
+          "value": "24 x 16 x 10 in, including handles, wheels and straps",
+          "status": "official",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "verified_at": "2026-08-24",
+          "notes": "Official bag-options page, Carry-On Bag section."
+        },
+        "carryon_weight_limit": {
+          "value": "35 lb maximum",
+          "status": "official",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "verified_at": "2026-08-24",
+          "notes": "Official bag-options page. A standard carry-on is generally an added product rather than part of every fare."
+        }
+      }
+    },
+    {
+      "id": "baggage",
+      "title": "Checked baggage",
+      "required": ["standard_piece_weight", "max_linear_dimensions"],
+      "fields": {
+        "standard_piece_weight": {
+          "value": "40 lb maximum for a standard checked bag",
+          "status": "official",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "verified_at": "2026-08-24",
+          "notes": "Certain bundles or elite statuses may permit a higher limit."
+        },
+        "max_linear_dimensions": {
+          "value": "62 linear in, including handles, wheels and straps",
+          "status": "official",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "verified_at": "2026-08-24",
+          "notes": "Length + width + depth."
+        }
+      }
+    },
+    {
+      "id": "checkin",
+      "title": "Check-in and airport cutoffs",
+      "required": ["online_checkin_opens", "checkin_and_bag_cutoff"],
+      "fields": {
+        "online_checkin_opens": {
+          "value": "24 hours before departure for most flights",
+          "status": "official",
+          "source_url": "https://www.flyfrontier.com/travel/my-trips/check-in/",
+          "verified_at": "2026-08-24",
+          "notes": "Official Frontier check-in page."
+        },
+        "checkin_and_bag_cutoff": {
+          "value": "Check-in and checked-bag acceptance close 1 hour before departure",
+          "status": "official",
+          "source_url": "https://www.flyfrontier.com/travel/my-trips/check-in/",
+          "verified_at": "2026-08-24",
+          "notes": "Official Frontier check-in page."
+        }
+      }
+    }
+  ]
+}

@@ -3,38 +3,93 @@
   "official_website": "https://www.jetblue.com",
   "modules": [
     {
-      "id": "baggage",
-      "title": "Checked baggage",
-      "required": [],
+      "id": "carryon",
+      "title": "Carry-on",
+      "required": ["included_items", "standard_carryon_dimensions", "personal_item_dimensions"],
       "fields": {
-        "unassigned_evidence": {
-          "value": null,
-          "status": "pending",
-          "notes": "43 candidate measurement(s) extracted from baggage_checked, baggage_fees. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  \u2022 $10  \u2014 \"Save up to $10 each on your first 2 checked bags when you add them before check-in (at least 24 hours before departure).\"\n  \u2022 $200  \u2014 \"For transatlantic routes, the 3rd (or more) checked bag fee is $200/\u00a3150/\u20ac185 for off-peak and $210/\u00a3160/\u20ac195 for peak.\"\n  \u2022 \u00a3150  \u2014 \"For transatlantic routes, the 3rd (or more) checked bag fee is $200/\u00a3150/\u20ac185 for off-peak and $210/\u00a3160/\u20ac195 for peak.\"\n  \u2022 \u20ac185  \u2014 \"For transatlantic routes, the 3rd (or more) checked bag fee is $200/\u00a3150/\u20ac185 for off-peak and $210/\u00a3160/\u20ac195 for peak.\"\n  \u2022 $210  \u2014 \"For transatlantic routes, the 3rd (or more) checked bag fee is $200/\u00a3150/\u20ac185 for off-peak and $210/\u00a3160/\u20ac195 for peak.\"\n  \u2022 \u00a3160  \u2014 \"For transatlantic routes, the 3rd (or more) checked bag fee is $200/\u00a3150/\u20ac185 for off-peak and $210/\u00a3160/\u20ac195 for peak.\"\n  \u2022 \u20ac195  \u2014 \"For transatlantic routes, the 3rd (or more) checked bag fee is $200/\u00a3150/\u20ac185 for off-peak and $210/\u00a3160/\u20ac195 for peak.\"\n  \u2022 $45  \u2014 \"More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/Main/Main Flex/EvenMore\u00ae Base/EvenMore/EvenMore Flex\u2076 1st Bag: $45 (incl $4 savings) 2nd Bag: $59 (incl $10 savings) 1st Bag: $49 (incl $10 savings) 2\u2026\"\n  \u2022 $4  \u2014 \"More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/Main/Main Flex/EvenMore\u00ae Base/EvenMore/EvenMore Flex\u2076 1st Bag: $45 (incl $4 savings) 2nd Bag: $59 (incl $10 savings) 1st Bag: $49 (incl $10 savings) 2\u2026\"\n  \u2022 $59  \u2014 \"More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/Main/Main Flex/EvenMore\u00ae Base/EvenMore/EvenMore Flex\u2076 1st Bag: $45 (incl $4 savings) 2nd Bag: $59 (incl $10 savings) 1st Bag: $49 (incl $10 savings) 2\u2026\"\n  \u2022 $49  \u2014 \"More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/Main/Main Flex/EvenMore\u00ae Base/EvenMore/EvenMore Flex\u2076 1st Bag: $45 (incl $4 savings) 2nd Bag: $59 (incl $10 savings) 1st Bag: $49 (incl $10 savings) 2\u2026\"\n  \u2022 $69  \u2014 \"More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/Main/Main Flex/EvenMore\u00ae Base/EvenMore/EvenMore Flex\u2076 1st Bag: $45 (incl $4 savings) 2nd Bag: $59 (incl $10 savings) 1st Bag: $49 (incl $10 savings) 2\u2026\"\n  \u2022 70lbs  \u2014 \"Included (up to 70lbs./32Kgs.) 2nd Bag:\"\n  \u2022 $75  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u00a365  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u20ac70  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 $5  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u00a35  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u20ac5  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 $109  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u00a389  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u20ac99  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 $85  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u00a375  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u20ac80  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 $119  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u00a399  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 \u20ac109  \u2014 \"Transatlantic Flights More than 24 hours before departure Within 24 hours of departure Off-Peak Peak* Main Base/EvenMore Base 1st Bag: $75/\u00a365/\u20ac70 (Incl $5/\u00a35/\u20ac5 savings) 2nd Bag: $109/\u00a389/\u20ac99 1st Bag: $85/\u00a375/\u20ac80 (Incl $5/\u00a35/\u20ac5 savings) 2n\u2026\"\n  \u2022 50 pounds  \u2014 \"Checked bag size and weight Checked bags should not exceed 62\u201d (157.48 cm) in overall dimensions (length + width + height) or 50 pounds (22.68 kg) in weight.\"\n  \u2022 68 kg  \u2014 \"Checked bag size and weight Checked bags should not exceed 62\u201d (157.48 cm) in overall dimensions (length + width + height) or 50 pounds (22.68 kg) in weight.\"\n  \u2022 99 pounds  \u2014 \"Oversized bags 63-80 inches (160-203.3 cm), including wheels and handles: $150/\u00a3120/\u20ac140 per bag Bags over 80 inches (203.3 cm) will not be accepted Overweight bags 51-99 pounds (23.13-44.91 kg): $150/\u00a3120/\u20ac140 per bag Bags over 99 pounds (\u2026\"\n  \u2022 91 kg  \u2014 \"Oversized bags 63-80 inches (160-203.3 cm), including wheels and handles: $150/\u00a3120/\u20ac140 per bag Bags over 80 inches (203.3 cm) will not be accepted Overweight bags 51-99 pounds (23.13-44.91 kg): $150/\u00a3120/\u20ac140 per bag Bags over 99 pounds (\u2026\"\n  \u2022 $150  \u2014 \"Oversized bags 63-80 inches (160-203.3 cm), including wheels and handles: $150/\u00a3120/\u20ac140 per bag Bags over 80 inches (203.3 cm) will not be accepted Overweight bags 51-99 pounds (23.13-44.91 kg): $150/\u00a3120/\u20ac140 per bag Bags over 99 pounds (\u2026\"\n  \u2022 \u00a3120  \u2014 \"Oversized bags 63-80 inches (160-203.3 cm), including wheels and handles: $150/\u00a3120/\u20ac140 per bag Bags over 80 inches (203.3 cm) will not be accepted Overweight bags 51-99 pounds (23.13-44.91 kg): $150/\u00a3120/\u20ac140 per bag Bags over 99 pounds (\u2026\"\n  \u2022 \u20ac140  \u2014 \"Oversized bags 63-80 inches (160-203.3 cm), including wheels and handles: $150/\u00a3120/\u20ac140 per bag Bags over 80 inches (203.3 cm) will not be accepted Overweight bags 51-99 pounds (23.13-44.91 kg): $150/\u00a3120/\u20ac140 per bag Bags over 99 pounds (\u2026\"\n  \u2022 70 pounds  \u2014 \"Bags that exceed 70 pounds (31.75 kg) are not accepted.\"\n  \u2022 75 kg  \u2014 \"Bags that exceed 70 pounds (31.75 kg) are not accepted.\"\n  \u2022 maximum of 2  \u2014 \"From Nov 16 - Jan 15, each customer may check a maximum of 2 bags.\"\n  \u2022 up to 2  \u2014 \"You can add up to 2 checked bags anytime, from during the booking to when you arrive at the airport.\"\n  \u2022 51 lbs  \u2014 \"51 lbs (23.13 kg) \u2013 99 lbs (44.91 kg): $150 per bag ($150/\u00a3120/\u20ac140 on transatlantic flights) Bags that exceed 70 pounds (31.75 kg) are not accepted on transatlantic flights 63\" in (160 cm) \u2013 80 in (203.3 cm, including wheels and handles): \u2026\"\n  \u2022 13 kg  \u2014 \"51 lbs (23.13 kg) \u2013 99 lbs (44.91 kg): $150 per bag ($150/\u00a3120/\u20ac140 on transatlantic flights) Bags that exceed 70 pounds (31.75 kg) are not accepted on transatlantic flights 63\" in (160 cm) \u2013 80 in (203.3 cm, including wheels and handles): \u2026\"\n  \u2022 99 lbs  \u2014 \"51 lbs (23.13 kg) \u2013 99 lbs (44.91 kg): $150 per bag ($150/\u00a3120/\u20ac140 on transatlantic flights) Bags that exceed 70 pounds (31.75 kg) are not accepted on transatlantic flights 63\" in (160 cm) \u2013 80 in (203.3 cm, including wheels and handles): \u2026\"\n  \u2022 up to 3  \u2014 \"Mosaic members (and eligible travel companions completing the same itinerary) always get 2 checked bags, and JetBlue Plus and JetBlue Business Cardmembers (and up to 3 eligible travel companions completing the same itinerary) get 1 free che\u2026\""
+        "included_items": {
+          "value": "One carry-on bag and one personal item on all fares",
+          "status": "official",
+          "source_url": "https://www.jetblue.com/help/carry-on-bags",
+          "verified_at": "2026-08-25",
+          "notes": "Official JetBlue carry-on page. It states there is currently no weight restriction provided the customer can lift the item."
+        },
+        "standard_carryon_dimensions": {
+          "value": "22 x 14 x 9 in (55.88 x 35.56 x 22.86 cm), including wheels and handles",
+          "status": "official",
+          "source_url": "https://www.jetblue.com/help/carry-on-bags",
+          "verified_at": "2026-08-25",
+          "notes": "Official JetBlue carry-on page, overhead-bin limit."
+        },
+        "personal_item_dimensions": {
+          "value": "17 x 13 x 8 in (43.2 x 33 x 20.32 cm)",
+          "status": "official",
+          "source_url": "https://www.jetblue.com/help/carry-on-bags",
+          "verified_at": "2026-08-25",
+          "notes": "Official JetBlue carry-on page, under-seat personal-item limit."
         }
       }
     },
     {
-      "id": "fares",
-      "title": "What the cheapest fare includes",
-      "required": [],
+      "id": "baggage",
+      "title": "Checked baggage",
+      "required": ["standard_piece_weight", "max_linear_dimensions", "absolute_weight_limit"],
       "fields": {
-        "unassigned_evidence": {
-          "value": null,
-          "status": "pending",
-          "notes": "1 candidate measurement(s) extracted from fare_conditions. Field names are NOT inferred: how these split into fields is a judgement about the carrier's product, not a parse. Split this into real fields, then promote only what you can source.\n  \u2022 $1  \u2014 \"Main EvenMore\u00ae Mint\u00ae Main Base Main Main Flex Baggage information Carry-on bag\u00b9 \u2713 \u2713 \u2713 Personal item included\u00b2 \u2713 \u2713 \u2713 Checked bags included\u00b3 X X X Checked bags included (UK/Europe) X \u2713 \u2713 Your booking Changes\u2074 $ \u2713 \u2713 Cancellations\u2075 Travel credi\u2026\""
+        "standard_piece_weight": {
+          "value": "50 lb (22.68 kg) per standard checked bag",
+          "status": "official",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "verified_at": "2026-08-24",
+          "notes": "Official checked-bags page. Included pieces and fees vary by fare, route, season and purchase time."
+        },
+        "max_linear_dimensions": {
+          "value": "62 in (157.48 cm) length + width + height",
+          "status": "official",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "verified_at": "2026-08-24",
+          "notes": "Official checked-bags page standard size limit."
+        },
+        "absolute_weight_limit": {
+          "value": "Bags over 99 lb (44.91 kg) are not accepted",
+          "status": "official",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "verified_at": "2026-08-24",
+          "notes": "Transatlantic flights have a lower 70 lb / 31.75 kg acceptance ceiling."
         }
       }
     },
     {
       "id": "checkin",
       "title": "Check-in and airport cutoffs",
-      "required": [],
+      "required": ["online_checkin_opens", "domestic_bag_cutoff", "international_cutoff", "boarding_cutoffs"],
       "fields": {
-        "unassigned_evidence": {
-          "value": null,
-          "status": "pending",
-          "notes": "No evidence. The checkin capture was not usable: capture_status is \"too_short\"."
+        "online_checkin_opens": {
+          "value": "Online check-in opens 24 hours before departure",
+          "status": "official",
+          "source_url": "https://www.jetblue.com/checkin/baggage",
+          "verified_at": "2026-08-25",
+          "notes": "JetBlue's official check-in page."
+        },
+        "domestic_bag_cutoff": {
+          "value": "45 minutes before departure for domestic passengers with checked baggage",
+          "status": "official",
+          "source_url": "https://cms.jetblue.com/public/dam/ui-assets/p/legal/Contract-of-Carriage--2026.04.17-.pdf",
+          "verified_at": "2026-08-25",
+          "notes": "Current official Contract of Carriage, section covering time requirements. Domestic passengers without checked baggage must obtain a boarding pass 30 minutes before departure."
+        },
+        "international_cutoff": {
+          "value": "60 minutes before departure for international boarding pass and bag drop, unless an airport requires earlier",
+          "status": "official",
+          "source_url": "https://cms.jetblue.com/public/dam/ui-assets/p/legal/Contract-of-Carriage--2026.04.17-.pdf",
+          "verified_at": "2026-08-25",
+          "notes": "Current official Contract of Carriage."
+        },
+        "boarding_cutoffs": {
+          "value": "On board 15 minutes before domestic departure or 20 minutes before international departure",
+          "status": "official",
+          "source_url": "https://www.jetblue.com/help/boarding-procedures",
+          "verified_at": "2026-08-25",
+          "notes": "Official JetBlue boarding-procedures page."
         }
       }
     }
