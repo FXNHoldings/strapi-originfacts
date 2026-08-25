@@ -22,6 +22,7 @@
     "draft:batch": "yarn --cwd ops/fetch draft:batch",
     "interpret": "yarn --cwd ops/fetch interpret",
     "interpret:batch": "yarn --cwd ops/fetch interpret:batch",
+    "review:build": "yarn --cwd ops/fetch review:build",
     "promote": "yarn --cwd ops/fetch promote"
   },
   "dependencies": {

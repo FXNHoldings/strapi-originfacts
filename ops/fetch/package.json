@@ -15,6 +15,7 @@
     "draft:batch": "tsx draft-batch.ts",
     "interpret": "tsx interpret.ts",
     "interpret:batch": "tsx interpret-batch.ts",
+    "review:build": "tsx build-review.ts",
     "promote": "tsx promote.ts"
   },
   "dependencies": {
