@@ -13,6 +13,8 @@
     "preflight": "tsx preflight.ts",
     "draft": "tsx draft.ts",
     "draft:batch": "tsx draft-batch.ts",
+    "interpret": "tsx interpret.ts",
+    "interpret:batch": "tsx interpret-batch.ts",
     "promote": "tsx promote.ts"
   },
   "dependencies": {

@@ -20,6 +20,8 @@
     "preflight": "yarn --cwd ops/fetch preflight",
     "draft": "yarn --cwd ops/fetch draft",
     "draft:batch": "yarn --cwd ops/fetch draft:batch",
+    "interpret": "yarn --cwd ops/fetch interpret",
+    "interpret:batch": "yarn --cwd ops/fetch interpret:batch",
     "promote": "yarn --cwd ops/fetch promote"
   },
   "dependencies": {
