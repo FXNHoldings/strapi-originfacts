@@ -1,0 +1,1920 @@
+{
+  "generated_at": "2026-08-25T06:31:35.516Z",
+  "approval_state": "unreviewed",
+  "carriers": [
+    {
+      "carrier_key": "air-canada",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": true,
+      "preview_file": "preview-facts/air-canada.json",
+      "summary": {
+        "extracted_candidates": 87,
+        "field_proposals": 3,
+        "high_confidence": 0,
+        "needs_review": 3,
+        "unclassified_candidates": 78
+      },
+      "operations": [
+        {
+          "module": "carryon",
+          "field": "standard_carryon_dimensions",
+          "confidence": 0.72,
+          "confidence_band": "medium",
+          "status": "needs_review",
+          "rationale": "Carry-on context is present, but the bag label may be outside the extracted sentence.",
+          "value": "25 x 30 x 14cm",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/carry-on.html",
+          "evidence": "25 x 30 x 14cm (10 x 12 x 5.5 in) Larger purses will be included in your carry-on allowance.",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_standard_carryon_dimensions_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23 kg / 50 lb",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/checked.html",
+          "evidence": "23 kg/50 lb If you exceed maximum dimensions or weight, additional fees may apply.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "32 kg / 70 lb",
+          "source_url": "https://www.aircanada.com/ca/en/aco/home/plan/baggage/checked.html",
+          "evidence": "For both personal and duty travel, this includes up to three checked bags, each weighing up to 32 kg (70 lb), at no additional charge.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_2",
+          "approval": "unreviewed"
+        }
+      ]
+    },
+    {
+      "carrier_key": "american-airlines",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": false,
+      "preview_file": "preview-facts/american-airlines.json",
+      "summary": {
+        "extracted_candidates": 260,
+        "field_proposals": 31,
+        "high_confidence": 0,
+        "needs_review": 30,
+        "unclassified_candidates": 135
+      },
+      "operations": [
+        {
+          "module": "carryon",
+          "field": "standard_carryon_dimensions",
+          "confidence": 0.45,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Carry-on context is present, but the bag label may be outside the extracted sentence.",
+          "value": "22 x 14 x 9 inches / 56 x 36 x 23 cm",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/carry-on-baggage.jsp",
+          "evidence": "Must fit in the overhead bin or under the seat in front of you Must fit in the airport sizer Cannot exceed 22 x 14 x 9 inches (56 x 36 x 23 cm) including handles and wheels Should be labeled in case it needs to be checked Some airports and planes may have additional carry-on restrictions.",
+          "flags": [
+            "mixed_bag_types_in_sentence"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_standard_carryon_dimensions_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$50 / $45 / $60 / $55",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "Virgin Islands, Canada, Caribbean (except Cuba / Haiti), Mexico, Central America (except Panama) and Guyana – 1st checked bag fee is $50 ($45 if you pay online) and the 2nd checked bag fee is $60 ($55 if you pay online).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$5",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "Pay $5 more for 1st and 2nd checked bag fees for Basic Economy tickets.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "50 lbs / 70 lbs",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "50 lbs / 23 kgs For First / Business, weight is 70 lbs / 32 kgs for free bags and 50 lbs / 23 kgs for excess charged bags For all confirmed customers on flights to / from Australia or New Zealand:",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "70 lbs / 50 lbs",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "70 lbs / 32kgs for free bags and 50 lbs / 23 kgs for excess charged bags Oversize and overweight bags What it will cost Free checked bags This content can be expanded If you have AAdvantage® status or oneworld® status, you may be eligible for up to 3 free checked bags on itineraries marketed and operated by American Airlines.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$5",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "Save $5 on the 1st and 2nd checked bag fees for travel within and between the U.S., including Hawaii and Alaska, Puerto Rico, U.S.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$55 / $50",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "A $55 1st checked bag fee ($50 if paid online) applies within / between the U.S. (including HI / AK), Puerto Rico, U.S.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_4",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$50 / $45",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "Virgin Islands, Canada, Mexico, Caribbean (except Cuba and Haiti), Central America (except Panama) and Guyana for tickets issued on / after May 18, 2026 and a $50 1st checked bag fee ($45 if paid online) applies for tickets issued on / before May 17, 2026 and on / after April 9, 2026.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_5",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$40 / $35",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "A $40 1st checked bag fee ($35 if paid online) applies within / between the U.S. (including HI / AK), Puerto Rico and U.S.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_6",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$40 / $35",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "A $40 1st checked bag fee ($35 if paid online) applies to / from Canada, Mexico, Caribbean (except Cuba and Haiti), Central America (except Panama) and Guyana for tickets issued on / before April 8, 2026 and on / after December 1, 2025 and a $35 1st checked bag fee applies for tickets issued on / before November 30, 2025 if you pay online or at the airport. ^^Main Cabin 1st checked bag fee:",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_7",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$50 / $45",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "A $50 1st checked bag fee ($45 if paid online) applies within / between the U.S. (including HI / AK), Puerto Rico, U.S.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_8",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$40 / $35",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "A $40 1st checked bag fee ($35 if paid online) applies to / from Canada, Mexico, Caribbean (except Cuba and Haiti), Central America (except Panama) and Guyana for tickets issued on / before April 8, 2026 and on / after December 1, 2025 and a $35 1st checked bag fee applies for tickets issued on / before November 30, 2025 if you pay online or at the airport. ^^^Basic Economy 2nd checked bag fee:",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_9",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$65 / $60",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "A $65 2nd checked bag fee ($60 if paid online) applies within / between the U.S. (including HI / AK), Puerto Rico, U.S.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_10",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$60 / $55 / $50 / $45",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "Virgin Islands, Canada, Mexico, Caribbean (except Cuba and Haiti), Central America (except Panama) and Guyana for tickets issued on / after May 18, 2026, a $60 2nd checked bag fee ($55 if paid online) applies for tickets issued on / before May 17, 2026 and on / after April 9, 2026, a $50 2nd checked bag fee ($45 if you pay online) applies for tickets issued on / before April 8, 2026 and on / after…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_11",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$60 / $55",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "A $60 2nd checked bag fee ($55 if paid online) applies within / between the U.S. (including HI / AK), Puerto Rico, U.S.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_12",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$50 / $45",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "Virgin Islands, Canada, Mexico, Caribbean (except Cuba and Haiti), Central America (except Panama) and Guyana for tickets issued on / after April 9, 2026, a $50 2nd checked bag fee ($45 if you pay online) applies for tickets issued on / before April 8, 2026 and on / after February 18, 2026 and a $45 2nd checked bag fee applies for tickets issued on / before February 17, 2026 if you pay online or a…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_13",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$50 / $45 / $35",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "For Basic Economy travel to / from Haiti a $50 1st checked bag fee ($45 if paid online) applies for tickets issued on / after April 9, 2026 and for tickets issued on / before April 8, 2026 a $35 1st checked bag fee applies if you pay online or at the airport.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_14",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$55 / $45",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "For Basic Economy travel to / from Panama a $55 1st checked bag fee applies for tickets issued on / after May 18, 2026 and a $45 1st checked bag fee applies for tickets issued on / before May 17, 2026.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_15",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$70 / $45",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "For Basic Economy travel to / from Colombia / Ecuador / Peru, a $70 1st checked bag fee applies for tickets issued on / after May 18, 2026 and a $45 1st checked bag fee applies for tickets issued on / before May 17, 2026.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_16",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$70 / $60",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "For Basic Economy travel to / from South America (except Colombia, Ecuador, Guyana, Peru) a $70 1st checked bag fee applies for tickets issued on / after April 9, 2026 and for tickets issued on / before April 8, 2026 a $60 1st bag fee applies.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_17",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$85 / $75",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "For Trans-Atlantic (except India and Qatar) Basic Economy travel an $85 1st bag fee applies for tickets issued on / after May 18, 2026 and a $75 1st bag fee applies for tickets issued on / before May 17, 2026. **Free checked bag includes Basic Economy to / from Australia / New Zealand.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_18",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$75 / $200",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "For travel to / from Asia, India and Qatar, free checked bag includes Basic Economy for tickets issued on / after April 23, 2026 and for tickets issued on / before April 22, 2026, a $75 1st checked bag fee applies. ***A $200 3rd checked bag fee applies for tickets issued on / after April 9, 2026 within / between the U.S. (including HI / AK), Puerto Rico, U.S.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_19",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$150",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "For tickets issued on / before April 8, 2026, a $150 3rd checked bag fee applies.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_20",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "70 lbs",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "Customer service FAQs Cuba Each passenger traveling to Cuba may only check up to 2 bags* with a maximum weight of 70 lbs / 32 kgs per bag, plus 1 carry-on bag and 1 personal item.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$0 / $200 / $150 / $45 / $50",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "Trips originating in Cuba Bag 1 Bag 2 Bag 3 Bag 4+ From Cuba $0 $0 $200 $200 To Cuba $0 $150 / $200** $200 – Not available Trips originating outside Cuba Bag 1 Bag 2 Bag 3 Bag 4+ To Cuba $0 / $45 / $50*^ $150 / $200**^ $200 – Not available From Cuba $0 $0 $200 $200 All bag fees are non-refundable and apply per person, each way, even if you buy or get an upgrade that includes free checked bags.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_21",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$50 / $45 / $35",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "Oversize and overweight bags Bag and optional fees Refunds *For travel to Cuba, a $50 1st checked bag fee ($45 if paid online) applies to Basic Economy for tickets issued on / after April 9, 2026 and a $35 1st bag fee applies to Basic Economy for tickets issued on / before April 8, 2026 if paid online or at the airport.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_22",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$200",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "There is no 1st bag fee for Main Cabin. **For travel to Cuba, a $200 2nd bag fee applies seasonally for travel from November 16 – January 15.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_23",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$150",
+          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
+          "evidence": "A $150 2nd bag fee applies otherwise.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_24",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "checkin",
+          "field": "online_checkin_window",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Duration appears with online/app check-in language.",
+          "value": "24 hours / 45 minutes",
+          "source_url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
+          "evidence": "Check-in times You can check in online or from the app starting 24 hours before and up to 45 minutes before your flight (90 for international).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_online_checkin_window_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "checkin",
+          "field": "airport_cutoff",
+          "confidence": 0.8,
+          "confidence_band": "medium",
+          "status": "proposed",
+          "rationale": "Duration appears with an airport cutoff or closure statement.",
+          "value": "45 minutes / 60 minutes / 75 minutes / 120 minutes / 90 minutes",
+          "source_url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
+          "evidence": "Within the U.S. – 45 minutes To or from destinations outside the U.S. – 60 minutes Airports with earlier check-in times Airport location Airport code Check-in before scheduled departure Amsterdam, Netherlands AMS 75 minutes Aruba AUA 75 minutes Athens, Greece ATH 75 minutes Auckland, New Zealand AKL 75 minutes Barcelona, Spain BCN 75 minutes Brisbane, Australia BNE 75 minutes Budapest, Hungary BUD…",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_airport_cutoff_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "checkin",
+          "field": "online_checkin_window",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Duration appears with online/app check-in language.",
+          "value": "90 minutes / 75 minutes",
+          "source_url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
+          "evidence": "Virgin Islands STT 90 minutes Tampa, Florida Applies only to the Consolidated Rental Car Center TPA 90 minutes Tel Aviv, Israel TLV 75 minutes Wallblake, Anguilla AXA 90 minutes Zurich, Switzerland ZRH 75 minutes Check-in and arrival times for flights operated by other carriers, including codeshare partners, are set by the individual airline.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_online_checkin_window_2",
+          "approval": "unreviewed"
+        }
+      ]
+    },
+    {
+      "carrier_key": "finnair",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": true,
+      "preview_file": "preview-facts/finnair.json",
+      "summary": {
+        "extracted_candidates": 199,
+        "field_proposals": 23,
+        "high_confidence": 0,
+        "needs_review": 23,
+        "unclassified_candidates": 130
+      },
+      "operations": [
+        {
+          "module": "carryon",
+          "field": "carryon_weight_limit",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in explicit carry-on context.",
+          "value": "12kg / 8kg",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/carry-on-baggage",
+          "evidence": "Carry-on baggage allowance Ticket type Carry-on bag (55cm x 40cm x 23cm) Small bag (40cm x 30cm x 15cm) Maximum combined weight Business Flex 1 PC 1 PC Total weight 12kg Business Classic 1 PC Business Light 1 PC Premium Economy Flex 1 PC Total weight 8kg Premium Economy Classic 1 PC Premium Economy Light 1 PC Economy Flex 1 PC Economy Classic 1 PC Economy Light 1 PC Economy Superlight 0 PC You can…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_carryon_weight_limit_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "carryon",
+          "field": "standard_carryon_dimensions",
+          "confidence": 0.45,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Sentence explicitly labels maximum carry-on dimensions.",
+          "value": "55 x 40 x 23 cm / 40 x 30 x 15 cm",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/carry-on-baggage",
+          "evidence": "Carry-on baggage sizes Carry-on bag maximum dimensions (length x width x height) 55 x 40 x 23 cm (21.7 x 15.7 x 9.1 in) maximum combined weight with a small bag 8/12 kg (17.6/26.5 lb.) Small bag a small bag such as a small handbag, a small laptop bag or a small backpack maximum dimensions (length x width x height) 40 x 30 x 15 cm (15.7 x 11.8 x 5.9 in) maximum combined weight with a carry-on bag 8…",
+          "flags": [
+            "mixed_bag_types_in_sentence"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_standard_carryon_dimensions_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "carryon",
+          "field": "carryon_weight_limit",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in explicit carry-on context.",
+          "value": "12 kg / 26.5 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/carry-on-baggage",
+          "evidence": "Carry-on baggage sizes Carry-on bag maximum dimensions (length x width x height) 55 x 40 x 23 cm (21.7 x 15.7 x 9.1 in) maximum combined weight with a small bag 8/12 kg (17.6/26.5 lb.) Small bag a small bag such as a small handbag, a small laptop bag or a small backpack maximum dimensions (length x width x height) 40 x 30 x 15 cm (15.7 x 11.8 x 5.9 in) maximum combined weight with a carry-on bag 8…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_carryon_weight_limit_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "32kg / 23kg",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
+          "evidence": "What's included in my ticket Checked baggage allowance Ticket type Journeys between Japan* and Europe Journeys to/from Asia and the Middle East** Journeys between North America*** and Europe Flights to/from all other destinations Children Infants 0–2 years**** Business Flex 3 PC (32kg each) 2 PC (32kg each) 2 PC (32kg each) 1 PC (23kg) same as adult 1 PC (23kg) Business Classic 3 PC (32kg each) 2 …",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23 kg / 50 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
+          "evidence": "Extra allowance for Finnair Plus and oneworld tier members Finnair Plus Gold, Platinum and Platinum Lumo members can take one extra checked bag (up to 23 kg or 50 lb) on flights operated and marketed by Finnair.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23kg",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
+          "evidence": "Silver members are entitled to a 50% discount on the extra checked bag (23kg) fee when purchasing the bag while booking or later via Manage booking or the Finnair app.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23 kg / 50 lb / 32 kg / 70 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
+          "evidence": "If you travel with a Business Classic or Business Flex ticket type on Finnair long-haul flights, you can buy regular extra checked baggage (23 kg/50 lb) in advance, but can take up to 32 kg/70 lb per bag – the same weight as the two bags included in your allowance.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_4",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "€60",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "If you bring a carry-on bag to the boarding gate that you have not purchased or that is not included in your booking, or if your carry-on bag exceeds the maximum size/weight limitations, you will be charged a €60 fee to place this bag in the aircraft hold.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23 kg / 50 lb / 32 kg / 70 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "If you travel with a Business Classic or Business Flex ticket type on Finnair long-haul flights, you can buy regular extra checked baggage (23 kg/50 lb) in advance, but can take up to 32 kg/70 lb per bag – the same weight as the two bags included in your allowance.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_5",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23 kg / 50 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Pay for extra baggage in Manage booking Pre-paid checked baggage charges for journeys within Finland and Northern Europe* Business Flex Business Classic Economy Flex Economy Classic Business Light Economy Superlight Purchase time 1st bag Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €27–50 (prepaid) or 3,400–6,500 Avios Up until 50 minutes before departure 2nd bag €45–65 (prepaid…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_6",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23 kg / 50 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Pre-paid checked baggage charges for journeys within the rest of Europe Business Flex Business Classic Economy Flex Economy Classic Business Light Economy Superlight Purchase time 1st bag Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €32–55 (prepaid) or 4,100–7,100 Avios Up until 50 minutes before departure 2nd bag €50–70 (prepaid) or 6,500–9,100 Avios €50–70 (prepaid) or 6,500–9…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_7",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "32 kg / 70 lb / 23 kg / 50 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Pre-paid checked baggage charges for journeys between North America* and Europe Business Flex Business Classic Business Saver** Premium Economy Flex Premium Economy Classic Premium Economy Saver** Economy Flex Economy Classic Economy Saver** Business Light Premium Economy Light Economy Light 1st bag Included (up to 32 kg or 70 lb) Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €75…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_8",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "32 kg / 70 lb / 23 kg / 50 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Pre-paid checked baggage charges for journeys to/from Australia, New Zealand and Fiji Business Flex Business Classic Premium Economy Flex Premium Economy Classic Economy Flex Economy Classic Business Light Premium Economy Light Economy Light Purchase time 1st bag Included (up to 32 kg or 70 lb) Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €100–120 (prepaid) or 13,100–15,800 Avio…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_9",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "32 kg / 70 lb / 23 kg / 50 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Pre-paid checked baggage charges for journeys between Japan and Europe Business Flex Business Classic Business Saver* Premium Economy Flex Premium Economy Classic Premium Economy Saver* Economy Flex Economy Classic Economy Saver* Business Light Premium Economy Light Economy Light Purchase time 1st bag Included (up to 32 kg or 70 lb) Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_10",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23 kg",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "The tables below contain the charges for Finnair flights for checked bags up to 23 kg.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_11",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23 kg / 50 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Checked baggage charges at the airport for journeys within Finland and Northern Europe* Business Flex Business Classic Economy Flex Economy Classic Business Light Economy Superlight 1st bag Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €65 2nd bag €85 €85 €85 3rd bag and subsequent €95 €95 €95 *Finland, Sweden, Denmark, Norway, Estonia, Latvia and Lithuania.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_12",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23 kg / 50 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Checked baggage charges at the airport for journeys within the rest of Europe Business Flex Business Classic Economy Flex Economy Classic Business Light Economy Superlight 1st bag Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €70 2nd bag €90 €90 €90 3rd bag and subsequent €100 €100 €100 Fees are for journeys in one direction.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_13",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "€70 / €90 / €100",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Checked baggage charges at the airport for journeys within the rest of Europe Business Flex Business Classic Economy Flex Economy Classic Business Light Economy Superlight 1st bag Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €70 2nd bag €90 €90 €90 3rd bag and subsequent €100 €100 €100 Fees are for journeys in one direction.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "32 kg / 70 lb / 23 kg / 50 lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Checked baggage charges at the airport for journeys between North America* and Europe Business Flex Business Classic Business Saver** Premium Economy Flex Premium Economy Classic Economy Flex Economy Classic Business Light Premium Economy Light Economy Light 1st bag Included (up to 32 kg or 70 lb) Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €90/$90/£75 2nd bag Included (up to 3…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_14",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "32 kg / 70 lb / 23 kg / 50 lb / 32kg / 70lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Checked baggage charges at the airport for journeys to/from Asia and the Middle East* and between Asia and Australia, New Zealand and Fiji Business Flex Business Classic Premium Economy Flex Premium Economy Classic Economy Flex Economy Classic Business Light Premium Economy Light Economy Light 1st bag Included (up to 32 kg or 70 lb) Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €…",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_15",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "32 kg / 70 lb / 23 kg / 50 lb / 32kg / 70lb / 50lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Checked baggage charges at the airport for journeys to/from Australia, New Zealand and Fiji Business Flex Business Classic Premium Economy Flex Premium Economy Classic Economy Flex Economy Classic Business Light Premium Economy Light Economy Light 1st bag Included (up to 32 kg or 70 lb) Included (up to 23 kg or 50 lb) Included (up to 23 kg or 50 lb) €140 2nd bag Included (up to 32kg or 70lb) €150 …",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_16",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "€85 / $95 / €65 / €170 / $190 / €130",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Heavy or oversized baggage charges at the airport Journeys to/from Asia, North America and the Middle East and between Asia and Australia, New Zealand and Fiji Journeys within Finland and Europe Journeys to/from Australia, New Zealand and Fiji Heavy bag €85/$95 €65 100€ Oversized bag €85/$95 €65 100€ Heavy and oversized bag €170/$190 €130 200€ Fees are for journeys in one direction.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23kg / 50lb",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/extra-baggage-fees",
+          "evidence": "Musical instruments You can carry your musical instrument as checked baggage in the hold of the aircraft when it fits within the size limits: a maximum of 23kg (50lb) and external dimensions no more than 90cm x 75cm x 45cm (35in x 30in x 18in).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_17",
+          "approval": "unreviewed"
+        }
+      ]
+    },
+    {
+      "carrier_key": "frontier",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": false,
+      "preview_file": "preview-facts/frontier.json",
+      "summary": {
+        "extracted_candidates": 86,
+        "field_proposals": 14,
+        "high_confidence": 1,
+        "needs_review": 11,
+        "unclassified_candidates": 64
+      },
+      "operations": [
+        {
+          "module": "carryon",
+          "field": "standard_carryon_dimensions",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Carry-on context is present, but the bag label may be outside the extracted sentence.",
+          "value": "18in by 14in by 8in",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "18in by 14in by 8in and up to 35lb including handles, wheels and straps Carry-On Bag Add when you book for the best price!",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_standard_carryon_dimensions_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "carryon",
+          "field": "carryon_weight_limit",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in explicit carry-on context.",
+          "value": "35lb",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "18in by 14in by 8in and up to 35lb including handles, wheels and straps Carry-On Bag Add when you book for the best price!",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_carryon_weight_limit_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "carryon",
+          "field": "standard_carryon_dimensions",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Carry-on context is present, but the bag label may be outside the extracted sentence.",
+          "value": "24in by 16in by 10in",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "24in by 16in by 10in and up to 35lb including handles, wheels and straps Board First Board with Group 1 and guarantee overhead bin space for your bag.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_standard_carryon_dimensions_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "carryon",
+          "field": "personal_item_dimensions",
+          "confidence": 0.94,
+          "confidence_band": "high",
+          "status": "proposed",
+          "rationale": "Sentence explicitly labels the dimensions as a personal item or small bag.",
+          "value": "18in by 14in by 8in",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "Personal Item Must be equal to or less than 18in by 14in by 8in, including handles, wheels, and straps.",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_personal_item_dimensions_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "carryon",
+          "field": "standard_carryon_dimensions",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Carry-on context is present, but the bag label may be outside the extracted sentence.",
+          "value": "24in by 16in by 10in",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "Carry-On Bag Must be equal to or less than 24in by 16in by 10in, including handles, wheels, and straps.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_standard_carryon_dimensions_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "carryon",
+          "field": "carryon_weight_limit",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in explicit carry-on context.",
+          "value": "50 pounds",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "Personal Item, Carry-On Bag, and 2 Checked Bags (up to 50 pounds each) Elite Status Elite Silver:",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_carryon_weight_limit_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "carryon",
+          "field": "carryon_weight_limit",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in explicit carry-on context.",
+          "value": "35 lbs / 40 LBS",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "Click here for more pricing information Bag Prices for Existing Trip Bag Prices for New Trip BAG PRICE CHECKER *Required Fields Last Name * Confirmation Code * How to Find CHECK BAG PRICES Carry On Bag 10\"D X 16\"W X 24\"H < 35 lbs Checked Bag 62 Linear Inches < 40 LBS Personal Item 8\"D X 18\"W X 14\"H Personal item size will be checked during boarding PLEASE SELECT ANOTHER FLIGHT One or more of your …",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_carryon_weight_limit_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "40 pounds",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "Checked Bag May weigh up to 40 pounds.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "50 pounds",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "Overweight Baggage $75-$129 per bag, per direction (Non-Refundable) Bags weighing 41-50 pounds will be charged $75 per bag, per direction.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "99.99 pounds",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "For bookings made prior to April 4, 2026, bags weighing 51-99.99 pounds will be charged $100 per bag, per direction; for bookings made on or after April 4, 2026, bags weighing 51-99.99 pounds will be charged $129 per bag.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "50 pounds",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "Personal Item, Carry-On Bag, and 2 Checked Bags (up to 50 pounds each) Elite Status Elite Silver:",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_4",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "35 lbs / 40 LBS",
+          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
+          "evidence": "Click here for more pricing information Bag Prices for Existing Trip Bag Prices for New Trip BAG PRICE CHECKER *Required Fields Last Name * Confirmation Code * How to Find CHECK BAG PRICES Carry On Bag 10\"D X 16\"W X 24\"H < 35 lbs Checked Bag 62 Linear Inches < 40 LBS Personal Item 8\"D X 18\"W X 14\"H Personal item size will be checked during boarding PLEASE SELECT ANOTHER FLIGHT One or more of your …",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_5",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "checkin",
+          "field": "airport_cutoff",
+          "confidence": 0.8,
+          "confidence_band": "medium",
+          "status": "proposed",
+          "rationale": "Duration appears with an airport cutoff or closure statement.",
+          "value": "1 hour",
+          "source_url": "https://www.flyfrontier.com/travel/my-trips/check-in/",
+          "evidence": "Check-in and checked bag acceptance closes 1 hour before your flight’s scheduled departure time.",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_airport_cutoff_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "checkin",
+          "field": "online_checkin_window",
+          "confidence": 0.84,
+          "confidence_band": "medium",
+          "status": "proposed",
+          "rationale": "Duration appears with online/app check-in language.",
+          "value": "24 hours",
+          "source_url": "https://www.flyfrontier.com/travel/my-trips/check-in/",
+          "evidence": "For most flights, you can check in on the Frontier app starting 24 hours before your flight's scheduled departure time.",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_online_checkin_window_1",
+          "approval": "unreviewed"
+        }
+      ]
+    },
+    {
+      "carrier_key": "jetblue",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": true,
+      "preview_file": "preview-facts/jetblue.json",
+      "summary": {
+        "extracted_candidates": 207,
+        "field_proposals": 17,
+        "high_confidence": 0,
+        "needs_review": 17,
+        "unclassified_candidates": 143
+      },
+      "operations": [
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$200 / £150 / €185 / $210 / £160 / €195",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "evidence": "For transatlantic routes, the 3rd (or more) checked bag fee is $200/£150/€185 for off-peak and $210/£160/€195 for peak.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$200",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "evidence": "For all other routes, the 3rd (or more) checked bag fee is $200 Peak-season pricing for checked bag fees applies for travel during peak travel and high-traffic periods (including Thanksgiving, Winter holidays, and peak spring and summer travel seasons).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$69 / $10 / $200",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "evidence": "Included⁵ 2nd Bag: $69 (incl $10 savings) Bag Fees Domestic - More than 24 Hours - 2026 Main Base/Main/Main Flex/EvenMore® Base/EvenMore/EvenMore Flex⁶ Mint/Mint Flex Mosaic 1¹ Mosaic 2-4 JetBlue Plus Cardmember² JetBlue Premier Cardmember⁴ The fee for 3rd (or more) checked bag is $200.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$119 / £99 / €109 / $200 / £150 / €185 / $210 / £160 / €195",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "evidence": "Included⁵ 2nd Bag: $119/£99/€109 Baggage Fees - Transatlantic Flights (More than 24 Hours) Main Base/EvenMore Base Main/Main Flex/EvenMore/EvenMore Flex Mint/Mint Flex Mosaic 1¹ Mosaic 2-4 JetBlue Plus Cardmember² JetBlue Premier Cardmember⁴ The fee for a 3rd (or more) checked bag on transatlantic routes is $200/£150/€185 for off-peak and $210/£160/€195 for peak. *Peak Travel Dates.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_4",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "50 pounds / 22.68 kg",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "evidence": "Checked bag size and weight Checked bags should not exceed 62” (157.48 cm) in overall dimensions (length + width + height) or 50 pounds (22.68 kg) in weight.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "99 pounds / 44.91 kg",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "evidence": "Oversized bags 63-80 inches (160-203.3 cm), including wheels and handles: $150/£120/€140 per bag Bags over 80 inches (203.3 cm) will not be accepted Overweight bags 51-99 pounds (23.13-44.91 kg): $150/£120/€140 per bag Bags over 99 pounds (44.91 kg) will not be accepted Destinations with specific limitations Ecuador For flights to/from Ecuador:",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "50 pounds / 22.68 kg",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "evidence": "Overweight bag fees apply to bags weighing over 50 pounds (22.68 kg).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$200 / £150 / €185 / $210 / £160 / €195",
+          "source_url": "https://www.jetblue.com/help/checked-bags",
+          "evidence": "The fee for a 3rd checked bag (or more) on transatlantic routes is $200/£150/€185 for off-peak and $210/£160/€195 for peak.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_5",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "50 pounds / 22.68 kg",
+          "source_url": "https://www.jetblue.com/at-the-airport/baggage-information",
+          "evidence": "Checked bags exceeding 62\" (157.48 cm) in overall dimensions (length + width + height) or 50 pounds (22.68 kg) will also incur a fee.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_4",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$69 / $10 / $200",
+          "source_url": "https://www.jetblue.com/at-the-airport/baggage-information",
+          "evidence": "Included⁵ 2nd Bag: $69 (incl $10 savings) Bag Fees Domestic - More than 24 Hours - 2026 Main Base/Main/Main Flex/EvenMore® Base/EvenMore/EvenMore Flex⁶ Mint/Mint Flex Mosaic 1¹ Mosaic 2-4 JetBlue Plus Cardmember² JetBlue Premier Cardmember⁴ The fee for 3rd (or more) checked bag is $200.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_6",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$119 / £99 / €109 / $200 / £150 / €185 / $210 / £160 / €195",
+          "source_url": "https://www.jetblue.com/at-the-airport/baggage-information",
+          "evidence": "Included⁵ 2nd Bag: $119/£99/€109 Baggage Fees - Transatlantic Flights (More than 24 Hours) Main Base/EvenMore Base Main/Main Flex/EvenMore/EvenMore Flex Mint/Mint Flex Mosaic 1¹ Mosaic 2-4 JetBlue Plus Cardmember² JetBlue Premier Cardmember⁴ The fee for a 3rd (or more) checked bag on transatlantic routes is $200/£150/€185 for off-peak and $210/£160/€195 for peak.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_7",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "51 lbs / 23.13 kg / 99 lbs / 44.91 kg / 70 pounds / 31.75 kg",
+          "source_url": "https://www.jetblue.com/at-the-airport/baggage-information",
+          "evidence": "51 lbs (23.13 kg) – 99 lbs (44.91 kg): $150 per bag ($150/£120/€140 on transatlantic flights) Bags that exceed 70 pounds (31.75 kg) are not accepted on transatlantic flights 63\" in (160 cm) – 80 in (203.3 cm, including wheels and handles): $150 per bag ($150/£120/€140 on transatlantic flights).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_5",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "50 pounds / 22.68 kg",
+          "source_url": "https://www.jetblue.com/at-the-airport/baggage-information",
+          "evidence": "You are allowed one checked bag 60\" (157.48 cm) in overall dimensions (length + width + height) or 50 pounds (22.68 kg).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_6",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$109 / $119",
+          "source_url": "https://www.jetblue.com/at-the-airport/baggage-information",
+          "evidence": "The fee for the second bag is $109 for off-peak and $119 for peak.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_8",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$200 / £150 / €185 / $210 / £160 / €195",
+          "source_url": "https://www.jetblue.com/at-the-airport/baggage-information",
+          "evidence": "The fee for a 3rd (or more) checked bag is $200/£150/€185 for off-peak and $210/£160/€195 for peak.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_9",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "50 pounds / 22.68 kg",
+          "source_url": "https://www.jetblue.com/at-the-airport/baggage-information",
+          "evidence": "You are allowed two checked bags 60\" (157.48 cm) in overall dimensions (length + width + height) or 50 pounds (22.68 kg).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_7",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$200",
+          "source_url": "https://www.jetblue.com/at-the-airport/baggage-information",
+          "evidence": "The fee for a 3rd (or more) checked bag is $200.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_10",
+          "approval": "unreviewed"
+        }
+      ]
+    },
+    {
+      "carrier_key": "malaysia-airlines",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": false,
+      "preview_file": "preview-facts/malaysia-airlines.json",
+      "summary": {
+        "extracted_candidates": 0,
+        "field_proposals": 0,
+        "high_confidence": 0,
+        "needs_review": 0,
+        "unclassified_candidates": 0
+      },
+      "operations": []
+    },
+    {
+      "carrier_key": "rex",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": false,
+      "preview_file": "preview-facts/rex.json",
+      "summary": {
+        "extracted_candidates": 17,
+        "field_proposals": 6,
+        "high_confidence": 0,
+        "needs_review": 6,
+        "unclassified_candidates": 9
+      },
+      "operations": [
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "20kg / 25kg",
+          "source_url": "https://www.rex.com.au/FlightInfo/BaggageAllowance.aspx",
+          "evidence": "Rex permits the carriage of cellos and guitars in the cabin, provided the instrument does not exceed the weight limit of 20kg (25kg if you purchase a Rex Flex fare for the instrument).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "10kg",
+          "source_url": "https://www.rex.com.au/FlightInfo/BaggageAllowance.aspx",
+          "evidence": "Up to two checked bags A pram/stroller Portable cot Baby capsule Car seat The total combined weight of the two pieces must not exceed 10kg.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23kg",
+          "source_url": "https://www.rex.com.au/FlightInfo/BaggageAllowance.aspx",
+          "evidence": "Rex Flyer Members Diamond members are entitled to 23kg of checked baggage on all fare classes.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "15kg / 23kg",
+          "source_url": "https://www.rex.com.au/FlightInfo/BaggageAllowance.aspx",
+          "evidence": "Opal, Sapphire, and Emerald members are entitled to 15kg of checked baggage, except when booked under Economy Flex, which allows 23kg.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_4",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_fee",
+          "confidence": 0.7,
+          "confidence_band": "medium",
+          "status": "needs_review",
+          "rationale": "Explicit baggage fee, but route, timing, currency, and bag-number conditions require review.",
+          "value": "$5.50",
+          "source_url": "https://www.rex.com.au/FlightInfo/BaggageAllowance.aspx",
+          "evidence": "Excess Baggage An excess baggage fee of $5.50 (incl.",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_fee_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "32kg",
+          "source_url": "https://www.rex.com.au/FlightInfo/BaggageAllowance.aspx",
+          "evidence": "The maximum weight per piece of baggage that can be accepted at the airport is 32kg.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_5",
+          "approval": "unreviewed"
+        }
+      ]
+    },
+    {
+      "carrier_key": "ryanair",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": true,
+      "preview_file": "preview-facts/ryanair.json",
+      "summary": {
+        "extracted_candidates": 58,
+        "field_proposals": 5,
+        "high_confidence": 0,
+        "needs_review": 4,
+        "unclassified_candidates": 48
+      },
+      "operations": [
+        {
+          "module": "carryon",
+          "field": "carryon_weight_limit",
+          "confidence": 0.82,
+          "confidence_band": "medium",
+          "status": "proposed",
+          "rationale": "Weight appears in explicit carry-on context.",
+          "value": "10kg / 20kg / 23kg",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+          "evidence": "Additional options include Priority boarding with a second 10kg cabin bag, checked bags of 10kg, 20kg (up to 3), or 23kg (1 allowed).",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_carryon_weight_limit_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "carryon",
+          "field": "standard_carryon_dimensions",
+          "confidence": 0.72,
+          "confidence_band": "medium",
+          "status": "needs_review",
+          "rationale": "Carry-on context is present, but the bag label may be outside the extracted sentence.",
+          "value": "40 x 30 x 20 cm / 55x40x20cm",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+          "evidence": "This allows you to carry a small personal bag (40 x 30 x 20 cm), which must fit under the seat in front of you and a 10kg bag (55x40x20cm) onboard, to be stored in the overhead locker.",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_standard_carryon_dimensions_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "10kg / 20kg / 23kg",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+          "evidence": "Additional options include Priority boarding with a second 10kg cabin bag, checked bags of 10kg, 20kg (up to 3), or 23kg (1 allowed).",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "20kg",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+          "evidence": "Passengers can purchase up to 3 checked bags of 20kg on their booking.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "baggage",
+          "field": "checked_bag_weight",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Weight appears in checked-baggage context; fare/route applicability may vary.",
+          "value": "23kg",
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+          "evidence": "Passengers can purchase up to 1 checked bags of 23kg on their booking.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_checked_bag_weight_3",
+          "approval": "unreviewed"
+        }
+      ]
+    },
+    {
+      "carrier_key": "tap-portugal",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": false,
+      "preview_file": "preview-facts/tap-portugal.json",
+      "summary": {
+        "extracted_candidates": 29,
+        "field_proposals": 2,
+        "high_confidence": 0,
+        "needs_review": 0,
+        "unclassified_candidates": 27
+      },
+      "operations": [
+        {
+          "module": "carryon",
+          "field": "carryon_weight_limit",
+          "confidence": 0.82,
+          "confidence_band": "medium",
+          "status": "proposed",
+          "rationale": "Weight appears in explicit carry-on context.",
+          "value": "10kg",
+          "source_url": "https://www.flytap.com/en-pt/baggage/hand-baggage",
+          "evidence": "Economy and Economy Prime 1 item of hand baggage Business to / from North American destinations 1 item of hand baggage Business to / from Europe, Africa, South America or domestic flights 2 items of hand baggage Economy and Economy Prime 1 item of hand baggage Business to / from North American destinations 1 item of hand baggage Business to / from Europe, Africa, South America or domestic flights …",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_carryon_weight_limit_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "checkin",
+          "field": "airport_cutoff",
+          "confidence": 0.8,
+          "confidence_band": "medium",
+          "status": "proposed",
+          "rationale": "Duration appears with an airport cutoff or closure statement.",
+          "value": "30 minutes",
+          "source_url": "https://www.flytap.com/en-pt/check-in",
+          "evidence": "Please note that, regardless of the chosen Check-in method, you must ensure that you arrive at your flight's boarding gate at least 30 minutes before the scheduled departure time.",
+          "flags": [],
+          "operation": "review_field",
+          "proposed_key": "proposal_airport_cutoff_1",
+          "approval": "unreviewed"
+        }
+      ]
+    },
+    {
+      "carrier_key": "westjet",
+      "capture_date": "2026-08-24",
+      "existing_fact_file": false,
+      "preview_file": "preview-facts/westjet.json",
+      "summary": {
+        "extracted_candidates": 29,
+        "field_proposals": 4,
+        "high_confidence": 0,
+        "needs_review": 4,
+        "unclassified_candidates": 21
+      },
+      "operations": [
+        {
+          "module": "checkin",
+          "field": "airport_cutoff",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Duration appears with an airport cutoff or closure statement.",
+          "value": "24 hours",
+          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
+          "evidence": "When check-in opens Check-in opens 24 hours before departure for most flights.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_airport_cutoff_1",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "checkin",
+          "field": "airport_cutoff",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Duration appears with an airport cutoff or closure statement.",
+          "value": "3 hours / 4 hours",
+          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
+          "evidence": "Checking in at the airport Airport check-in counters Open 3 hours before departure for most flights Open 4 hours before departure for flights departing from:",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_airport_cutoff_2",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "checkin",
+          "field": "airport_cutoff",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Duration appears with an airport cutoff or closure statement.",
+          "value": "2 hours / 30 minutes / 150 minutes",
+          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
+          "evidence": "Arrive 2 hours 30 minutes (150 minutes) before departure Check-in cut-off Domestic:",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_airport_cutoff_3",
+          "approval": "unreviewed"
+        },
+        {
+          "module": "checkin",
+          "field": "airport_cutoff",
+          "confidence": 0.69,
+          "confidence_band": "low",
+          "status": "needs_review",
+          "rationale": "Duration appears with an airport cutoff or closure statement.",
+          "value": "3 hours / 180 minutes",
+          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
+          "evidence": "Until check-in cut-off time Baggage is accepted up to 3 hours (180 minutes) before departure at most locations.",
+          "flags": [
+            "multiple_contextual_values"
+          ],
+          "operation": "review_field",
+          "proposed_key": "proposal_airport_cutoff_4",
+          "approval": "unreviewed"
+        }
+      ]
+    }
+  ]
+}
