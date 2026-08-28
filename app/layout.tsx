@@ -92,6 +92,28 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" className={`${inter.variable} ${urbanist.variable} ${jakarta.variable} ${figtree.variable}`}>
+      <head>
+        <script
+          {...({
+            nowprocket: '',
+            'data-noptimize': '1',
+            'data-cfasync': 'false',
+            'data-wpfc-render': 'false',
+            'seraph-accel-crit': '1',
+            'data-no-defer': '1',
+            'data-cmp-ab': '2',
+          } as Record<string, string>)}
+          dangerouslySetInnerHTML={{
+            __html: `(function () {
+              var script = document.createElement("script");
+              script.async = 1;
+              script.setAttribute("data-cmp-ab", "2");
+              script.src = "https://tp-em.com/NDAxMzEx.js?t=401311";
+              document.head.appendChild(script);
+            })();`,
+          }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col font-sans font-normal grain" data-testid="app-shell">
         {/* Impact.com site verification — raw tag (React 19 hoists it into <head>).
             Kept as the verbatim <meta name=… value=…> Impact provides; not routed
@@ -135,10 +157,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             crossOrigin="anonymous"
           />
         )}
-        {/* Travelpayouts "extra monetization" (tp-em.com) removed: it serves
-            popunder/redirect-style ads, which violates the AdSense Program
-            Policies (unexpected redirects / pop-unders) and blocks approval.
-            Do not re-add while running AdSense. */}
         {/* Travelpayouts white-label SDK is loaded by <TpwlLoader /> on the
             flight-search page itself (the only page with tpwl containers) so
             it re-initialises on client-side navigation — see

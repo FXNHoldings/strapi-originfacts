@@ -7,6 +7,7 @@ import { breadcrumbJsonLd } from '@/lib/jsonld';
 import { faqJsonLd } from '@/lib/entity-seo';
 import TpwlLoader from '@/components/TpwlLoader';
 import AirlineResultsFilter from '@/components/AirlineResultsFilter';
+import CustomFlightSearch from '@/components/CustomFlightSearch';
 
 export const metadata = {
   title: 'Flight Search',
@@ -125,9 +126,8 @@ export default async function FlightsPage({
       <JsonLd data={faqJsonLd(BOOKING_FAQ)} />
       <TpwlLoader />
 
-      {/* TPWL loader now lives in app/layout.tsx so the SDK is available
-          site-wide. The two `<div id="tpwl-search">` / `<div id="tpwl-tickets">`
-          containers below are what tells main.js where to render. */}
+      {/* TPWL renders the result list below. The hero uses our custom form so
+          its layout stays fully under OriginFacts' control. */}
 
       <Script id="flight-search-state" strategy="afterInteractive">
         {`(function () {
@@ -142,20 +142,29 @@ export default async function FlightsPage({
       </Script>
 
       <div data-testid="fly-page">
-        <div className="bg-[#f0f3f5]">
-          <div className="fs-search-band mx-auto max-w-7xl px-6 pb-14 pt-16">
-            <header className="max-w-3xl" data-testid="flight-search-hero">
-              <h1 className="editorial-h text-[2.5rem] font-bold tracking-[-1px] text-forest-900">
-                Compare every airline. In one search.
-              </h1>
-              <p className="mt-[5px] text-lg font-normal text-ink/75">
-                Live fares from hundreds of carriers and online travel agencies, ranked by total
-                price. We don&apos;t sell the ticket — we just help you find the cheapest one.
-              </p>
-            </header>
+        <div className="bg-gradient-to-b from-white via-white to-[#edf4ff]">
+          <div className="fs-search-band mx-auto max-w-7xl px-6 pb-16 pt-14 lg:pt-16">
+            <div data-testid="flight-search-hero" className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+              <header className="max-w-4xl">
+                <h1 className="editorial-h max-w-4xl text-[clamp(2rem,3vw,3rem)] font-bold leading-[1.08] text-forest-900">
+                  Cheap flights, compared across hundreds of airlines
+                </h1>
+                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-lg text-forest-900">
+                  <span>Live fares from <strong className="text-primary-emphasis">500+ airlines</strong></span>
+                  <span className="hidden h-7 w-px bg-forest-900/20 sm:block" />
+                  <span>Compare now. Book with confidence.</span>
+                </div>
+              </header>
+              <aside className="relative hidden h-[168px] overflow-hidden rounded-[18px] bg-forest-900 shadow-lg lg:block" aria-label="Travel inspiration">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/generated/airports/airport-enu-hero.jpg" alt="Traveler overlooking a destination" className="h-full w-full object-cover opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-r from-forest-950/80 via-forest-950/20 to-transparent" />
+                <p className="absolute bottom-5 left-5 max-w-[190px] text-xl font-bold leading-tight text-white">Your next journey starts here.</p>
+              </aside>
+            </div>
 
             <div className="tpwl-search-wrap mt-10">
-              <div id="tpwl-search" />
+              <CustomFlightSearch variant="hero" />
             </div>
           </div>
         </div>
