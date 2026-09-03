@@ -19,6 +19,7 @@ import { SECTIONS } from '@/lib/sections';
 import { DEFAULT_OG_IMAGE, faqJsonLd, howToJsonLd, normalizeFaqs, normalizeSteps } from '@/lib/entity-seo';
 import { JsonLd, FaqSection, HowToSteps } from '@/components/SeoBlocks';
 import KeyFacts from '@/components/KeyFacts';
+import TakeadsTravelOffers from '@/components/TakeadsTravelOffers';
 import { clampDescription, warnIfLong } from '@/lib/seo';
 import type { Metadata } from 'next';
 
@@ -321,6 +322,12 @@ export default async function ArticlePage({ params }: Props) {
             )}
 
             <KeyFacts tldr={article.tldr} keyFacts={article.keyFacts} />
+
+            <TakeadsTravelOffers
+              articleSlug={article.slug}
+              title={article.title}
+              category={article.category?.name}
+            />
 
             <div
               className="prose-article"

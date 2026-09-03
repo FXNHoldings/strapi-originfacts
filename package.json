@@ -10,6 +10,7 @@
     "lint": "next lint",
     "validate:facts": "node ops/validate-airline-facts.mjs",
     "validate:facts:fixtures": "node ops/validate-airline-facts.mjs --fixtures",
+    "sync:facts": "node ops/sync-airline-facts.mjs",
     "prebuild": "node ops/validate-airline-facts.mjs",
     "fetch": "yarn --cwd ops/fetch fetch",
     "reach": "yarn --cwd ops/fetch reach",

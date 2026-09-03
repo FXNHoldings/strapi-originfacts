@@ -142,7 +142,7 @@ export default async function FlightsPage({
       </Script>
 
       <div data-testid="fly-page">
-        <div className="bg-gradient-to-b from-white via-white to-[#edf4ff]">
+        <div data-testid="fs-search-section" className="bg-gradient-to-b from-white via-white to-[#edf4ff]">
           <div className="fs-search-band mx-auto max-w-7xl px-6 pb-16 pt-14 lg:pt-16">
             <div data-testid="flight-search-hero" className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
               <header className="max-w-4xl">

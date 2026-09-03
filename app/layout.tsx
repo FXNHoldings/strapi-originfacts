@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Figtree, Inter, Plus_Jakarta_Sans, Urbanist } from 'next/font/google';
+import { Figtree, Inter, Outfit, Plus_Jakarta_Sans, Urbanist } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 import Header from '@/components/Header';
@@ -24,6 +24,13 @@ const urbanist = Urbanist({
   subsets: ['latin'],
   variable: '--font-urbanist',
   weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit',
+  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
@@ -114,7 +121,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}
         />
       </head>
-      <body className="min-h-screen flex flex-col font-sans font-normal grain" data-testid="app-shell">
+      <body className={`${inter.variable} ${urbanist.variable} ${outfit.variable} ${jakarta.variable} ${figtree.variable} min-h-screen flex flex-col font-sans font-normal grain`} data-testid="app-shell">
         {/* Impact.com site verification — raw tag (React 19 hoists it into <head>).
             Kept as the verbatim <meta name=… value=…> Impact provides; not routed
             through Next's metadata API, which would rewrite `value` to `content`. */}
@@ -169,17 +176,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <FixedSocialFollow />
         <Footer />
         <CookieConsent />
-        {/* VigLink (Sovrn Commerce) — auto-affiliates outbound merchant links.
-            Loaded just before </body> per Sovrn's install snippet. */}
-        <Script id="viglink" strategy="afterInteractive">{`
-          var vglnk = {key: 'afc24eff86a1f79d72ff2337684e5150'};
-          (function(d, t) {var s = d.createElement(t);
-            s.type = 'text/javascript';s.async = true;
-            s.src = '//cdn.viglink.com/api/vglnk.js';
-            var r = d.getElementsByTagName(t)[0];
-            r.parentNode.insertBefore(s, r);
-          }(document, 'script'));
-        `}</Script>
+        <script src="https://convertlink.com/script/7295bcfa-4dc7-4794-8b6c-4434f5945457/bundle.js" />
       </body>
     </html>
   );

@@ -16,7 +16,7 @@ import {
   summariseRoutes,
 } from '@/lib/entity-seo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
-import { airlineGuideIsPublished, airlineIsIndexable } from '@/lib/airline-tier';
+import { airlineGuideIsPublished, airlineIsIndexable, airlineTier } from '@/lib/airline-tier';
 import { getFlySfoAirlineProfile } from '@/lib/flysfo-airline';
 import { getAirlineFacts } from '@/lib/airline-facts';
 import { getAirlineReviews } from '@/lib/airline-reviews';
@@ -145,11 +145,9 @@ export default async function AirlinePage({ params }: Props) {
     { label: 'Popular routes', value: routes.length ? String(routes.length) : undefined },
   ].filter((fact) => fact.value);
 
-  // Published Tier 1 guides. Unlike the showcase below this is not a reskin:
-  // modules render only where a source backs them, so the page shows what is
-  // verified and says so where nothing is. Every other airline keeps its
-  // existing layout and remains under the directory-wide noindex hold.
-  if (airlineGuideIsPublished(slug)) {
+  // Published Tier 1 guides & Tier 2 carriers. Render modern policy layout
+  // for all substantive carriers (Tier 1 & Tier 2).
+  if (airlineGuideIsPublished(slug) || airlineTier(airline, routes.length > 0) <= 2) {
     const tier1Faqs = derivedFaqs(airline, routeFacts, alliance);
     const tier1AirlineLd: Record<string, unknown> = { ...airlineJsonLd(airline, url), '@id': `${url}#airline` };
     if (airline.founded) tier1AirlineLd.foundingDate = String(airline.founded);

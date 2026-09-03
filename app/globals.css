@@ -1,3 +1,5 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,800,700,500,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,8 +7,9 @@
 @layer base {
   html {
     background: #ffffff;
-    color: #7f8795;
+    color: #334155;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
   }
@@ -14,24 +17,20 @@
   .prose-article h2, .prose-article h3 {
     scroll-margin-top: 6rem;
   }
-  /* Default body text — Plus Jakarta Sans */
-  body {
-    font-family: var(--font-jakarta), system-ui, sans-serif;
+  /* Default body text & paragraphs — Inter */
+  body, p {
+    font-family: var(--font-inter), 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
     font-weight: 400;
-    letter-spacing: 0;
+    letter-spacing: -0.011em;
+    color: #334155;
   }
-  /* All headings → Figtree, near-black.
-     !important on font-family/weight/color so every heading overrides
-     per-element Tailwind utilities (font-urbanist, font-extrabold,
-     text-forest-900 etc) without having to edit each one. Components
-     that need a different heading colour (the footer's yellow on
-     navy, for example) override via a more specific rule below. */
+  /* All headings → Inter */
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-figtree), system-ui, sans-serif !important;
+    font-family: var(--font-inter), 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
     font-weight: 700 !important;
-    letter-spacing: -0.01em !important;
-    line-height: 1.2;
-    color: #2d3c58 !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.25;
+    color: #0f172a !important;
   }
   /* Pixelbin-style fluid heading scale.
      Pattern: clamp(min, calc(base-rem + vw), max).
@@ -74,6 +73,40 @@
   [data-testid^="category-page-"] h3 {
     font-weight: 700 !important;
   }
+
+  /* Airline Directory & Airline Detail Pages Typography:
+     - Headings (h1 - h6, titles) -> Google Font Urbanist
+     - Paragraphs & body -> Google Font Outfit */
+  [data-testid="airlines-page"] h1,
+  [data-testid="airlines-page"] h2,
+  [data-testid="airlines-page"] h3,
+  [data-testid="airlines-page"] h4,
+  [data-testid="airlines-page"] h5,
+  [data-testid="airlines-page"] h6,
+  [data-testid="airlines-page"] .title,
+  [data-testid^="airline-page-"] h1,
+  [data-testid^="airline-page-"] h2,
+  [data-testid^="airline-page-"] h3,
+  [data-testid^="airline-page-"] h4,
+  [data-testid^="airline-page-"] h5,
+  [data-testid^="airline-page-"] h6,
+  [data-testid^="airline-page-"] .title {
+    font-family: var(--font-inter), 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  }
+
+  [data-testid="airlines-page"],
+  [data-testid="airlines-page"] p,
+  [data-testid="airlines-page"] span,
+  [data-testid="airlines-page"] a,
+  [data-testid^="airline-page-"],
+  [data-testid^="airline-page-"] p {
+    font-family: var(--font-outfit), 'Outfit', system-ui, sans-serif;
+  }
+
+  [data-testid="airlines-page"] h3,
+  [data-testid^="airline-page-"] h3 {
+    font-size: 1.5rem !important;
+  }
   /* Hide the left "Popular Now" floating widget on single post pages.
      Uses :has() to detect the article-page data-testid anywhere in the
      body and target the global FixedPopularNow widget. */
@@ -85,6 +118,8 @@
      search, airlines (index + detail), airports (index + detail + hubs).
      Gives directory / search layouts the full canvas without the
      left popular-posts widget or right icon bar competing for space. */
+  body:has([data-testid="flight-deals-preview"]) [data-testid="fixed-popular-now"],
+  body:has([data-testid="flight-deals-preview"]) [data-testid="fixed-right-bar"],
   body:has([data-testid="fly-page"]) [data-testid="fixed-popular-now"],
   body:has([data-testid="fly-page"]) [data-testid="fixed-right-bar"],
   body:has([data-testid="flights-page"]) [data-testid="fixed-popular-now"],
@@ -111,6 +146,66 @@
   /* Airport detail hero title sits on a dark image/gradient. */
   [data-testid^="airport-page-"] header h1 {
     color: #ffffff !important;
+  }
+
+  /* Airport Template Page Typography (Extracted from flightfares.one) */
+  [data-testid^="airport-page-"],
+  [data-testid="airports-page"],
+  [data-testid="airport-hubs-page"] {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  [data-testid^="airport-page-"] h1,
+  [data-testid^="airport-page-"] h2,
+  [data-testid^="airport-page-"] h3,
+  [data-testid^="airport-page-"] h4,
+  [data-testid="airports-page"] h1,
+  [data-testid="airports-page"] h2,
+  [data-testid="airports-page"] h3,
+  [data-testid="airports-page"] h4 {
+    font-family: var(--font-inter), 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+  }
+
+  [data-testid^="airport-page-"] h1 {
+    font-size: clamp(2rem, 3.5vw, 3.25rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.025em !important;
+    color: #ffffff !important;
+  }
+
+  [data-testid^="airport-page-"] h2 {
+    font-size: clamp(1.5rem, 2.2vw, 2.25rem) !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.02em !important;
+    color: #0f172a !important;
+  }
+
+  [data-testid^="airport-page-"] h3 {
+    font-size: clamp(1.25rem, 1.6vw, 1.65rem) !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.015em !important;
+    color: #0f172a !important;
+  }
+
+  [data-testid^="airport-page-"] h4 {
+    font-size: 1.125rem !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+    letter-spacing: -0.01em !important;
+    color: #0f172a !important;
+  }
+
+  [data-testid^="airport-page-"] p,
+  [data-testid^="airport-page-"] li {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #334155;
+    letter-spacing: -0.011em;
   }
 
   /* Category page sidebar — Popular/Recent post row titles, fluid 14→16px
@@ -267,23 +362,30 @@
   }
 }
 
-/* ---------- /flights: make the search form sticky during results ----------
-   Matches the behaviour on the flights.originfacts.com white-label so users
-   can tweak origin/destination/dates without scrolling back up. The site
-   Header is sticky at top: 0 with z-50 (~96px tall on desktop, ~72px mobile);
-   the search bar sits right beneath it. */
-html.flight-search-active .tpwl-search-wrap {
-  position: sticky;
-  top: 75px;
-  z-index: 40;
-  margin-top: 16px;
-  padding: 12px 0;
-  background: #f0f2f4; /* matches theme.colors.paper */
+/* ---------- /flights: make the search form sticky at top: 0 during results ----------
+   On search results view (html.flight-search-active), the top menu bar is non-sticky,
+   and fs-search-section sticks directly at top: 0 with a medium box shadow. */
+html.flight-search-active [data-testid="site-header"] {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  box-shadow: none !important;
 }
-@media (max-width: 768px) {
-  html.flight-search-active .tpwl-search-wrap {
-    top: 72px;
-  }
+html.flight-search-active [data-testid="site-header-spacer"] {
+  display: none !important;
+}
+
+html.flight-search-active .tpwl-search-wrap,
+html.flight-search-active [data-testid="fs-search-section"] {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 50 !important;
+  margin-top: 0 !important;
+  padding: 5px 0 !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* ---------- /flights: hide browse sections once search results render ----------
@@ -295,8 +397,15 @@ html.flight-search-active .tpwl-search-wrap {
 html.flight-search-active [data-testid="travel-pros"],
 html.flight-search-active [data-testid="popular-destinations"],
 html.flight-search-active [data-testid="cheap-flights-by-destination"],
-html.flight-search-active [data-testid="booking-faq"] {
-  display: none;
+html.flight-search-active [data-testid="booking-faq"],
+html.flight-search-active [data-testid="custom-flight-options-row"]:not(.is-expanded),
+html.flight-search-active [data-testid="direct-flights-only-row"]:not(.is-expanded) {
+  display: none !important;
+}
+
+html.flight-search-active [data-testid="custom-flight-options-row"].is-expanded,
+html.flight-search-active [data-testid="direct-flights-only-row"].is-expanded {
+  display: flex !important;
 }
 
 /* Results view matches the white-label layout: hero copy hidden, search form
@@ -304,22 +413,33 @@ html.flight-search-active [data-testid="booking-faq"] {
 html.flight-search-active [data-testid="flight-search-hero"] {
   display: none;
 }
+html.flight-search-active [data-testid="fs-search-section"],
 html.flight-search-active .fs-search-band {
-  padding-top: 16px;
-  padding-bottom: 8px;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
 }
 html.flight-search-active .tpwl-search-wrap {
   margin-top: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+html.flight-search-active .tpwl-search-wrap {
+  margin-top: 0;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
 }
 html.flight-search-active #tpwl-tickets {
   margin-top: 0;
 }
 
-/* ---------- TPWL search form fields → 4px corner radius ----------
-   TPWL ships the form with rounded-full pill fields. Override every
-   field-like element inside #tpwl-search down to 4px so the rest of
-   the page (which uses 4px on the topbar search + Pro Tip cards)
-   reads as a single system. */
+/* ---------- TPWL & Custom flight search form & buttons → 8px corner radius ---------- */
+#tpwl-search,
 #tpwl-search button,
 #tpwl-search input,
 #tpwl-search [role="combobox"],
@@ -331,8 +451,13 @@ html.flight-search-active #tpwl-tickets {
 #tpwl-search [class*="Input"],
 #tpwl-search [class*="input"],
 #tpwl-search [class*="Button"],
-#tpwl-search [class*="button"] {
-  border-radius: 4px !important;
+#tpwl-search [class*="button"],
+[data-testid="custom-flight-search"],
+[data-testid="custom-travel-search"],
+[data-testid="custom-flight-search"] button,
+[data-testid="airline-flight-search"],
+.fs-search-band form {
+  border-radius: 8px !important;
 }
 
 /* ---------- TPWL language / currency switcher → dropdown menu ----------
@@ -456,7 +581,7 @@ html.flight-search-active #tpwl-tickets {
   /* 1rem (16px) body throughout, weight 400 (matches html body weight). */
   font-size: 1rem;
   font-weight: 400;
-  color: #7f8795;
+  color: #334155;
   line-height: 1.7;
   letter-spacing: 0;
 }

@@ -6,52 +6,34 @@
  * Tailwind and its own tokens.
  */
 .root {
-  /* Site tokens, not a palette of this template's own — forest/sand from
-     tailwind.config.ts, ink and paper from the same map. Kept as local custom
-     properties so the module stays self-contained, but every value here is the
-     site's. */
-  --ink: #07142b;          /* colors.ink */
-  --ink-soft: #33415f;
-  --slate: #5a6a88;
-  --slate-light: #8d99b0;
-  /* Ground and cards are both white. That only works because the card border
-     carries the boundary on its own: #7f8ea6 measures 3.32:1 against white,
-     the WCAG 1.4.11 floor for a structural element. It was #d9dee7 at 1.35:1,
-     and at that contrast a white-on-white layout had nothing holding it
-     together — which is why an earlier attempt at this was reverted.
-     If the border is ever lightened, this ground has to change with it. */
-  --paper: #ffffff;
-  --card: #ffffff;
-  --rule: #7f8ea6;
-  --rule-soft: #ccd3de;    /* interior hairlines — table rows, source rules */
-  --rule-strong: #5f7089;
-  --verified: #03721e;     /* success.emphasis */
-  --verified-bg: #e4f1e7;
-  --check: #983e00;        /* attention.emphasis */
-  --check-bg: #fff6d1;     /* sand.100 */
-  /* Hero and the closing note are both light surfaces. They stay distinct
-     from each other and from the page: the hero takes forest.100 so it reads
-     as its own band against the neutral --paper ground, the closing note is
-     plain white with a rule above it so it does not float. */
-  --hero-bg: #e7f4ff;      /* forest.100 */
-  --hero-rule: #b6d5ef;
-  --hero-text: #33415f;
-  --hero-dim: #4a5b78;
-  /* Sector endpoints: origin on the brand blue, destination on terracotta —
-     the site's only other hue, so the two ends read apart without inventing a
-     colour the palette does not have. */
-  --sector-from: #0072de;  /* forest.500 */
-  --sector-to: #b85812;    /* terracotta.500 */
-  --foot-bg: #ffffff;
-  --foot-text: #33415f;
+  /* Official site color tokens (tailwind.config.ts / app/globals.css) */
+  --ink: #0f172a;          /* site colors.ink (slate-900) */
+  --ink-soft: #334155;     /* slate-700 body text */
+  --slate: #64748b;        /* slate-500 secondary text */
+  --slate-light: #94a3b8;  /* slate-400 labels */
+  --paper: #f8fafc;        /* slate-50 site ground */
+  --card: #ffffff;         /* pure white card background */
+  --rule: #e2e8f0;         /* slate-200 card borders */
+  --rule-soft: #f1f5f9;    /* slate-100 interior hairlines */
+  --rule-strong: #b8c2d0;  /* slate-300 dividers */
+  
+  --verified: #059669;     /* site success.emphasis emerald green */
+  --verified-bg: #ecfdf5;  /* site success soft background */
+  --check: #d97706;        /* site attention.emphasis amber */
+  --check-bg: #fffbeb;     /* site sand.100 soft background */
 
-  /* Typography follows the site: Plus Jakarta Sans for body, Figtree for
-     headings (globals.css enforces that with !important, so declaring it here
-     matches what actually renders rather than being silently overridden).
-     Labels and figures use a system monospace stack — the site ships no mono
-     webfont and this template does not add one. */
-  --t1-body: var(--font-jakarta), system-ui, sans-serif;
-  --t1-head: var(--font-figtree), system-ui, sans-serif;
+  --hero-bg: linear-gradient(135deg, #f5f9fe 0%, #ebf4fc 50%, #f7faff 100%);
+  --hero-rule: #c7ddfd;    /* forest.200 */
+  --hero-text: #0f172a;    /* slate-900 */
+  --hero-dim: #025ccc;     /* primary.emphasis blue */
+
+  --sector-from: #025ccc;  /* primary.emphasis blue */
+  --sector-to: #d95a14;    /* terracotta.500 */
+  --foot-bg: #ffffff;
+  --foot-text: #334155;
+
+  --t1-body: var(--font-inter), 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --t1-head: var(--font-inter), 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --t1-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   background: var(--paper);
@@ -68,7 +50,7 @@
   --rule: #d9dee7;
   --rule-strong: #b8c2d0;
 }
-.root.preview h1 { font-size: 3.5rem; }
+.root.preview h1 { font-size: 2.8rem; }
 .root.preview h2 { font-size: 2rem; }
 .preview .module,
 .preview .codes,
@@ -96,51 +78,73 @@
 .wrap { max-width: 1420px; margin: 0 auto; padding: 0 24px; }
 
 /* ---------- hero: the data plate ---------- */
-.hero { background: var(--hero-bg); color: var(--ink); padding: 40px 0 0; }
+.hero {
+  background: linear-gradient(135deg, #f5f9fe 0%, #ebf4fc 50%, #f7faff 100%);
+  color: var(--ink);
+  padding: 40px 0 0;
+}
 .plate {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 32px;
-  align-items: end;
+  align-items: start;
   padding-bottom: 36px;
 }
-.identity { display: flex; align-items: center; gap: 24px; min-width: 0; }
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.titleHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 .logo {
-  width: 88px;
-  height: 88px;
-  flex: 0 0 88px;
+  width: 112px;
+  height: 112px;
+  flex: 0 0 112px;
   border: 1px solid var(--hero-rule);
-  border-radius: 18px;
+  border-radius: 8px;
   background: #fff;
   display: grid;
   place-items: center;
-  padding: 14px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
-.logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.06);
+}
 .eyebrow {
   font-family: var(--t1-mono);
   font-size: 11px;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--hero-dim);
-  margin-bottom: 18px;
+  margin-bottom: 6px;
 }
 .root h1 {
-  font-size: clamp(38px, 6.4vw, 68px);
+  font-size: 2.8rem;
   font-weight: 800;
   letter-spacing: -0.035em;
-  margin-bottom: 14px;
+  margin: 0;
+  line-height: 1.1;
 }
 .code {
   font-family: var(--t1-mono);
-  font-size: .42em;
+  font-size: .48em;
   font-weight: 500;
   letter-spacing: .04em;
-  vertical-align: .42em;
+  vertical-align: .15em;
   color: var(--hero-dim);
-  margin-left: 14px;
+  margin-left: 12px;
 }
-.standfirst { font-size: 19px; color: var(--hero-text); max-width: 52ch; font-weight: 300; margin: 0; }
+.standfirst { font-size: 18px; line-height: 1.55; color: var(--hero-text); max-width: 62ch; font-weight: 400; margin: 0; }
 
 .codes {
   border: 1px solid var(--hero-rule);
@@ -223,7 +227,7 @@
 .introLinks { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 .introLinks a {
   border: 1px solid var(--rule-strong);
-  border-radius: 999px;
+  border-radius: 8px;
   color: var(--ink);
   font-family: var(--t1-head);
   font-size: 13px;
@@ -244,12 +248,13 @@
   justify-content: space-between;
   align-items: baseline;
   gap: 20px;
-  border-bottom: 2px solid var(--ink);
+  border-bottom: 2px solid #b8c2d0;
   padding-bottom: 13px;
   margin-bottom: 24px;
   flex-wrap: wrap;
 }
-.moduleHead h2 { font-size: 25px; font-weight: 700; }
+.moduleHead h2,
+.moduleHead h3 { font-size: 1.5rem !important; font-weight: 700; }
 .stamp {
   font-family: var(--t1-mono);
   font-size: 10.5px;
@@ -505,12 +510,13 @@
 
 /* rail */
 .rail { position: sticky; top: 56px; font-size: 14.5px; }
-.railBlock { border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 34px; }
+.railBlock { border-top: 2px solid #b8c2d0; padding-top: 14px; margin-bottom: 34px; }
 .railBlock h3 {
-  font-family: var(--t1-mono);
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
+  font-family: var(--t1-head);
+  font-size: 1.2rem !important;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none !important;
   margin-bottom: 14px;
 }
 .rail ul { list-style: none; margin: 0; padding: 0; }
@@ -567,10 +573,547 @@
   .contactGrid { grid-template-columns: 1fr; }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .module { animation: rise .5s ease both; }
+
+/* ---------- Cabins & Seating Module Redesign ---------- */
+.cabinGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin: 24px 0 28px;
 }
-@keyframes rise {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: none; }
+.cabinCard {
+  background: #ffffff;
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+.cabinCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+.cabinCard_blue { border-top: 4px solid #0072de; }
+.cabinCard_purple { border-top: 4px solid #7c3aed; }
+.cabinCard_emerald { border-top: 4px solid #059669; }
+.cabinCard_amber { border-top: 4px solid #d97706; }
+
+.cabinHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+.cabinTag {
+  font-family: var(--t1-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate);
+  display: block;
+  margin-bottom: 4px;
+}
+.cabinCard h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+.cabinSpecs {
+  background: var(--hero-bg);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.specItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.specLabel {
+  color: var(--slate);
+}
+.specValue {
+  font-family: var(--t1-mono);
+  font-weight: 600;
+  color: var(--ink);
+}
+.cabinHighlights {
+  margin-top: auto;
+}
+.highlightTitle {
+  font-family: var(--t1-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate-light);
+  display: block;
+  margin-bottom: 8px;
+}
+.cabinHighlights ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+.bullet {
+  color: var(--verified);
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+.fleetSection {
+  margin-top: 32px;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 24px;
+}
+.fleetSection h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.fleetNote {
+  font-size: 14px;
+  color: var(--slate);
+  margin-bottom: 16px;
+}
+.aircraftName {
+  font-weight: 600 !important;
+  color: var(--ink);
+}
+.typeBadge {
+  font-family: var(--t1-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+.typeWide { background: #e0f2fe; color: #0369a1; }
+.typeNarrow { background: #f1f5f9; color: #475569; }
+
+.amenitiesBox {
+  margin-top: 28px;
+  background: var(--hero-bg);
+  border: 1px solid var(--hero-rule);
+  border-radius: 8px;
+  padding: 20px;
+}
+.amenitiesBox h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.amenityPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.amenityPill {
+  background: #ffffff;
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+/* ---------- Carry-on & Checked Baggage Redesign ---------- */
+.baggageHeroCard {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  border: 1px solid var(--hero-rule);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 20px 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+.baggageDimVal {
+  font-family: var(--t1-head);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.baggageDimSub {
+  font-size: 13.5px;
+  color: var(--slate);
+  margin-top: 4px;
+}
+.baggageTagBadge {
+  background: #0072de;
+  color: #ffffff;
+  font-family: var(--t1-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.baggageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.bagCard {
+  background: #ffffff;
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.bagCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.bagIcon {
+  font-size: 24px;
+  background: var(--hero-bg);
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+}
+.bagCardTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+.bagCardSub {
+  font-size: 12px;
+  color: var(--slate);
+}
+.bagWeightVal {
+  font-family: var(--t1-head);
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  color: #001e73 !important;
+  margin-bottom: 10px;
+}
+.bagNotesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.baggageRulesBox {
+  background: #f8fafc;
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-top: 20px;
+}
+.baggageRulesBox h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.rulesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+/* ---------- Contact & Small Print Redesign ---------- */
+.contactGridRedesign {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin: 20px 0 26px;
+}
+.contactCardRedesign {
+  background: #ffffff;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.contactCardRedesign:hover {
+  border-color: #025ccc;
+  box-shadow: 0 4px 12px rgba(2, 92, 204, 0.08);
+}
+.contactCardHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.contactIconBadge {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  background: #f0f6fe;
+  color: #025ccc;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.contactTitle {
+  font-family: var(--t1-head);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+.contactBodyVal {
+  font-size: 15px;
+  color: var(--ink-soft);
+  word-break: break-word;
+}
+.contactBodyVal a {
+  color: #025ccc;
+  font-weight: 600;
+  text-decoration: none;
+}
+.contactBodyVal a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Network / Where They Fly Redesign ---------- */
+.netStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 14px;
+  margin: 20px 0 24px;
+}
+.netStatCard {
+  background: #ffffff;
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+.netStatVal {
+  font-family: var(--t1-head);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #001e73;
+}
+.netStatLbl {
+  font-size: 12px;
+  color: var(--slate);
+  margin-top: 4px;
+  font-weight: 500;
+}
+.netSubTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 24px 0 12px;
+}
+.netHubsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.netHubCard {
+  background: #ffffff;
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.netHubCard:hover {
+  border-color: #025ccc;
+  box-shadow: 0 4px 12px rgba(2, 92, 204, 0.08);
+}
+.netHubMain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.netHubLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #025ccc;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 14px;
+}
+.netHubLink:hover {
+  text-decoration: underline;
+  color: #001e73;
+}
+.netHubCity {
+  color: var(--ink);
+  font-weight: 600;
+}
+.netHubLink:hover .netHubCity {
+  color: #025ccc;
+}
+.netHubIata {
+  background: #f0f6fe;
+  color: #025ccc;
+  font-family: var(--t1-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.netHubBadge {
+  font-size: 12px;
+  color: var(--slate);
+  font-family: var(--t1-mono);
+}
+.netPillsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.netDestPill {
+  background: #ffffff;
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #025ccc;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.netDestPill:hover {
+  background: #f0f6fe;
+  border-color: #025ccc;
+  color: #001e73;
+}
+.netDestPillStatic {
+  color: var(--ink-soft);
+}
+.netDot {
+  font-size: 10px;
+  color: #025ccc;
+}
+.netPillIata {
+  font-family: var(--t1-mono);
+  font-size: 11px;
+  opacity: 0.8;
+}
+.netSectorCard {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-top: 24px;
+}
+.netSectorContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 12px;
+}
+.netSectorPoint {
+  display: flex;
+  flex-direction: column;
+}
+.netSectorLabel {
+  font-size: 11px;
+  font-family: var(--t1-mono);
+  text-transform: uppercase;
+  color: var(--slate);
+  letter-spacing: 0.08em;
+}
+.netSectorCityLink {
+  font-size: 16px;
+  font-weight: 700;
+  color: #025ccc;
+  text-decoration: none;
+  margin-top: 2px;
+}
+.netSectorCityLink:hover {
+  text-decoration: underline;
+  color: #001e73;
+}
+.netSectorCity {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 2px;
+}
+.netSectorArc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 260px;
+}
+.netSectorKm {
+  font-family: var(--t1-head);
+  font-size: 14px;
+  font-weight: 800;
+  color: #001e73;
+}
+.netArcLine {
+  width: 100%;
+  height: 2px;
+  background: var(--rule-strong);
+  position: relative;
+  margin: 8px 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.netPlaneIcon {
+  position: absolute;
+  background: #ffffff;
+  padding: 0 4px;
+  font-size: 12px;
+  color: #025ccc;
+}
+.netSectorSub {
+  font-size: 11px;
+  color: var(--slate);
+}
+
+
+

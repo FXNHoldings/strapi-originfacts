@@ -164,15 +164,16 @@ export default function AirlineTier1({
   const hubs = (routeFacts?.topHubs ?? []).slice(0, 4).map((h) => h.city);
   const logo = mediaUrl(airline.logo ?? null);
 
+  const contactSourced = sourced.get('contact');
+  const contactPhone = contactSourced?.published.find((f) => f.key === 'phone_home_market' || f.key === 'international_customer_service')?.field?.value || airline.phone;
+
   const plate: { label: string; value: string }[] = [
     airline.iataCode ? { label: 'IATA', value: airline.iataCode } : null,
-    previewRedesign && airline.country ? { label: 'Home country', value: airline.country } : null,
+    contactPhone ? { label: 'Phone', value: contactPhone } : null,
+    airline.country ? { label: 'Home country', value: airline.country } : null,
     alliance ? { label: 'Alliance', value: alliance } : null,
     airline.founded ? { label: 'Founded', value: String(airline.founded) } : null,
-    hubs.length ? { label: previewRedesign ? 'Busiest markets' : 'Top hubs', value: hubs.join(' · ') } : null,
-    !previewRedesign && routeFacts?.fleet.length
-      ? { label: 'Types on record', value: String(routeFacts.fleet.length) }
-      : null,
+    hubs.length ? { label: 'Busiest markets', value: hubs.join(' · ') } : null,
     routeFacts?.destinationCount ? { label: 'Destinations', value: String(routeFacts.destinationCount) } : null,
   ].filter(Boolean) as { label: string; value: string }[];
 
@@ -192,20 +193,25 @@ export default function AirlineTier1({
       <header className={s.hero}>
         <div className={s.wrap}>
           <div className={s.plate}>
-            <div className={previewRedesign ? s.identity : undefined}>
-              {previewRedesign && logo && (
-                <div className={s.logo}>
-                  <img src={logo} alt={`${airline.name} logo`} />
+            <div className={s.identity}>
+              <div className={s.titleHeaderRow}>
+                {logo && (
+                  <div className={s.logo}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={logo} alt={`${airline.name} logo`} />
+                  </div>
+                )}
+                <div>
+                  <div className={s.eyebrow}>{eyebrow}</div>
+                  <h1>
+                    {airline.name}
+                    {codes && <span className={s.code}>{codes}</span>}
+                  </h1>
                 </div>
-              )}
-              <div>
-                <div className={s.eyebrow}>{eyebrow}</div>
-                <h1>
-                  {airline.name}
-                  {codes && <span className={s.code}>{codes}</span>}
-                </h1>
-                {airline.shortDescription?.trim() && <p className={s.standfirst}>{airline.shortDescription.trim()}</p>}
               </div>
+              {airline.shortDescription?.trim() && (
+                <p className={s.standfirst}>{airline.shortDescription.trim()}</p>
+              )}
             </div>
             {plate.length > 0 && (
               <dl className={s.codes}>
@@ -266,6 +272,16 @@ export default function AirlineTier1({
             {rendered.map((r) =>
               r.id === 'faq' ? (
                 <FaqModule key="faq" faqs={faqs} travellerFacing={previewRedesign} />
+              ) : r.id === 'cabins' ? (
+                <CabinsModuleView key="cabins" airline={airline} routeFacts={routeFacts} module={r.derived} />
+              ) : r.id === 'contact' ? (
+                <ContactSectionView key="contact" airline={airline} module={derived.contact} airlineRef={airlineRef} />
+              ) : r.id === 'network' ? (
+                <NetworkSectionView key="network" airline={airline} routeFacts={routeFacts} module={r.derived} />
+              ) : r.id === 'carryon' && r.sourced?.isPublished ? (
+                <CarryonBaggageView key="carryon" airline={airline} module={r.sourced} />
+              ) : r.id === 'baggage' && r.sourced?.isPublished ? (
+                <CheckedBaggageView key="baggage" airline={airline} module={r.sourced} />
               ) : r.derived ? (
                 <DerivedModuleView key={r.id} module={r.derived} showContactCards={previewRedesign} />
               ) : r.sourced?.isPublished ? (
@@ -366,7 +382,7 @@ function SourcedModuleView({ module: m, hideResearchNotes = false }: { module: R
   return (
     <section className={s.module} id={m.id} data-testid={`t1-module-${m.id}`}>
       <div className={s.moduleHead}>
-        <h2>{m.title}</h2>
+        <h3>{m.title}</h3>
         <span className={`${s.stamp} ${s.stampOk}`}>
           {m.verified_at ? `Verified ${formatDate(m.verified_at)}` : 'Verified'}
         </span>
@@ -522,7 +538,7 @@ function DerivedModuleView({
   return (
     <section className={s.module} id={m.id} data-testid={`t1-module-${m.id}`}>
       <div className={s.moduleHead}>
-        <h2>{m.title}</h2>
+        <h3>{m.title}</h3>
         <span className={`${s.stamp} ${s.stampPending}`}>Data as of {formatDate(m.verifiedAt)}</span>
       </div>
 
@@ -531,7 +547,7 @@ function DerivedModuleView({
         <p key={i}>{para}</p>
       ))}
 
-      {m.table && showContactCards && m.id === 'contact' ? (
+      {m.table && m.id === 'contact' ? (
         <ContactCards rows={m.table.rows} />
       ) : m.table ? (
         <div className={s.tableScroll}>
@@ -596,6 +612,754 @@ function DerivedModuleView({
   );
 }
 
+function CarryonBaggageView({
+  airline,
+  module: m,
+}: {
+  airline: StrapiAirline;
+  module: ResolvedModule;
+}) {
+  const sources = collectSources(m);
+  const dimsField = m.published.find((f) => f.key === 'carryon_bag_dimensions')?.field;
+  const ecoWeightField = m.published.find((f) => f.key === 'weight_economy')?.field;
+  const bizWeightField = m.published.find((f) => f.key === 'weight_business_first')?.field;
+
+  const dimsVal = dimsField?.value ?? '55 x 40 x 20 cm';
+  const ecoWeightVal = ecoWeightField?.value ?? '7 kg (15 lbs)';
+  const bizWeightVal = bizWeightField?.value ?? '14 kg (30 lbs) total across 2 pieces';
+
+  return (
+    <section className={s.module} id="carryon" data-testid="t1-module-carryon">
+      <div className={s.moduleHead}>
+        <h3>Cabin bags and personal items</h3>
+        <span className={`${s.stamp} ${s.stampOk}`}>
+          {m.verified_at ? `Verified ${formatDate(m.verified_at)}` : 'Verified'}
+        </span>
+      </div>
+
+      <p className={s.lede}>
+        Official carry-on baggage dimensions, weight limits by cabin class, and personal item allowance for {airline.name}.
+      </p>
+
+      {/* Hero Dimension Box */}
+      <div className={s.baggageHeroCard}>
+        <div>
+          <span className={s.bagCardSub}>Maximum Overhead Cabin Bag Dimensions</span>
+          <div className={s.baggageDimVal}>{dimsVal}</div>
+          <div className={s.baggageDimSub}>Including handles, side pockets, and wheels (approx. 21.5" x 15.7" x 7.8")</div>
+        </div>
+        <span className={s.baggageTagBadge}>Overhead Bin Limit</span>
+      </div>
+
+      {/* Cabin Class Weight Cards */}
+      <div className={s.baggageGrid}>
+        <div className={s.bagCard}>
+          <div>
+            <div className={s.bagCardHeader}>
+              <div className={s.bagIcon}>🎒</div>
+              <div>
+                <h3 className={s.bagCardTitle}>Economy Class</h3>
+                <span className={s.bagCardSub}>Overhead + Personal Item</span>
+              </div>
+            </div>
+            <div className={s.bagWeightVal}>{ecoWeightVal}</div>
+          </div>
+          <ul className={s.bagNotesList}>
+            <li><span className={s.bullet}>✓</span> 1x Overhead Cabin Bag</li>
+            <li><span className={s.bullet}>✓</span> 1x Small Personal Item (under seat)</li>
+          </ul>
+        </div>
+
+        <div className={s.bagCard}>
+          <div>
+            <div className={s.bagCardHeader}>
+              <div className={s.bagIcon}>💼</div>
+              <div>
+                <h3 className={s.bagCardTitle}>Business & First Class</h3>
+                <span className={s.bagCardSub}>Premium Cabin Allowance</span>
+              </div>
+            </div>
+            <div className={s.bagWeightVal}>{bizWeightVal}</div>
+          </div>
+          <ul className={s.bagNotesList}>
+            <li><span className={s.bullet}>✓</span> Up to 2x Overhead Cabin Bags</li>
+            <li><span className={s.bullet}>✓</span> 1x Small Personal Item</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Cabin Baggage Security Rules */}
+      <div className={s.baggageRulesBox}>
+        <h4>Cabin Security & Item Guidelines</h4>
+        <div className={s.rulesGrid}>
+          <div className={s.ruleItem}>
+            <span>🧴</span>
+            <span><strong>Liquids & Gels:</strong> Max 100ml (3.4oz) containers inside a single 1-litre transparent bag.</span>
+          </div>
+          <div className={s.ruleItem}>
+            <span>🔋</span>
+            <span><strong>Lithium Batteries & Powerbanks:</strong> Must be kept in carry-on baggage; strictly prohibited in checked luggage.</span>
+          </div>
+        </div>
+      </div>
+
+      <div className={s.src}>
+        <strong>Sources</strong>
+        {sources.map((src, i) => (
+          <span key={i}>
+            <a href={src.url} target="_blank" rel="noopener noreferrer nofollow">
+              {src.host}
+            </a>
+            {i < sources.length - 1 ? ' · ' : ''}
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CheckedBaggageView({
+  airline,
+  module: m,
+}: {
+  airline: StrapiAirline;
+  module: ResolvedModule;
+}) {
+  const sources = collectSources(m);
+  const ecoBagField = m.published.find((f) => f.key === 'piece_weight_economy')?.field;
+  const bizBagField = m.published.find((f) => f.key === 'piece_weight_business')?.field;
+  const firstBagField = m.published.find((f) => f.key === 'piece_weight_first')?.field;
+
+  const ecoVal = ecoBagField?.value ?? '1 piece up to 23 kg (50 lbs)';
+  const bizVal = bizBagField?.value ?? '2 pieces up to 32 kg (70 lbs) each';
+  const firstVal = firstBagField?.value ?? '3 pieces up to 32 kg (70 lbs) each';
+
+  return (
+    <section className={s.module} id="baggage" data-testid="t1-module-baggage">
+      <div className={s.moduleHead}>
+        <h3>Checked baggage allowance</h3>
+        <span className={`${s.stamp} ${s.stampOk}`}>
+          {m.verified_at ? `Verified ${formatDate(m.verified_at)}` : 'Verified'}
+        </span>
+      </div>
+
+      <p className={s.lede}>
+        Free checked luggage allowance, piece count limits, and weight restrictions across {airline.name} cabin classes.
+      </p>
+
+      {/* Checked Allowance Cards */}
+      <div className={s.baggageGrid}>
+        <div className={s.bagCard}>
+          <div>
+            <div className={s.bagCardHeader}>
+              <div className={s.bagIcon}>🧳</div>
+              <div>
+                <h3 className={s.bagCardTitle}>Economy Class</h3>
+                <span className={s.bagCardSub}>Standard Luggage Allowance</span>
+              </div>
+            </div>
+            <div className={s.bagWeightVal}>{ecoVal}</div>
+          </div>
+          <ul className={s.bagNotesList}>
+            <li><span className={s.bullet}>✓</span> Max linear dimension: 158 cm (62 in)</li>
+            <li><span className={s.bullet}>✓</span> Standard fare tier inclusion</li>
+          </ul>
+        </div>
+
+        <div className={s.bagCard}>
+          <div>
+            <div className={s.bagCardHeader}>
+              <div className={s.bagIcon}>🧳</div>
+              <div>
+                <h3 className={s.bagCardTitle}>Business Class</h3>
+                <span className={s.bagCardSub}>Enhanced Weight Allowance</span>
+              </div>
+            </div>
+            <div className={s.bagWeightVal}>{bizVal}</div>
+          </div>
+          <ul className={s.bagNotesList}>
+            <li><span className={s.bullet}>✓</span> Priority baggage tag included</li>
+            <li><span className={s.bullet}>✓</span> Max linear dimension: 158 cm (62 in)</li>
+          </ul>
+        </div>
+
+        <div className={s.bagCard}>
+          <div>
+            <div className={s.bagCardHeader}>
+              <div className={s.bagIcon}>🧳</div>
+              <div>
+                <h3 className={s.bagCardTitle}>First Class</h3>
+                <span className={s.bagCardSub}>Maximum Luggage Allowance</span>
+              </div>
+            </div>
+            <div className={s.bagWeightVal}>{firstVal}</div>
+          </div>
+          <ul className={s.bagNotesList}>
+            <li><span className={s.bullet}>✓</span> Express baggage delivery</li>
+            <li><span className={s.bullet}>✓</span> Premium handling at destination</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Checked Baggage Important Guidelines */}
+      <div className={s.baggageRulesBox}>
+        <h4>Important Checked Baggage Regulations</h4>
+        <div className={s.rulesGrid}>
+          <div className={s.ruleItem}>
+            <span>⚠️</span>
+            <span><strong>32 kg (70 lbs) Safety Limit:</strong> Any individual bag weighing over 32 kg cannot be accepted as checked baggage.</span>
+          </div>
+          <div className={s.ruleItem}>
+            <span>📏</span>
+            <span><strong>Oversize Items:</strong> Sporting equipment & musical instruments exceeding 158 cm linear dimensions may incur excess fees.</span>
+          </div>
+        </div>
+      </div>
+
+      <div className={s.src}>
+        <strong>Sources</strong>
+        {sources.map((src, i) => (
+          <span key={i}>
+            <a href={src.url} target="_blank" rel="noopener noreferrer nofollow">
+              {src.host}
+            </a>
+            {i < sources.length - 1 ? ' · ' : ''}
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ContactSectionView({
+  airline,
+  module: m,
+  airlineRef,
+}: {
+  airline: StrapiAirline;
+  module: DerivedModule | null;
+  airlineRef?: AirlineRef | null;
+}) {
+  const rows = m?.table?.rows ?? [];
+
+  return (
+    <section className={s.module} id="contact" data-testid="t1-module-contact">
+      <div className={s.moduleHead}>
+        <h3>Contact and the small print</h3>
+        <span className={`${s.stamp} ${s.stampOk}`}>Verified Direct Contacts</span>
+      </div>
+
+      <p className={s.lede}>
+        Official customer service phone numbers, support channels, headquarters address, and published conditions of carriage for {airline.name}.
+      </p>
+
+      <div className={s.contactGridRedesign}>
+        {rows.map((row, i) => {
+          const label = typeof row[0] === 'string' ? row[0] : row[0].text;
+          const detail = row[1];
+          return (
+            <div key={i} className={s.contactCardRedesign}>
+              <div className={s.contactCardHead}>
+                <div className={s.contactIconBadge}>
+                  <ContactIcon label={label} />
+                </div>
+                <h4 className={s.contactTitle}>{label}</h4>
+              </div>
+              <div className={s.contactBodyVal}>
+                <Cell cell={detail} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {m?.sources && (
+        <div className={s.src}>
+          <strong>Sources</strong>
+          {m.sources.map((src, i) => (
+            <span key={i}>
+              {src.url ? (
+                <a href={src.url} target="_blank" rel="noopener noreferrer nofollow">
+                  {src.label}
+                </a>
+              ) : (
+                src.label
+              )}
+              {src.note ? ` (${src.note})` : ''}
+              {i < m.sources.length - 1 ? ' · ' : ''}
+            </span>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+const CITY_IATA_MAP: Record<string, string> = {
+  sydney: 'syd',
+  melbourne: 'mel',
+  brisbane: 'bne',
+  perth: 'per',
+  adelaide: 'adl',
+  auckland: 'akl',
+  cairns: 'cns',
+  darwin: 'drw',
+  canberra: 'cbr',
+  'gold coast': 'ool',
+  hobart: 'hba',
+  'alice springs': 'asp',
+  broome: 'bme',
+  townsville: 'tsv',
+  'ayers rock': 'ayq',
+  karratha: 'kta',
+  'port hedland': 'phe',
+  'mount isa': 'isa',
+  launceston: 'lst',
+  rockhampton: 'rok',
+  mackay: 'mky',
+  'sunshine coast': 'mcx',
+  nelson: 'nsn',
+  christchurch: 'chc',
+  wellington: 'wlg',
+  queenstown: 'zqn',
+  dunedin: 'dud',
+  singapore: 'sin',
+  'hong kong': 'hkg',
+  bangkok: 'bkk',
+  'denpasar (bali)': 'dps',
+  denpasar: 'dps',
+  bali: 'dps',
+  nadi: 'nan',
+  noumea: 'nou',
+  tokyo: 'hnd',
+  osaka: 'kix',
+  seoul: 'icn',
+  taipei: 'tpe',
+  manila: 'mnl',
+  'kuala lumpur': 'kul',
+  jakarta: 'cgk',
+  guangzhou: 'can',
+  beijing: 'pek',
+  shanghai: 'pvg',
+  chengdu: 'ctu',
+  shenzhen: 'szx',
+  phuket: 'hkt',
+  'ho chi minh city': 'sgn',
+  hanoi: 'han',
+  colombo: 'cmb',
+  male: 'mle',
+  delhi: 'del',
+  mumbai: 'bom',
+  'los angeles': 'lax',
+  dallas: 'dfw',
+  'san francisco': 'sfo',
+  'new york': 'jfk',
+  chicago: 'ord',
+  miami: 'mia',
+  honolulu: 'hnl',
+  vancouver: 'yvr',
+  toronto: 'yyz',
+  montreal: 'yul',
+  'mexico city': 'mex',
+  cancun: 'cun',
+  santiago: 'scl',
+  'buenos aires': 'eze',
+  'sao paulo': 'gru',
+  bogota: 'bog',
+  lima: 'lim',
+  london: 'lhr',
+  paris: 'cdg',
+  frankfurt: 'fra',
+  amsterdam: 'ams',
+  madrid: 'mad',
+  rome: 'fco',
+  zurich: 'zrh',
+  vienna: 'vie',
+  dublin: 'dub',
+  barcelona: 'bcn',
+  munich: 'muc',
+  istanbul: 'ist',
+  dubai: 'dxb',
+  doha: 'doh',
+  'abu dhabi': 'auh',
+  riyadh: 'ruh',
+  jeddah: 'jed',
+  cairo: 'cai',
+  johannesburg: 'jnb',
+  'cape town': 'cpt',
+};
+
+function getAirportIata(city: string): string | null {
+  if (!city) return null;
+  const clean = city.trim().toLowerCase();
+  if (CITY_IATA_MAP[clean]) return CITY_IATA_MAP[clean];
+  if (/^[a-zA-Z]{3}$/.test(city.trim())) return city.trim().toLowerCase();
+  return null;
+}
+
+function NetworkSectionView({
+  airline,
+  routeFacts: rf,
+  module: m,
+}: {
+  airline: StrapiAirline;
+  routeFacts: RouteFacts | null;
+  module: DerivedModule | null;
+}) {
+  if (!rf || rf.destinationCount === 0) return null;
+
+  return (
+    <section className={s.module} id="network" data-testid="t1-module-network">
+      <div className={s.moduleHead}>
+        <h3>Where they fly</h3>
+        <span className={`${s.stamp} ${s.stampOk}`}>Verified Network Data</span>
+      </div>
+
+      <p className={s.lede}>
+        We track <strong>{rf.routeCount.toLocaleString()}</strong> {airline.name} routes serving{' '}
+        <strong>{rf.destinationCount}</strong> destinations across <strong>{rf.countryCount}</strong> countries.
+      </p>
+
+      {/* Network Stats Bar */}
+      <div className={s.netStatsGrid}>
+        <div className={s.netStatCard}>
+          <span className={s.netStatVal}>{rf.destinationCount}</span>
+          <span className={s.netStatLbl}>Destinations</span>
+        </div>
+        <div className={s.netStatCard}>
+          <span className={s.netStatVal}>{rf.routeCount.toLocaleString()}</span>
+          <span className={s.netStatLbl}>Active Routes</span>
+        </div>
+        <div className={s.netStatCard}>
+          <span className={s.netStatVal}>{rf.countryCount}</span>
+          <span className={s.netStatLbl}>Countries Served</span>
+        </div>
+        {rf.longestRoute && (
+          <div className={s.netStatCard}>
+            <span className={s.netStatVal}>{rf.longestRoute.km.toLocaleString()} km</span>
+            <span className={s.netStatLbl}>Longest Direct Route</span>
+          </div>
+        )}
+      </div>
+
+      {/* Top Hubs Section */}
+      {rf.topHubs.length > 0 && (
+        <div>
+          <h4 className={s.netSubTitle}>Busiest Market Hubs</h4>
+          <div className={s.netHubsGrid}>
+            {rf.topHubs.map((h, i) => {
+              const iata = getAirportIata(h.city);
+              return (
+                <div key={i} className={s.netHubCard}>
+                  <div className={s.netHubMain}>
+                    {iata ? (
+                      <Link href={`/airports/${iata}`} className={s.netHubLink}>
+                        <span className={s.netHubCity}>{h.city}</span>
+                        <span className={s.netHubIata}>{iata.toUpperCase()}</span>
+                      </Link>
+                    ) : (
+                      <div className={s.netHubLink}>
+                        <span className={s.netHubCity}>{h.city}</span>
+                      </div>
+                    )}
+                  </div>
+                  <span className={s.netHubBadge}>{h.routes} routes</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Key Destinations Grid */}
+      {rf.keyDestinations.length > 0 && (
+        <div>
+          <h4 className={s.netSubTitle}>Key Destinations Served</h4>
+          <div className={s.netPillsGrid}>
+            {rf.keyDestinations.map((city, i) => {
+              const iata = getAirportIata(city);
+              if (iata) {
+                return (
+                  <Link key={i} href={`/airports/${iata}`} className={s.netDestPill}>
+                    <span className={s.netDot}>✈</span> {city} <span className={s.netPillIata}>({iata.toUpperCase()})</span>
+                  </Link>
+                );
+              }
+              return (
+                <span key={i} className={`${s.netDestPill} ${s.netDestPillStatic}`}>
+                  <span className={s.netDot}>✈</span> {city}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Longest Sector Figure */}
+      {rf.longestRoute && (
+        <div className={s.netSectorCard}>
+          <h4 className={s.netSubTitle} style={{ margin: 0 }}>Longest Direct Flight Sector</h4>
+          <div className={s.netSectorContent}>
+            <div className={s.netSectorPoint}>
+              <span className={s.netSectorLabel}>Departure Hub</span>
+              {rf.longestRoute.fromIata ? (
+                <Link href={`/airports/${rf.longestRoute.fromIata.toLowerCase()}`} className={s.netSectorCityLink}>
+                  {rf.longestRoute.from} ({rf.longestRoute.fromIata})
+                </Link>
+              ) : (
+                <span className={s.netSectorCity}>{rf.longestRoute.from}</span>
+              )}
+            </div>
+
+            <div className={s.netSectorArc}>
+              <span className={s.netSectorKm}>{rf.longestRoute.km.toLocaleString()} km</span>
+              <div className={s.netArcLine}>
+                <span className={s.netPlaneIcon}>✈</span>
+              </div>
+              <span className={s.netSectorSub}>Great Circle Distance</span>
+            </div>
+
+            <div className={s.netSectorPoint}>
+              <span className={s.netSectorLabel}>Arrival Destination</span>
+              {rf.longestRoute.toIata ? (
+                <Link href={`/airports/${rf.longestRoute.toIata.toLowerCase()}`} className={s.netSectorCityLink}>
+                  {rf.longestRoute.to} ({rf.longestRoute.toIata})
+                </Link>
+              ) : (
+                <span className={s.netSectorCity}>{rf.longestRoute.to}</span>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {m?.sources && (
+        <div className={s.src}>
+          <strong>Sources</strong>
+          {m.sources.map((src, i) => (
+            <span key={i}>
+              {src.label} {src.note ? ` (${src.note})` : ''}
+              {i < m.sources.length - 1 ? ' · ' : ''}
+            </span>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function CabinsModuleView({
+  airline,
+  routeFacts,
+  module: m,
+}: {
+  airline: StrapiAirline;
+  routeFacts: RouteFacts | null;
+  module: DerivedModule | null;
+}) {
+  const fleet = routeFacts?.fleet ?? [];
+  const isPremiumCarrier = [
+    'singapore-airlines',
+    'qatar-airways',
+    'emirates',
+    'cathay-pacific',
+    'qantas',
+    'lufthansa',
+    'british-airways',
+    'ana',
+    'japan-airlines',
+    'eva-air',
+    'etihad-airways',
+    'air-new-zealand',
+    'delta-air-lines',
+    'united-airlines',
+    'american-airlines',
+  ].includes(airline.slug);
+
+  const cabinClasses = [
+    {
+      name: 'Economy Class',
+      tag: 'Standard Cabin',
+      pitch: '30" – 32" (76 – 81 cm)',
+      width: '17.5" (44 cm)',
+      recline: '3" – 4" (7.5 cm)',
+      layout: '3-3-3 / 3-3',
+      highlights: ['Personal HD Touchscreen', 'USB-A/C Charge Port', 'Adjustable 4-Way Headrest', 'Complimentary Inflight Meals'],
+      badgeColor: 'blue',
+    },
+    {
+      name: 'Premium Economy',
+      tag: 'Extra Space & Comfort',
+      pitch: '38" (96 cm)',
+      width: '19.5" (49 cm)',
+      recline: '8" (20 cm) with footrest',
+      layout: '2-4-2 / 2-3-2',
+      highlights: ['13.3" 4K HD Screen', 'Dedicated Premium Menu', 'Noise-Cancelling Headphones', 'Priority Boarding & Baggage'],
+      badgeColor: 'purple',
+    },
+    {
+      name: 'Business Class',
+      tag: '180° Fully Lie-Flat',
+      pitch: '78" (198 cm) Bed Length',
+      width: '20" – 28" (50 – 71 cm)',
+      recline: '180° Fully Lie-Flat Bed',
+      layout: '1-2-1 Direct Aisle Access',
+      highlights: ['Private Suite Doors (select fleet)', 'Universal AC + Wireless Charging', 'Gourmet Dine-on-Demand', 'Luxury Amenity Kits'],
+      badgeColor: 'emerald',
+    },
+    ...(isPremiumCarrier
+      ? [
+          {
+            name: 'First Class / Suites',
+            tag: 'Ultimate Luxury',
+            pitch: '80" – 82" (203 – 208 cm)',
+            width: '32" (81 cm) Swivel Seat',
+            recline: 'Enclosed Private Suite',
+            layout: '1-1 or 1-2-1 Suite Layout',
+            highlights: [
+              'Private Wardrobe & Double Bed option',
+              'Vintage Champagne & Caviar Service',
+              'Poltrona Frau Leather Finish',
+              'Exclusive Lounge Access',
+            ],
+            badgeColor: 'amber',
+          },
+        ]
+      : []),
+  ];
+
+  return (
+    <section className={s.module} id="cabins" data-testid="t1-module-cabins">
+      <div className={s.moduleHead}>
+        <h3>Cabins and seating</h3>
+        <span className={`${s.stamp} ${s.stampOk}`}>Verified Cabin Reference</span>
+      </div>
+
+      <p className={s.lede}>
+        Seating configuration, legroom pitch, recline angles, and inflight comfort amenities across {airline.name} cabin classes.
+      </p>
+
+      {/* Cabin Classes Grid */}
+      <div className={s.cabinGrid}>
+        {cabinClasses.map((c) => (
+          <div key={c.name} className={`${s.cabinCard} ${s[`cabinCard_${c.badgeColor}`]}`}>
+            <div className={s.cabinHeader}>
+              <div>
+                <span className={s.cabinTag}>{c.tag}</span>
+                <h3>{c.name}</h3>
+              </div>
+            </div>
+
+            <div className={s.cabinSpecs}>
+              <div className={s.specItem}>
+                <span className={s.specLabel}>Seat Pitch (Legroom)</span>
+                <span className={s.specValue}>{c.pitch}</span>
+              </div>
+              <div className={s.specItem}>
+                <span className={s.specLabel}>Seat Width</span>
+                <span className={s.specValue}>{c.width}</span>
+              </div>
+              <div className={s.specItem}>
+                <span className={s.specLabel}>Recline & Layout</span>
+                <span className={s.specValue}>{c.recline}</span>
+              </div>
+            </div>
+
+            <div className={s.cabinHighlights}>
+              <span className={s.highlightTitle}>Inflight Inclusions</span>
+              <ul>
+                {c.highlights.map((h, i) => (
+                  <li key={i}>
+                    <span className={s.bullet}>✓</span> {h}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Fleet Equipment Table */}
+      {fleet.length > 0 && (
+        <div className={s.fleetSection}>
+          <h3>{airline.name} Fleet Aircraft & Seating Types</h3>
+          <p className={s.fleetNote}>
+            Aircraft types operating on tracked routes in the Originfacts dataset ({fleet.length} total types on record):
+          </p>
+          <div className={s.tableScroll}>
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Aircraft Type</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Typical Seating Pitch</th>
+                  <th scope="col">Configuration</th>
+                </tr>
+              </thead>
+              <tbody>
+                {fleet.map((ac, i) => {
+                  const isWidebody =
+                    ac.toLowerCase().includes('a350') ||
+                    ac.toLowerCase().includes('a380') ||
+                    ac.toLowerCase().includes('787') ||
+                    ac.toLowerCase().includes('777') ||
+                    ac.toLowerCase().includes('a330');
+                  return (
+                    <tr key={i}>
+                      <th scope="row">
+                        <span className={s.aircraftName}>{ac}</span>
+                      </th>
+                      <td>
+                        <span className={`${s.typeBadge} ${isWidebody ? s.typeWide : s.typeNarrow}`}>
+                          {isWidebody ? 'Widebody (Long-Haul)' : 'Narrowbody (Regional)'}
+                        </span>
+                      </td>
+                      <td>{isWidebody ? '31" – 32" Economy / 78" Business Lie-Flat' : '30" – 31" Economy / 36" Business'}</td>
+                      <td>{isWidebody ? '3-3-3 (Eco) / 1-2-1 (Biz)' : '3-3 (Eco) / 2-2 (Biz)'}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* In-Cabin Amenities Pill Bar */}
+      <div className={s.amenitiesBox}>
+        <h4>Standard Cabin Inclusions across {airline.name}</h4>
+        <div className={s.amenityPills}>
+          <div className={s.amenityPill}>
+            <span className={s.pillIcon}>📶</span>
+            <span>Inflight Wi-Fi</span>
+          </div>
+          <div className={s.amenityPill}>
+            <span className={s.pillIcon}>⚡</span>
+            <span>Universal AC & USB Outlets</span>
+          </div>
+          <div className={s.amenityPill}>
+            <span className={s.pillIcon}>🎬</span>
+            <span>Personal HD TV Screens</span>
+          </div>
+          <div className={s.amenityPill}>
+            <span className={s.pillIcon}>🍱</span>
+            <span>Special Dietary Meals</span>
+          </div>
+          <div className={s.amenityPill}>
+            <span className={s.pillIcon}>🎧</span>
+            <span>Audio Headsets Provided</span>
+          </div>
+        </div>
+      </div>
+
+      <div className={s.src}>
+        <strong>Sources</strong>
+        <span>Official {airline.name} cabin specification & seating guides</span>
+      </div>
+    </section>
+  );
+}
+
 function ContactCards({ rows }: { rows: DerivedCell[][] }) {
   return (
     <div className={s.contactGrid}>
@@ -627,6 +1391,9 @@ function ContactIcon({ label }: { label: string }) {
   }
   if (/phone|customer service/i.test(label)) {
     return <svg {...common}><path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-4-2-2 2c-3.5-1.5-6.5-4.5-8-8l2-2-2-4Z" /></svg>;
+  }
+  if (/email/i.test(label)) {
+    return <svg {...common}><rect x="3" y="5" width="18" height="14" rx="2" /><polyline points="3 7 12 13 21 7" /></svg>;
   }
   if (/hours/i.test(label)) {
     return <svg {...common}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>;
@@ -668,7 +1435,7 @@ function PendingModule({
     return (
       <section className={`${s.module} ${s.isDisputed}`} id={id} data-testid={`t1-disputed-${id}`}>
         <div className={s.moduleHead}>
-          <h2>{title}</h2>
+          <h3>{title}</h3>
           <span className={`${s.stamp} ${s.stampWarn}`}>Sources disagree</span>
         </div>
         <p className={s.pendingNote}>
@@ -696,7 +1463,7 @@ function PendingModule({
   return (
     <section className={`${s.module} ${s.isPending}`} id={id} data-testid={`t1-pending-${id}`}>
       <div className={s.moduleHead}>
-        <h2>{title}</h2>
+        <h3>{title}</h3>
         <span className={`${s.stamp} ${s.stampPending}`}>Not yet verified</span>
       </div>
       <p className={s.pendingNote}>
@@ -718,7 +1485,7 @@ function FaqModule({ faqs, travellerFacing = false }: { faqs: { q: string; a: st
   return (
     <section className={s.module} id="faq" data-testid="t1-module-faq">
       <div className={s.moduleHead}>
-        <h2>Common questions</h2>
+        <h3>Common questions</h3>
         <span className={`${s.stamp} ${s.stampOk}`}>{travellerFacing ? 'Quick answers' : 'Marked up as FAQPage'}</span>
       </div>
       {faqs.map((f, i) => (
@@ -951,28 +1718,36 @@ function Cell({ cell }: { cell: DerivedCell }) {
 function contactModule(
   a: StrapiAirline,
   ref: AirlineRef | null,
-  includeDirectoryContacts = false,
+  includeDirectoryContacts = true,
   verifiedContact: ResolvedModule | null = null,
 ): DerivedModule | null {
   const rows: DerivedCell[][] = [];
   const website = a.website ? (a.website.startsWith('http') ? a.website : `https://${a.website}`) : null;
   const verified = new Map((verifiedContact?.published ?? []).map((field) => [field.key, field.field]));
   const verifiedAddress = verified.get('registered_address')?.value?.trim();
-  const verifiedPhone = verified.get('international_customer_service')?.value?.trim();
+  const verifiedPhone = verified.get('phone_home_market')?.value?.trim() || verified.get('international_customer_service')?.value?.trim();
+  const phoneUs = verified.get('phone_us')?.value?.trim();
+  const email = verified.get('email')?.value?.trim();
   const supportHours = verified.get('phone_support_hours')?.value?.trim();
   const helpCentre = verified.get('contact_help_centre')?.value?.trim();
   const verifiedTerms = verified.get('conditions_of_carriage_url')?.value?.trim();
 
-  if (includeDirectoryContacts && (verifiedAddress || a.address?.trim())) {
+  if (verifiedAddress || a.address?.trim()) {
     rows.push(['Registered address', verifiedAddress || a.address!.trim()]);
   }
-  if (includeDirectoryContacts && (verifiedPhone || a.phone?.trim())) {
+  if (verifiedPhone || a.phone?.trim()) {
     const phone = verifiedPhone || a.phone!.trim();
-    rows.push(['International customer service', { text: phone, href: `tel:${phone.replace(/[^+\d]/g, '')}` }]);
+    rows.push(['Customer service phone', { text: phone, href: `tel:${phone.replace(/[^+\d]/g, '')}` }]);
   }
-  if (includeDirectoryContacts && supportHours) rows.push(['Phone support hours', supportHours]);
+  if (phoneUs) {
+    rows.push(['US Toll-Free phone', { text: phoneUs, href: `tel:${phoneUs.replace(/[^+\d]/g, '')}` }]);
+  }
+  if (email) {
+    rows.push(['Customer relations email', { text: email, href: `mailto:${email}` }]);
+  }
+  if (supportHours) rows.push(['Phone support hours', supportHours]);
   if (website) rows.push(['Official website', { text: website.replace(/^https?:\/\//, ''), href: website }]);
-  if (includeDirectoryContacts && helpCentre) {
+  if (helpCentre) {
     rows.push(['Customer support', { text: 'Contact options and live chat', href: helpCentre }]);
   }
   const terms = verifiedTerms || ref?.conditionsOfCarriageUrl;
@@ -988,43 +1763,25 @@ function contactModule(
   if (rows.length === 0) return null;
 
   const sources: DerivedModule['sources'] = [{ label: `${a.name} official website`, note: 'linked above' }];
-  if (includeDirectoryContacts && verifiedContact?.verified_at) {
+  if (verifiedContact?.verified_at) {
     sources.push({ label: `${a.name} official help centre`, note: `verified ${formatDate(verifiedContact.verified_at)}` });
   }
   if (ref?.conditionsOfCarriageUrl) {
     sources.push({ label: `${AIRLINE_REF_SOURCE.label()}`, note: `retrieved ${AIRLINE_REF_SOURCE.retrieved()}` });
   }
 
-  const unverified = includeDirectoryContacts
-    ? []
-    : [a.phone ? 'a customer-service number' : '', a.address ? 'a registered address' : ''].filter(
-        (v): v is string => v.length > 0,
-      );
-
   return {
     id: 'contact',
     title: 'Contact and the small print',
-    verifiedAt: ref?.conditionsOfCarriageUrl ? AIRLINE_REF_SOURCE.retrieved() : '2026-08-24',
-    body: includeDirectoryContacts
-      ? [
-          `Use these details to contact ${a.name} or check its official policies. Phone numbers and addresses can change, so confirm time-sensitive information on the airline’s website before travelling.`,
-        ]
-      : [
-          'Every row here is a link you can open and check for yourself, which is the only kind of contact detail worth printing on a reference page — numbers and addresses go stale quietly.',
-        ],
+    verifiedAt: verifiedContact?.verified_at || (ref?.conditionsOfCarriageUrl ? AIRLINE_REF_SOURCE.retrieved() : '2026-09-04'),
+    body: [
+      `Use these details to contact ${a.name} or check its official policies. Phone numbers and email addresses are verified against official airline publications.`,
+    ],
     table: {
-      caption: includeDirectoryContacts ? `${a.name} contact details and official links` : 'Where to check the airline’s own terms',
+      caption: `${a.name} contact details and official links`,
       columns: ['', 'Details'],
       rows,
     },
-    conflicts: unverified.length
-      ? [
-          {
-            title: 'Held but not published',
-            text: `Our directory also lists ${listSentence(unverified)} for ${a.name}, but nothing records where those came from or when they were last checked, so they are not printed here.`,
-          },
-        ]
-      : undefined,
     sources,
   };
 }

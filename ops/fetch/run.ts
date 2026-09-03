@@ -17,7 +17,7 @@
  * kind — a page behind a bot wall is recorded and left for manual capture.
  */
 import fs from 'node:fs/promises';
-import { readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import type { Browser, BrowserContext } from 'playwright';
 import { openBrowser, loadPage, extractText, readHtmlLang } from './browser.js';
@@ -28,11 +28,33 @@ import { hashText, utcDateStamp, utcTimestamp, writeCapture, CAPTURES_ROOT } fro
 import type { Carrier, CaptureMeta } from './types.js';
 import { pageEntry } from './types.js';
 
+function hasExistingCapture(carrierKey: string, pageKey: string): boolean {
+  try {
+    if (!existsSync(CAPTURES_ROOT)) return false;
+    const dates = readdirSync(CAPTURES_ROOT);
+    for (const date of dates) {
+      if (date === 'manual' || date.startsWith('.')) continue;
+      const metaFile = path.join(CAPTURES_ROOT, date, carrierKey, `${pageKey}.meta.json`);
+      if (existsSync(metaFile)) {
+        try {
+          const meta = JSON.parse(readFileSync(metaFile, 'utf8')) as CaptureMeta;
+          if (meta.capture_status === 'ok') return true;
+        } catch {
+          // ignore
+        }
+      }
+    }
+  } catch {
+    return false;
+  }
+  return false;
+}
+
 const MIN_HOST_DELAY_MS = 3_000;
 const MAX_ATTEMPTS = 3; // the first try plus two retries
 const BACKOFF_MS = [4_000, 8_000];
 
-type Args = { carrier?: string; band?: string; dryRun: boolean; fromPreflight: boolean };
+type Args = { carrier?: string; band?: string; dryRun: boolean; fromPreflight: boolean; skipExisting: boolean };
 
 /**
  * URLs the pre-flight found reachable with no structural problem.
@@ -62,12 +84,13 @@ function preflightAllowlist(): Set<string> | null {
 }
 
 function parseArgs(argv: string[]): Args {
-  const args: Args = { dryRun: false, fromPreflight: false };
+  const args: Args = { dryRun: false, fromPreflight: false, skipExisting: false };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--dry-run') args.dryRun = true;
     else if (argv[i] === '--carrier') args.carrier = argv[++i];
     else if (argv[i].startsWith('--carrier=')) args.carrier = argv[i].split('=')[1];
     else if (argv[i] === '--from-preflight') args.fromPreflight = true;
+    else if (argv[i] === '--skip-existing') args.skipExisting = true;
     else if (argv[i] === '--band') args.band = argv[++i];
     else if (argv[i].startsWith('--band=')) args.band = argv[i].split('=')[1];
   }
@@ -354,6 +377,14 @@ async function main(): Promise<void> {
       .map((p) => `${p.carrier.carrier_key}/${p.pageKey}`);
     planned = planned.filter((p) => allow.has(`${p.carrier.carrier_key}/${p.pageKey}`));
     console.log(`Pre-flight filter: ${planned.length} of ${before} pages are reachable and unflagged.\n`);
+  }
+
+  let skippedExistingCount = 0;
+  if (args.skipExisting) {
+    const before = planned.length;
+    planned = planned.filter((p) => !hasExistingCapture(p.carrier.carrier_key, p.pageKey));
+    skippedExistingCount = before - planned.length;
+    console.log(`Skip existing filter: ${planned.length} remaining of ${before} total pages (${skippedExistingCount} already captured ok).\n`);
   }
   const unset = carriers.flatMap((c) =>
     Object.entries(c.pages).filter(([, raw]) => pageEntry(raw) === null).map(([k]) => `${c.carrier_key}/${k}`),
