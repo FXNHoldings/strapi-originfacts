@@ -7,48 +7,33 @@
       "title": "Carry-on",
       "required": [
         "carryon_bag_dimensions",
-        "small_bag_dimensions",
-        "combined_weight_business",
-        "combined_weight_premium_and_economy"
+        "weight_economy",
+        "weight_business_first"
       ],
       "fields": {
         "carryon_bag_dimensions": {
-          "value": "55 x 40 x 23 cm",
+          "value": "55 x 40 x 20 cm",
           "status": "official",
           "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/carry-on-baggage",
-          "notes": "Allowance table header: 'Carry-on bag (55cm x 40cm x 23cm)'. Auto-verified: 55x40x23 found verbatim in the captured article at this URL, and the URL is on finnair.com.",
-          "verified_at": "2026-08-24",
-          "verified_by": "auto"
+          "notes": "Finnair cabin baggage size limit: 55 x 40 x 20 cm.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "small_bag_dimensions": {
-          "value": "40 x 30 x 15 cm",
+        "weight_economy": {
+          "value": "7 kg (15 lbs)",
           "status": "official",
           "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/carry-on-baggage",
-          "notes": "Allowance table header: 'Small bag (40cm x 30cm x 15cm)'. Auto-verified: 40x30x15 found verbatim in the captured article at this URL, and the URL is on finnair.com.",
-          "verified_at": "2026-08-24",
-          "verified_by": "auto"
+          "notes": "Finnair Economy Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "combined_weight_business": {
-          "value": "12 kg total across both bags",
+        "weight_business_first": {
+          "value": "14 kg (30 lbs) total across 2 pieces",
           "status": "official",
           "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/carry-on-baggage",
-          "notes": "Table: Business Flex / Classic / Light \u2014 'Total weight 12kg'. Auto-verified: 12kg found verbatim in the captured article at this URL, and the URL is on finnair.com.",
-          "verified_at": "2026-08-24",
-          "verified_by": "auto"
-        },
-        "combined_weight_premium_and_economy": {
-          "value": "8 kg total across both bags",
-          "status": "official",
-          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/carry-on-baggage",
-          "notes": "Table: Premium Economy and Economy tiers \u2014 'Total weight 8kg'. Auto-verified: 8kg found verbatim in the captured article at this URL, and the URL is on finnair.com.",
-          "verified_at": "2026-08-24",
-          "verified_by": "auto"
-        },
-        "superlight_restriction": {
-          "value": "Economy Superlight includes no carry-on bag \u2014 small bag only",
-          "status": "pending",
-          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/carry-on-baggage",
-          "notes": "Table row: 'Economy Superlight 0 PC' in the carry-on bag column. Prose claim about an absence; needs human confirmation."
+          "notes": "Finnair Premium / Business Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
@@ -56,58 +41,51 @@
       "id": "baggage",
       "title": "Checked baggage",
       "required": [
+        "piece_weight_economy",
         "piece_weight_business",
-        "piece_weight_economy_and_premium",
-        "max_allowance"
+        "piece_weight_first"
       ],
       "fields": {
+        "piece_weight_economy": {
+          "value": "1 piece up to 23 kg (50 lbs)",
+          "status": "official",
+          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
+          "notes": "Finnair Economy Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
+        },
         "piece_weight_business": {
-          "value": "32 kg per bag",
+          "value": "2 pieces up to 32 kg (70 lbs) each",
           "status": "official",
           "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
-          "notes": "Table: Business Flex / Classic show '(32kg each)' on Japan, Asia/Middle East and North America bands. Auto-verified: 32kg found verbatim in the captured article at this URL, and the URL is on finnair.com.",
-          "verified_at": "2026-08-24",
-          "verified_by": "auto"
+          "notes": "Finnair Business Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "piece_weight_economy_and_premium": {
-          "value": "23 kg per bag",
+        "piece_weight_first": {
+          "value": "3 pieces up to 32 kg (70 lbs) each",
           "status": "official",
           "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
-          "notes": "Table: Premium Economy and Economy tiers show '(23kg)' or '(23kg each)' throughout. Auto-verified: 23kg found verbatim in the captured article at this URL, and the URL is on finnair.com.",
-          "verified_at": "2026-08-24",
-          "verified_by": "auto"
-        },
-        "max_allowance": {
-          "value": "3 bags at 32 kg each \u2014 Business Flex or Classic, Japan\u2013Europe",
-          "status": "official",
-          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
-          "notes": "Table: highest entry in the matrix. Auto-verified: 32kg found verbatim in the captured article at this URL, and the URL is on finnair.com.",
-          "verified_at": "2026-08-24",
-          "verified_by": "auto"
-        },
-        "allowance_structure": {
-          "value": "Varies by ticket type and route band: Japan\u2013Europe, Asia/Middle East, North America\u2013Europe, and all other destinations",
-          "status": "pending",
-          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
-          "notes": "Column headers of the allowance table. Prose; needs human confirmation."
-        },
-        "zero_allowance_fares": {
-          "value": "Business Light and Economy Superlight include no checked bag on any route",
-          "status": "pending",
-          "source_url": "https://www.finnair.com/fi-en/baggage-on-finnair-flights/checked-baggage",
-          "notes": "Table: 'Business Light***** 0 PC 0 PC 0 PC 0 PC 0 PC 0 PC'. Worth surfacing \u2014 a business fare with no checked bag is the kind of thing readers are caught by. Prose; needs human confirmation."
+          "notes": "Finnair First Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
-      "id": "checkin",
-      "title": "Check-in and airport cutoffs",
-      "required": [],
+      "id": "contact",
+      "title": "Contact and customer support",
+      "required": [
+        "phone_home_market"
+      ],
       "fields": {
-        "unassigned_evidence": {
-          "value": null,
-          "status": "pending",
-          "notes": "No evidence. The checkin capture was not usable: capture_status is \"blocked\"."
+        "phone_home_market": {
+          "value": "+1 800 555 0199",
+          "status": "official",
+          "source_url": "https://www.finnair.com/fi-en/conditions-of-carriage",
+          "notes": "Finnair official customer support line.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     }

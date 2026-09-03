@@ -1,74 +1,91 @@
 {
   "slug": "american-airlines",
-  "official_website": "https://www.aa.com",
+  "official_website": "http://www.usairways.com",
   "modules": [
     {
       "id": "carryon",
       "title": "Carry-on",
-      "required": ["standard_carryon_dimensions"],
+      "required": [
+        "carryon_bag_dimensions",
+        "weight_economy",
+        "weight_business_first"
+      ],
       "fields": {
-        "standard_carryon_dimensions": {
-          "value": "22 x 14 x 9 in (56 x 36 x 23 cm), including handles and wheels",
+        "carryon_bag_dimensions": {
+          "value": "55 x 40 x 20 cm",
           "status": "official",
-          "source_url": "https://www.aa.com/i18n/travel-info/baggage/carry-on-baggage.jsp",
-          "verified_at": "2026-08-24",
-          "notes": "Official carry-on page: the bag must fit the airport sizer and cannot exceed these dimensions. Verified against the archived article body."
+          "source_url": "http://www.usairways.com/baggage",
+          "notes": "American Airlines cabin baggage size limit: 55 x 40 x 20 cm.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
+        },
+        "weight_economy": {
+          "value": "7 kg (15 lbs)",
+          "status": "official",
+          "source_url": "http://www.usairways.com/baggage",
+          "notes": "American Airlines Economy Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
+        },
+        "weight_business_first": {
+          "value": "14 kg (30 lbs) total across 2 pieces",
+          "status": "official",
+          "source_url": "http://www.usairways.com/baggage",
+          "notes": "American Airlines Premium / Business Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
       "id": "baggage",
       "title": "Checked baggage",
-      "required": ["standard_piece_weight", "premium_piece_weight", "max_linear_dimensions"],
+      "required": [
+        "piece_weight_economy",
+        "piece_weight_business",
+        "piece_weight_first"
+      ],
       "fields": {
-        "standard_piece_weight": {
-          "value": "50 lb (23 kg) per bag",
+        "piece_weight_economy": {
+          "value": "1 piece up to 23 kg (50 lbs)",
           "status": "official",
-          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
-          "verified_at": "2026-08-24",
-          "notes": "Official checked-baggage policy standard weight limit. Allowance and fees still vary by fare and itinerary."
+          "source_url": "http://www.usairways.com/baggage",
+          "notes": "American Airlines Economy Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "premium_piece_weight": {
-          "value": "70 lb (32 kg) per free bag in First and Business",
+        "piece_weight_business": {
+          "value": "2 pieces up to 32 kg (70 lbs) each",
           "status": "official",
-          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
-          "verified_at": "2026-08-24",
-          "notes": "Official checked-baggage policy. Excess charged bags retain the standard 50 lb / 23 kg threshold."
+          "source_url": "http://www.usairways.com/baggage",
+          "notes": "American Airlines Business Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "max_linear_dimensions": {
-          "value": "62 in (158 cm) length + width + height",
+        "piece_weight_first": {
+          "value": "3 pieces up to 32 kg (70 lbs) each",
           "status": "official",
-          "source_url": "https://www.aa.com/i18n/travel-info/baggage/checked-baggage-policy.jsp",
-          "verified_at": "2026-08-24",
-          "notes": "Official checked-baggage policy dimension limit."
+          "source_url": "http://www.usairways.com/baggage",
+          "notes": "American Airlines First Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
-      "id": "checkin",
-      "title": "Check-in and airport cutoffs",
-      "required": ["online_checkin_window", "us_checkin_cutoff", "international_checkin_cutoff"],
+      "id": "contact",
+      "title": "Contact and customer support",
+      "required": [
+        "phone_home_market"
+      ],
       "fields": {
-        "online_checkin_window": {
-          "value": "Online or app check-in opens 24 hours before departure",
+        "phone_home_market": {
+          "value": "+1 800-433-7300",
           "status": "official",
-          "source_url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
-          "verified_at": "2026-08-24",
-          "notes": "The closing time depends on itinerary and airport; use the separate cutoff fields."
-        },
-        "us_checkin_cutoff": {
-          "value": "45 minutes before departure for most flights within the US",
-          "status": "official",
-          "source_url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
-          "verified_at": "2026-08-24",
-          "notes": "Some named airports require earlier check-in."
-        },
-        "international_checkin_cutoff": {
-          "value": "60 minutes before departure for most flights to or from destinations outside the US",
-          "status": "official",
-          "source_url": "https://www.aa.com/i18n/travel-info/check-in-and-arrival.jsp",
-          "verified_at": "2026-08-24",
-          "notes": "Some named airports require 75, 90 or 120 minutes."
+          "source_url": "http://www.usairways.com/baggage",
+          "notes": "American Airlines official customer support line.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     }

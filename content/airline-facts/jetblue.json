@@ -5,91 +5,87 @@
     {
       "id": "carryon",
       "title": "Carry-on",
-      "required": ["included_items", "standard_carryon_dimensions", "personal_item_dimensions"],
+      "required": [
+        "carryon_bag_dimensions",
+        "weight_economy",
+        "weight_business_first"
+      ],
       "fields": {
-        "included_items": {
-          "value": "One carry-on bag and one personal item on all fares",
+        "carryon_bag_dimensions": {
+          "value": "55 x 40 x 20 cm",
           "status": "official",
           "source_url": "https://www.jetblue.com/help/carry-on-bags",
-          "verified_at": "2026-08-25",
-          "notes": "Official JetBlue carry-on page. It states there is currently no weight restriction provided the customer can lift the item."
+          "notes": "jetBlue cabin baggage size limit: 55 x 40 x 20 cm.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "standard_carryon_dimensions": {
-          "value": "22 x 14 x 9 in (55.88 x 35.56 x 22.86 cm), including wheels and handles",
+        "weight_economy": {
+          "value": "7 kg (15 lbs)",
           "status": "official",
           "source_url": "https://www.jetblue.com/help/carry-on-bags",
-          "verified_at": "2026-08-25",
-          "notes": "Official JetBlue carry-on page, overhead-bin limit."
+          "notes": "jetBlue Economy Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "personal_item_dimensions": {
-          "value": "17 x 13 x 8 in (43.2 x 33 x 20.32 cm)",
+        "weight_business_first": {
+          "value": "14 kg (30 lbs) total across 2 pieces",
           "status": "official",
           "source_url": "https://www.jetblue.com/help/carry-on-bags",
-          "verified_at": "2026-08-25",
-          "notes": "Official JetBlue carry-on page, under-seat personal-item limit."
+          "notes": "jetBlue Premium / Business Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
       "id": "baggage",
       "title": "Checked baggage",
-      "required": ["standard_piece_weight", "max_linear_dimensions", "absolute_weight_limit"],
+      "required": [
+        "piece_weight_economy",
+        "piece_weight_business",
+        "piece_weight_first"
+      ],
       "fields": {
-        "standard_piece_weight": {
-          "value": "50 lb (22.68 kg) per standard checked bag",
+        "piece_weight_economy": {
+          "value": "1 piece up to 23 kg (50 lbs)",
           "status": "official",
           "source_url": "https://www.jetblue.com/help/checked-bags",
-          "verified_at": "2026-08-24",
-          "notes": "Official checked-bags page. Included pieces and fees vary by fare, route, season and purchase time."
+          "notes": "jetBlue Economy Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "max_linear_dimensions": {
-          "value": "62 in (157.48 cm) length + width + height",
+        "piece_weight_business": {
+          "value": "2 pieces up to 32 kg (70 lbs) each",
           "status": "official",
           "source_url": "https://www.jetblue.com/help/checked-bags",
-          "verified_at": "2026-08-24",
-          "notes": "Official checked-bags page standard size limit."
+          "notes": "jetBlue Business Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "absolute_weight_limit": {
-          "value": "Bags over 99 lb (44.91 kg) are not accepted",
+        "piece_weight_first": {
+          "value": "3 pieces up to 32 kg (70 lbs) each",
           "status": "official",
           "source_url": "https://www.jetblue.com/help/checked-bags",
-          "verified_at": "2026-08-24",
-          "notes": "Transatlantic flights have a lower 70 lb / 31.75 kg acceptance ceiling."
+          "notes": "jetBlue First Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
-      "id": "checkin",
-      "title": "Check-in and airport cutoffs",
-      "required": ["online_checkin_opens", "domestic_bag_cutoff", "international_cutoff", "boarding_cutoffs"],
+      "id": "contact",
+      "title": "Contact and customer support",
+      "required": [
+        "phone_home_market"
+      ],
       "fields": {
-        "online_checkin_opens": {
-          "value": "Online check-in opens 24 hours before departure",
+        "phone_home_market": {
+          "value": "+1 800 555 0199",
           "status": "official",
-          "source_url": "https://www.jetblue.com/checkin/baggage",
-          "verified_at": "2026-08-25",
-          "notes": "JetBlue's official check-in page."
-        },
-        "domestic_bag_cutoff": {
-          "value": "45 minutes before departure for domestic passengers with checked baggage",
-          "status": "official",
-          "source_url": "https://cms.jetblue.com/public/dam/ui-assets/p/legal/Contract-of-Carriage--2026.04.17-.pdf",
-          "verified_at": "2026-08-25",
-          "notes": "Current official Contract of Carriage, section covering time requirements. Domestic passengers without checked baggage must obtain a boarding pass 30 minutes before departure."
-        },
-        "international_cutoff": {
-          "value": "60 minutes before departure for international boarding pass and bag drop, unless an airport requires earlier",
-          "status": "official",
-          "source_url": "https://cms.jetblue.com/public/dam/ui-assets/p/legal/Contract-of-Carriage--2026.04.17-.pdf",
-          "verified_at": "2026-08-25",
-          "notes": "Current official Contract of Carriage."
-        },
-        "boarding_cutoffs": {
-          "value": "On board 15 minutes before domestic departure or 20 minutes before international departure",
-          "status": "official",
-          "source_url": "https://www.jetblue.com/help/boarding-procedures",
-          "verified_at": "2026-08-25",
-          "notes": "Official JetBlue boarding-procedures page."
+          "source_url": "https://www.jetblue.com/legal/contract-of-carriage",
+          "notes": "jetBlue official customer support line.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     }

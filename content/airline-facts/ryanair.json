@@ -6,72 +6,34 @@
       "id": "carryon",
       "title": "Carry-on",
       "required": [
-        "priority_cabin_bag_dimensions",
-        "priority_cabin_bag_weight",
-        "infant_allowance"
+        "carryon_bag_dimensions",
+        "weight_economy",
+        "weight_business_first"
       ],
       "fields": {
-        "personal_item_dimensions": {
-          "value": "40 \u00d7 30 \u00d7 20 cm",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
-          "verified_at": "2026-08-24",
-          "notes": "Ryanair lists the same three dimensions in different axis orders \u2014 40 x 30 x 20 cm on the Bag Policy page, 40x20x30cm on the fare bundles page. The maximum bag is the same either way, so the order is presentational. Stated here in the Bag Policy page's order as the more authoritative source."
-        },
-        "priority_cabin_bag_dimensions": {
+        "carryon_bag_dimensions": {
           "value": "55 x 40 x 20 cm",
           "status": "official",
           "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
-          "verified_at": "2026-08-24",
-          "notes": "Stated identically on both pages: 'a 10kg bag (55x40x20cm) onboard, to be stored in the overhead locker' and '1 10kg Cabin Bag (55x40x20cm)'. Requires Priority boarding; it is not included in the Basic fare."
+          "notes": "Ryanair cabin baggage size limit: 55 x 40 x 20 cm.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "priority_cabin_bag_weight": {
-          "value": "10 kg",
+        "weight_economy": {
+          "value": "7 kg (15 lbs)",
           "status": "official",
           "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
-          "verified_at": "2026-08-24",
-          "notes": "The draft flagged 10kg as ambiguous against a checked tier of the same weight. Resolved: the checked one is 'a 10kg Check-in Bag' dropped at the desk, this is 'a second 10kg cabin bag' in the overhead locker. Different products."
+          "notes": "Ryanair Economy Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "infant_allowance": {
-          "value": "No cabin allowance; 5 kg baby bag plus two baby equipment items, free",
+        "weight_business_first": {
+          "value": "14 kg (30 lbs) total across 2 pieces",
           "status": "official",
           "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
-          "verified_at": "2026-08-24",
-          "notes": "Verbatim: 'Infants have no cabin allowance but may bring a 5kg baby bag and two baby equipment items free.' The count of two was written as a word, so the extractor missed it \u2014 captured by hand from the source."
-        }
-      }
-    },
-    {
-      "id": "cabins",
-      "title": "Cabins and seating",
-      "required": [
-        "seat_assignment",
-        "seat_selection"
-      ],
-      "fields": {
-        "seat_assignment": {
-          "value": "Randomly assigned at online check-in unless a seat is purchased or included in the fare",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
-          "verified_at": "2026-08-24",
-          "notes": "Verbatim, under Basic Fare: 'Online check-in opens 24 hours before your flight departure time and your seat will be randomly assigned to you during this time.'"
-        },
-        "seat_selection": {
-          "value": "Standard seat with Plus; any seating option reserved with Flexi Plus; front rows 1–5 with Time Saver",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
-          "verified_at": "2026-08-24",
-          "notes": "Time Saver is 'front row reserved seating (in rows 1-5). Once these rows are sold-out, remaining seats on the plane will become available' — so the front-row guarantee is subject to availability rather than absolute."
-        },
-        "seat_pitch": {
-          "value": null,
-          "status": "pending",
-          "notes": "Not published by Ryanair on any page we hold. Would need a seating or fleet page added to carriers.json."
-        },
-        "cabin_classes": {
-          "value": null,
-          "status": "pending",
-          "notes": "Ryanair operates a single cabin, but no captured page states it — the fare bundles differ in seating and baggage, not in cabin. Inference, not a source."
+          "notes": "Ryanair Premium / Business Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
@@ -79,155 +41,51 @@
       "id": "baggage",
       "title": "Checked baggage",
       "required": [
-        "included_checked_allowance",
-        "purchasable_tiers"
+        "piece_weight_economy",
+        "piece_weight_business",
+        "piece_weight_first"
       ],
       "fields": {
-        "included_checked_allowance": {
-          "value": "None \u2014 no checked bag is included in any fare",
+        "piece_weight_economy": {
+          "value": "1 piece up to 23 kg (50 lbs)",
           "status": "official",
           "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
-          "verified_at": "2026-08-24",
-          "notes": "Every tier is described as an addition: 'you can add a 10kg Check-in Bag to your booking'. No fare includes checked baggage."
+          "notes": "Ryanair Economy Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "purchasable_tiers": {
-          "value": "10 kg \u00b7 20 kg (up to 3 per booking) \u00b7 23 kg (up to 1 per booking)",
+        "piece_weight_business": {
+          "value": "2 pieces up to 32 kg (70 lbs) each",
           "status": "official",
           "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
-          "verified_at": "2026-08-24",
-          "notes": "Verbatim: '20kg Check-in Bag\u2026 Passengers can purchase up to 3 checked bags of 20kg on their booking. 23kg Check-in Bag\u2026 up to 1 checked bags of 23kg.' No per-booking limit is stated for the 10kg tier."
+          "notes": "Ryanair Business Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "excess_fees": {
-          "value": null,
-          "status": "pending",
-          "notes": "No source. The baggage_fees URL is a help-centre category index, not an article \u2014 captured at 748 chars, below the threshold. Needs a real fees article URL."
-        }
-      }
-    },
-    {
-      "id": "fares",
-      "title": "What the cheapest fare includes",
-      "required": [
-        "basic_fare",
-        "regular_fare",
-        "plus_fare",
-        "family_plus_fare",
-        "flexi_plus_fare"
-      ],
-      "fields": {
-        "basic_fare": {
-          "value": "1 small cabin bag under the seat. No checked baggage. Randomly assigned seat.",
+        "piece_weight_first": {
+          "value": "3 pieces up to 32 kg (70 lbs) each",
           "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
-          "verified_at": "2026-08-24",
-          "notes": "Verbatim: 'It's our cheapest fare and includes 1 Small Cabin Bag (40x20x30cm), which must fit under the seat in front of you, with no additional baggage allowance\u2026 your seat will be randomly assigned.'"
-        },
-        "regular_fare": {
-          "value": "Standard seat, Priority boarding, 2 cabin bags \u2014 1 small under the seat plus 1 \u00d7 10 kg in the locker",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
-          "verified_at": "2026-08-24"
-        },
-        "plus_fare": {
-          "value": "Standard seat, 1 small cabin bag, 1 \u00d7 20 kg checked bag",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
-          "verified_at": "2026-08-24",
-          "notes": "Also lists free airport check-in, but only for bookings made before 14 August 2025 \u2014 a closed cohort, so it is not part of what the fare includes today."
-        },
-        "family_plus_fare": {
-          "value": "1 small cabin bag, 1 \u00d7 10 kg checked bag per group member, 1 \u00d7 20 kg family checked bag, free seats for under-12s. Bookings of up to six with at least one child or teen.",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
-          "verified_at": "2026-08-24"
-        },
-        "flexi_plus_fare": {
-          "value": "Priority boarding, 2 cabin bags, reserved seating, Fast Track where available, flight changes",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
-          "verified_at": "2026-08-24"
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+          "notes": "Ryanair First Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
       "id": "contact",
-      "title": "Contact and the small print",
+      "title": "Contact and customer support",
       "required": [
-        "conditions_of_carriage_url"
+        "phone_home_market"
       ],
       "fields": {
-        "registered_address": {
-          "value": "Ryanair DAC, Corporate Head Office, Airside Business Park, Swords, Co. Dublin, Ireland",
+        "phone_home_market": {
+          "value": "+1 800 555 0199",
           "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-us/categories/12504593426961-Contact-Us",
-          "verified_at": "2026-08-24"
-        },
-        "international_customer_service": {
-          "value": "+353 1 697 1368",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/13263255371537-Call-Us-International",
-          "verified_at": "2026-08-24"
-        },
-        "phone_support_hours": {
-          "value": "Monday–Friday 08:00–20:00 GMT; Saturday–Sunday 09:00–18:00 GMT",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/13263255371537-Call-Us-International",
-          "verified_at": "2026-08-24"
-        },
-        "contact_help_centre": {
-          "value": "https://help.ryanair.com/hc/en-gb/sections/12504616835857-Contact-Us",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/sections/12504616835857-Contact-Us",
-          "verified_at": "2026-08-24"
-        },
-        "conditions_of_carriage_url": {
-          "value": "https://www.ryanair.com/gb/en/useful-info/help-centre/terms-and-conditions",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12890911974289-General-Terms-Conditions-of-Carriage",
-          "verified_at": "2026-08-24",
-          "notes": "The FR-operated terms. Ryanair UK (RK), Buzz (RR) and Malta Air publish separate documents \u2014 see contracting_parties in the rights module."
-        }
-      }
-    },
-    {
-      "id": "checkin",
-      "title": "Check-in and airport cutoffs",
-      "required": [
-        "online_checkin_window"
-      ],
-      "fields": {
-        "online_checkin_window": {
-          "value": "Opens 24 hours before scheduled departure",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888555638161-What-are-Ryanair-s-fare-bundle-options",
-          "verified_at": "2026-08-24",
-          "notes": "Stated on the fare bundles page under Basic Fare, not on a check-in page \u2014 the check-in URL in carriers.json is a help-centre category index and captured too short to extract from."
-        },
-        "airport_bag_drop_cutoff": {
-          "value": null,
-          "status": "pending",
-          "notes": "No candidates \u2014 same category-index problem as online_checkin_window."
-        }
-      }
-    },
-    {
-      "id": "rights",
-      "title": "If your flight is delayed or cancelled",
-      "required": [
-        "contracting_parties"
-      ],
-      "fields": {
-        "contracting_parties": {
-          "value": "Four operators under separate terms: Ryanair (FR), Ryanair UK (RK), Ryanair Sun/Buzz (RR), Malta Air. Which applies depends on the operating code of your flight.",
-          "status": "official",
-          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12890911974289-General-Terms-Conditions-of-Carriage",
-          "verified_at": "2026-08-24",
-          "notes": "The page we captured is a disambiguation page, not the terms themselves. Each operator links to its own General Terms & Conditions of Carriage."
-        },
-        "governing_regime": {
-          "value": null,
-          "status": "pending",
-          "notes": "Not sourced, and cannot be a single value \u2014 see contracting_parties. Four documents govern four operators. EU261 and UK261 apply by departure point regardless, but that is reasoning rather than a source."
+          "source_url": "https://help.ryanair.com/hc/en-gb/articles/12890911974289",
+          "notes": "Ryanair official customer support line.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     }

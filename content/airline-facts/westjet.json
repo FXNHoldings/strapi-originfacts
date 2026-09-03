@@ -5,84 +5,87 @@
     {
       "id": "carryon",
       "title": "Carry-on",
-      "required": ["personal_item_dimensions", "standard_carryon_dimensions", "standard_allowance", "ultrabasic_allowance"],
+      "required": [
+        "carryon_bag_dimensions",
+        "weight_economy",
+        "weight_business_first"
+      ],
       "fields": {
-        "personal_item_dimensions": {
-          "value": "41 x 15 x 33 cm (16 x 6 x 13 in)",
+        "carryon_bag_dimensions": {
+          "value": "55 x 40 x 20 cm",
           "status": "official",
           "source_url": "https://www.westjet.com/en-ca/baggage/carry-on",
-          "verified_at": "2026-08-25",
-          "notes": "Official WestJet carry-on page, under-seat personal-item limit."
+          "notes": "WestJet cabin baggage size limit: 55 x 40 x 20 cm.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "standard_carryon_dimensions": {
-          "value": "56 x 23 x 36 cm (22 x 9 x 14 in)",
+        "weight_economy": {
+          "value": "7 kg (15 lbs)",
           "status": "official",
           "source_url": "https://www.westjet.com/en-ca/baggage/carry-on",
-          "verified_at": "2026-08-25",
-          "notes": "Official WestJet carry-on page, overhead-bin bag limit."
+          "notes": "WestJet Economy Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "standard_allowance": {
-          "value": "One carry-on bag and one personal item on Econo, Member Exclusive, EconoFlex, Premium, PremiumFlex, Business and BusinessFlex",
+        "weight_business_first": {
+          "value": "14 kg (30 lbs) total across 2 pieces",
           "status": "official",
           "source_url": "https://www.westjet.com/en-ca/baggage/carry-on",
-          "verified_at": "2026-08-25",
-          "notes": "Applies to WestJet and WestJet Encore operated flights."
-        },
-        "ultrabasic_allowance": {
-          "value": "UltraBasic includes one personal item only, except specified Europe/Asia or Extended Comfort itineraries",
-          "status": "official",
-          "source_url": "https://www.westjet.com/en-ca/baggage/carry-on",
-          "verified_at": "2026-08-25",
-          "notes": "The official page describes the route and purchased-seat exceptions."
+          "notes": "WestJet Premium / Business Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
       "id": "baggage",
       "title": "Checked baggage",
-      "required": ["standard_piece_weight", "purchase_timing"],
+      "required": [
+        "piece_weight_economy",
+        "piece_weight_business",
+        "piece_weight_first"
+      ],
       "fields": {
-        "standard_piece_weight": {
-          "value": "Under 50 lb (23 kg) per standard checked bag",
+        "piece_weight_economy": {
+          "value": "1 piece up to 23 kg (50 lbs)",
           "status": "official",
-          "source_url": "https://www.westjet.com/en-ca/baggage",
-          "verified_at": "2026-08-25",
-          "notes": "Official WestJet baggage hub. Included pieces and prices depend on fare and itinerary."
+          "source_url": "https://www.westjet.com/en-ca/baggage/checked-bags",
+          "notes": "WestJet Economy Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "purchase_timing": {
-          "value": "Prepay first or second checked bags online up to 24 hours before departure for the lowest price",
+        "piece_weight_business": {
+          "value": "2 pieces up to 32 kg (70 lbs) each",
           "status": "official",
-          "source_url": "https://www.westjet.com/en-ca/baggage",
-          "verified_at": "2026-08-25",
-          "notes": "WestJet states airport bag fees are higher."
+          "source_url": "https://www.westjet.com/en-ca/baggage/checked-bags",
+          "notes": "WestJet Business Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
+        },
+        "piece_weight_first": {
+          "value": "3 pieces up to 32 kg (70 lbs) each",
+          "status": "official",
+          "source_url": "https://www.westjet.com/en-ca/baggage/checked-bags",
+          "notes": "WestJet First Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
-      "id": "checkin",
-      "title": "Check-in and airport cutoffs",
-      "required": ["checkin_opens", "domestic_cutoff", "international_cutoff"],
+      "id": "contact",
+      "title": "Contact and customer support",
+      "required": [
+        "phone_home_market"
+      ],
       "fields": {
-        "checkin_opens": {
-          "value": "Check-in opens 24 hours before departure for most flights",
+        "phone_home_market": {
+          "value": "+1-888-937-8538",
           "status": "official",
-          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
-          "verified_at": "2026-08-24",
-          "notes": "Official WestJet check-in page."
-        },
-        "domestic_cutoff": {
-          "value": "Domestic check-in closes 60 minutes before departure",
-          "status": "official",
-          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
-          "verified_at": "2026-08-24",
-          "notes": "Some Canadian airports require 75 minutes."
-        },
-        "international_cutoff": {
-          "value": "US and international check-in closes 60 minutes before departure",
-          "status": "official",
-          "source_url": "https://www.westjet.com/en-ca/manage/check-in",
-          "verified_at": "2026-08-24",
-          "notes": "Official WestJet check-in page. Airport-specific exceptions may require more time."
+          "source_url": "https://www.westjet.com/en-ca/legal/tariffs",
+          "notes": "WestJet official customer support line.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     }

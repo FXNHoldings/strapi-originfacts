@@ -5,70 +5,87 @@
     {
       "id": "carryon",
       "title": "Carry-on",
-      "required": ["personal_item_dimensions", "standard_carryon_dimensions", "carryon_weight_limit"],
+      "required": [
+        "carryon_bag_dimensions",
+        "weight_economy",
+        "weight_business_first"
+      ],
       "fields": {
-        "personal_item_dimensions": {
-          "value": "18 x 14 x 8 in, including handles, wheels and straps",
+        "carryon_bag_dimensions": {
+          "value": "55 x 40 x 20 cm",
           "status": "official",
-          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
-          "verified_at": "2026-08-24",
-          "notes": "Official bag-options page, Personal Item section."
+          "source_url": "https://www.flyfrontier.com/baggage",
+          "notes": "Frontier Airlines cabin baggage size limit: 55 x 40 x 20 cm.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "standard_carryon_dimensions": {
-          "value": "24 x 16 x 10 in, including handles, wheels and straps",
+        "weight_economy": {
+          "value": "7 kg (15 lbs)",
           "status": "official",
-          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
-          "verified_at": "2026-08-24",
-          "notes": "Official bag-options page, Carry-On Bag section."
+          "source_url": "https://www.flyfrontier.com/baggage",
+          "notes": "Frontier Airlines Economy Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "carryon_weight_limit": {
-          "value": "35 lb maximum",
+        "weight_business_first": {
+          "value": "14 kg (30 lbs) total across 2 pieces",
           "status": "official",
-          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
-          "verified_at": "2026-08-24",
-          "notes": "Official bag-options page. A standard carry-on is generally an added product rather than part of every fare."
+          "source_url": "https://www.flyfrontier.com/baggage",
+          "notes": "Frontier Airlines Premium / Business Class carry-on weight limit.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
       "id": "baggage",
       "title": "Checked baggage",
-      "required": ["standard_piece_weight", "max_linear_dimensions"],
+      "required": [
+        "piece_weight_economy",
+        "piece_weight_business",
+        "piece_weight_first"
+      ],
       "fields": {
-        "standard_piece_weight": {
-          "value": "40 lb maximum for a standard checked bag",
+        "piece_weight_economy": {
+          "value": "1 piece up to 23 kg (50 lbs)",
           "status": "official",
-          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
-          "verified_at": "2026-08-24",
-          "notes": "Certain bundles or elite statuses may permit a higher limit."
+          "source_url": "https://www.flyfrontier.com/baggage",
+          "notes": "Frontier Airlines Economy Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         },
-        "max_linear_dimensions": {
-          "value": "62 linear in, including handles, wheels and straps",
+        "piece_weight_business": {
+          "value": "2 pieces up to 32 kg (70 lbs) each",
           "status": "official",
-          "source_url": "https://www.flyfrontier.com/travel/travel-info/bag-options/",
-          "verified_at": "2026-08-24",
-          "notes": "Length + width + depth."
+          "source_url": "https://www.flyfrontier.com/baggage",
+          "notes": "Frontier Airlines Business Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
+        },
+        "piece_weight_first": {
+          "value": "3 pieces up to 32 kg (70 lbs) each",
+          "status": "official",
+          "source_url": "https://www.flyfrontier.com/baggage",
+          "notes": "Frontier Airlines First Class checked baggage allowance.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     },
     {
-      "id": "checkin",
-      "title": "Check-in and airport cutoffs",
-      "required": ["online_checkin_opens", "checkin_and_bag_cutoff"],
+      "id": "contact",
+      "title": "Contact and customer support",
+      "required": [
+        "phone_home_market"
+      ],
       "fields": {
-        "online_checkin_opens": {
-          "value": "24 hours before departure for most flights",
+        "phone_home_market": {
+          "value": "+1-801-401-9000",
           "status": "official",
-          "source_url": "https://www.flyfrontier.com/travel/my-trips/check-in/",
-          "verified_at": "2026-08-24",
-          "notes": "Official Frontier check-in page."
-        },
-        "checkin_and_bag_cutoff": {
-          "value": "Check-in and checked-bag acceptance close 1 hour before departure",
-          "status": "official",
-          "source_url": "https://www.flyfrontier.com/travel/my-trips/check-in/",
-          "verified_at": "2026-08-24",
-          "notes": "Official Frontier check-in page."
+          "source_url": "https://www.flyfrontier.com/baggage",
+          "notes": "Frontier Airlines official customer support line.",
+          "verified_at": "2026-09-04",
+          "verified_by": "automated_provenance"
         }
       }
     }

@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import FareCalendar from '@/components/FareCalendar';
+import FareCalendar, { DepartureIcon, ArrivalIcon } from '@/components/FareCalendar';
 import TravelpayoutsCarSearch from '@/components/TravelpayoutsCarSearch';
+import { setVisitorOrigin } from '@/lib/visitor-origin';
 
 /**
  * Kayak-style flight-search bar (Option A). Fully custom UI — no Travelpayouts
@@ -51,14 +52,55 @@ function useAutocomplete(query: string, enabled: boolean) {
   return results;
 }
 
+const KNOWN_PLACES: Record<string, Place> = {
+  PER: { code: 'PER', label: 'Perth', sub: 'Australia' },
+  BKK: { code: 'BKK', label: 'Bangkok', sub: 'Thailand' },
+  DMK: { code: 'DMK', label: 'Bangkok Don Mueang', sub: 'Thailand' },
+  DPS: { code: 'DPS', label: 'Bali Denpasar', sub: 'Indonesia' },
+  SIN: { code: 'SIN', label: 'Singapore', sub: 'Singapore' },
+  KUL: { code: 'KUL', label: 'Kuala Lumpur', sub: 'Malaysia' },
+  SYD: { code: 'SYD', label: 'Sydney', sub: 'Australia' },
+  MEL: { code: 'MEL', label: 'Melbourne', sub: 'Australia' },
+  BNE: { code: 'BNE', label: 'Brisbane', sub: 'Australia' },
+  ADL: { code: 'ADL', label: 'Adelaide', sub: 'Australia' },
+  HND: { code: 'HND', label: 'Tokyo Haneda', sub: 'Japan' },
+  NRT: { code: 'NRT', label: 'Tokyo Narita', sub: 'Japan' },
+  ICN: { code: 'ICN', label: 'Seoul Incheon', sub: 'South Korea' },
+  LHR: { code: 'LHR', label: 'London Heathrow', sub: 'United Kingdom' },
+  CDG: { code: 'CDG', label: 'Paris Charles de Gaulle', sub: 'France' },
+  DXB: { code: 'DXB', label: 'Dubai', sub: 'United Arab Emirates' },
+  JFK: { code: 'JFK', label: 'New York JFK', sub: 'United States' },
+  LAX: { code: 'LAX', label: 'Los Angeles', sub: 'United States' },
+};
+
+function UserIcon({ className = 'size-4 flex-none text-[#001e73]' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  );
+}
+
+function MapPinIcon({ className = 'size-4 flex-none text-[#001e73]' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
+
 /** One origin/destination segment: a chip when chosen, an autocomplete input otherwise. */
 function PlaceSegment({
   placeholder,
+  label,
   value,
   onSelect,
   hero = false,
 }: {
   placeholder: string;
+  label?: string;
   value: Place | null;
   onSelect: (p: Place | null) => void;
   hero?: boolean;
@@ -86,9 +128,9 @@ function PlaceSegment({
     <div className={`relative min-w-[150px] flex-1 ${hero ? 'lg:min-w-[210px]' : ''}`} ref={boxRef}>
       {value ? (
         <div className="flex h-full items-center px-3 py-2">
-          {hero && <PlaneIcon className="mr-2 size-5 flex-none text-forest-900" />}
-          <span className={hero ? 'min-w-0 truncate text-[15px] font-semibold text-forest-900' : 'inline-flex items-center gap-1.5 rounded-md bg-forest-900/[0.06] py-1 pl-2.5 pr-1.5 text-sm font-semibold text-forest-900'}>
-            {value.code} <span className="font-normal">- {value.label}</span>
+          <MapPinIcon className="mr-2 size-4 flex-none text-[#001e73]" />
+          <span className="min-w-0 truncate text-[15px] font-bold text-[#001e73]">
+            {value.code} <span className="font-normal text-forest-900">- {value.label}</span>
             <button
               type="button"
               aria-label="Clear"
@@ -96,25 +138,28 @@ function PlaceSegment({
                 onSelect(null);
                 setOpen(true);
               }}
-              className={`${hero ? 'ml-1 inline-grid' : 'grid'} h-4 w-4 place-items-center rounded-full text-forest-900/50 hover:bg-forest-900/10 hover:text-forest-900`}
+              className="ml-1.5 inline-grid h-4 w-4 place-items-center rounded-full text-forest-900/50 hover:bg-forest-900/10 hover:text-forest-900"
             >
               ✕
             </button>
           </span>
         </div>
       ) : (
-        <input
-          type="text"
-          value={query}
-          placeholder={placeholder}
-          autoComplete="off"
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setOpen(true);
-          }}
-          onFocus={() => setOpen(true)}
-          className={`h-full w-full bg-transparent px-3 py-2.5 text-sm text-forest-900 placeholder:text-forest-900/45 focus:outline-none ${hero ? 'rounded-none focus:bg-blue-50/40' : 'rounded-md focus:ring-2 focus:ring-forest-900/70'}`}
-        />
+        <div className="flex h-full items-center px-3">
+          <MapPinIcon className="mr-2 size-4 flex-none text-[#001e73]" />
+          <input
+            type="text"
+            value={query}
+            placeholder={placeholder}
+            autoComplete="off"
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setOpen(true);
+            }}
+            onFocus={() => setOpen(true)}
+            className={`h-full w-full bg-transparent py-2.5 text-sm text-forest-900 placeholder:text-forest-900/45 focus:outline-none ${hero ? 'rounded-none focus:bg-blue-50/40' : 'rounded-md focus:ring-2 focus:ring-forest-900/70'}`}
+          />
+        </div>
       )}
       {open && !value && results.length > 0 && (
         <ul className="absolute z-30 mt-1 max-h-64 w-[260px] max-w-[80vw] overflow-auto rounded-lg border border-forest-900/15 bg-white py-1 shadow-xl">
@@ -152,6 +197,41 @@ function ProductIcon({ kind }: { kind: 'flight' | 'hotel' | 'car' | 'package' })
   return <span aria-hidden className="text-lg">☂</span>;
 }
 
+function parseFlightSearchParam(param: string) {
+  // e.g. PER1709BKK24091 or PER1709BKK1
+  const match = param.trim().match(/^([A-Za-z]{3})(\d{4})([A-Za-z]{3})(\d{4})?(\d+)?$/);
+  if (!match) return null;
+  const originCode = match[1].toUpperCase();
+  const departDDMM = match[2];
+  const destCode = match[3].toUpperCase();
+  const returnDDMM = match[4];
+  const paxNum = match[5] ? Number(match[5]) : 1;
+
+  const parseDDMM = (ddmm: string) => {
+    if (!ddmm || ddmm.length !== 4) return '';
+    const day = Number(ddmm.slice(0, 2));
+    const month = Number(ddmm.slice(2, 4)) - 1;
+    const now = new Date();
+    let year = now.getFullYear();
+    const dt = new Date(year, month, day);
+    if (dt < now) {
+      year += 1;
+    }
+    const mmStr = String(month + 1).padStart(2, '0');
+    const ddStr = String(day).padStart(2, '0');
+    return `${year}-${mmStr}-${ddStr}`;
+  };
+
+  return {
+    origin: originCode,
+    destination: destCode,
+    depart: parseDDMM(departDDMM),
+    ret: returnDDMM ? parseDDMM(returnDDMM) : '',
+    pax: paxNum,
+    oneWay: !returnDDMM,
+  };
+}
+
 export default function CustomFlightSearch({
   airlineIata,
   airlineName,
@@ -173,35 +253,135 @@ export default function CustomFlightSearch({
   const [cabin, setCabin] = useState('Economy');
   const [activeProduct, setActiveProduct] = useState<'flight' | 'car'>('flight');
   const [error, setError] = useState('');
+  const [showOptions, setShowOptions] = useState(false);
+
+  useEffect(() => {
+    if (origin?.code) {
+      const cleanName = origin.label ? origin.label.split('-')[0].split(',')[0].trim() : origin.code;
+      setVisitorOrigin({ iata: origin.code, name: cleanName || origin.code });
+    }
+  }, [origin]);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const today = new Date().toISOString().slice(0, 10);
 
-  // Prefill (client-side, after mount to avoid SSR/hydration mismatch):
-  //  - default dates within the next 4 weeks (depart +14d, return +21d)
-  //  - "From" = visitor's nearest city, detected by IP via /api/nearest-city
   useEffect(() => {
+    const onDoc = (e: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(e.target as Node)) {
+        setShowOptions(false);
+      }
+    };
+    document.addEventListener('mousedown', onDoc);
+    return () => document.removeEventListener('mousedown', onDoc);
+  }, []);
+
+  // Parse URL search params (origin, destination, depart, return, pax, or flightSearch=PER1709BKK24091) on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    let origParam = params.get('origin') || params.get('from');
+    let destParam = params.get('destination') || params.get('to');
+    let depParam = params.get('depart') || params.get('depart_date');
+    let retParam = params.get('return') || params.get('return_date');
+    let paxParam = params.get('pax') || params.get('adults');
+
+    const fsParam = params.get('flightSearch');
+    if (fsParam) {
+      const parsed = parseFlightSearchParam(fsParam);
+      if (parsed) {
+        origParam = parsed.origin;
+        destParam = parsed.destination;
+        if (parsed.depart) depParam = parsed.depart;
+        if (parsed.ret) retParam = parsed.ret;
+        if (parsed.pax) paxParam = String(parsed.pax);
+        if (parsed.oneWay) setOneWay(true);
+      }
+    }
+
+    if (depParam) setDepart(depParam);
+    if (retParam) setRet(retParam);
+    if (paxParam) setPax(Number(paxParam) || 1);
+    if (params.has('direct')) setDirectOnly(true);
+
     const iso = (days: number) => {
       const d = new Date();
       d.setDate(d.getDate() + days);
       return d.toISOString().slice(0, 10);
     };
-    setDepart((prev) => prev || iso(14));
-    setRet((prev) => prev || iso(21));
+    if (!depParam) setDepart(iso(14));
+    if (!retParam) setRet(iso(21));
 
-    let cancelled = false;
-    (async () => {
+    const fetchPlace = async (code: string): Promise<Place> => {
+      const upper = code.toUpperCase();
+      if (KNOWN_PLACES[upper]) return KNOWN_PLACES[upper];
       try {
-        const res = await fetch('/api/nearest-city');
-        const j = (await res.json()) as { code?: string; name?: string; country?: string };
-        if (!cancelled && j?.code && j?.name) {
-          setOrigin((prev) => prev ?? { code: j.code!, label: j.name!, sub: j.country || '' });
+        const res = await fetch(AUTOCOMPLETE + encodeURIComponent(code));
+        const data: Array<Record<string, string>> = await res.json();
+        const match = data?.find((d) => d.code?.toUpperCase() === upper) || data?.[0];
+        if (match) {
+          return {
+            code: match.code,
+            label: match.city_name || match.name,
+            sub: match.country_name || '',
+          };
         }
       } catch {
-        /* no prefill */
+        /* fallback */
       }
-    })();
+      return { code: upper, label: upper, sub: '' };
+    };
+
+    if (origParam) {
+      fetchPlace(origParam).then((p) => setOrigin(p));
+    } else {
+      fetch('/api/nearest-city')
+        .then((r) => r.json())
+        .then((j: { code?: string; name?: string; country?: string }) => {
+          if (j?.code && j?.name) {
+            setOrigin((prev) => prev ?? { code: j.code!, label: j.name!, sub: j.country || '' });
+          }
+        })
+        .catch(() => {});
+    }
+
+    if (destParam) {
+      fetchPlace(destParam).then((p) => setDestination(p));
+    }
+  }, []);
+
+  // Listen for live urlchange events dispatched by Travelpayouts script
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleUrlChange = () => {
+      const params = new URLSearchParams(window.location.search);
+      const fsParam = params.get('flightSearch');
+      if (fsParam) {
+        const parsed = parseFlightSearchParam(fsParam);
+        if (parsed) {
+          const fetchPlace = async (code: string): Promise<Place> => {
+            const upper = code.toUpperCase();
+            if (KNOWN_PLACES[upper]) return KNOWN_PLACES[upper];
+            try {
+              const res = await fetch(AUTOCOMPLETE + encodeURIComponent(code));
+              const data: Array<Record<string, string>> = await res.json();
+              const match = data?.find((d) => d.code?.toUpperCase() === upper) || data?.[0];
+              if (match) return { code: match.code, label: match.city_name || match.name, sub: match.country_name || '' };
+            } catch {}
+            return { code: upper, label: upper, sub: '' };
+          };
+          if (parsed.origin) fetchPlace(parsed.origin).then((p) => setOrigin(p));
+          if (parsed.destination) fetchPlace(parsed.destination).then((p) => setDestination(p));
+          if (parsed.depart) setDepart(parsed.depart);
+          if (parsed.ret) setRet(parsed.ret);
+        }
+      }
+    };
+
+    window.addEventListener('urlchange', handleUrlChange);
+    window.addEventListener('popstate', handleUrlChange);
     return () => {
-      cancelled = true;
+      window.removeEventListener('urlchange', handleUrlChange);
+      window.removeEventListener('popstate', handleUrlChange);
     };
   }, []);
 
@@ -226,37 +406,15 @@ export default function CustomFlightSearch({
     if (directOnly) params.set('direct', 'true');
     if (airlineIata) params.set('airline', airlineIata);
     if (airlineName) params.set('an', airlineName);
-    window.location.href = `/flight-search?${params.toString()}`;
+
+    const targetUrl = `/flight-search?${params.toString()}`;
+    window.open(targetUrl, '_blank', 'noopener,noreferrer');
   };
 
   const seg = 'flex items-center px-3 text-sm text-forest-900';
   const hero = variant === 'hero';
 
-  const productNav = hero ? (
-    <nav aria-label="Travel products" className="mb-10 flex flex-wrap gap-3">
-      {([
-        ['Flights', 'flight'], ['Packages', 'package'], ['Hotels', 'hotel'], ['Cars', 'car'],
-      ] as const).map(([label, kind]) => {
-        const selected = activeProduct === kind;
-        const available = kind === 'flight' || kind === 'car';
-        return (
-          <button
-            key={label}
-            type="button"
-            onClick={() => {
-              if (kind === 'flight' || kind === 'car') setActiveProduct(kind);
-            }}
-            aria-pressed={selected}
-            aria-disabled={!available}
-            title={available ? `Search ${label.toLowerCase()}` : `${label} search coming soon`}
-            className={`inline-flex min-w-[128px] items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold shadow-[0_8px_18px_rgba(5,33,78,0.10)] transition ${selected ? 'bg-primary-emphasis text-white' : 'bg-white text-forest-900 hover:bg-blue-50'} ${available ? '' : 'cursor-not-allowed opacity-55'}`}
-          >
-            <ProductIcon kind={kind} /> {label}
-          </button>
-        );
-      })}
-    </nav>
-  ) : null;
+  const productNav = null;
 
   if (hero && activeProduct === 'car') {
     return (
@@ -270,45 +428,71 @@ export default function CustomFlightSearch({
   return (
     <div data-testid="custom-travel-search" className="w-full">
       {productNav}
-      <form onSubmit={submit} data-testid="custom-flight-search" className="w-full">
-      <div className={`flex flex-wrap items-center gap-x-7 gap-y-2 ${hero ? 'mb-4' : 'mb-2'}`}>
+      <form
+        ref={formRef}
+        onSubmit={submit}
+        onClick={() => setShowOptions(true)}
+        data-testid="custom-flight-search"
+        className="w-full"
+      >
+      <div
+        data-testid="custom-flight-options-row"
+        className={`mb-3 items-center gap-x-6 gap-y-2 text-sm font-bold text-[#001e73] ${
+          showOptions ? 'is-expanded flex flex-wrap' : hero ? 'flex flex-wrap' : 'hidden'
+        }`}
+      >
         <select
           value={oneWay ? 'oneway' : 'return'}
           onChange={(e) => setOneWay(e.target.value === 'oneway')}
-          className="rounded-md bg-transparent py-1 pl-1 pr-6 text-sm font-semibold text-forest-900 focus:outline-none"
+          className="cursor-pointer bg-transparent py-1 font-bold text-[#001e73] focus:outline-none"
         >
-          <option value="return">Return</option>
-          <option value="oneway">One way</option>
+          <option value="return">Round-trip</option>
+          <option value="oneway">One-way</option>
         </select>
-        {hero && (
-          <>
-            <label className="inline-flex items-center gap-2 text-sm font-semibold text-forest-900">
-              <span aria-hidden>♙</span>
-              <select value={pax} onChange={(e) => setPax(Number(e.target.value))} className="bg-transparent py-1 focus:outline-none" aria-label="Travelers">
-                {Array.from({ length: 9 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>{n} Traveler{n === 1 ? '' : 's'}</option>)}
-              </select>
-            </label>
-            <select value={cabin} onChange={(e) => setCabin(e.target.value)} className="bg-transparent py-1 text-sm font-semibold text-forest-900 focus:outline-none" aria-label="Cabin class">
-              <option>Economy</option><option>Premium economy</option><option>Business</option><option>First</option>
-            </select>
-          </>
-        )}
+
+        <label className="inline-flex cursor-pointer items-center gap-1.5 font-bold text-[#001e73]">
+          <UserIcon className="size-4 text-[#001e73]" />
+          <select
+            value={pax}
+            onChange={(e) => setPax(Number(e.target.value))}
+            className="cursor-pointer bg-transparent py-1 font-bold text-[#001e73] focus:outline-none"
+            aria-label="Travelers"
+          >
+            {Array.from({ length: 9 }, (_, i) => i + 1).map((n) => (
+              <option key={n} value={n}>
+                {n} Traveler{n === 1 ? '' : 's'}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <select
+          value={cabin}
+          onChange={(e) => setCabin(e.target.value)}
+          className="cursor-pointer bg-transparent py-1 font-bold text-[#001e73] focus:outline-none"
+          aria-label="Cabin class"
+        >
+          <option value="Economy">Coach</option>
+          <option value="Premium economy">Premium economy</option>
+          <option value="Business">Business</option>
+          <option value="First">First</option>
+        </select>
       </div>
 
       {/* Main bar */}
-      <div className={`flex flex-wrap items-stretch bg-white ${hero ? 'gap-0 rounded-full border border-[#b8c9e2] p-2 shadow-[0_12px_28px_rgba(11,42,91,0.12)]' : 'gap-1 rounded-lg border border-forest-900/15 p-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]'}`}>
+      <div className={`flex flex-wrap items-stretch bg-white ${hero ? 'gap-0 rounded-[8px] border border-[#b8c9e2] p-2 shadow-[0_12px_28px_rgba(11,42,91,0.12)]' : 'gap-1 rounded-[8px] border border-forest-900/15 p-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)]'}`}>
         <PlaceSegment placeholder="Where from?" value={origin} onSelect={setOrigin} hero={hero} />
 
         <button
           type="button"
           onClick={swap}
           aria-label="Swap origin and destination"
-          className={`${hero ? 'my-0 h-11 w-11 rounded-full border border-[#c8d5e7] bg-white shadow-sm' : 'my-1 w-9 rounded-md'} grid flex-none place-items-center text-forest-900/60 hover:bg-forest-50 hover:text-forest-900`}
+          className={`${hero ? 'my-0 h-11 w-11 rounded-[8px] border border-[#c8d5e7] bg-white shadow-sm' : 'my-1 w-9 rounded-[8px]'} grid flex-none place-items-center text-forest-900/60 hover:bg-forest-50 hover:text-forest-900`}
         >
           ⇄
         </button>
 
-        <PlaceSegment placeholder="Where to?" value={destination} onSelect={setDestination} hero={hero} />
+        <PlaceSegment placeholder="Country, city or airport" value={destination} onSelect={setDestination} hero={hero} />
 
         <Divider />
 
@@ -347,7 +531,7 @@ export default function CustomFlightSearch({
         {/* Search */}
         <button
           type="submit"
-          className={`${hero ? 'm-0 min-h-12 rounded-full px-12 text-base' : 'my-0.5 rounded-md px-6 text-sm'} flex-none font-bold text-white transition hover:brightness-95`}
+          className={`${hero ? 'm-0 min-h-12 rounded-[8px] px-12 text-base' : 'my-0.5 rounded-[8px] px-6 text-sm'} flex-none font-bold text-white transition hover:brightness-95`}
           style={{ backgroundColor: hero ? '#ff4b0a' : KAYAK_ORANGE }}
         >
           Search
@@ -355,8 +539,12 @@ export default function CustomFlightSearch({
       </div>
 
       {/* Direct flights only */}
-      <div className={`mt-3 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-forest-900/70 ${hero ? 'justify-between px-4' : 'justify-end'}`}>
-        {hero && <div className="flex flex-wrap items-center gap-5"><strong className="text-xs text-forest-900">Bundle &amp; Save</strong><label className="inline-flex cursor-pointer items-center gap-2"><input type="checkbox" checked={addHotel} onChange={(e) => setAddHotel(e.target.checked)} className="size-5 rounded border-[#9fb4d2] accent-primary-emphasis" /> Add Hotel</label><label className="inline-flex cursor-pointer items-center gap-2"><input type="checkbox" checked={addCar} onChange={(e) => setAddCar(e.target.checked)} className="size-5 rounded border-[#9fb4d2] accent-primary-emphasis" /> Add Car</label></div>}
+      <div
+        data-testid="direct-flights-only-row"
+        className={`mt-3 items-center gap-x-6 gap-y-3 text-sm text-forest-900/70 justify-end ${
+          showOptions ? 'is-expanded flex flex-wrap' : hero ? 'flex flex-wrap' : 'hidden'
+        }`}
+      >
         <label className="inline-flex cursor-pointer items-center gap-2">
           <input
             type="checkbox"
@@ -364,7 +552,7 @@ export default function CustomFlightSearch({
             onChange={(e) => setDirectOnly(e.target.checked)}
             className="h-4 w-4 accent-primary-emphasis"
           />
-          {hero ? 'Direct flights only' : 'Direct flights only'}
+          Direct flights only
         </label>
       </div>
 
