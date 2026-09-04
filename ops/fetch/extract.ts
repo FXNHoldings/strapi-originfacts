@@ -109,13 +109,16 @@ function sentencesOf(text: string): string[] {
     .filter(Boolean);
 }
 
-function parseArgs(argv: string[]): { carrier?: string; date?: string; report: boolean } {
-  const out: { carrier?: string; date?: string; report: boolean } = { report: false };
+function parseArgs(argv: string[]): { carrier?: string; date?: string; report: boolean; concurrency: number } {
+  const out: { carrier?: string; date?: string; report: boolean; concurrency: number } = { report: false, concurrency: 4 };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--carrier') out.carrier = argv[++i];
     else if (argv[i] === '--date') out.date = argv[++i];
     else if (argv[i] === '--report') out.report = true;
+    else if (argv[i] === '--concurrency') out.concurrency = Number(argv[++i]);
+    else if (argv[i].startsWith('--concurrency=')) out.concurrency = Number(argv[i].split('=')[1]);
   }
+  if (!Number.isInteger(out.concurrency) || out.concurrency < 1) out.concurrency = 4;
   return out;
 }
 
@@ -151,6 +154,11 @@ function printReport(file: CandidateFile): void {
 }
 
 type PageSource = { page_key: string; set: string; dir: string; meta: any };
+type PageExtraction = {
+  page?: CandidateFile['pages'][number];
+  candidates: Candidate[];
+  skipped: CandidateFile['skipped'];
+};
 
 /**
  * Every page of this carrier we hold usable bytes for, and where each came from.
@@ -228,6 +236,7 @@ async function main(): Promise<void> {
     process.exitCode = 1;
     return;
   }
+  const articleSelector = selector;
 
   const allSources = await resolvePageSources(args.carrier);
   const sources = args.date
@@ -257,53 +266,55 @@ async function main(): Promise<void> {
   };
 
   try {
-    for (const source of sources) {
+    async function extractSource(source: PageSource): Promise<PageExtraction> {
       const { meta, page_key: pageKey } = source;
 
       if (!['ok', 'manual'].includes(meta.capture_status)) {
-        out.skipped.push({ page_key: pageKey, reason: `capture_status is "${meta.capture_status}"` });
-        continue;
+        return { candidates: [], skipped: [{ page_key: pageKey, reason: `capture_status is "${meta.capture_status}"` }] };
       }
 
       const htmlPath = path.join(source.dir, `${pageKey}.html`);
       const html = await fs.readFile(htmlPath, 'utf8').catch(() => null);
       if (html === null) {
-        out.skipped.push({ page_key: pageKey, reason: 'no archived HTML beside the meta' });
-        continue;
+        return { candidates: [], skipped: [{ page_key: pageKey, reason: 'no archived HTML beside the meta' }] };
       }
 
       const page = await context.newPage();
-      await page.setContent(html, { waitUntil: 'domcontentloaded' });
-      const article = await page.evaluate((sel) => {
-        const el = document.querySelector(sel);
-        return el ? (el as HTMLElement).innerText : null;
-      }, selector);
-      await page.close();
+      let article: string | null = null;
+      try {
+        await page.setContent(html, { waitUntil: 'domcontentloaded' });
+        article = await page.evaluate((sel) => {
+          const el = document.querySelector(sel);
+          return el ? (el as HTMLElement).innerText : null;
+        }, articleSelector);
+      } finally {
+        await page.close().catch(() => undefined);
+      }
 
       // A selector that stops matching is a silent data-loss bug — the page
       // would still parse, just with nothing in it. Say so instead.
       if (article === null) {
-        out.skipped.push({ page_key: pageKey, reason: `selector "${selector}" matched nothing` });
-        continue;
+        return { candidates: [], skipped: [{ page_key: pageKey, reason: `selector "${articleSelector}" matched nothing` }] };
       }
 
       const text = article.replace(/\s+/g, ' ').trim();
-      out.pages.push({
+      const pageRecord = {
         page_key: pageKey,
         source_url: meta.url,
         content_hash: meta.content_hash,
         article_chars: text.length,
         capture_set: source.set,
-      });
+      };
 
       const seen = new Set<string>();
+      const candidates: Candidate[] = [];
       for (const sentence of sentencesOf(text)) {
         for (const { kind, re } of PATTERNS) {
           for (const m of sentence.match(re) ?? []) {
             const key = `${pageKey}|${kind}|${m.toLowerCase()}|${sentence}`;
             if (seen.has(key)) continue;
             seen.add(key);
-            out.candidates.push({
+            candidates.push({
               kind,
               raw: m.trim(),
               sentence: sentence.length > 400 ? `${sentence.slice(0, 400)}…` : sentence,
@@ -312,6 +323,17 @@ async function main(): Promise<void> {
             });
           }
         }
+      }
+      return { page: pageRecord, candidates, skipped: [] };
+    }
+
+    for (let i = 0; i < sources.length; i += args.concurrency) {
+      const batch = sources.slice(i, i + args.concurrency);
+      const results = await Promise.all(batch.map(extractSource));
+      for (const result of results) {
+        if (result.page) out.pages.push(result.page);
+        out.candidates.push(...result.candidates);
+        out.skipped.push(...result.skipped);
       }
     }
   } finally {

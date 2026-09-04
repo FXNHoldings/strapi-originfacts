@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { mediaUrl, type StrapiAirport, type StrapiAirline } from '@/lib/strapi';
+import { airportPath } from '@/lib/airport-slugs';
 
 const AIRPORTS_PAGE_SIZE = 12;
 const AIRLINES_PAGE_SIZE = 9;
@@ -216,7 +217,7 @@ function SearchBox({
 function AirportCard({ airport }: { airport: StrapiAirport }) {
   return (
     <Link
-      href={`/airports/${airport.iata.toLowerCase()}`}
+      href={airportPath(airport)}
       className="group flex items-center justify-between gap-3 rounded-lg border border-forest-900/10 bg-paper px-4 py-3 transition hover:-translate-y-0.5 hover:border-forest-900/30"
     >
       <div className="min-w-0">

@@ -490,6 +490,14 @@ export async function listAirports() {
   });
 }
 
+export async function listAirportSlugIndex() {
+  return fetchAllPages<Pick<StrapiAirport, 'iata' | 'city' | 'name'>>('airports', {
+    sort: ['name:asc'],
+    fields: ['iata', 'city', 'name'],
+    pageSize: 500,
+  });
+}
+
 export async function getAirport(iata: string) {
   const res = await strapiFetch<ListResponse<StrapiAirport>>('airports', {
     filters: { iata: { $eqi: iata } },

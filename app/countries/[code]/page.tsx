@@ -11,6 +11,7 @@ import {
   type StrapiAirport,
 } from '@/lib/strapi';
 import { SITE_URL, countryFaqs, countryJsonLd, faqJsonLd } from '@/lib/entity-seo';
+import { airportPath } from '@/lib/airport-slugs';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import type { Metadata } from 'next';
 
@@ -271,7 +272,7 @@ function Stat({ label, value }: { label: string; value: string }) {
 function AirportCard({ airport }: { airport: StrapiAirport }) {
   return (
     <Link
-      href={`/airports/${airport.iata.toLowerCase()}`}
+      href={airportPath(airport)}
       className="group flex items-center justify-between gap-3 rounded-[0.3rem] border border-forest-900/10 bg-paper px-4 py-3 transition hover:-translate-y-0.5 hover:border-forest-900/30"
     >
       <div className="min-w-0">

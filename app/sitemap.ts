@@ -9,8 +9,9 @@ import {
 } from '@/lib/strapi';
 import { SECTIONS } from '@/lib/sections';
 import { LEGAL_DOCS } from '@/lib/legal';
-import { AIRLINES_INDEXABLE } from '@/lib/entity-seo';
+import { AIRLINES_INDEXABLE, AIRPORTS_INDEXABLE, airportIsPublished, airportIsSubstantive } from '@/lib/entity-seo';
 import { airlineGuideIsPublished, airlineIsIndexable } from '@/lib/airline-tier';
+import { airportPath } from '@/lib/airport-slugs';
 
 const SITE_URL = 'https://www.originfacts.com';
 
@@ -83,10 +84,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     }));
 
-  // Airport pages are temporarily noindexed and out of the sitemap for the
-  // AdSense review — see AIRPORTS_INDEXABLE in lib/entity-seo.ts.
-  const airportPaths: MetadataRoute.Sitemap = [];
-  void airports;
+  // Reviewed airport guides enter the sitemap individually while the broad
+  // directory hold remains in place.
+  const airportPaths: MetadataRoute.Sitemap = airports
+    .filter((a) => (AIRPORTS_INDEXABLE || airportIsPublished(a.iata)) && airportIsSubstantive(a, coverage.originIatas.has(a.iata)))
+    .map((a) => ({
+      url: `${SITE_URL}${airportPath(a, airports)}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    }));
 
   // /countries/<code> permanently redirects to /destinations/<slug>; the
   // destination pages are already listed, so the redirecting URLs stay out

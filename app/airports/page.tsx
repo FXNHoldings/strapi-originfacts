@@ -4,6 +4,7 @@ import ExpandableDescription from '@/components/ExpandableDescription';
 import { JsonLd } from '@/components/SeoBlocks';
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
 import { HUB_INTROS, HUB_PATHS } from '@/lib/hub-intros';
+import { airportPath } from '@/lib/airport-slugs';
 
 export const revalidate = 60;
 
@@ -28,7 +29,7 @@ export default async function AirportsPage() {
     itemListName: 'Airports',
     items: airports.map((a) => ({
       name: a.city ? `${a.name} (${a.iata}) — ${a.city}` : `${a.name} (${a.iata})`,
-      url: `/airports/${a.iata}`,
+      url: airportPath(a, airports),
       image: mediaUrl(a.heroImage ?? null),
     })),
   });

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { mediaUrl, type StrapiAirport, type AirlineRegion } from '@/lib/strapi';
 import { HUB_AIRPORT_SET } from '@/lib/hub-airports';
+import { airportPath } from '@/lib/airport-slugs';
 
 const REGION_ORDER: AirlineRegion[] = ['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America'];
 const TOP_HUBS_PREVIEW = 12;
@@ -274,7 +275,7 @@ function FilterChip({ label, active, onClick }: { label: string; active: boolean
 function AirportCard({ airport }: { airport: StrapiAirport }) {
   return (
     <Link
-      href={`/airports/${airport.iata.toLowerCase()}`}
+      href={airportPath(airport)}
       className="group flex items-center justify-between gap-3 rounded-[0.3rem] border border-forest-900/10 bg-[#f7f8fa] px-4 py-3 transition hover:-translate-y-0.5 hover:border-forest-900/30"
       data-testid={`airport-card-${airport.iata}`}
     >
@@ -300,7 +301,7 @@ function HubChip({ airport }: { airport: StrapiAirport }) {
   const img = mediaUrl(airport.heroImage ?? null);
   return (
     <Link
-      href={`/airports/${airport.iata.toLowerCase()}`}
+      href={airportPath(airport)}
       className="group flex h-full overflow-hidden rounded-lg border border-forest-900/10 bg-[#f7f8fa] transition hover:-translate-y-0.5 hover:border-forest-900/30 hover:shadow-sm"
       data-testid={`hub-chip-${airport.iata}`}
     >

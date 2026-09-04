@@ -9,6 +9,7 @@ import {
 } from '@/lib/strapi';
 import { SECTIONS } from '@/lib/sections';
 import { LEGAL_DOCS } from '@/lib/legal';
+import { airportPath } from '@/lib/airport-slugs';
 
 export const revalidate = 3600;
 
@@ -166,7 +167,7 @@ export default async function SitemapPage() {
           <ul className="mt-4 grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-3">
             {sortedAirports.map((a) => (
               <li key={a.id}>
-                <Link href={`/airports/${a.iata.toLowerCase()}`} className={linkClass}>
+                <Link href={airportPath(a, sortedAirports)} className={linkClass}>
                   {a.iata.toUpperCase()} — {a.name}
                 </Link>
               </li>

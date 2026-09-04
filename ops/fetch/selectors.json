@@ -23,5 +23,17 @@
   "westjet": {
     "article": "main",
     "note": "85%. .cmp-container scored 100%, which is the whole page including nav — coverage that high means the selector is not isolating anything."
+  },
+  "malaysia-airlines": {
+    "article": "main",
+    "note": "Auto-derived from archived 2026-09-03 captures; matched 2/2 usable page(s), average body coverage 59%. Review before promotion."
+  },
+  "tap-portugal": {
+    "article": "main",
+    "note": "Auto-derived from archived 2026-09-03 captures; matched 2/2 usable page(s), average body coverage 83%. Review before promotion."
+  },
+  "american-airlines": {
+    "article": "[role=\"main\"]",
+    "note": "Auto-derived from archived 2026-09-03 captures; matched 6/6 usable page(s), average body coverage 93%. Review before promotion."
   }
 }

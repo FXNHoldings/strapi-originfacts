@@ -5,6 +5,7 @@ import { flightSearchUrl } from '@/lib/affiliate';
 import PriceCalendar from '@/components/PriceCalendar';
 import ScheduleWidget from '@/components/ScheduleWidget';
 import ExpandableDescription from '@/components/ExpandableDescription';
+import { airportPath } from '@/lib/airport-slugs';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -270,7 +271,7 @@ function CarrierCard({
 function AirportLink({ airport }: { airport: { iata: string; name: string; city?: string } }) {
   return (
     <Link
-      href={`/airports/${airport.iata.toLowerCase()}`}
+      href={airportPath(airport)}
       className="group flex items-center justify-between rounded-[0.3rem] border border-forest-900/10 bg-paper p-5 transition hover:border-forest-900/30"
     >
       <div>
