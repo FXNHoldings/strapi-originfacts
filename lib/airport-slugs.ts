@@ -4,6 +4,8 @@ const PREFERRED_AIRPORT_SLUGS: Record<string, string> = {
   EZE: 'buenos-aires',
   GIG: 'rio-de-janeiro',
   GRU: 'sao-paulo',
+  LIM: 'lima',
+  SCL: 'santiago',
   SYD: 'sydney',
 };
 

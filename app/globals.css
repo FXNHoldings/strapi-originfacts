@@ -561,6 +561,12 @@ html.flight-search-active #tpwl-tickets {
   color: #014fd3;
 }
 
+[data-testid="popular-hotel-cities"] h5 {
+  color: #ffffff !important;
+  font-size: 1.3rem;
+  font-weight: 600 !important;
+}
+
 /* Article body — Outfit body text at 18px / 300, keep headings bold */
 .prose-article {
   @apply prose prose-stone
@@ -570,7 +576,7 @@ html.flight-search-active #tpwl-tickets {
          prose-a:text-primary-emphasis prose-a:no-underline hover:prose-a:text-primary-highlight hover:prose-a:underline
          prose-strong:font-medium prose-strong:text-ink
          prose-blockquote:border-l-sand-500 prose-blockquote:font-display prose-blockquote:font-normal prose-blockquote:text-forest-900 prose-blockquote:not-italic;
-  max-width: 800px;
+  max-width: 100%;
   margin-left: 0;
   margin-right: 0;
 }

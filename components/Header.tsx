@@ -123,7 +123,7 @@ export default function Header() {
                 data-testid="nav-item-articles"
               >
                 <Link
-                  href="/articles"
+                  href="/all-articles"
                   className="inline-flex items-center gap-1.5 px-3 py-2 text-[#000000] transition-colors hover:text-[rgb(1,79,211)]"
                   data-testid="nav-articles"
                   aria-haspopup="true"

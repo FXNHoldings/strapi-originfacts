@@ -77,7 +77,7 @@ export default async function HomePage() {
     publisher: { '@id': ORG_ID },
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://www.originfacts.com/articles?q={search_term_string}',
+      target: 'https://www.originfacts.com/all-articles?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
   };

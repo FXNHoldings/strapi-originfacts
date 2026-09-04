@@ -52,7 +52,7 @@ export default function TagsBar() {
             {TAGS.map((tag, i) => (
               <div key={tag} className="relative flex shrink-0 items-center">
                 <Link
-                  href={`/articles?q=${encodeURIComponent(tag)}`}
+                  href={`/all-articles?q=${encodeURIComponent(tag)}`}
                   className="font-urbanist whitespace-nowrap pl-5 pr-[37px] text-[14px] font-medium leading-10 text-[#080808] transition hover:text-primary-emphasis"
                 >
                   #{tag}

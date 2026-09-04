@@ -120,6 +120,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             })();`,
           }}
         />
+        <script
+          async
+          defer
+          src="https://widget.getyourguide.com/dist/pa.umd.production.min.js"
+          data-gyg-partner-id="H8Y3KHZ"
+        />
       </head>
       <body className={`${inter.variable} ${urbanist.variable} ${outfit.variable} ${jakarta.variable} ${figtree.variable} min-h-screen flex flex-col font-sans font-normal grain`} data-testid="app-shell">
         {/* Impact.com site verification — raw tag (React 19 hoists it into <head>).

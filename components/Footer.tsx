@@ -104,7 +104,7 @@ export default function Footer() {
           <ul className="mt-3 space-y-2 text-sm text-slate-300" data-testid="footer-company">
             <li><Link href="/" className="transition-colors hover:text-sky-300">Home</Link></li>
             <li><Link href="/about" className="transition-colors hover:text-sky-300">About</Link></li>
-            <li><Link href="/articles" className="transition-colors hover:text-sky-300">Blog</Link></li>
+            <li><Link href="/all-articles" className="transition-colors hover:text-sky-300">Blog</Link></li>
             <li><Link href="/sitemap" className="transition-colors hover:text-sky-300">Site Map</Link></li>
             <li><Link href="/contact" className="transition-colors hover:text-sky-300">Contact</Link></li>
           </ul>

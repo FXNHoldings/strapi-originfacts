@@ -30,6 +30,9 @@ import type { Metadata } from 'next';
 export const revalidate = 60;
 
 const CONTINENTS = ['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America'] as const;
+const GYG_EXCLUDED_TOUR_IDS_BY_DESTINATION: Record<string, string> = {
+  bangkok: '1457595',
+};
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -69,6 +72,7 @@ export default async function DestinationPage({ params }: Props) {
   ]);
 
   const hero = mediaUrl(destination.heroImage ?? null);
+  const activityQuery = buildActivityWidgetQuery(destination, routes);
 
   // Editor-managed FAQs (Strapi json field), appended below whichever layout
   // renders. FaqSection + faqJsonLd both no-op when < 2 real Q&As survive
@@ -121,12 +125,12 @@ export default async function DestinationPage({ params }: Props) {
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-forest-950/10" />
         <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-14 text-sand-100">
-          <div className="text-xs uppercase tracking-widest opacity-80">
+          <div className="text-xs uppercase tracking-widest text-white/80">
             {destination.type ?? 'Destination'}{destination.countryCode ? ` · ${destination.countryCode}` : ''}
           </div>
-          <h1 className="editorial-h mt-3 text-3xl font-bold sm:text-4xl">{destination.name}</h1>
+          <h1 className="editorial-h mt-3 text-3xl font-bold !text-[#ffffff] sm:text-4xl">{destination.name}</h1>
           {destination.description && (
-            <p className="mt-4 max-w-2xl text-lg opacity-90">{destination.description}</p>
+            <p className="mt-4 max-w-2xl text-lg text-white/90">{destination.description}</p>
           )}
         </div>
       </section>
@@ -146,6 +150,12 @@ export default async function DestinationPage({ params }: Props) {
           </div>
         )}
       </div>
+
+      {destination.type === 'city' && (
+        <div className="mx-auto max-w-7xl px-6">
+          <GetYourGuideActivityWidget destination={destination} query={activityQuery} />
+        </div>
+      )}
 
       {/* Sponsored search CTA — only when we have a representative city IATA */}
       {(() => {
@@ -190,6 +200,79 @@ export default async function DestinationPage({ params }: Props) {
       <div className="pb-20" />
     </div>
   );
+}
+
+function GetYourGuideActivityWidget({
+  destination,
+  query,
+}: {
+  destination: StrapiDestination;
+  query: string;
+}) {
+  const campaign = `originfacts-destination-${destination.slug}`.slice(0, 80);
+  const excludedTourIds = GYG_EXCLUDED_TOUR_IDS_BY_DESTINATION[destination.slug];
+
+  return (
+    <section
+      className="my-12 overflow-hidden rounded-2xl border border-forest-900/10 bg-gradient-to-br from-white via-sand-50 to-sky-50 p-6 shadow-sm sm:p-8"
+      data-nosnippet
+      data-testid="destination-activity-widget"
+    >
+      <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-forest-700/70">
+            Sponsored activities
+          </div>
+          <h2 className="editorial-h mt-3 text-3xl font-bold text-forest-950">
+            Things to do in {destination.name}
+          </h2>
+          <p className="mt-4 text-base leading-7 text-forest-900/70">
+            Compare tours, tickets, day trips and local experiences related to {destination.name}.
+            The activity feed is supplied by GetYourGuide and updates based on live availability.
+          </p>
+          <p className="mt-3 text-sm leading-6 text-forest-900/55">
+            Origin Facts may earn a commission when you book through this widget, at no extra cost to you.
+          </p>
+        </div>
+
+        <div className="min-h-[360px] rounded-xl border border-white/70 bg-white/80 p-4 shadow-inner">
+          <div
+            data-gyg-href="https://widget.getyourguide.com/default/activities.frame"
+            data-gyg-locale-code="en-US"
+            data-gyg-locale-currency="USD"
+            data-gyg-widget="activities"
+            data-gyg-number-of-items="3"
+            data-gyg-partner-id="H8Y3KHZ"
+            data-gyg-campaign={campaign}
+            data-gyg-cmp={campaign}
+            data-gyg-q={query}
+            data-gyg-excluded-tour-ids={excludedTourIds}
+          >
+            <span className="text-sm text-forest-900/55">
+              Powered by{' '}
+              <a
+                target="_blank"
+                rel="sponsored nofollow noopener noreferrer"
+                href={`https://www.getyourguide.com/s/?q=${encodeURIComponent(query)}`}
+                className="font-medium text-forest-800 underline underline-offset-4"
+              >
+                GetYourGuide
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function buildActivityWidgetQuery(
+  destination: Pick<StrapiDestination, 'name' | 'countryCode'>,
+  routes: Awaited<ReturnType<typeof listRoutesToDestination>>,
+) {
+  const country = routes.find((route) => route.destination?.country)?.destination?.country;
+  const countryHint = country || destination.countryCode;
+  return [destination.name, countryHint].filter(Boolean).join(', ');
 }
 
 /* -------------------------------------------------------------------------- */

@@ -5,10 +5,12 @@ import { getRouteFacts } from '@/lib/route-facts';
 import { getAirlineFacts } from '@/lib/airline-facts';
 import AirlineDirectory from '@/components/AirlineDirectory';
 import Tier1AirlineCarousel, { type Tier1GuideSlide } from '@/components/Tier1AirlineCarousel';
-import ExpandableDescription from '@/components/ExpandableDescription';
+import CategoryDescription from '@/components/CategoryDescription';
 import { JsonLd } from '@/components/SeoBlocks';
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
 import { HUB_INTROS, HUB_PATHS } from '@/lib/hub-intros';
+import { SECTIONS } from '@/lib/sections';
+import Link from 'next/link';
 
 export const revalidate = 60;
 
@@ -111,33 +113,55 @@ export default async function AirlinesPage() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16" data-testid="airlines-page">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-6 py-12 sm:py-16" data-testid="airlines-page">
       <JsonLd data={breadcrumbJsonLd([{ name: HUB.name, url: PATH }])} />
       <JsonLd data={collectionJsonLd} />
 
-      {/* Redesigned Hero Header Section */}
-      <header className="relative overflow-hidden rounded-3xl border border-forest-900/10 bg-gradient-to-br from-forest-900/[0.04] via-emerald-900/[0.02] to-sand-100/50 p-8 sm:p-12 shadow-sm">
-        <div className="relative z-10 max-w-4xl">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-forest-900 px-3 py-1 font-mono text-xs font-bold text-sand-100 shadow-xs">
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
-              Global Airline Directory
-            </span>
-            <span className="rounded-full bg-emerald-700/10 px-3 py-1 font-mono text-xs font-semibold text-emerald-800 border border-emerald-700/20">
-              Verified Policy Database
-            </span>
+      <header data-testid="airlines-header">
+        <div className="grid items-start gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12">
+          <div className="min-w-0">
+            <h1 className="font-urbanist text-5xl font-bold leading-none tracking-tight text-forest-950 sm:text-6xl">
+              Airlines
+            </h1>
+            <CategoryDescription text={HUB.intro} />
           </div>
-
-          <h1 className="editorial-h mt-4 text-3xl sm:text-5xl font-bold tracking-tight text-forest-900 leading-[1.15]">
-            Airline Policy Directory & Carrier Guides
-          </h1>
-
-          <div className="mt-4 text-base sm:text-lg leading-relaxed text-forest-900/80">
-            <ExpandableDescription text={HUB.intro} />
+          <div
+            className="flex h-32 w-32 flex-col items-center justify-center rounded-[0.3rem] bg-[#f1f5f9] text-forest-950"
+            data-testid="airlines-count"
+          >
+            <span className="font-urbanist text-4xl font-bold leading-none">{airlines.length.toLocaleString()}</span>
+            <span className="mt-2 font-urbanist text-[11px] font-bold uppercase tracking-widest text-forest-900/70">
+              Airlines
+            </span>
           </div>
         </div>
+
+        <nav
+          className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-y border-forest-900/15 py-4 font-urbanist text-[14px] font-bold uppercase tracking-widest text-forest-950"
+          aria-label="Categories"
+          data-testid="airlines-subnav"
+        >
+          {[
+            ...SECTIONS.filter((s) => s.slug !== 'destinations').map((s) => ({
+              href: `/category/${s.slug}`,
+              slug: s.slug,
+              name: s.title,
+            })),
+            { href: '/airlines', slug: 'airlines', name: 'Airlines' },
+            { href: '/airports', slug: 'airports', name: 'Airports' },
+          ].map((item) => (
+            <Link
+              key={item.slug}
+              href={item.href}
+              className={`transition hover:text-primary-emphasis ${
+                item.slug === 'airlines' ? 'text-primary-emphasis' : ''
+              }`}
+              aria-current={item.slug === 'airlines' ? 'page' : undefined}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
       </header>
 
       {/* Auto-sliding & Tabbed Featured Policy Guides section */}
@@ -148,4 +172,3 @@ export default async function AirlinesPage() {
     </div>
   );
 }
-

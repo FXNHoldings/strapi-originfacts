@@ -12,6 +12,7 @@
  */
 
 export const DESCRIPTION_MAX = 155;
+export const TITLE_MAX = 60;
 const TITLE_WARN = 60;
 const DESCRIPTION_WARN = 160;
 
@@ -28,6 +29,22 @@ export function clampDescription(input?: string | null, max = DESCRIPTION_MAX): 
   const cut = slice.lastIndexOf(' ');
   return `${(cut > 0 ? slice.slice(0, cut) : slice).replace(/[,;:.\s]+$/, '')}…`;
 }
+
+export function compactTitle(input?: string | null, max = TITLE_MAX): string {
+  const clean = (input ?? '').replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+
+  const separators = [' | ', ': ', ' — ', ' - '];
+  for (const separator of separators) {
+    const [first] = clean.split(separator);
+    if (first && first.length >= 24 && first.length <= max) return first;
+  }
+
+  const slice = clean.slice(0, max - 1);
+  const cut = slice.lastIndexOf(' ');
+  return `${(cut > 0 ? slice.slice(0, cut) : slice).replace(/[,;:.\s]+$/, '')}…`;
+}
+
 
 /**
  * Logs a console warning when source copy exceeds SERP-safe lengths — shows up

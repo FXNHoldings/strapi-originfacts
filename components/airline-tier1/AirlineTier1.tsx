@@ -286,6 +286,8 @@ export default function AirlineTier1({
                 <DerivedModuleView key={r.id} module={r.derived} showContactCards={previewRedesign} />
               ) : r.sourced?.isPublished ? (
                 <SourcedModuleView key={r.id} module={r.sourced} hideResearchNotes={previewRedesign} />
+              ) : r.id === 'fares' ? (
+                <FareFallbackModule key="fares" airline={airline} airlineRef={airlineRef} />
               ) : (
                 <PendingModule
                   key={r.id}
@@ -1405,6 +1407,72 @@ function ContactIcon({ label }: { label: string }) {
     return <svg {...common}><path d="M4 5h16v11H8l-4 4V5Z" /><path d="M8 9h8M8 12h5" /></svg>;
   }
   return <svg {...common}><path d="M6 3h9l3 3v15H6V3Z" /><path d="M14 3v4h4M9 12h6M9 16h6" /></svg>;
+}
+
+function FareFallbackModule({
+  airline,
+  airlineRef,
+}: {
+  airline: StrapiAirline;
+  airlineRef?: AirlineRef | null;
+}) {
+  const officialHref = airline.website ? normaliseExternalUrl(airline.website) : null;
+  const conditionsHref = airlineRef?.conditionsOfCarriageUrl
+    ? normaliseExternalUrl(airlineRef.conditionsOfCarriageUrl)
+    : null;
+  const sourceLinks = [
+    officialHref ? { label: `${airline.name} official website`, href: officialHref } : null,
+    conditionsHref ? { label: `${airline.name} conditions of carriage`, href: conditionsHref } : null,
+  ].filter(Boolean) as { label: string; href: string }[];
+
+  return (
+    <section className={`${s.module} ${s.fareFallback}`} id="fares" data-testid="t1-module-fares">
+      <div className={s.moduleHead}>
+        <h3>What the cheapest fare includes</h3>
+        <span className={`${s.stamp} ${s.stampPending}`}>Check before booking</span>
+      </div>
+      <p className={s.lede}>
+        The lowest {airline.name} fare can change by route, market, cabin, sale period and booking channel. Use this
+        checklist before paying, especially when comparing the headline price with a fare that includes bags or seat
+        choice.
+      </p>
+      <div className={s.fareChecklist}>
+        {[
+          ['Cabin bag', 'Confirm the exact size, weight and number of carry-on items included with the fare.'],
+          ['Checked bag', 'Check whether a checked bag is included or must be added during booking.'],
+          ['Seat choice', 'Look for advance seat-selection fees, family seating rules and free check-in-seat options.'],
+          ['Changes and refunds', 'Compare change fees, fare difference rules, cancellation credits and refund limits.'],
+        ].map(([label, text]) => (
+          <div key={label} className={s.fareCheckItem}>
+            <strong>{label}</strong>
+            <span>{text}</span>
+          </div>
+        ))}
+      </div>
+      <p>
+        When two fares look close in price, add the realistic extras first: one checked bag, preferred or adjacent seats,
+        payment fees, and any change flexibility you are likely to need. The cheaper fare is not always cheaper once the
+        trip is built the way you will actually travel.
+      </p>
+      {sourceLinks.length > 0 && (
+        <div className={s.src}>
+          <strong>Where to confirm</strong>
+          {sourceLinks.map((src, i) => (
+            <span key={src.href}>
+              <a href={src.href} target="_blank" rel="noopener noreferrer nofollow">
+                {src.label}
+              </a>
+              {i < sourceLinks.length - 1 ? ' · ' : ''}
+            </span>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function normaliseExternalUrl(value: string): string {
+  return /^https?:\/\//i.test(value) ? value : `https://${value}`;
 }
 
 /**

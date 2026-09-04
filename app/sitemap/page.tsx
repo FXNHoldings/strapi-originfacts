@@ -58,7 +58,7 @@ export default async function SitemapPage() {
             <li><Link href="/" className={linkClass}>Home</Link></li>
             <li><Link href="/about" className={linkClass}>About</Link></li>
             <li><Link href="/contact" className={linkClass}>Contact</Link></li>
-            <li><Link href="/articles" className={linkClass}>All articles</Link></li>
+            <li><Link href="/all-articles" className={linkClass}>All articles</Link></li>
           </ul>
         </section>
 

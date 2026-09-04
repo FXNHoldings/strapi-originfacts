@@ -11,7 +11,6 @@ import {
   mediaUrl,
 } from '@/lib/strapi';
 import ArticleCard from '@/components/ArticleCard';
-import AdSlot from '@/components/AdSlot';
 import ShareButtons from '@/components/ShareButtons';
 import BlogSidebar from '@/components/BlogSidebar';
 import RelatedPostsSlider from '@/components/RelatedPostsSlider';
@@ -20,7 +19,7 @@ import { DEFAULT_OG_IMAGE, faqJsonLd, howToJsonLd, normalizeFaqs, normalizeSteps
 import { JsonLd, FaqSection, HowToSteps } from '@/components/SeoBlocks';
 import KeyFacts from '@/components/KeyFacts';
 import TakeadsTravelOffers from '@/components/TakeadsTravelOffers';
-import { clampDescription, warnIfLong } from '@/lib/seo';
+import { clampDescription, compactTitle, warnIfLong } from '@/lib/seo';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -32,14 +31,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const a = await getArticle(slug);
   if (!a) return { title: 'Not found' };
   const ogImg = mediaUrl(a.ogImage ?? a.coverImage ?? null);
-  warnIfLong(`/articles/${a.slug}`, { title: a.seoTitle || a.title, description: a.seoDescription || a.excerpt });
+  const metaTitle = compactTitle(a.seoTitle || a.title);
+  const metaDescription = clampDescription(a.seoDescription || a.excerpt);
+  warnIfLong(`/articles/${a.slug}`, { title: metaTitle, description: metaDescription });
   return {
-    title: a.seoTitle || a.title,
-    description: clampDescription(a.seoDescription || a.excerpt),
+    title: metaTitle,
+    description: metaDescription,
     alternates: { canonical: `/articles/${a.slug}` },
     openGraph: {
-      title: a.seoTitle || a.title,
-      description: a.seoDescription || a.excerpt,
+      title: metaTitle,
+      description: metaDescription,
       type: 'article',
       publishedTime: a.publishedAt,
       modifiedTime: a.updatedAt,
@@ -337,7 +338,8 @@ export default async function ArticlePage({ params }: Props) {
 
             <HowToSteps steps={steps} />
 
-            <AdSlot slot="0000000000" className="mt-12" />
+            {article.category?.slug === 'hotels' && <BookingHotelBanner articleSlug={article.slug} />}
+            {article.category?.slug === 'flights' && <FlightBookingBanners articleSlug={article.slug} />}
 
             <CommentsSection slug={article.slug} />
 
@@ -397,6 +399,109 @@ export default async function ArticlePage({ params }: Props) {
         </section>
       )}
     </article>
+  );
+}
+
+function BookingHotelBanner({ articleSlug }: { articleSlug: string }) {
+  const href = `https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc&s=${encodeURIComponent(
+    `originfacts_article_${articleSlug}_booking_com_banner`,
+  )}`;
+
+  return (
+    <aside
+      className="mt-12 overflow-hidden rounded-[0.4rem] border border-[#003b95]/15 bg-gradient-to-r from-[#003b95] via-[#0057b8] to-[#febb02] p-[1px]"
+      data-testid="booking-hotel-banner"
+      aria-label="Sponsored Booking.com hotel offer"
+    >
+      <div className="flex flex-col gap-4 rounded-[0.35rem] bg-white px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <p className="font-urbanist text-[10px] font-bold uppercase tracking-[0.2em] text-[#003b95]/70">
+            Sponsored · Booking.com
+          </p>
+          <p className="mt-1 font-urbanist text-lg font-bold leading-snug text-forest-950">
+            Compare stays for your next trip
+          </p>
+          <p className="mt-1 max-w-2xl text-sm leading-6 text-forest-900/65">
+            Search hotels, apartments and flexible stays before you lock in the final itinerary.
+          </p>
+        </div>
+        <a
+          href={href}
+          target="_blank"
+          rel="sponsored nofollow noopener noreferrer"
+          className="inline-flex shrink-0 items-center justify-center rounded-[0.3rem] bg-[#003b95] px-5 py-2.5 font-urbanist text-sm font-bold text-white shadow-sm transition hover:bg-[#002f78]"
+        >
+          Search Booking.com <span aria-hidden className="ml-2">→</span>
+        </a>
+      </div>
+    </aside>
+  );
+}
+
+function FlightBookingBanners({ articleSlug }: { articleSlug: string }) {
+  const offers = [
+    {
+      name: 'Kiwi.com',
+      href: `https://tatrck.com/h/0Hu30_OZ0bgZ?model=cpa&s=${encodeURIComponent(
+        `originfacts_article_${articleSlug}_kiwi_com_banner`,
+      )}`,
+      title: 'Check flexible flight combinations',
+      description: 'Compare one-way, return and self-transfer options when price or routing matters most.',
+      cta: 'Search Kiwi.com',
+      theme: 'from-[#00a991] via-[#00bfa5] to-[#d7fff7]',
+      button: 'bg-[#007f71] hover:bg-[#006b60]',
+      label: 'text-[#007f71]/75',
+    },
+    {
+      name: 'Trip.com',
+      href: `https://www.trip.com/?utm_source=originfacts&utm_medium=affiliate_banner&utm_campaign=${encodeURIComponent(
+        `article_${articleSlug}_trip_com_banner`,
+      )}`,
+      title: 'Compare flights with global trip tools',
+      description: 'Look across fares, baggage choices and travel extras before choosing the ticket.',
+      cta: 'Search Trip.com',
+      theme: 'from-[#1d4ed8] via-[#2563eb] to-[#bcd7ff]',
+      button: 'bg-[#1d4ed8] hover:bg-[#1e40af]',
+      label: 'text-[#1d4ed8]/75',
+    },
+  ];
+
+  return (
+    <aside
+      className="mt-12 grid gap-4 sm:grid-cols-2"
+      data-testid="flight-affiliate-banners"
+      aria-label="Sponsored flight booking offers"
+    >
+      {offers.map((offer) => (
+        <div
+          key={offer.name}
+          className={`overflow-hidden rounded-[0.4rem] border border-forest-900/10 bg-gradient-to-r ${offer.theme} p-[1px]`}
+          data-testid={`flight-affiliate-banner-${offer.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+        >
+          <div className="flex h-full flex-col justify-between gap-4 rounded-[0.35rem] bg-white px-5 py-4">
+            <div>
+              <p className={`font-urbanist text-[10px] font-bold uppercase tracking-[0.2em] ${offer.label}`}>
+                Sponsored · {offer.name}
+              </p>
+              <p className="mt-1 font-urbanist text-lg font-bold leading-snug text-forest-950">
+                {offer.title}
+              </p>
+              <p className="mt-1 text-sm leading-6 text-forest-900/65">
+                {offer.description}
+              </p>
+            </div>
+            <a
+              href={offer.href}
+              target="_blank"
+              rel="sponsored nofollow noopener noreferrer"
+              className={`inline-flex w-fit items-center justify-center rounded-[0.3rem] px-5 py-2.5 font-urbanist text-sm font-bold text-white shadow-sm transition ${offer.button}`}
+            >
+              {offer.cta} <span aria-hidden className="ml-2">→</span>
+            </a>
+          </div>
+        </div>
+      ))}
+    </aside>
   );
 }
 

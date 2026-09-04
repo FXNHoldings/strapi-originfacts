@@ -469,6 +469,36 @@
   border: 1px solid var(--rule);
 }
 
+.fareFallback {
+  background:
+    linear-gradient(135deg, rgba(245, 249, 254, 0.96), rgba(255, 255, 255, 0.98) 58%, rgba(255, 251, 235, 0.72));
+  border-color: #cbd8ea;
+}
+.fareChecklist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 22px 0;
+}
+.fareCheckItem {
+  min-height: 116px;
+  border: 1px solid var(--rule);
+  background: rgba(255, 255, 255, 0.82);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.fareCheckItem strong {
+  color: var(--ink);
+  font-size: 15px;
+}
+.fareCheckItem span {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
 /* sources */
 .src {
   margin-top: 24px;
@@ -558,6 +588,7 @@
   .rail { position: static; }
   .plate { grid-template-columns: 1fr; align-items: start; }
   .module { padding: 26px 20px 28px; }
+  .fareChecklist { grid-template-columns: 1fr; }
   .sector { grid-template-columns: 1fr; }
   .sectorPlot { border-left: 0; border-top: 1px solid var(--rule); }
   .sectorText { padding: 22px 20px; }
@@ -1114,6 +1145,4 @@
   font-size: 11px;
   color: var(--slate);
 }
-
-
 

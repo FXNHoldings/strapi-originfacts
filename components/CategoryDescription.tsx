@@ -4,11 +4,17 @@ import { useState } from 'react';
 
 const PREVIEW_WORDS = 30;
 
-export default function CategoryDescription({ text }: { text: string }) {
+export default function CategoryDescription({
+  text,
+  previewWords = PREVIEW_WORDS,
+}: {
+  text: string;
+  previewWords?: number;
+}) {
   const [expanded, setExpanded] = useState(false);
   const words = text.split(/\s+/).filter(Boolean);
-  const isTruncatable = words.length > PREVIEW_WORDS;
-  const preview = isTruncatable ? words.slice(0, PREVIEW_WORDS).join(' ') : text;
+  const isTruncatable = words.length > previewWords;
+  const preview = isTruncatable ? words.slice(0, previewWords).join(' ') : text;
 
   return (
     <div className="mt-6 max-w-[80%]" data-testid="category-description">
