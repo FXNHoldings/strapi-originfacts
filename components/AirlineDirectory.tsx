@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { mediaUrl, type StrapiAirline, type AirlineRegion, type AirlineType } from '@/lib/strapi';
 
@@ -50,7 +51,9 @@ export default function AirlineDirectory({
   airlines: StrapiAirline[];
   publishedSlugs?: string[];
 }) {
-  const [query, setQuery] = useState('');
+  const searchParams = useSearchParams();
+  const initialCountry = searchParams.get('country')?.trim() ?? '';
+  const [query, setQuery] = useState(initialCountry);
   const [activeType, setActiveType] = useState<AirlineType | null>(null);
   const [activeRegion, setActiveRegion] = useState<AirlineRegion | null>(null);
   const [activeLetter, setActiveLetter] = useState<string | null>(null);

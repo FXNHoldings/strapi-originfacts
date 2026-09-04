@@ -7,6 +7,7 @@ import { HUB_INTROS, HUB_PATHS } from '@/lib/hub-intros';
 import { airportPath } from '@/lib/airport-slugs';
 import { SECTIONS } from '@/lib/sections';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export const revalidate = 60;
 
@@ -88,7 +89,9 @@ export default async function AirportsPage() {
         </nav>
       </header>
 
-      <AirportDirectory airports={airports} />
+      <Suspense>
+        <AirportDirectory airports={airports} />
+      </Suspense>
     </div>
   );
 }

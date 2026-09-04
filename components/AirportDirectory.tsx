@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { mediaUrl, type StrapiAirport, type AirlineRegion } from '@/lib/strapi';
 import { HUB_AIRPORT_SET } from '@/lib/hub-airports';
 import { airportPath } from '@/lib/airport-slugs';
@@ -33,7 +34,9 @@ function flagEmoji(code?: string): string {
 }
 
 export default function AirportDirectory({ airports }: { airports: StrapiAirport[] }) {
-  const [query, setQuery] = useState('');
+  const searchParams = useSearchParams();
+  const initialCountry = searchParams.get('country')?.trim() ?? '';
+  const [query, setQuery] = useState(initialCountry);
   const [activeRegion, setActiveRegion] = useState<AirlineRegion | null>(null);
   const [activeLetter, setActiveLetter] = useState<string | null>(null);
   const [onlyHubs, setOnlyHubs] = useState(false);

@@ -6,7 +6,7 @@ import { mediaUrl, type StrapiAirport, type StrapiAirline } from '@/lib/strapi';
 import { airportPath } from '@/lib/airport-slugs';
 
 const AIRPORTS_PAGE_SIZE = 12;
-const AIRLINES_PAGE_SIZE = 9;
+const AIRLINES_PAGE_SIZE = 12;
 
 export default function CountryDetailSections({
   countryName,
@@ -69,7 +69,7 @@ export default function CountryDetailSections({
             No airports match “{airportQuery}”.
           </p>
         ) : (
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 divide-y divide-forest-900/10 border-y border-forest-900/10">
             {filteredAirports.slice(0, AIRPORTS_PAGE_SIZE).map((a) => (
               <AirportCard key={a.id} airport={a} />
             ))}
@@ -78,7 +78,7 @@ export default function CountryDetailSections({
         {filteredAirports.length > AIRPORTS_PAGE_SIZE && (
           <div className="mt-6">
             <Link
-              href="/airports"
+              href={`/airports?country=${encodeURIComponent(countryName)}`}
               className="text-sm font-medium text-forest-700 hover:underline"
               data-testid="country-airports-view-all"
             >
@@ -117,28 +117,28 @@ export default function CountryDetailSections({
             No airlines match “{airlineQuery}”.
           </p>
         ) : (
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {filteredAirlines.slice(0, AIRLINES_PAGE_SIZE).map((al) => {
               const logo = mediaUrl(al.logo ?? null);
               return (
                 <Link
                   key={al.id}
                   href={`/airlines/${al.slug}`}
-                  className="group flex items-center gap-12 rounded-lg border border-forest-900/10 bg-paper p-4 transition hover:-translate-y-0.5 hover:border-forest-900/30 hover:shadow-sm"
+                  className="group flex min-h-[190px] flex-col rounded-lg border border-forest-900/10 bg-paper p-4 transition hover:-translate-y-0.5 hover:border-forest-900/30 hover:shadow-sm"
                 >
-                  <div className="flex h-28 w-28 flex-none items-center justify-center overflow-hidden rounded-lg">
+                  <div className="flex h-24 w-full flex-none items-center justify-center overflow-hidden rounded-lg bg-white">
                     {logo ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={logo} alt={al.name} className="h-full w-full object-contain" />
+                      <img src={logo} alt={al.name} className="h-full w-full object-contain p-3" />
                     ) : (
                       <span className="font-urbanist text-sm font-bold text-forest-900/60">
                         {(al.iataCode || al.name).slice(0, 3).toUpperCase()}
                       </span>
                     )}
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <div className="truncate font-urbanist text-base font-bold text-forest-900 group-hover:text-forest-700">
+                  <div className="mt-4 min-w-0 flex-1">
+                    <div className="flex min-w-0 items-start justify-between gap-2">
+                      <div className="line-clamp-2 font-urbanist text-base font-bold leading-snug text-forest-900 group-hover:text-forest-700">
                         {al.name}
                       </div>
                       {al.iataCode && (
@@ -147,7 +147,7 @@ export default function CountryDetailSections({
                         </span>
                       )}
                     </div>
-                    <div className="mt-1 truncate text-xs text-forest-900/60">
+                    <div className="mt-2 line-clamp-2 text-xs text-forest-900/60">
                       {[al.city, al.type].filter(Boolean).join(' · ')}
                     </div>
                   </div>
@@ -159,7 +159,7 @@ export default function CountryDetailSections({
         {filteredAirlines.length > AIRLINES_PAGE_SIZE && (
           <div className="mt-6">
             <Link
-              href="/airlines"
+              href={`/airlines?country=${encodeURIComponent(countryName)}`}
               className="text-sm font-medium text-forest-700 hover:underline"
               data-testid="country-airlines-view-all"
             >
@@ -218,18 +218,21 @@ function AirportCard({ airport }: { airport: StrapiAirport }) {
   return (
     <Link
       href={airportPath(airport)}
-      className="group flex items-center justify-between gap-3 rounded-lg border border-forest-900/10 bg-paper px-4 py-3 transition hover:-translate-y-0.5 hover:border-forest-900/30"
+      className="group grid gap-3 py-4 transition hover:bg-forest-900/[0.025] sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center"
     >
       <div className="min-w-0">
-        <div className="flex items-center gap-2">
-          <span className="flex-none rounded bg-forest-900 px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider text-sand-100">
-            {airport.iata}
-          </span>
-          <div className="truncate font-urbanist text-base font-bold text-forest-900 group-hover:text-forest-700">
-            {airport.city || airport.name}
-          </div>
-        </div>
-        <div className="mt-1 truncate text-xs text-forest-900/60">{airport.name}</div>
+        <h3 className="truncate font-urbanist text-base font-bold leading-snug text-forest-900 group-hover:text-forest-700">
+          {airport.name}
+        </h3>
+        <p className="mt-1 truncate text-xs text-forest-900/55">
+          {[airport.city, airport.icao].filter(Boolean).join(' · ')}
+        </p>
+      </div>
+      <div className="flex items-center gap-3 text-xs">
+        <span className="font-mono font-bold tracking-wider text-forest-900">{airport.iata}</span>
+        <span className="text-forest-900/30" aria-hidden>
+          →
+        </span>
       </div>
     </Link>
   );

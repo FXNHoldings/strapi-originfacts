@@ -11,6 +11,7 @@ import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
 import { HUB_INTROS, HUB_PATHS } from '@/lib/hub-intros';
 import { SECTIONS } from '@/lib/sections';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export const revalidate = 60;
 
@@ -168,7 +169,9 @@ export default async function AirlinesPage() {
       <Tier1AirlineCarousel slides={carouselSlides} />
 
       {/* Main Directory & Search Grid */}
-      <AirlineDirectory airlines={airlines} publishedSlugs={Array.from(PUBLISHED_AIRLINE_GUIDES)} />
+      <Suspense>
+        <AirlineDirectory airlines={airlines} publishedSlugs={Array.from(PUBLISHED_AIRLINE_GUIDES)} />
+      </Suspense>
     </div>
   );
 }

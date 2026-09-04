@@ -17,6 +17,9 @@
   .prose-article h2, .prose-article h3 {
     scroll-margin-top: 6rem;
   }
+  .leading-relaxed {
+    max-width: 100%;
+  }
   /* Default body text & paragraphs — Inter */
   body, p {
     font-family: var(--font-inter), 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
