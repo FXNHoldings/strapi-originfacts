@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { Fragment } from 'react';
 import Link from 'next/link';
 import {
   getDestination,
@@ -59,9 +60,16 @@ export default async function DestinationPage({ params }: Props) {
   const isContinent =
     destination.type === 'region' && (CONTINENTS as readonly string[]).includes(destination.name);
   const routeLimit = isCountry ? 4 : 12;
+  const countryCitiesPromise = isCountry
+    ? listCitiesByCountryCode(destination.countryCode as string, 100).catch(() => [] as StrapiDestination[])
+    : Promise.resolve<StrapiDestination[]>([]);
+  const countryCities = await countryCitiesPromise;
+  const articleDestinationSlugs = isCountry
+    ? [slug, ...countryCities.map((city) => city.slug)]
+    : [slug];
 
-  const [{ data: articles }, routes, airports, airlines, countries, cityAirports, countryCities] = await Promise.all([
-    listArticles({ destination: slug, pageSize: 24 }),
+  const [{ data: articles }, routes, airports, airlines, countries, cityAirports] = await Promise.all([
+    listArticles({ destinations: articleDestinationSlugs, pageSize: 24 }),
     listRoutesToDestination(destination, routeLimit).catch(() => []),
     isCountry
       ? listAirportsByCountryCode(destination.countryCode as string).catch(() => [] as StrapiAirport[])
@@ -83,9 +91,6 @@ export default async function DestinationPage({ params }: Props) {
           )
           .catch(() => [] as StrapiAirport[])
       : Promise.resolve<StrapiAirport[]>([]),
-    isCountry
-      ? listCitiesByCountryCode(destination.countryCode as string, 12).catch(() => [] as StrapiDestination[])
-      : Promise.resolve<StrapiDestination[]>([]),
   ]);
 
   const hero = mediaUrl(destination.heroImage ?? null);
@@ -148,7 +153,7 @@ export default async function DestinationPage({ params }: Props) {
           </div>
           <h1 className="editorial-h mt-3 text-3xl font-bold !text-[#ffffff] sm:text-4xl">{destination.name}</h1>
           {destination.description && (
-            <p className="mt-4 max-w-2xl text-lg text-white/90">{destination.description}</p>
+            <p className="mt-4 max-w-3xl text-lg text-white/90">{destination.description}</p>
           )}
         </div>
       </section>
@@ -163,7 +168,7 @@ export default async function DestinationPage({ params }: Props) {
           {articles.length === 0 ? 'No stories yet' : `${articles.length} stor${articles.length === 1 ? 'y' : 'ies'} from ${destination.name}`}
         </h2>
         {articles.length > 0 && (
-          <div className="mt-10 grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {articles.map((a) => <ArticleCard key={a.id} article={a} size="md" />)}
           </div>
         )}
@@ -453,6 +458,7 @@ function CountryDestinationPage({
   const ABOUT_HERO_HEADINGS = new Set(['Overview', 'Visa Requirements']);
   const aboutHeroSections = namedSections.filter((s) => s.heading && ABOUT_HERO_HEADINGS.has(s.heading));
   const extraSections = namedSections.filter((s) => s.heading && !ABOUT_HERO_HEADINGS.has(s.heading));
+  const activityQuery = buildActivityWidgetQuery(destination, routes);
   // Prefer Strapi-stored facts (populated by enrich-country-content.js),
   // fall back to the static lookup in lib/country-facts.ts.
   const facts = destination.facts ?? getCountryFacts(destination.countryCode);
@@ -483,7 +489,7 @@ function CountryDestinationPage({
                 {destination.name}
               </h1>
               {leadParagraphs.length > 0 && (
-                <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/90">
+                <p className="mt-4 text-lg leading-relaxed text-white/90">
                   {leadParagraphs.join(' ')}
                 </p>
               )}
@@ -501,7 +507,18 @@ function CountryDestinationPage({
             </div>
             {/* Right — overview content, fills column */}
             <div className="w-full">
-              <CountryAbout sections={aboutHeroSections} />
+              {aboutHeroSections.map((section) => (
+                <Fragment key={section.heading ?? 'country-about-section'}>
+                  <CountryAbout sections={[section]} />
+                  {section.heading === 'Visa Requirements' && (
+                    <CountryArrivalPlanningNote
+                      destination={destination}
+                      airportsCount={airports.length}
+                      airlinesCount={airlines.length}
+                    />
+                  )}
+                </Fragment>
+              ))}
             </div>
           </div>
         </section>
@@ -531,7 +548,12 @@ function CountryDestinationPage({
           {extraSections
             .filter((s) => s.heading !== 'Interesting Facts About the UK' && s.heading !== 'Official Resources' && !s.heading?.startsWith('Interesting Facts About '))
             .map((s, i) => (
-              <CountryAbout key={s.heading ?? `extra-${i}`} sections={[s]} />
+              <Fragment key={s.heading ?? `extra-${i}`}>
+                {s.heading === 'Weather & Climate' && (
+                  <GetYourGuideActivityWidget destination={destination} query={activityQuery} />
+                )}
+                <CountryAbout sections={[s]} />
+              </Fragment>
             ))}
           {(() => {
             const interestingFacts = extraSections.find(
@@ -540,31 +562,12 @@ function CountryDestinationPage({
             const officialResources = extraSections.find((s) => s.heading === 'Official Resources');
             if (!interestingFacts && !officialResources) return null;
             return (
-              <div className="grid gap-6 lg:grid-cols-2" data-testid="country-extras-pair">
+              <div className="grid gap-[3.5rem] lg:grid-cols-2" data-testid="country-extras-pair">
                 {interestingFacts && (
-                  <div className="relative overflow-hidden rounded-[0.3rem] border border-forest-900/10 bg-gradient-to-br from-[#f7fbff] via-white to-[#fff8e6] p-6 sm:p-8">
-                    <div className="absolute right-0 top-0 h-28 w-28 rounded-bl-full bg-primary-emphasis/10" />
-                    <div className="relative">
-                      <p className="section-eyebrow">
-                        <span className="inline-block h-px w-8 bg-primary-emphasis" />
-                        Country context
-                      </p>
-                      <div className="mt-5 [&_h3]:!text-2xl [&_h3]:!leading-tight [&_li]:!mb-3 [&_li]:rounded-[0.3rem] [&_li]:border [&_li]:border-forest-900/10 [&_li]:bg-white/75 [&_li]:px-4 [&_li]:py-3 [&_li]:text-sm [&_li]:leading-6">
-                        <CountryAbout sections={[interestingFacts]} singleColumnBullets />
-                      </div>
-                    </div>
-                  </div>
+                  <CountryAbout sections={[interestingFacts]} singleColumnBullets />
                 )}
                 {officialResources && (
-                  <div className="rounded-[0.3rem] border border-forest-900/10 bg-white p-6 sm:p-8">
-                    <p className="section-eyebrow">
-                      <span className="inline-block h-px w-8 bg-forest-800/60" />
-                      Verified links
-                    </p>
-                    <div className="mt-5 [&_h3]:!text-2xl [&_h3]:!leading-tight [&_a]:font-bold [&_li]:!mb-3 [&_li]:border-b [&_li]:border-forest-900/10 [&_li]:pb-3 [&_li]:text-sm [&_li]:leading-6 [&_li:last-child]:border-b-0 [&_li:last-child]:pb-0">
-                      <CountryAbout sections={[officialResources]} singleColumnBullets />
-                    </div>
-                  </div>
+                  <CountryAbout sections={[officialResources]} singleColumnBullets />
                 )}
               </div>
             );
@@ -604,17 +607,44 @@ function CountryDestinationPage({
           </h2>
           {articles.length > 4 && (
             <span className="text-sm font-light text-forest-900/50">
-              showing 4 of {articles.length}
+              {articles.length} available
             </span>
           )}
         </header>
         {articles.length > 0 && (
-          <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {articles.slice(0, 4).map((a) => <ArticleCard key={a.id} article={a} size="compact" />)}
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {articles.slice(0, 4).map((a) => (
+              <ArticleCard key={a.id} article={a} size="compact" imageClassName="h-[200px]" />
+            ))}
           </div>
         )}
       </section>
     </article>
+  );
+}
+
+function CountryArrivalPlanningNote({
+  destination,
+  airportsCount,
+  airlinesCount,
+}: {
+  destination: StrapiDestination;
+  airportsCount: number;
+  airlinesCount: number;
+}) {
+  return (
+    <section
+      className="prose-article border-forest-900/10"
+      data-testid="country-arrival-planning-note"
+    >
+      <h3>
+        Entry planning after the visa check
+      </h3>
+      <p className="mt-3">
+        Once the entry rules for {destination.name} are clear, compare arrival airports, onward cities and airline
+        options together: Originfacts currently links this country guide to {airportsCount.toLocaleString()} airport{airportsCount === 1 ? '' : 's'} and {airlinesCount.toLocaleString()} airline{airlinesCount === 1 ? '' : 's'}, helping you choose the route that best matches your timing, connection margin and first stop.
+      </p>
+    </section>
   );
 }
 
@@ -631,21 +661,71 @@ function CountryPlanningNote({
   routesCount: number;
   articlesCount: number;
 }) {
+  const coverageItems = [
+    {
+      label: 'Start with cities',
+      body: `Choose your first stop in ${destination.name}, then compare nearby airports and onward travel before booking a fare.`,
+    },
+    {
+      label: 'Compare the flight setup',
+      body: `${airportsCount.toLocaleString()} airport${airportsCount === 1 ? '' : 's'} and ${airlinesCount.toLocaleString()} airline${airlinesCount === 1 ? '' : 's'} are linked here, so you can scan gateways and local carriers together.`,
+    },
+    {
+      label: 'Use live context',
+      body:
+        routesCount > 0
+          ? `${routesCount.toLocaleString()} tracked inbound route${routesCount === 1 ? '' : 's'} and ${articlesCount.toLocaleString()} related stor${articlesCount === 1 ? 'y' : 'ies'} help connect trip ideas with practical flight options.`
+          : `Live route-planning tools and ${articlesCount.toLocaleString()} related stor${articlesCount === 1 ? 'y' : 'ies'} help turn the country overview into a practical next step.`,
+    },
+  ];
+
   return (
     <section className="mx-auto mt-12 max-w-7xl px-6" data-testid="country-planning-note">
-      <div className="border-t border-forest-900/10 pt-8">
-        <h2 className="font-urbanist text-2xl font-bold text-forest-950">
-          How to use this {destination.name} guide
-        </h2>
-        <p className="mt-4 max-w-4xl text-base font-light leading-7 text-forest-900/75">
-          Start with the overview and visa notes, then compare the practical travel data below. Originfacts currently
-          links {destination.name} to {airportsCount.toLocaleString()} airport{airportsCount === 1 ? '' : 's'}, {airlinesCount.toLocaleString()} airline{airlinesCount === 1 ? '' : 's'},
-          {routesCount > 0 ? ` ${routesCount.toLocaleString()} tracked inbound route${routesCount === 1 ? '' : 's'},` : ' live route planning tools,'}
-          and {articlesCount.toLocaleString()} related stor{articlesCount === 1 ? 'y' : 'ies'}, so you can move from country context to airports,
-          airlines, routes and trip ideas without treating the destination page as a dead-end summary.
-        </p>
+      <div className="overflow-hidden rounded-[0.3rem] border border-forest-900/10 bg-white">
+        <div className="grid gap-6 bg-gradient-to-br from-[#f7fbff] via-white to-[#fff8e6] p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
+          <div>
+            <p className="section-eyebrow">
+              <span className="inline-block h-px w-8 bg-primary-emphasis" />
+              Planning snapshot
+            </p>
+            <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-950 lg:text-3xl">
+              Build your {destination.name} trip around the right first stop
+            </h2>
+            <p className="mt-4 max-w-4xl text-base font-light leading-7 text-forest-900/75">
+              Use this country page as a practical bridge between inspiration and booking. Start with the entry basics,
+              then compare cities, airports, airlines, routes and related guides before choosing dates.
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-2 rounded-[0.3rem] border border-forest-900/10 bg-white/80 p-3 text-center lg:grid-cols-1 lg:text-left">
+            <PlanningStat label="Airports" value={airportsCount} />
+            <PlanningStat label="Airlines" value={airlinesCount} />
+            <PlanningStat label="Stories" value={articlesCount} />
+          </div>
+        </div>
+        <div className="grid divide-y divide-forest-900/10 md:grid-cols-3 md:divide-x md:divide-y-0">
+          {coverageItems.map((item, index) => (
+            <article key={item.label} className="p-6 sm:p-7">
+              <div className="font-mono text-[11px] font-bold tracking-[0.18em] text-primary-emphasis">
+                {String(index + 1).padStart(2, '0')}
+              </div>
+              <h3 className="mt-3 font-urbanist text-lg font-bold text-forest-950">{item.label}</h3>
+              <p className="mt-3 text-sm font-light leading-7 text-forest-900/72">{item.body}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
+  );
+}
+
+function PlanningStat({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="px-2 py-2">
+      <div className="font-urbanist text-2xl font-bold leading-none text-forest-900">
+        {value.toLocaleString()}
+      </div>
+      <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-forest-900/55">{label}</div>
+    </div>
   );
 }
 
@@ -713,6 +793,7 @@ function CountryCityCard({
   wide?: boolean;
 }) {
   const image = mediaUrl(city.heroImage ?? null);
+  const description = cityCardDescription(city);
 
   return (
     <Link
@@ -740,10 +821,10 @@ function CountryCityCard({
             {city.name}
           </h5>
           <p
-            className="mt-2 text-xs font-bold uppercase tracking-[0.18em]"
+            className="mt-3 line-clamp-3 max-w-md text-sm font-normal leading-6"
             style={{ color: '#e5e5e5' }}
           >
-            Open city guide
+            {description}
           </p>
         </div>
         <div className="flex flex-none items-center gap-2">
@@ -763,6 +844,20 @@ function CountryCityCard({
       </div>
     </Link>
   );
+}
+
+function cityCardDescription(city: StrapiDestination) {
+  const firstParagraph = city.description
+    ?.replace(/#{1,6}\s+/g, '')
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .find(Boolean);
+
+  if (!firstParagraph) {
+    return `Plan where to stay, which airport to use and what to check before booking ${city.name}.`;
+  }
+
+  return firstParagraph.replace(/\s+/g, ' ');
 }
 
 function HeroStat({ label, value, display }: { label: string; value: number; display?: string }) {
@@ -1015,7 +1110,7 @@ function ContinentDestinationPage({
           </header>
           <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {articles.slice(0, 8).map((a) => (
-              <ArticleCard key={a.id} article={a} size="compact" />
+              <ArticleCard key={a.id} article={a} size="compact" imageClassName="h-[200px]" />
             ))}
           </div>
         </section>

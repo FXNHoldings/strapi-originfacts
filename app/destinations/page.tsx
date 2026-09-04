@@ -35,7 +35,7 @@ export default async function DestinationsPage() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8" data-testid="destinations-page">
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-6" data-testid="destinations-page">
       <JsonLd data={breadcrumbJsonLd([{ name: HUB.name, url: PATH }])} />
       <JsonLd data={collectionJsonLd} />
 

@@ -582,7 +582,7 @@ export default async function AirportPage({ params }: Props) {
               <span className="inline-block h-px w-8 bg-forest-800/60" />
               Routes
             </p>
-            <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-900 lg:text-3xl">
+            <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
               Top routes from {airport.iata}
             </h2>
             <p className="mt-2 max-w-2xl text-sm font-light leading-7 text-forest-900/70">
@@ -642,7 +642,7 @@ export default async function AirportPage({ params }: Props) {
               Official planning details
             </p>
             <div className="mt-3 grid gap-4 lg:grid-cols-[minmax(0,1fr)_300px]">
-              <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-3xl">
+              <h2 className="editorial-h text-2xl font-bold text-2xl">
                 Transfers, fares, parking and passenger services at {airport.iata}
               </h2>
               <p className="text-sm font-light leading-7 text-forest-900/70">
@@ -745,7 +745,7 @@ export default async function AirportPage({ params }: Props) {
                 <span className="inline-block h-px w-8 bg-forest-800/60" />
                 Nearby airports
               </p>
-              <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-900 lg:text-3xl">
+              <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
                 Other airports in {airport.country}
               </h2>
               <p className="mt-2 max-w-2xl text-sm font-light leading-7 text-forest-900/70">

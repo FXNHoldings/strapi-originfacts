@@ -69,7 +69,7 @@ export function FaqSection({
           <span className="inline-block h-px w-8 bg-forest-800/60" />
           FAQ
         </p>
-        <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-900 lg:text-3xl">{title}</h2>
+        <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">{title}</h2>
         <p className="mt-4 text-sm font-light leading-7 text-forest-900/78">
           Quick answers to the details travellers usually check first, from codes and locations to the practical basics that help with planning.
         </p>

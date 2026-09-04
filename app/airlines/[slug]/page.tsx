@@ -386,7 +386,7 @@ export default async function AirlinePage({ params }: Props) {
             <span className="inline-block h-px w-8 bg-forest-800/60" />
             Good to know
           </p>
-          <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-900 lg:text-3xl">
+          <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
             Flying with {airline.name} — what to expect
           </h2>
           {goodToKnowCards.length > 0 ? (
@@ -439,7 +439,7 @@ export default async function AirlinePage({ params }: Props) {
                 <span className="inline-block h-px w-8 bg-forest-800/60" />
                 Route network
               </p>
-              <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-900 lg:text-3xl">
+              <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
                 Popular routes operated by {airline.name}
               </h2>
             </div>
@@ -500,7 +500,7 @@ export default async function AirlinePage({ params }: Props) {
               <span className="inline-block h-px w-8 bg-forest-800/60" />
               Route network
             </p>
-            <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-900 lg:text-3xl">
+            <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
               Popular routes operated by {airline.name}
             </h2>
             <p className="mt-3 text-sm font-light text-forest-900/60">
@@ -539,7 +539,7 @@ export default async function AirlinePage({ params }: Props) {
             <span className="inline-block h-px w-8 bg-forest-800/60" />
             More from {airline.country}
           </p>
-          <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-900 lg:text-3xl">
+          <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
             Other airlines based in {airline.country}
           </h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

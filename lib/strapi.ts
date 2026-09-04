@@ -198,10 +198,12 @@ export function mediaUrl(img: StrapiImage): string | null {
   return img.url.startsWith('http') ? img.url : `${BASE}${img.url}`;
 }
 
-export async function listArticles(opts: { page?: number; pageSize?: number; category?: string; destination?: string; q?: string } = {}) {
+export async function listArticles(opts: { page?: number; pageSize?: number; category?: string; destination?: string; destinations?: string[]; q?: string } = {}) {
   const filters: Record<string, unknown> = {};
   if (opts.category) filters.category = { slug: { $eqi: opts.category } };
-  if (opts.destination) filters.destinations = { slug: { $eqi: opts.destination } };
+  const destinationSlugs = opts.destinations?.filter(Boolean);
+  if (destinationSlugs?.length) filters.destinations = { slug: { $in: destinationSlugs } };
+  else if (opts.destination) filters.destinations = { slug: { $eqi: opts.destination } };
   if (opts.q?.trim()) {
     const q = opts.q.trim();
     filters.$or = [

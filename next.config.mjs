@@ -6,7 +6,7 @@ const strapiHost = new URL(
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  allowedDevOrigins: ['preview.fxnstudio.com'],
+  allowedDevOrigins: ['preview.fxnstudio.com', '51.161.208.188'],
   // Markdown and JSON read from disk at request time. The paths are built with
   // join(process.cwd(), …) rather than written as literals, so Next's file
   // tracer cannot follow them and would leave these out of the serverless
