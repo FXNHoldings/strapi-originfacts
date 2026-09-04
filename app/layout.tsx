@@ -90,6 +90,7 @@ export const metadata: Metadata = {
     'mitgo-verification': 'c35b4b6a-ddfe-4741-ab3e-2c1b7538a949',
     'Takeads-verification': 'd5d48ab4-be05-4198-bb51-e1492a80937c',
     'verify-admitad': 'f0703eb480',
+    'ahrefs-site-verification': '9f39dc9055559be529e3fa6460b115fc2cbbed0f424148902c26a1170c54f046',
     ...(ADSENSE_ENABLED ? { 'google-adsense-account': ADSENSE_CLIENT } : {}),
   },
 };
@@ -125,6 +126,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           defer
           src="https://widget.getyourguide.com/dist/pa.umd.production.min.js"
           data-gyg-partner-id="H8Y3KHZ"
+        />
+        <script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="q1H936DX22JvtmIwQTfWng"
+          async
         />
       </head>
       <body className={`${inter.variable} ${urbanist.variable} ${outfit.variable} ${jakarta.variable} ${figtree.variable} min-h-screen flex flex-col font-sans font-normal grain`} data-testid="app-shell">

@@ -53,7 +53,7 @@ const TOP_PRIORITY_SLUGS = [
 ];
 
 export const metadata: Metadata = {
-  title: 'Airline Directory — Search Carriers & Verified Guides | OriginFacts',
+  title: 'Airlines',
   description: HUB.description,
   alternates: { canonical: PATH },
   robots: { index: true, follow: true },

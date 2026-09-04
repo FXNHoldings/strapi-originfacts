@@ -8,10 +8,9 @@ import { faqJsonLd } from '@/lib/entity-seo';
 import TpwlLoader from '@/components/TpwlLoader';
 import AirlineResultsFilter from '@/components/AirlineResultsFilter';
 import CustomFlightSearch from '@/components/CustomFlightSearch';
-import PopularHotelCitiesBlock from '@/components/PopularHotelCitiesBlock';
 
 export const metadata = {
-  title: 'Cheap Flight Search | Compare Airline Fares Online',
+  title: 'Cheap flight search',
   description:
     'Compare cheap flights from hundreds of airlines and travel sites, check flexible dates, browse popular routes, and plan hotels near your trip.',
   alternates: { canonical: '/flight-search' },
@@ -216,8 +215,6 @@ export default async function FlightsPage({
         </section>
 
         <SearchByDestinationBlock />
-
-        <PopularHotelCitiesBlock />
 
         {/* ---------- Booking flights with Originfacts (FAQ) ---------- */}
         <section className="mt-20" data-testid="booking-faq">

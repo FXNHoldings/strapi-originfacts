@@ -110,12 +110,16 @@ function renderInlineImg(
   return `<figure class="article-inline-image my-8"><img src="${url}" alt="${alt}" class="aspect-[16/9] w-full rounded-lg object-cover" loading="lazy" /></figure>`;
 }
 
+function demoteBodyH1(html: string): string {
+  return html.replace(/<h1(\s[^>]*)?>/gi, '<h2$1>').replace(/<\/h1>/gi, '</h2>');
+}
+
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
   const article = await getArticle(slug);
   if (!article) notFound();
 
-  const rawHtml = await marked.parse(article.content || '', { async: true });
+  const rawHtml = demoteBodyH1(await marked.parse(article.content || '', { async: true }));
   const html = interleaveGallery(rawHtml, article.gallery, article.title);
   const hero = mediaUrl(article.coverImage ?? null);
   const date = article.publishedAt ? format(new Date(article.publishedAt), 'd MMMM yyyy') : '';

@@ -6,6 +6,14 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
+        userAgent: 'AhrefsSiteAudit',
+        allow: '/',
+      },
+      {
+        userAgent: 'AhrefsBot',
+        allow: '/',
+      },
+      {
         userAgent: '*',
         allow: '/',
         disallow: ['/api/'],

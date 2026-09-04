@@ -147,11 +147,46 @@ export default function ContactPage() {
             does not handle bookings, payments, or refunds. If your question is about a ticket,
             hotel, rental, or tour, contact the provider you booked with directly.
           </div>
+
+          <div className="rounded-lg border border-forest-900/10 bg-white p-5 text-sm leading-relaxed text-forest-900/80">
+            <h2 className="editorial-h text-sm uppercase tracking-widest text-forest-800/70">
+              Editorial Notes
+            </h2>
+            <p className="mt-3">
+              Send corrections with the page URL, the exact line that looks wrong, and a source we
+              can verify. Airport, airline, hotel, and destination details can change quickly, so
+              clear source links help us update pages faster.
+            </p>
+          </div>
         </aside>
 
         {/* Right — form (Client Component) */}
         <ContactForm />
       </div>
+
+      <section className="mt-14 grid gap-6 border-t border-forest-900/10 pt-10 md:grid-cols-3">
+        <div>
+          <h2 className="editorial-h text-xl font-bold text-forest-950">Content corrections</h2>
+          <p className="mt-3 text-base leading-7 text-forest-900/75">
+            Tell us when a route, airport code, airline policy, destination detail, or article
+            reference needs review. Include enough context for our editors to reproduce the issue.
+          </p>
+        </div>
+        <div>
+          <h2 className="editorial-h text-xl font-bold text-forest-950">Affiliate questions</h2>
+          <p className="mt-3 text-base leading-7 text-forest-900/75">
+            We can review advertiser, affiliate, and disclosure questions related to sponsored
+            links, travel widgets, hotel search cards, flight partners, or commercial placements.
+          </p>
+        </div>
+        <div>
+          <h2 className="editorial-h text-xl font-bold text-forest-950">Privacy and access</h2>
+          <p className="mt-3 text-base leading-7 text-forest-900/75">
+            Use this page for privacy requests, accessibility feedback, user content concerns, and
+            account-independent support. We route legal or data requests to the right reviewer.
+          </p>
+        </div>
+      </section>
     </article>
   );
 }

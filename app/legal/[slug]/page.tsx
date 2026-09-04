@@ -22,9 +22,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const doc = getLegalDoc(slug);
   if (!doc) return { title: 'Not found' };
+  const description =
+    doc.description.length >= 80
+      ? doc.description
+      : `${doc.title} for Originfacts, including website policies, user rights, affiliate disclosures, contact options and related legal information.`;
   return {
     title: `${doc.title} — Originfacts`,
-    description: clampDescription(doc.description),
+    description: clampDescription(description),
   };
 }
 

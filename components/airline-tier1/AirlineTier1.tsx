@@ -272,6 +272,8 @@ export default function AirlineTier1({
             {rendered.map((r) =>
               r.id === 'faq' ? (
                 <FaqModule key="faq" faqs={faqs} travellerFacing={previewRedesign} />
+              ) : r.id === 'cabins' && r.sourced?.isPublished ? (
+                <SourcedModuleView key="cabins" module={r.sourced} hideResearchNotes={previewRedesign} />
               ) : r.id === 'cabins' ? (
                 <CabinsModuleView key="cabins" airline={airline} routeFacts={routeFacts} module={r.derived} />
               ) : r.id === 'contact' ? (
@@ -626,6 +628,11 @@ function CarryonBaggageView({
   const ecoWeightField = m.published.find((f) => f.key === 'weight_economy')?.field;
   const bizWeightField = m.published.find((f) => f.key === 'weight_business_first')?.field;
 
+  // Fare-specific records must not fall back to sample cabin allowances.
+  if (!dimsField || !ecoWeightField || !bizWeightField) {
+    return <SourcedModuleView module={m} hideResearchNotes />;
+  }
+
   const dimsVal = dimsField?.value ?? '55 x 40 x 20 cm';
   const ecoWeightVal = ecoWeightField?.value ?? '7 kg (15 lbs)';
   const bizWeightVal = bizWeightField?.value ?? '14 kg (30 lbs) total across 2 pieces';
@@ -731,6 +738,10 @@ function CheckedBaggageView({
   const ecoBagField = m.published.find((f) => f.key === 'piece_weight_economy')?.field;
   const bizBagField = m.published.find((f) => f.key === 'piece_weight_business')?.field;
   const firstBagField = m.published.find((f) => f.key === 'piece_weight_first')?.field;
+
+  if (!ecoBagField || !bizBagField || !firstBagField) {
+    return <SourcedModuleView module={m} hideResearchNotes />;
+  }
 
   const ecoVal = ecoBagField?.value ?? '1 piece up to 23 kg (50 lbs)';
   const bizVal = bizBagField?.value ?? '2 pieces up to 32 kg (70 lbs) each';
@@ -1790,8 +1801,10 @@ function contactModule(
   verifiedContact: ResolvedModule | null = null,
 ): DerivedModule | null {
   const rows: DerivedCell[][] = [];
-  const website = a.website ? (a.website.startsWith('http') ? a.website : `https://${a.website}`) : null;
   const verified = new Map((verifiedContact?.published ?? []).map((field) => [field.key, field.field]));
+  const verifiedWebsite = verified.get('official_website_url')?.value?.trim();
+  const websiteSource = verifiedWebsite || a.website;
+  const website = websiteSource ? (websiteSource.startsWith('http') ? websiteSource : `https://${websiteSource}`) : null;
   const verifiedAddress = verified.get('registered_address')?.value?.trim();
   const verifiedPhone = verified.get('phone_home_market')?.value?.trim() || verified.get('international_customer_service')?.value?.trim();
   const phoneUs = verified.get('phone_us')?.value?.trim();
@@ -1799,6 +1812,7 @@ function contactModule(
   const supportHours = verified.get('phone_support_hours')?.value?.trim();
   const helpCentre = verified.get('contact_help_centre')?.value?.trim();
   const verifiedTerms = verified.get('conditions_of_carriage_url')?.value?.trim();
+  const refunds = verified.get('cancellations_refunds')?.value?.trim();
 
   if (verifiedAddress || a.address?.trim()) {
     rows.push(['Registered address', verifiedAddress || a.address!.trim()]);
@@ -1821,6 +1835,9 @@ function contactModule(
   const terms = verifiedTerms || ref?.conditionsOfCarriageUrl;
   if (terms) {
     rows.push(['Conditions of carriage', { text: 'Published terms', href: terms }]);
+  }
+  if (refunds) {
+    rows.push(['Cancellations and refunds', { text: 'Refund policy', href: refunds }]);
   }
   if (a.frequentFlyerProgram) {
     rows.push([

@@ -28,7 +28,7 @@ import { getCountryFacts } from '@/lib/country-facts';
 import { faqJsonLd, normalizeFaqs } from '@/lib/entity-seo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import KeyFacts from '@/components/KeyFacts';
-import { clampDescription } from '@/lib/seo';
+import { clampDescription, compactTitle } from '@/lib/seo';
 import { airportPath } from '@/lib/airport-slugs';
 import type { Metadata } from 'next';
 
@@ -52,10 +52,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const d = await getDestination(slug);
   if (!d) return { title: 'Not found' };
   return {
-    title: d.name,
-    description: clampDescription(d.description),
+    title: destinationMetaTitle(d),
+    description: destinationMetaDescription(d),
     alternates: { canonical: `/destinations/${slug}` },
   };
+}
+
+function destinationMetaTitle(destination: StrapiDestination) {
+  if (destination.type === 'city') return compactTitle(`${destination.name} travel guide`);
+  if (destination.type === 'country') return compactTitle(`${destination.name} travel guide`);
+  if (destination.type === 'region') return compactTitle(`${destination.name} destinations guide`);
+  return compactTitle(destination.name);
+}
+
+function destinationMetaDescription(destination: StrapiDestination) {
+  if (destination.description?.trim()) return clampDescription(destination.description);
+
+  const country = countryNameFromCode(destination.countryCode);
+  if (destination.type === 'city') {
+    return clampDescription(
+      `Plan ${destination.name}${country ? `, ${country}` : ''} with hotels, airports, activities, routes, local stories and practical travel notes from Originfacts.`,
+    );
+  }
+
+  if (destination.type === 'country') {
+    return clampDescription(
+      `Explore ${destination.name} with city guides, airports, airlines, visa notes, travel stories and practical planning context from Originfacts.`,
+    );
+  }
+
+  return clampDescription(
+    `Explore ${destination.name} travel planning with countries, cities, airports, airlines, routes, stories and practical context from Originfacts.`,
+  );
 }
 
 export default async function DestinationPage({ params }: Props) {
@@ -298,7 +326,10 @@ function CityDestinationPage({
   faqBlock: React.ReactNode;
 }) {
   const destIata = routes.find((r) => r.destination?.iata)?.destination?.iata;
-  const country = airports.find((airport) => airport.country)?.country || destination.countryCode || 'the region';
+  const country =
+    airports.find((airport) => airport.country)?.country ||
+    countryNameFromCode(destination.countryCode) ||
+    'the region';
   const primaryAirport = airports[0];
 
   return (
@@ -312,7 +343,7 @@ function CityDestinationPage({
         <div className="relative mx-auto flex min-h-[520px] max-w-7xl flex-col justify-end px-6 pb-12 pt-24 text-white">
           <div className="max-w-4xl">
             <div className="text-xs font-bold uppercase tracking-[0.22em] text-white/75">
-              City guide{destination.countryCode ? ` · ${destination.countryCode}` : ''}
+              City guide{country !== 'the region' ? ` · ${country}` : ''}
             </div>
             <h1 className="editorial-h mt-4 text-4xl font-bold leading-tight !text-[#ffffff] sm:text-5xl lg:text-6xl">
               {destination.name}
@@ -565,7 +596,10 @@ function CitySeoGuide({
   airports: StrapiAirport[];
   articlesCount: number;
 }) {
-  const country = airports.find((airport) => airport.country)?.country || destination.countryCode || 'the region';
+  const country =
+    airports.find((airport) => airport.country)?.country ||
+    countryNameFromCode(destination.countryCode) ||
+    'the region';
   const primaryAirport = airports[0];
   const originCities = unique(
     routes
@@ -665,7 +699,10 @@ function CityPlanningSections({
       .filter((name): name is string => Boolean(name)),
   ).slice(0, 5);
   const carriers = unique(routes.flatMap((route) => route.carriers?.map((carrier) => carrier.name) ?? [])).slice(0, 5);
-  const country = airports.find((airport) => airport.country)?.country || destination.countryCode || 'the region';
+  const country =
+    airports.find((airport) => airport.country)?.country ||
+    countryNameFromCode(destination.countryCode) ||
+    'the region';
   const airportNames = airports.map((airport) => airport.name).slice(0, 3);
   const primaryAirport = airportNames[0];
 
@@ -844,7 +881,7 @@ function buildActivityWidgetQuery(
   routes: Awaited<ReturnType<typeof listRoutesToDestination>>,
 ) {
   const country = routes.find((route) => route.destination?.country)?.destination?.country;
-  const countryHint = country || destination.countryCode;
+  const countryHint = country || countryNameFromCode(destination.countryCode) || destination.countryCode;
   return [destination.name, countryHint].filter(Boolean).join(', ');
 }
 
@@ -857,7 +894,7 @@ function buildCityHeroDescription(
   const override = CITY_HERO_DESCRIPTION_OVERRIDES[destination.slug];
   if (override) return override;
 
-  const country = airports.find((airport) => airport.country)?.country || destination.countryCode;
+  const country = airports.find((airport) => airport.country)?.country || countryNameFromCode(destination.countryCode);
   const primaryAirport = airports[0]?.name;
   const articleText =
     articlesCount > 0

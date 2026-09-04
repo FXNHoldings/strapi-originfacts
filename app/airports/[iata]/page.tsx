@@ -28,6 +28,7 @@ import { getAirportWeather, weatherLabel } from '@/lib/open-meteo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import type { Metadata } from 'next';
 import topAirportSources from '@/data/airport-sources/top-100-official-links.json';
+import { clampDescription, compactTitle } from '@/lib/seo';
 
 export const revalidate = 60;
 
@@ -87,15 +88,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!a) return { title: 'Airport not found', robots: { index: false, follow: false } };
   const routes = await listRoutesFromAirport(a.iata, 1).catch(() => []);
   const hero = airportHeroImage(a.iata, mediaUrl(a.heroImage ?? null));
-  const description =
-    a.about?.slice(0, 150) ||
-    `${a.name} (${a.iata})${a.city ? ` in ${a.city}` : ''}${a.country ? `, ${a.country}` : ''}: codes, location, airlines, top destinations and ground-transfer basics.`;
+  const metaTitle = compactTitle(`${a.name} (${a.iata}) airport guide`);
+  const description = clampDescription(
+    a.about ||
+      `${a.name} (${a.iata})${a.city ? ` in ${a.city}` : ''}${a.country ? `, ${a.country}` : ''}: codes, location, airlines, top destinations, terminal notes and ground-transfer basics.`,
+  );
   return {
-    title: `${a.name} (${a.iata}) — airport guide`,
+    title: metaTitle,
     description,
     alternates: { canonical: `${SITE_URL}${airportPath(a, allAirports)}` },
     openGraph: {
-      title: `${a.name} (${a.iata}) — airport guide`,
+      title: metaTitle,
       description,
       type: 'article',
       url: `${SITE_URL}${airportPath(a, allAirports)}`,

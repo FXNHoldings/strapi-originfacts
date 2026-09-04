@@ -11,8 +11,8 @@
  * feedback without titles being hard-truncated.
  */
 
-export const DESCRIPTION_MAX = 155;
-export const TITLE_MAX = 60;
+export const DESCRIPTION_MAX = 150;
+export const TITLE_MAX = 45;
 const TITLE_WARN = 60;
 const DESCRIPTION_WARN = 160;
 
@@ -22,7 +22,12 @@ const DESCRIPTION_WARN = 160;
  * cuts mid-word. Empty/undefined input returns ''.
  */
 export function clampDescription(input?: string | null, max = DESCRIPTION_MAX): string {
-  const clean = (input ?? '').replace(/\s+/g, ' ').trim();
+  const clean = (input ?? '')
+    .replace(/!\[[^\]]*]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]+)]\([^)]*\)/g, '$1')
+    .replace(/[`*_>#-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
   if (clean.length <= max) return clean;
   // Reserve one char for the ellipsis, then back off to a word boundary.
   const slice = clean.slice(0, max - 1);

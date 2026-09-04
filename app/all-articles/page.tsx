@@ -9,7 +9,8 @@ import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
 export const revalidate = 60;
 
 const PAGE_SIZE = 12;
-const DESCRIPTION = "Every travel guide, flight hack, and hotel review we've published.";
+const DESCRIPTION =
+  "Browse every Originfacts story, including travel guides, flight advice, hotel picks, airline explainers and destination planning notes.";
 
 type Props = { searchParams: Promise<{ page?: string; q?: string }> };
 

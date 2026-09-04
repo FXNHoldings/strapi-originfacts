@@ -1639,5 +1639,173 @@
     ],
     "cached": false,
     "cachedAt": "2026-09-04T18:26:43.966Z"
+  },
+  "darwin__australia__popular__usd__6": {
+    "city": "Darwin",
+    "country": "Australia",
+    "scope": "popular",
+    "scopeLabel": "Popular hotels",
+    "checkIn": "2026-09-25",
+    "checkOut": "2026-09-26",
+    "hotels": [
+      {
+        "id": "ChoI84PMz8O3v8KGARoNL2cvMTFidzY3bnh5bRAB",
+        "name": "Darwin Waterfront Luxury Suites",
+        "stars": 4,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm_0HUD8n0K4Rq7QPxOlK2OyInvHMDBv3P_82utB8BiBc-MmAkxeH5DvnVcCSp6pa6NV2ZaZQewYYKDe_QEBj6GH15PWAVyGMgX25iSjDoQaFSiWiehNv_julPt4ePMXhg-i39Xpw=s287-w287-h192-n-k-no-v1",
+        "rating": 4.8,
+        "reviews": 123,
+        "price": 0,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChoIp6Dehp70peS7ARoNL2cvMTFwYmg5OHE4eBAB",
+        "name": "Hudson Parap",
+        "stars": 4,
+        "image": "https://lh3.googleusercontent.com/gps-proxy/ALd4DhEr3izpbI1rYXBP9ZfmQl1f13J9rsSf3nBEHdblUVWkTtIcJihSRkoYbT9SrXkrc41a7iXAqHtQWSCSQ5arxOi_4UNFr7ZStt_ao-AZoNAth4lrNVD5sWztpFBRk4cUfAEf47RbwxpZenZizXSxYq00lDK5-ApCMUr29f07f1F9AnEbFzSEtJgd=s287-w287-h192-n-k-no-v1",
+        "rating": 4.7,
+        "reviews": 126,
+        "price": 0,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChgIip_X1da2j4OEARoLL2cvMXRzdnc5NDcQAQ",
+        "name": "Argus Apartments Darwin",
+        "stars": 4,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnaQ09OCgKqAOUrr9So_2ovXxf3s_7QYi86xNmEeZh7MKVCzvQVH2HCP8k2HCsYd2LdmZutK8YQjhjOn4lLc77Y9CetNrvVLAsKnHwpW4dnzpUkz2DW9r5aFd9itTGUuxb0QhAW=s287-w287-h192-n-k-no-v1",
+        "rating": 4.5,
+        "reviews": 365,
+        "price": 437,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChcI5vaPs-Dste0NGgsvZy8xdGQ4ZmhjchAB",
+        "name": "Oasis Tourist Park",
+        "stars": 3,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnqQsK_GIPi-nTKnFqRF1hnjfuehf-eyKdQMYFvfVr9zE7ngtOsfAmAEqEeqgksfOJ34thdf-WEV11lPUNwoqL_GisFqn_3u3PVthHihQlHXnBrn2PNzH4PgzB084I4TnfW6pKACA=s287-w287-h192-n-k-no-v1",
+        "rating": 4.5,
+        "reviews": 295,
+        "price": 0,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChkItb7L3oLP4b1nGg0vZy8xMWI3MDF5cjFtEAE",
+        "name": "Ramada Suites by Wyndham Zen Quarter Darwin",
+        "stars": 4,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWknaapJtllxStjiY-W9O02RTfrO0aJCIrrp0nF8Qzg4ta4B945FluFppA0xkQ1CaOeDSo6csa68GboIJAdSArdwRa0zgrJzVppd90D1_V2QpBJrQusVbxGx6alLLDv7T_Q_wvCA6Q=s287-w287-h192-n-k-no-v1",
+        "rating": 4.3,
+        "reviews": 1180,
+        "price": 186,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChoI45z3wvre1dKTARoNL2cvMTFwenMwcjIyeBAB",
+        "name": "Hudson Apartment Hotel Berrimah",
+        "stars": 4,
+        "image": "https://lh3.googleusercontent.com/gps-proxy/ALd4DhHiHBw9Q_Dw48eZEfJyoGUhejyo9iShLLIOkWYW3kyBNHte9KCNKQywFL7sFX0ZdYd8by7uPwUcqCX0KJoUILH51Kvz-_uEIA_lm0Mx-K0ZygLCxWLkO73nU8xBi4OMV3LxflmKXsacWMOf_WnVL8gkfr9toZZ9hGnz8dasFkCaeuGloUkW6GRa=s287-w287-h192-n-k-no-v1",
+        "rating": 4.8,
+        "reviews": 53,
+        "price": 162,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      }
+    ],
+    "cached": false,
+    "cachedAt": "2026-09-04T19:54:56.785Z"
+  },
+  "melbourne__australia__popular__usd__6": {
+    "city": "Melbourne",
+    "country": "Australia",
+    "scope": "popular",
+    "scopeLabel": "Popular hotels",
+    "checkIn": "2026-09-25",
+    "checkOut": "2026-09-26",
+    "hotels": [
+      {
+        "id": "ChkIqsGxyKyygaJSGg0vZy8xMWh5a3YybXQ0EAE",
+        "name": "Five Acres",
+        "stars": 0,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm_CkAQIFDP5R7p0qt7l0Sy488rDydOjTnn8evuCC7FDWBvtNbOL9i3widD7nSCcD9GqXzsISYp3qF8GCnb1IMehZY0NBHYTOhbJTXxiSI0UvGM_VtPp7OcM1NcxjGKe7kF0NM=s287-w287-h192-n-k-no-v1",
+        "rating": 4.9,
+        "reviews": 253,
+        "price": 0,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChgI78zNnMqVg8KaARoLL2cvMXR2ZGp5ZDEQAQ",
+        "name": "Clarendon Cottages Dandenong Ranges",
+        "stars": 4,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnjCHtHk63lOIy8DCc_NCYRRI-Q3xwIhHOdaAW-zl8aI7VJE0533QQzNzth-OxXhJMJDFIDzElRfo_mQZFsZ6HKziLl7G0i4Ij9b128hLzz_XgqB5fELd8SLWKR25zQ4tn5t6pC=s287-w287-h192-n-k-no-v1",
+        "rating": 5,
+        "reviews": 229,
+        "price": 0,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChkI3qaqoKP_w8crGg0vZy8xMWgxOTF5NXk5EAE",
+        "name": "Eden Yarra Valley",
+        "stars": 0,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnVIAdtivNu4Njd3Rj8Sg6N1o43gurf7A3lmmXf9kJHu9heto51Ls5SaiFA1BQMNRfaKcj-Xs0SrmtJdUXuDyhpRdIVWJSOECN9sc3xfys8EVCHwz-RA8W7jhiUxNaEb36wRKaP=s287-w287-h192-n-k-no-v1",
+        "rating": 4.9,
+        "reviews": 407,
+        "price": 0,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChkI4uijqMT507AJGg0vZy8xMWgyNzYzY2c1EAE",
+        "name": "Quest Burwood East",
+        "stars": 0,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkcnPS517O-124P5kjZyaTaoF3TEHgbafaqX8MCjyYx0ySS6heLGb4arUN3wpDtTH-CxEIwVmlM4agtJDFFCtKPFmjHXnjlUaHWg2gUJYNQG7cb-TK2koqB2EGqqyc3EwCQtWeP=s287-w287-h192-n-k-no-v1",
+        "rating": 4.8,
+        "reviews": 1103,
+        "price": 128,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChcIosyJ8_zis-ILGgsvZy8xdGYwcXJxOBAB",
+        "name": "Quest Mont Albert",
+        "stars": 4,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkmFQ9H3FVGEyD_bCa-pjEMo9Ae5JzL28JJbDAM4hwRm9Tz6M_q9PdXB7heO615Uq2vtMmQZ3MLWtonl80OYiQa5saMZ97gif9nitqmtiSkMlmAj_frweskWYaLVdk1P1KStxAA=s287-w287-h192-n-k-no-v1",
+        "rating": 4.8,
+        "reviews": 1071,
+        "price": 138,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      },
+      {
+        "id": "ChoIqoGG0NCunpCFARoNL2cvMTF0NTQ0ZnB2MRAB",
+        "name": "Melbourne City Apartment Hotel",
+        "stars": 4,
+        "image": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkR4GxHjdKWcCtw7brLjnKfORd1i3vk9I-jS6kRdvbj7PlrAgr0AL_FgnsE3fEI8j_aj2vaw4QqS8YNCjayRcy-UY883CUyZSYoWUG_tvv97rXsssIH2MqIrNQZd7XCp2dwww-YfQ=s287-w287-h192-n-k-no-v1",
+        "rating": 4.7,
+        "reviews": 640,
+        "price": 0,
+        "currency": "USD",
+        "discount": null,
+        "href": "https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc"
+      }
+    ],
+    "cached": false,
+    "cachedAt": "2026-09-04T19:55:08.185Z"
   }
 }
