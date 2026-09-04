@@ -165,6 +165,57 @@ export default async function AirlinesPage() {
         </nav>
       </header>
 
+      <section className="mt-10 grid gap-5 lg:grid-cols-3" aria-label="How to use the airline directory">
+        {[
+          {
+            title: 'Compare the carrier behind the fare',
+            text:
+              'A cheap flight can look different once you know which airline operates it, where the carrier is based, and whether the itinerary depends on a partner or codeshare. Use this airline directory to check names, IATA codes, home countries, hubs, and verified policy guides before you move from search results to checkout.',
+          },
+          {
+            title: 'Check baggage, seats, and airport context',
+            text:
+              'Airline rules vary most around cabin baggage, checked bags, seat selection, refunds, schedule changes, and airport transfers. OriginFacts keeps carrier profiles connected to airports and routes so you can see the practical context around a booking, not only the brand name printed on the ticket.',
+          },
+          {
+            title: 'Use codes to avoid booking mistakes',
+            text:
+              'Two-letter IATA codes are useful when airlines have similar names, regional subsidiaries, or flights sold by another carrier. Search by name, country, or code to confirm you are comparing the right airline, especially on multi-carrier trips, regional flights, and low-cost connections.',
+          },
+        ].map((item) => (
+          <article
+            key={item.title}
+            className="rounded-[0.3rem] border border-forest-900/10 bg-white p-6 shadow-xs"
+          >
+            <h2 className="font-urbanist text-2xl font-bold leading-tight text-forest-950">
+              {item.title}
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-forest-900/70">{item.text}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="mt-8 rounded-[0.3rem] border border-forest-900/10 bg-[#f8fafc] p-6 sm:p-8">
+        <h2 className="font-urbanist text-3xl font-bold leading-tight text-forest-950">
+          What makes an airline page useful
+        </h2>
+        <div className="mt-4 grid gap-5 text-base leading-relaxed text-forest-900/70 md:grid-cols-2">
+          <p>
+            The most useful airline information is operational: where the airline is registered,
+            which airport acts as its main hub, what type of carrier it is, and whether OriginFacts
+            has enough verified policy information to publish a deeper guide. That helps travellers
+            separate a familiar brand from the airline that will actually handle check-in, boarding,
+            baggage, schedule changes, and customer support.
+          </p>
+          <p>
+            We also connect airline pages to route and airport data wherever it is available. That
+            gives the directory more context than a code lookup table: a carrier can be compared by
+            region, country, operating model, and network footprint, then followed into the airport
+            or route pages that explain how the trip fits together.
+          </p>
+        </div>
+      </section>
+
       {/* Auto-sliding & Tabbed Featured Policy Guides section */}
       <Tier1AirlineCarousel slides={carouselSlides} />
 

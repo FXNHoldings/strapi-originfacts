@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { listDestinations, mediaUrl } from '@/lib/strapi';
 import DestinationsDirectory from '@/components/DestinationsDirectory';
-import ExpandableDescription from '@/components/ExpandableDescription';
+import CategoryDescription from '@/components/CategoryDescription';
 import { JsonLd } from '@/components/SeoBlocks';
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
 import { HUB_INTROS, HUB_PATHS } from '@/lib/hub-intros';
+import { SECTIONS } from '@/lib/sections';
+import Link from 'next/link';
 import { Suspense } from 'react';
 
 export const revalidate = 60;
@@ -39,36 +41,118 @@ export default async function DestinationsPage() {
       <JsonLd data={breadcrumbJsonLd([{ name: HUB.name, url: PATH }])} />
       <JsonLd data={collectionJsonLd} />
 
-      <header className="relative overflow-hidden rounded-3xl border border-forest-900/10 bg-gradient-to-br from-forest-900/[0.04] via-emerald-900/[0.02] to-sand-100/50 p-8 shadow-sm sm:p-12">
-        <div className="relative z-10 max-w-4xl">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-forest-900 px-3 py-1 font-mono text-xs font-bold text-sand-100 shadow-xs">
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-              </svg>
-              Global Destination Directory
-            </span>
-            <span className="rounded-full border border-emerald-700/20 bg-emerald-700/10 px-3 py-1 font-mono text-xs font-semibold text-emerald-800">
-              Cities, Countries & Regions
-            </span>
-            <span className="rounded-full border border-forest-900/10 bg-white/70 px-3 py-1 font-mono text-xs font-semibold text-forest-900/70">
-              {destinations.length.toLocaleString()} Places Indexed
-            </span>
+      <header data-testid="destinations-header">
+        <div className="grid items-start gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12">
+          <div className="min-w-0">
+            <h1 className="font-urbanist text-5xl font-bold leading-none tracking-tight text-forest-950 sm:text-6xl">
+              Destinations
+            </h1>
+            <CategoryDescription text={HUB.intro} />
           </div>
-
-          <h1 className="editorial-h mt-4 text-3xl font-bold leading-[1.15] tracking-tight text-forest-900 sm:text-5xl">
-            Destination Guides for Cities, Countries & Regions
-          </h1>
-
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-forest-900/75 sm:text-lg">
-            Browse OriginFacts by continent, country, or city, then use each destination page to connect the practical details: nearby airports, airlines, hotels, routes, and travel context.
-          </p>
-
-          <div className="mt-4 text-base leading-relaxed text-forest-900/80 sm:text-lg">
-            <ExpandableDescription text={HUB.intro} />
+          <div
+            className="flex h-32 w-32 flex-col items-center justify-center rounded-[0.3rem] bg-[#f1f5f9] text-forest-950"
+            data-testid="destinations-count"
+          >
+            <span className="font-urbanist text-4xl font-bold leading-none">
+              {destinations.length.toLocaleString()}
+            </span>
+            <span className="mt-2 font-urbanist text-[11px] font-bold uppercase tracking-widest text-forest-900/70">
+              Places
+            </span>
           </div>
         </div>
+
+        <nav
+          className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-y border-forest-900/15 py-4 font-urbanist text-[14px] font-bold uppercase tracking-widest text-forest-950"
+          aria-label="Categories"
+          data-testid="destinations-subnav"
+        >
+          {[
+            ...SECTIONS.filter((s) => s.slug !== 'destinations').map((s) => ({
+              href: `/category/${s.slug}`,
+              slug: s.slug,
+              name: s.title,
+            })),
+            { href: '/destinations', slug: 'destinations', name: 'Destinations' },
+            { href: '/airlines', slug: 'airlines', name: 'Airlines' },
+            { href: '/airports', slug: 'airports', name: 'Airports' },
+          ].map((item) => (
+            <Link
+              key={item.slug}
+              href={item.href}
+              className={`transition hover:text-primary-emphasis ${
+                item.slug === 'destinations' ? 'text-primary-emphasis' : ''
+              }`}
+              aria-current={item.slug === 'destinations' ? 'page' : undefined}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
       </header>
+
+      <section className="mt-10 grid gap-5 lg:grid-cols-3" aria-label="How to use the destination directory">
+        {[
+          {
+            title: 'Start with the place, then check the logistics',
+            text:
+              'A destination page is most useful when it connects inspiration to practical travel planning. Use this directory to move from a continent or country into the cities, airports, airlines, routes, hotels, weather notes, and local planning details that shape the real trip.',
+          },
+          {
+            title: 'Compare countries, regions, and cities',
+            text:
+              'OriginFacts separates destinations into regions, countries, and city pages so broad planning and specific booking research do not get mixed together. Country pages help with visas, airports, airlines, and city coverage; city pages focus more on where to stay, how to arrive, and what to read before booking.',
+          },
+          {
+            title: 'Find travel coverage by route and context',
+            text:
+              'Search by destination name, country code, or region when you already know where you want to go. Browse the grouped sections when you are still deciding. The goal is to show not just a list of places, but the travel context around each one: how people get there, which hubs matter, and what planning questions come next.',
+          },
+        ].map((item) => (
+          <article
+            key={item.title}
+            className="rounded-[0.3rem] border border-forest-900/10 bg-white p-6 shadow-xs"
+          >
+            <h2 className="font-urbanist text-2xl font-bold leading-tight text-forest-950">
+              {item.title}
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-forest-900/70">{item.text}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="mt-8 rounded-[0.3rem] border border-forest-900/10 bg-[#f8fafc] p-6 sm:p-8">
+        <h2 className="font-urbanist text-3xl font-bold leading-tight text-forest-950">
+          What each destination guide brings together
+        </h2>
+        <div className="mt-4 grid gap-5 text-base leading-relaxed text-forest-900/70 md:grid-cols-2">
+          <p>
+            Each destination profile is designed to be more than a postcard summary. It pulls
+            together nearby airports, airlines, hotel areas, route context, weather patterns,
+            practical entry notes, and related stories where we have coverage. That makes the page
+            useful whether you are choosing between places or checking the details for a trip you
+            have already started planning.
+          </p>
+          <p>
+            The directory also helps keep similar places distinct. A country page answers different
+            questions from a city page, and a region page should help you compare options rather
+            than repeat the same generic travel copy. As more articles, airport pages, and route
+            profiles are published, those connections become visible here first.
+          </p>
+        </div>
+        <div className="mt-6 border-t border-forest-900/10 pt-5">
+          <h3 className="font-urbanist text-xl font-bold leading-tight text-forest-950">
+            Good for early trip research
+          </h3>
+          <p className="mt-3 text-base leading-relaxed text-forest-900/70">
+            Use the destination index before you open a booking site when you need to decide what
+            kind of trip is realistic. A city with several nearby airports may be easier to reach
+            than a better-known place with limited routes, while a country page can quickly show
+            whether the useful travel coverage sits around one capital, a resort coast, or several
+            regional gateways. That context makes the next search more focused.
+          </p>
+        </div>
+      </section>
 
       <Suspense>
         <DestinationsDirectory destinations={destinations} />

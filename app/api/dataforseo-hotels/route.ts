@@ -90,6 +90,15 @@ function safeCity(value: string | null) {
   return city;
 }
 
+function countryNameFromCode(value: string) {
+  if (!/^[A-Za-z]{2}$/.test(value)) return value;
+  try {
+    return new Intl.DisplayNames(['en'], { type: 'region' }).of(value.toUpperCase()) || value;
+  } catch {
+    return value;
+  }
+}
+
 const HOTEL_SCOPES = {
   popular: { label: 'Popular hotels', suffix: 'hotels' },
   cbd: { label: 'CBD hotels', suffix: 'CBD hotels' },
@@ -164,7 +173,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ hotels: [], error: 'city is required.' }, { status: 400 });
   }
 
-  const country = safeCity(input.get('country'));
+  const country = countryNameFromCode(safeCity(input.get('country')));
   const locationName = country || city;
   const scope = resolveScope(input.get('scope'));
   const scopeConfig = HOTEL_SCOPES[scope];
@@ -177,7 +186,7 @@ export async function GET(request: Request) {
   const cache = await readHotelCache();
   const cached = cache[key];
 
-  if (!forceRefresh && cached) {
+  if (!forceRefresh && cached && cached.hotels.length > 0) {
     const age = Date.now() - Date.parse(cached.cachedAt);
     if (Number.isFinite(age) && age < HOTEL_CACHE_TTL_MS) {
       const normalizedCached = withAffiliateHotelLinks(cached);
@@ -252,7 +261,9 @@ export async function GET(request: Request) {
       cached: false,
       cachedAt: new Date().toISOString(),
     };
-    await saveHotelCacheEntry(key, payload);
+    if (hotels.length > 0) {
+      await saveHotelCacheEntry(key, payload);
+    }
 
     return NextResponse.json(
       payload,

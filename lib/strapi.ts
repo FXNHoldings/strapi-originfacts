@@ -154,6 +154,27 @@ export type StrapiRoute = {
 type ListResponse<T> = { data: T[]; meta: { pagination: { page: number; pageSize: number; pageCount: number; total: number } } };
 type MemoryCacheEntry<T> = { expiresAt: number; value?: T; promise?: Promise<T> };
 
+const REMOVED_DESTINATION_SLUGS = new Set([
+  'patagonia',
+  'provence',
+  'tuscany',
+  'yucatan-peninsula',
+]);
+
+const REMOVED_DESTINATION_NAMES = new Set([
+  'patagonia',
+  'provence',
+  'tuscany',
+  'yucatán peninsula',
+  'yucatan peninsula',
+]);
+
+function isRemovedDestination(destination: Pick<StrapiDestination, 'slug' | 'name'>) {
+  const slug = destination.slug?.toLowerCase();
+  const name = destination.name?.toLowerCase();
+  return REMOVED_DESTINATION_SLUGS.has(slug) || REMOVED_DESTINATION_NAMES.has(name);
+}
+
 const MEMORY_CACHE_TTL_MS = 60_000;
 const memoryCache = new Map<string, MemoryCacheEntry<unknown>>();
 
@@ -374,11 +395,13 @@ export async function listDestinations() {
     fetchAllPages<StrapiDestination>('destinations', {
       sort: ['name:asc'],
       populate: ['heroImage'],
-    }),
+    }).then((destinations) => destinations.filter((d) => !isRemovedDestination(d))),
   );
 }
 
 export async function getDestination(slug: string) {
+  if (REMOVED_DESTINATION_SLUGS.has(slug)) return null;
+
   const res = await strapiFetch<ListResponse<StrapiDestination>>('destinations', {
     filters: { slug: { $eq: slug } },
     populate: ['heroImage'],
@@ -475,6 +498,20 @@ export async function listCitiesByCountryCode(code: string, limit = 100) {
     pagination: { pageSize: limit },
   });
   return res.data;
+}
+
+export async function listCountryAndCityDestinationsByCountryCodes(codes: string[]) {
+  const normalized = [...new Set(codes.map((code) => code?.toUpperCase()).filter(Boolean))];
+  if (normalized.length === 0) return [] as StrapiDestination[];
+
+  return fetchAllPages<StrapiDestination>('destinations', {
+    filters: {
+      type: { $in: ['country', 'city'] },
+      countryCode: { $in: normalized },
+    },
+    sort: ['type:asc', 'name:asc'],
+    populate: ['heroImage'],
+  }).then((destinations) => destinations.filter((d) => !isRemovedDestination(d)));
 }
 
 async function fetchAllPages<T>(

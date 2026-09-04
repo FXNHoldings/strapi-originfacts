@@ -233,14 +233,14 @@
     letter-spacing: 0.3px !important;
   }
 
-  /* Footer headings sit on a dark navy bg — keep them brand yellow */
+  /* Footer headings sit on a dark navy bg. */
   [data-testid="site-footer"] h1,
   [data-testid="site-footer"] h2,
   [data-testid="site-footer"] h3,
   [data-testid="site-footer"] h4,
   [data-testid="site-footer"] h5,
   [data-testid="site-footer"] h6 {
-    color: #ffe200 !important;
+    color: #ffffff !important;
   }
 
   /* Hero overlay tiles (homepage top section) — titles sit on top of an
@@ -594,6 +594,37 @@ html.flight-search-active #tpwl-tickets {
   line-height: 1.7;
   letter-spacing: 0;
 }
+
+.city-destination-page,
+.city-destination-page p,
+.city-destination-page li,
+.city-destination-page dd {
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+}
+
+.city-destination-page p {
+  line-height: 1.7;
+}
+
+[data-testid="city-stories"] article h3 {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+
+[data-testid="city-stories"] article p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
 /* Remove the Tailwind Typography default left padding on list items so our
    custom `!list-none !pl-0 !ps-0` ul renders bullets flush-left. */
 .prose-article :where(ul > li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {

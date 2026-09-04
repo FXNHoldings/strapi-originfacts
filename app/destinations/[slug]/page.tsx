@@ -9,6 +9,7 @@ import {
   listArticles,
   listCitiesByCountryCode,
   listCountriesByRegion,
+  listCountryAndCityDestinationsByCountryCodes,
   listRoutesToDestination,
   mediaUrl,
   type StrapiAirline,
@@ -19,15 +20,16 @@ import {
 import ArticleCard from '@/components/ArticleCard';
 import ContinentCountriesGrid from '@/components/ContinentCountriesGrid';
 import CountryAbout from '@/components/CountryAbout';
-import TruncatedSection from '@/components/TruncatedSection';
 import CountryDetailSections from '@/components/CountryDetailSections';
 import CountryFactsPanel from '@/components/CountryFactsPanel';
 import FlightSearchCTA from '@/components/FlightSearchCTA';
+import PopularHotelsByCity from '@/components/PopularHotelsByCity';
 import { getCountryFacts } from '@/lib/country-facts';
 import { faqJsonLd, normalizeFaqs } from '@/lib/entity-seo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
 import KeyFacts from '@/components/KeyFacts';
 import { clampDescription } from '@/lib/seo';
+import { airportPath } from '@/lib/airport-slugs';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -35,6 +37,12 @@ export const revalidate = 60;
 const CONTINENTS = ['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America'] as const;
 const GYG_EXCLUDED_TOUR_IDS_BY_DESTINATION: Record<string, string> = {
   bangkok: '1457595',
+};
+const CITY_HERO_DESCRIPTION_OVERRIDES: Record<string, string> = {
+  perth:
+    'Plan Perth with airport access, Indian Ocean stays, neighbourhood hotel choices, flight routes, and local stories for Western Australia trips that need space, beaches, and practical transport context.',
+  bangkok:
+    'Plan Bangkok with airport transfers, hotel-area choices, temples, food districts, day trips, activities, and flight routes across Thailand and Southeast Asia in one practical city guide.',
 };
 
 type Props = { params: Promise<{ slug: string }> };
@@ -64,22 +72,37 @@ export default async function DestinationPage({ params }: Props) {
     ? listCitiesByCountryCode(destination.countryCode as string, 100).catch(() => [] as StrapiDestination[])
     : Promise.resolve<StrapiDestination[]>([]);
   const countryCities = await countryCitiesPromise;
+  const countries = isContinent
+    ? await listCountriesByRegion(destination.name).catch(() => [] as StrapiCountry[])
+    : [];
+  const continentDestinations = isContinent
+    ? await listCountryAndCityDestinationsByCountryCodes(countries.map((country) => country.code)).catch(
+        () => [] as StrapiDestination[],
+      )
+    : [];
   const articleDestinationSlugs = isCountry
     ? [slug, ...countryCities.map((city) => city.slug)]
+    : isContinent
+      ? [slug, ...continentDestinations.map((d) => d.slug)]
     : [slug];
+  const articlePageSize = isCountry ? 100 : isContinent ? 50 : 24;
 
-  const [{ data: articles }, routes, airports, airlines, countries, cityAirports] = await Promise.all([
-    listArticles({ destinations: articleDestinationSlugs, pageSize: 24 }),
+  const [{ data: articles }, routes, airports, airlines, cityAirports] = await Promise.all([
+    listArticles({ destinations: articleDestinationSlugs, pageSize: articlePageSize }),
     listRoutesToDestination(destination, routeLimit).catch(() => []),
     isCountry
       ? listAirportsByCountryCode(destination.countryCode as string).catch(() => [] as StrapiAirport[])
+      : isContinent
+        ? listAirports()
+            .then((all) => {
+              const countryCodes = new Set(countries.map((country) => country.code.toUpperCase()));
+              return all.filter((airport) => airport.countryCode && countryCodes.has(airport.countryCode.toUpperCase()));
+            })
+            .catch(() => [] as StrapiAirport[])
       : Promise.resolve<StrapiAirport[]>([]),
     isCountry
       ? listAirlinesByCountry(destination.name).catch(() => [] as StrapiAirline[])
       : Promise.resolve<StrapiAirline[]>([]),
-    isContinent
-      ? listCountriesByRegion(destination.name).catch(() => [] as StrapiCountry[])
-      : Promise.resolve<StrapiCountry[]>([]),
     isCity
       ? listAirports()
           .then((all) =>
@@ -95,6 +118,9 @@ export default async function DestinationPage({ params }: Props) {
 
   const hero = mediaUrl(destination.heroImage ?? null);
   const activityQuery = buildActivityWidgetQuery(destination, routes);
+  const heroDescription = isCity
+    ? buildCityHeroDescription(destination, cityAirports, routes, articles.length)
+    : destination.description;
 
   // Editor-managed FAQs (Strapi json field), appended below whichever layout
   // renders. FaqSection + faqJsonLd both no-op when < 2 real Q&As survive
@@ -131,10 +157,27 @@ export default async function DestinationPage({ params }: Props) {
           destination={destination}
           hero={hero}
           countries={countries}
+          airports={airports}
+          childDestinations={continentDestinations}
           articles={articles}
         />
         {faqBlock}
       </>
+    );
+  }
+
+  if (isCity) {
+    return (
+      <CityDestinationPage
+        destination={destination}
+        hero={hero}
+        heroDescription={heroDescription}
+        routes={routes}
+        airports={cityAirports}
+        articles={articles}
+        activityQuery={activityQuery}
+        faqBlock={faqBlock}
+      />
     );
   }
 
@@ -152,8 +195,10 @@ export default async function DestinationPage({ params }: Props) {
             {destination.type ?? 'Destination'}{destination.countryCode ? ` · ${destination.countryCode}` : ''}
           </div>
           <h1 className="editorial-h mt-3 text-3xl font-bold !text-[#ffffff] sm:text-4xl">{destination.name}</h1>
-          {destination.description && (
-            <p className="mt-4 max-w-3xl text-lg text-white/90">{destination.description}</p>
+          {heroDescription && (
+            <p className="mt-4 line-clamp-3 max-w-3xl text-lg leading-relaxed text-white/90">
+              {heroDescription}
+            </p>
           )}
         </div>
       </section>
@@ -176,6 +221,10 @@ export default async function DestinationPage({ params }: Props) {
 
       {destination.type === 'city' && (
         <CityPlanningSections destination={destination} routes={routes} airports={cityAirports} articlesCount={articles.length} />
+      )}
+
+      {destination.type === 'city' && (
+        <CitySeoGuide destination={destination} routes={routes} airports={cityAirports} articlesCount={articles.length} />
       )}
 
       {destination.type === 'city' && (
@@ -226,6 +275,376 @@ export default async function DestinationPage({ params }: Props) {
 
       <div className="pb-20" />
     </div>
+  );
+}
+
+function CityDestinationPage({
+  destination,
+  hero,
+  heroDescription,
+  routes,
+  airports,
+  articles,
+  activityQuery,
+  faqBlock,
+}: {
+  destination: StrapiDestination;
+  hero: string | null;
+  heroDescription?: string;
+  routes: Awaited<ReturnType<typeof listRoutesToDestination>>;
+  airports: StrapiAirport[];
+  articles: Awaited<ReturnType<typeof listArticles>>['data'];
+  activityQuery: string;
+  faqBlock: React.ReactNode;
+}) {
+  const destIata = routes.find((r) => r.destination?.iata)?.destination?.iata;
+  const country = airports.find((airport) => airport.country)?.country || destination.countryCode || 'the region';
+  const primaryAirport = airports[0];
+
+  return (
+    <article className="city-destination-page" data-testid={`destination-page-${destination.slug}`}>
+      <section className="relative min-h-[520px] overflow-hidden bg-forest-950">
+        {hero && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={hero} alt={destination.name} className="absolute inset-0 h-full w-full object-cover" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/45 to-forest-950/10" />
+        <div className="relative mx-auto flex min-h-[520px] max-w-7xl flex-col justify-end px-6 pb-12 pt-24 text-white">
+          <div className="max-w-4xl">
+            <div className="text-xs font-bold uppercase tracking-[0.22em] text-white/75">
+              City guide{destination.countryCode ? ` · ${destination.countryCode}` : ''}
+            </div>
+            <h1 className="editorial-h mt-4 text-4xl font-bold leading-tight !text-[#ffffff] sm:text-5xl lg:text-6xl">
+              {destination.name}
+            </h1>
+            {heroDescription && (
+              <p className="mt-5 line-clamp-3 max-w-3xl text-lg leading-8 text-white/90">
+                {heroDescription}
+              </p>
+            )}
+          </div>
+          <div className="mt-8 grid max-w-4xl gap-3 sm:grid-cols-3">
+            <CityHeroMetric label="Stories" value={articles.length} />
+            <CityHeroMetric label="Routes" value={routes.length} />
+            <CityHeroMetric label="Airports" value={airports.length} />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-14" data-testid="city-overview-panel">
+        <KeyFacts
+          tldr={destination.tldr}
+          keyFacts={destination.keyFacts}
+          title={`${destination.name} at a glance`}
+        />
+        <div className="mt-8 grid gap-8 lg:grid-cols-[360px_minmax(0,1fr)]">
+          <aside className="rounded-[0.3rem] border border-forest-900/10 bg-gradient-to-br from-[#f7fbff] via-white to-[#fff8e6] p-6">
+            <p className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-primary-emphasis">
+              Planning snapshot
+            </p>
+            <div className="mt-5 space-y-5">
+              <CitySnapshotItem label="Country context" value={country} />
+              <CitySnapshotItem
+                label="Primary airport"
+                value={primaryAirport ? primaryAirport.name : 'Airport coverage expanding'}
+                href={primaryAirport ? airportPath(primaryAirport, airports) : undefined}
+              />
+              <CitySnapshotItem
+                label="Best first check"
+                value={destIata ? `Search flights to ${destIata}` : 'Compare live flight options'}
+                href={destIata ? `/flight-search?destination=${encodeURIComponent(destIata)}` : '/flight-search'}
+              />
+            </div>
+            <div className="mt-6 border-t border-forest-900/10 pt-5">
+              <h3 className="font-urbanist text-lg font-bold text-forest-950">
+                What this snapshot helps with
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-forest-900/72">
+                Use these quick signals to avoid the most common planning mistake: choosing a cheap fare or hotel
+                before checking how the airport, neighbourhood and onward route fit together.
+              </p>
+              <ul className="mt-4 space-y-2 text-sm leading-6 text-forest-900/72">
+                <li>Match the airport to your arrival plans.</li>
+                <li>Check hotel areas before comparing prices.</li>
+                <li>Use routes to spot practical connections.</li>
+              </ul>
+            </div>
+          </aside>
+
+          <div className="border-y border-forest-900/10 py-8">
+            <p className="section-eyebrow">
+              <span className="inline-block h-px w-8 bg-primary-emphasis" />
+              Start here
+            </p>
+            <h2 className="editorial-h mt-3 text-3xl font-bold text-forest-950">
+              Build your {destination.name} trip around arrivals, areas and routes
+            </h2>
+            <p className="mt-4 max-w-4xl text-base leading-7 text-forest-900/72">
+              Use this city page to compare the practical pieces that shape a trip: where you arrive, where you stay,
+              which routes are currently tracked and what local stories can help you choose smarter.
+            </p>
+            <p className="mt-4 max-w-4xl text-base leading-7 text-forest-900/72">
+              Start by confirming the airport and arrival time, then compare central hotel areas with airport-area
+              stays if your itinerary includes an early departure, late landing or short stopover. After that, use
+              the route and article sections to understand how {destination.name} connects with nearby regions,
+              major gateways and the rest of {country}.
+            </p>
+            <p className="mt-4 max-w-4xl text-base leading-7 text-forest-900/72">
+              This page is designed for quick trip decisions rather than generic inspiration. It brings together
+              flight context, hotel discovery, local activities and related Originfacts stories so you can move from
+              “where should I go?” to “what should I book first?” with fewer open tabs.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <CityPopularHotelsSection destination={destination} airports={airports} />
+      <CityPlanningSections destination={destination} routes={routes} airports={airports} articlesCount={articles.length} />
+
+      <div className="mx-auto max-w-7xl px-6">
+        <GetYourGuideActivityWidget destination={destination} query={activityQuery} />
+      </div>
+
+      <CitySeoGuide destination={destination} routes={routes} airports={airports} articlesCount={articles.length} />
+
+      {destIata && (
+        <div className="mx-auto max-w-7xl px-6">
+          <FlightSearchCTA
+            title={`Find cheap flights to ${destination.name}`}
+            subtitle="Live fares from hundreds of airlines and OTAs, ranked by total price."
+            cta={`Search flights to ${destIata}`}
+            subId={`dest_${destination.slug}`}
+            destination={destIata}
+          />
+        </div>
+      )}
+
+      <CityRoutesSection destination={destination} routes={routes} />
+      <CityStoriesSection destination={destination} articles={articles} />
+      {faqBlock}
+      <div className="pb-20" />
+    </article>
+  );
+}
+
+function CityPopularHotelsSection({
+  destination,
+  airports,
+}: {
+  destination: StrapiDestination;
+  airports: StrapiAirport[];
+}) {
+  const country = airports.find((airport) => airport.country)?.country || countryNameFromCode(destination.countryCode) || '';
+
+  return (
+    <div className="mx-auto max-w-7xl px-6 pb-12" data-testid="city-popular-hotels">
+      <PopularHotelsByCity
+        city={destination.name}
+        country={country}
+        eyebrow="Popular hotels"
+        title={`Popular hotels in ${destination.name}`}
+        description={`Compare highly rated ${destination.name} hotels from live Google Hotels data before choosing where to stay. Use the filters to scan central, airport, luxury, budget and family-friendly options for the city.`}
+        searchContextLabel="Page city"
+      />
+    </div>
+  );
+}
+
+function countryNameFromCode(code?: string) {
+  if (!code || code.length !== 2) return '';
+  try {
+    return new Intl.DisplayNames(['en'], { type: 'region' }).of(code.toUpperCase()) || '';
+  } catch {
+    return '';
+  }
+}
+
+function CityHeroMetric({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="border border-white/25 bg-white/10 px-4 py-3 backdrop-blur">
+      <div className="font-urbanist text-2xl font-bold leading-none text-white">{value.toLocaleString()}</div>
+      <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white/70">{label}</div>
+    </div>
+  );
+}
+
+function CitySnapshotItem({ label, value, href }: { label: string; value: string; href?: string }) {
+  const content = (
+    <>
+      <dt className="text-[10px] font-bold uppercase tracking-[0.18em] text-forest-900/50">{label}</dt>
+      <dd className="mt-1 font-urbanist text-lg font-bold leading-tight text-forest-950">{value}</dd>
+    </>
+  );
+
+  return href ? (
+    <Link href={href} className="block border-b border-forest-900/10 pb-4 last:border-b-0 last:pb-0">
+      {content}
+    </Link>
+  ) : (
+    <div className="border-b border-forest-900/10 pb-4 last:border-b-0 last:pb-0">{content}</div>
+  );
+}
+
+function CityStoriesSection({
+  destination,
+  articles,
+}: {
+  destination: StrapiDestination;
+  articles: Awaited<ReturnType<typeof listArticles>>['data'];
+}) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 pb-12 pt-[50px]" data-testid="city-stories">
+      <header className="flex flex-col gap-3 border-b border-forest-900/10 pb-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="section-eyebrow">
+            <span className="inline-block h-px w-8 bg-primary-emphasis" />
+            Local stories
+          </p>
+          <h2 className="editorial-h mt-3 text-3xl font-bold text-forest-950">
+            {articles.length === 0 ? `Stories from ${destination.name} coming soon` : `Stories from ${destination.name}`}
+          </h2>
+        </div>
+        {articles.length > 0 && (
+          <span className="text-sm text-forest-900/55">
+            {articles.length} stor{articles.length === 1 ? 'y' : 'ies'}
+          </span>
+        )}
+      </header>
+      {articles.length > 0 && (
+        <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {articles.slice(0, 8).map((article) => (
+            <ArticleCard key={article.id} article={article} size="md" />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function CityRoutesSection({
+  destination,
+  routes,
+}: {
+  destination: StrapiDestination;
+  routes: Awaited<ReturnType<typeof listRoutesToDestination>>;
+}) {
+  if (routes.length === 0) return null;
+
+  return (
+    <section className="mx-auto max-w-7xl px-6" data-testid="destination-routes">
+      <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
+        <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-2xl">
+          Flights to {destination.name}
+        </h2>
+        <span className="text-sm font-light text-forest-900/50">
+          {routes.length} route{routes.length === 1 ? '' : 's'}
+        </span>
+      </header>
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {routes.map((route) => (
+          <RouteCard key={route.id} r={route} />
+        ))}
+      </div>
+      <div className="mt-6">
+        <Link href="/flight-routes" className="text-sm font-medium text-forest-700 hover:underline">
+          Browse all routes →
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+function CitySeoGuide({
+  destination,
+  routes,
+  airports,
+  articlesCount,
+}: {
+  destination: StrapiDestination;
+  routes: Awaited<ReturnType<typeof listRoutesToDestination>>;
+  airports: StrapiAirport[];
+  articlesCount: number;
+}) {
+  const country = airports.find((airport) => airport.country)?.country || destination.countryCode || 'the region';
+  const primaryAirport = airports[0];
+  const originCities = unique(
+    routes
+      .map((route) => route.origin?.city || route.origin?.name)
+      .filter((name): name is string => Boolean(name)),
+  ).slice(0, 4);
+  const airlines = unique(routes.flatMap((route) => route.carriers?.map((carrier) => carrier.name) ?? [])).slice(0, 4);
+  const routeSummary = originCities.length
+    ? `Current route data connects ${destination.name} with ${formatList(originCities)}, giving travellers a quick view of useful inbound flight patterns.`
+    : `Route coverage for ${destination.name} is still growing, so use the flight search tools alongside this guide when comparing live fares.`;
+
+  const sections = [
+    {
+      title: `Where to stay in ${destination.name}`,
+      body: `For a first visit, compare central neighbourhoods with airport-area hotels before choosing the lowest nightly rate. Central stays usually work better for sightseeing, dining and short city breaks, while airport hotels can make sense for early departures, late arrivals or one-night stopovers in ${country}.`,
+    },
+    {
+      title: `Airport and arrival planning`,
+      body: primaryAirport
+        ? `${primaryAirport.name} is the main airport matched to ${destination.name}. Check the exact airport name on your ticket, then compare transfer time, arrival hour and baggage rules before booking tight onward plans.`
+        : `Before booking flights to ${destination.name}, check whether the fare uses a primary or secondary airport and how long the transfer into the city is likely to take.`,
+    },
+    {
+      title: `Flight and route context`,
+      body: `${routeSummary} ${airlines.length ? `Airlines appearing in the current route set include ${formatList(airlines)}.` : 'Airlines and schedules can change by season, so confirm the final carrier, fare rules and baggage allowance before payment.'}`,
+    },
+    {
+      title: `How to use this ${destination.name} guide`,
+      body: `Start with the city overview, then compare articles, airport details, activity ideas and flight routes. ${articlesCount > 0 ? `Originfacts currently links ${articlesCount} related ${articlesCount === 1 ? 'story' : 'stories'} to ${destination.name}.` : `Originfacts is still adding local stories for ${destination.name}.`} Use the live booking pages only after you know the area, airport and route that fit your trip.`,
+    },
+  ];
+
+  const checklist = [
+    'Confirm the arrival airport.',
+    'Compare central and airport hotels.',
+    'Check transfer time before booking.',
+    'Review baggage and fare rules.',
+    'Save flexible plans for late arrivals.',
+  ];
+
+  return (
+    <section className="mx-auto mt-12 max-w-7xl px-6" data-testid="city-seo-guide">
+      <div className="rounded-[0.3rem] border border-forest-900/10 bg-gradient-to-br from-white via-[#f7fbff] to-[#fff8e6] p-6 sm:p-8">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+          <div>
+            <p className="section-eyebrow">
+              <span className="inline-block h-px w-8 bg-primary-emphasis" />
+              Practical city guide
+            </p>
+            <h2 className="editorial-h mt-3 text-3xl font-bold text-forest-950">
+              Plan a better trip to {destination.name}
+            </h2>
+            <p className="mt-4 max-w-4xl text-base leading-7 text-forest-900/72">
+              Use this guide to connect the big travel decisions for {destination.name}: where to stay, which airport
+              to use, how flight routes compare and what to verify before booking.
+            </p>
+          </div>
+          <div className="border-l-2 border-primary-emphasis pl-5">
+            <div className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-primary-emphasis">
+              Quick checklist
+            </div>
+            <ul className="mt-4 space-y-2 text-sm leading-6 text-forest-900/72">
+              {checklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          {sections.map((section) => (
+            <article key={section.title} className="border-t border-forest-900/10 pt-5">
+              <h3 className="font-urbanist text-xl font-bold text-forest-950">{section.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-forest-900/72">{section.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -427,6 +846,33 @@ function buildActivityWidgetQuery(
   const country = routes.find((route) => route.destination?.country)?.destination?.country;
   const countryHint = country || destination.countryCode;
   return [destination.name, countryHint].filter(Boolean).join(', ');
+}
+
+function buildCityHeroDescription(
+  destination: StrapiDestination,
+  airports: StrapiAirport[],
+  routes: Awaited<ReturnType<typeof listRoutesToDestination>>,
+  articlesCount: number,
+) {
+  const override = CITY_HERO_DESCRIPTION_OVERRIDES[destination.slug];
+  if (override) return override;
+
+  const country = airports.find((airport) => airport.country)?.country || destination.countryCode;
+  const primaryAirport = airports[0]?.name;
+  const articleText =
+    articlesCount > 0
+      ? `${articlesCount} related ${articlesCount === 1 ? 'story' : 'stories'}`
+      : 'local planning notes';
+  const routeText =
+    routes.length > 0
+      ? `${routes.length} tracked flight ${routes.length === 1 ? 'route' : 'routes'}`
+      : 'flight-search context';
+
+  if (primaryAirport) {
+    return `Plan ${destination.name}${country ? `, ${country}` : ''} with ${primaryAirport}, ${routeText}, hotel-area guidance, activities, and ${articleText} in one practical travel guide.`;
+  }
+
+  return `Plan ${destination.name}${country ? `, ${country}` : ''} with ${routeText}, hotel-area guidance, activities, and ${articleText} while OriginFacts expands airport-level coverage for the city.`;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -941,11 +1387,15 @@ function ContinentDestinationPage({
   destination,
   hero,
   countries,
+  airports,
+  childDestinations,
   articles,
 }: {
   destination: StrapiDestination;
   hero: string | null;
   countries: StrapiCountry[];
+  airports: StrapiAirport[];
+  childDestinations: StrapiDestination[];
   articles: Awaited<ReturnType<typeof listArticles>>['data'];
 }) {
   // Parse the markdown description into a short lead + named sections, the
@@ -977,92 +1427,65 @@ function ContinentDestinationPage({
 
   return (
     <article data-testid={`destination-page-${destination.slug}`}>
-      {/* 1. Hero — image background; title + lead on the left, facts panel on the right */}
-      <section className="relative overflow-hidden bg-paper py-16">
+      {/* 1. Hero — bottom-anchored, left-aligned title + lead */}
+      <section className="relative h-[55vh] min-h-[380px] overflow-hidden bg-forest-900">
         {hero && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={hero}
             alt={destination.name}
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.35]"
+            className="absolute inset-0 h-full w-full object-cover"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-paper/85 via-paper/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-950/90 via-forest-950/30 to-forest-950/10" />
 
-        <div className="relative mx-auto max-w-7xl px-6">
-          <div className="grid items-end gap-10 lg:grid-cols-[1fr_320px]">
-            {/* Left — text column */}
-            <div>
-              <div className="text-xs uppercase tracking-widest text-forest-900/60">Continent</div>
-              <h1 className="editorial-h mt-3 text-3xl font-bold text-forest-900 sm:text-4xl">
-                {destination.name}
-              </h1>
-              {leadParagraphs.length > 0 ? (
-                <p className="mt-4 max-w-2xl text-lg leading-relaxed text-forest-900/75">
-                  {leadParagraphs.join(' ')}
-                </p>
-              ) : destination.description ? (
-                <p className="mt-4 max-w-2xl text-lg leading-relaxed text-forest-900/75">
-                  {destination.description}
-                </p>
-              ) : null}
-            </div>
+        <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-14 text-sand-100">
+          <div className="max-w-3xl">
+            <div className="text-xs uppercase tracking-widest text-white/80">Continent</div>
+            <h1 className="editorial-h mt-3 text-3xl font-bold !text-[#ffffff] sm:text-4xl">
+              {destination.name}
+            </h1>
+            {leadParagraphs.length > 0 ? (
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/90">
+                {leadParagraphs.join(' ')}
+              </p>
+            ) : destination.description ? (
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-white/90">
+                {destination.description}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </section>
 
-            {/* Right — facts panel */}
+      {/* 2. About — facts panel left, Overview + History right */}
+      {(aboutHeroSections.length > 0 || historySection) && (
+        <section className="mx-auto mt-14 max-w-7xl px-6" data-testid="continent-about">
+          <div className="grid gap-y-10 lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-x-12">
             <ContinentFactsPanel
               destination={destination}
               countriesCount={countries.length}
               articlesCount={articles.length}
             />
-          </div>
-        </div>
-      </section>
-
-      {/* 2. About — stats left, Overview + History right (Thailand-style) */}
-      {(aboutHeroSections.length > 0 || historySection) && (
-        <section className="mx-auto mt-14 max-w-7xl px-6" data-testid="continent-about">
-          <div className="grid gap-y-10 lg:grid-cols-[30%_60%] lg:gap-x-[10%]">
-            {/* Left — coverage stats */}
-            <div className="grid grid-cols-2 gap-x-8 gap-y-6 self-start">
-              <HeroStat label="Countries" value={countries.length} />
-              <HeroStat label="Stories" value={articles.length} />
-              {facts.population != null && (
-                <HeroStat
-                  label="Population"
-                  value={facts.population}
-                  display={
-                    facts.population >= 1_000_000_000
-                      ? `${(facts.population / 1_000_000_000).toFixed(1)}B`
-                      : facts.population >= 1_000_000
-                        ? `${(facts.population / 1_000_000).toFixed(0)}M`
-                        : facts.population.toLocaleString()
-                  }
-                />
-              )}
-              {facts.areaKm2 != null && (
-                <HeroStat
-                  label="Area km²"
-                  value={facts.areaKm2}
-                  display={
-                    facts.areaKm2 >= 1_000_000
-                      ? `${(facts.areaKm2 / 1_000_000).toFixed(1)}M`
-                      : facts.areaKm2.toLocaleString()
-                  }
-                />
-              )}
-            </div>
             {/* Right — Overview + History and Ancient Civilizations (truncated) */}
             <div className="w-full space-y-8">
               {aboutHeroSections.length > 0 && (
                 <CountryAbout sections={aboutHeroSections} />
               )}
               {historySection && (
-                <TruncatedSection section={historySection} truncateAfterWords={30} />
+                <CountryAbout sections={[historySection]} />
               )}
             </div>
           </div>
         </section>
       )}
+
+      <ContinentPlanningContent
+        destination={destination}
+        facts={facts}
+        countriesCount={countries.length}
+        articlesCount={articles.length}
+      />
 
       {/* 3. Countries — full width, with A-Z letter filter */}
       <ContinentCountriesGrid countries={countries} regionName={destination.name} />
@@ -1074,8 +1497,14 @@ function ContinentDestinationPage({
         </section>
       )}
 
+      <ContinentTravelToolkit
+        regionName={destination.name}
+        airports={airports}
+        cities={childDestinations.filter((d) => d.type === 'city')}
+      />
+
       {/* 3b. Interesting Facts + Top Travel Highlights — 2-col grid, below countries */}
-      {(interestingFactsSection || topHighlightsSection) && (
+      {(interestingFactsSection || topHighlightsSection || articles.length > 0) && (
         <section
           className="mx-auto mt-14 max-w-7xl px-6"
           data-testid="continent-facts-and-highlights"
@@ -1084,9 +1513,11 @@ function ContinentDestinationPage({
             {interestingFactsSection && (
               <CountryAbout sections={[interestingFactsSection]} singleColumnBullets />
             )}
-            {topHighlightsSection && (
+            {articles.length > 0 ? (
+              <ContinentPostHighlights regionName={destination.name} articles={articles} />
+            ) : topHighlightsSection ? (
               <CountryAbout sections={[topHighlightsSection]} singleColumnBullets />
-            )}
+            ) : null}
           </div>
         </section>
       )}
@@ -1117,6 +1548,236 @@ function ContinentDestinationPage({
       )}
     </article>
   );
+}
+
+function ContinentPostHighlights({
+  regionName,
+  articles,
+}: {
+  regionName: string;
+  articles: Awaited<ReturnType<typeof listArticles>>['data'];
+}) {
+  const highlights = articles.slice(0, 4);
+
+  return (
+    <section data-testid="continent-top-travel-highlights">
+      <div className="mb-6">
+        <div className="kicker text-primary-highlight">Top Travel Highlights</div>
+        <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-900 lg:text-3xl">
+          Fresh stories from {regionName}
+        </h2>
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink/75">
+          Explore practical travel stories automatically gathered from countries and cities across {regionName}.
+        </p>
+      </div>
+      <div className="grid gap-3">
+        {highlights.map((article) => (
+          <Link
+            key={article.id}
+            href={`/articles/${article.slug}`}
+            className="group border-b border-forest-900/10 py-3"
+          >
+            <h3 className="editorial-h text-lg font-bold leading-tight text-forest-900 transition-colors group-hover:text-primary-highlight">
+              {article.title}
+            </h3>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ContinentTravelToolkit({
+  regionName,
+  airports,
+  cities,
+}: {
+  regionName: string;
+  airports: StrapiAirport[];
+  cities: StrapiDestination[];
+}) {
+  const hubs = sortAirportsByHubPriority(airports).slice(0, 6);
+  const featuredCities = cities.slice(0, 5);
+  const timing = bestTimeToVisit(regionName);
+
+  if (hubs.length === 0 && featuredCities.length === 0) return null;
+
+  return (
+    <section className="mx-auto mt-14 max-w-7xl px-6" data-testid="continent-travel-toolkit">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
+        {hubs.length > 0 && (
+          <div className="rounded-[0.3rem] border border-forest-900/10 bg-white p-6 sm:p-8">
+            <p className="section-eyebrow">
+              <span className="inline-block h-px w-8 bg-primary-emphasis" />
+              Major travel hubs
+            </p>
+            <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-950">
+              Main airport gateways for {regionName}
+            </h2>
+            <p className="mt-3 max-w-3xl text-base leading-7 text-forest-900/72">
+              Start with the airports that usually anchor long-haul arrivals, regional connections and onward city
+              planning across {regionName}.
+            </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {hubs.map((airport) => (
+                <Link
+                  key={airport.id}
+                  href={airportPath(airport, airports)}
+                  className="group flex items-center justify-between gap-4 border-b border-forest-900/10 py-3"
+                >
+                  <span>
+                    <span className="block font-urbanist text-base font-bold text-forest-950 group-hover:text-primary-highlight">
+                      {airport.city || airport.name}
+                    </span>
+                    <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-forest-900/55">
+                      {airport.iata} · {airport.country}
+                    </span>
+                  </span>
+                  <span className="text-sm font-bold text-primary-emphasis">View</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="rounded-[0.3rem] border border-forest-900/10 bg-gradient-to-br from-[#f7fbff] via-white to-[#fff8e6] p-6 sm:p-8">
+          <p className="section-eyebrow">
+            <span className="inline-block h-px w-8 bg-primary-emphasis" />
+            Best time to visit
+          </p>
+          <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-950">
+            When {regionName} is easiest to plan
+          </h2>
+          <p className="mt-3 text-base leading-7 text-forest-900/72">{timing.summary}</p>
+          <div className="mt-6 space-y-4">
+            {timing.notes.map((note) => (
+              <div key={note.label} className="border-l-2 border-primary-emphasis pl-4">
+                <h3 className="font-urbanist text-base font-bold text-forest-950">{note.label}</h3>
+                <p className="mt-1 text-sm leading-6 text-forest-900/70">{note.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {featuredCities.length > 0 && (
+        <div className="mt-6 rounded-[0.3rem] border border-forest-900/10 bg-white p-6 sm:p-8" data-testid="continent-featured-cities">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="section-eyebrow">
+                <span className="inline-block h-px w-8 bg-primary-emphasis" />
+                Featured cities
+              </p>
+              <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-950">
+                City guides across {regionName}
+              </h2>
+            </div>
+            <p className="max-w-xl text-sm leading-6 text-forest-900/70">
+              Use these city pages to compare airports, routes, local planning context and related stories.
+            </p>
+          </div>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {featuredCities.map((city) => (
+              <Link
+                key={city.id}
+                href={`/destinations/${city.slug}`}
+                className="group border-b border-forest-900/10 py-3"
+              >
+                <h3 className="font-urbanist text-lg font-bold text-forest-950 group-hover:text-primary-highlight">
+                  {city.name}
+                </h3>
+                {city.countryCode && (
+                  <p className="mt-1 text-xs font-bold uppercase tracking-[0.16em] text-forest-900/55">
+                    {city.countryCode}
+                  </p>
+                )}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function sortAirportsByHubPriority(airports: StrapiAirport[]) {
+  const preferred = new Set([
+    'ATL', 'PEK', 'PVG', 'HND', 'DXB', 'SIN', 'ICN', 'BKK', 'DEL', 'HKG',
+    'LHR', 'CDG', 'AMS', 'FRA', 'MAD', 'IST', 'FCO', 'MUC',
+    'JFK', 'LAX', 'ORD', 'DFW', 'DEN', 'YYZ', 'MEX',
+    'GRU', 'BOG', 'SCL', 'LIM', 'EZE',
+    'SYD', 'MEL', 'AKL', 'BNE',
+    'JNB', 'ADD', 'CAI', 'NBO', 'CMN',
+  ]);
+
+  return [...airports].sort((a, b) => {
+    const aPreferred = preferred.has(a.iata?.toUpperCase());
+    const bPreferred = preferred.has(b.iata?.toUpperCase());
+    if (aPreferred !== bPreferred) return aPreferred ? -1 : 1;
+    return (a.city || a.name).localeCompare(b.city || b.name);
+  });
+}
+
+function bestTimeToVisit(regionName: string) {
+  const byRegion: Record<string, { summary: string; notes: { label: string; body: string }[] }> = {
+    Africa: {
+      summary:
+        'Africa works best when you plan around dry seasons, safari calendars, coastal heat and regional rainy periods rather than relying on one continent-wide weather rule.',
+      notes: [
+        { label: 'Dry-season travel', body: 'Often best for wildlife viewing and easier overland movement in many safari regions.' },
+        { label: 'Coastal timing', body: 'North African, island and Indian Ocean trips can have very different beach seasons.' },
+      ],
+    },
+    Asia: {
+      summary:
+        'Asia is easiest to plan by subregion: monsoon timing, mountain seasons, typhoon risk and holiday peaks can vary sharply between neighbouring countries.',
+      notes: [
+        { label: 'Shoulder seasons', body: 'Spring and autumn often balance weather, prices and crowds across many major city routes.' },
+        { label: 'Holiday peaks', body: 'Lunar New Year, Golden Week and school holidays can change fares and hotel availability fast.' },
+      ],
+    },
+    Europe: {
+      summary:
+        'Europe is usually most comfortable in spring and autumn, while summer brings the widest schedules but also heavier crowds and higher prices.',
+      notes: [
+        { label: 'City breaks', body: 'April to June and September to October are strong months for capitals and rail-linked trips.' },
+        { label: 'Peak summer', body: 'Book earlier for Mediterranean beaches, island routes and school-holiday travel.' },
+      ],
+    },
+    'North America': {
+      summary:
+        'North America rewards seasonal planning: winter, spring break, summer road trips and autumn city travel each shift prices and airport demand.',
+      notes: [
+        { label: 'Shoulder months', body: 'May, early June, September and October can be easier for cities, parks and cross-country flights.' },
+        { label: 'Weather checks', body: 'Hurricane, wildfire and winter-storm seasons can affect routes in different parts of the region.' },
+      ],
+    },
+    Oceania: {
+      summary:
+        'Oceania is often strongest from spring through autumn, but island weather, school holidays and long domestic distances make local timing important.',
+      notes: [
+        { label: 'Australia and New Zealand', body: 'Spring and autumn are useful for cities, coasts and easier road or flight connections.' },
+        { label: 'Island travel', body: 'Check wet seasons and cyclone risk before booking Pacific island stays.' },
+      ],
+    },
+    'South America': {
+      summary:
+        'South America needs route-by-route timing because Andes altitude, Amazon rainfall, Patagonia seasons and beach weather all follow different patterns.',
+      notes: [
+        { label: 'Southern summer', body: 'December to March is the main window for Patagonia and far-south outdoor trips.' },
+        { label: 'Altitude and rain', body: 'Build flexibility into Andean and Amazon itineraries where weather can change plans quickly.' },
+      ],
+    },
+  };
+
+  return byRegion[regionName] ?? {
+    summary:
+      `Plan ${regionName} by matching the season to the countries, cities and routes you want most, then check local holiday periods before booking.`,
+    notes: [
+      { label: 'Compare subregions', body: 'Weather and pricing can change quickly across borders, coasts and inland routes.' },
+      { label: 'Check major dates', body: 'Festivals, school holidays and event weeks can affect flights and hotels.' },
+    ],
+  };
 }
 
 function flagEmoji(code?: string): string {
@@ -1167,6 +1828,158 @@ type ContinentFacts = {
   timezoneSpan?: string;
   subregions?: string[];
 };
+
+function ContinentPlanningContent({
+  destination,
+  facts,
+  countriesCount,
+  articlesCount,
+}: {
+  destination: StrapiDestination;
+  facts: ContinentFacts;
+  countriesCount: number;
+  articlesCount: number;
+}) {
+  const angle = continentPlanningAngle(destination.name);
+  const countryLabel = `${countriesCount.toLocaleString()} countr${countriesCount === 1 ? 'y' : 'ies'}`;
+  const storyLabel = `${articlesCount.toLocaleString()} related stor${articlesCount === 1 ? 'y' : 'ies'}`;
+  const scaleParts = [
+    facts.population
+      ? `about ${formatContinentPopulation(facts.population)} people`
+      : null,
+    facts.areaKm2
+      ? `${facts.areaKm2.toLocaleString()} km²`
+      : null,
+  ].filter(Boolean);
+  const scaleSentence = scaleParts.length
+    ? `${destination.name} covers ${scaleParts.join(' across ')}, so distance, season, and route choice matter more than a single headline itinerary.`
+    : `${destination.name} is too varied for one generic itinerary, so distance, season, and route choice matter more than a single headline plan.`;
+
+  return (
+    <section
+      className="mx-auto mt-14 max-w-7xl px-6"
+      data-testid="continent-planning-content"
+      aria-labelledby="continent-planning-heading"
+    >
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.42fr)]">
+        <div className="rounded-[0.3rem] border border-forest-900/10 bg-white p-6 sm:p-8">
+          <p className="section-eyebrow">
+            <span className="inline-block h-px w-8 bg-forest-800/60" />
+            Regional planning guide
+          </p>
+          <h2
+            id="continent-planning-heading"
+            className="editorial-h mt-3 text-3xl font-bold text-forest-950"
+          >
+            How to plan travel across {destination.name}
+          </h2>
+          <div className="mt-5 grid gap-5 text-base font-normal leading-7 text-forest-900/75 md:grid-cols-2">
+            <p>
+              {scaleSentence} Use this page to move from a broad regional idea into the countries,
+              cities, airports, airlines, routes, and stories that make the trip practical.
+            </p>
+            <p>
+              OriginFacts currently connects {countryLabel} and {storyLabel} to this region. That
+              helps you compare where coverage is strongest, which gateways appear most often, and
+              whether a route is better planned as a direct arrival, a stopover, or a multi-country
+              journey.
+            </p>
+          </div>
+        </div>
+
+        <aside className="rounded-[0.3rem] border border-forest-900/10 bg-[#f8fafc] p-6">
+          <h3 className="font-urbanist text-xl font-bold leading-tight text-forest-950">
+            Best planning angle
+          </h3>
+          <p className="mt-3 text-sm font-normal leading-7 text-forest-900/70">{angle.summary}</p>
+          <ul className="mt-5 space-y-3 text-sm font-normal leading-6 text-forest-900/70">
+            {angle.points.map((point) => (
+              <li key={point} className="flex gap-3">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-emphasis" />
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </section>
+  );
+}
+
+function formatContinentPopulation(value: number) {
+  if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(2)} billion`;
+  if (value >= 1_000_000) return `${Math.round(value / 1_000_000).toLocaleString()} million`;
+  return value.toLocaleString();
+}
+
+function continentPlanningAngle(name: string) {
+  const angles: Record<string, { summary: string; points: string[] }> = {
+    Africa: {
+      summary:
+        'Plan around gateway cities, visa differences, and long overland distances rather than assuming neighbouring countries are simple add-ons.',
+      points: [
+        'Check regional hubs before choosing a first arrival city.',
+        'Compare dry and wet seasons by country, not continent.',
+        'Leave margin for multi-country flights and border formalities.',
+      ],
+    },
+    Asia: {
+      summary:
+        'Asia rewards route planning: major hubs can make long trips cheap, but climate, visa rules, and airport transfers vary sharply by country.',
+      points: [
+        'Use hub airports to compare direct flights and stopovers.',
+        'Check monsoon, heat, and festival periods before booking.',
+        'Treat big metro areas as multi-airport destinations.',
+      ],
+    },
+    Europe: {
+      summary:
+        'Europe is best planned by mixing rail, low-cost flights, and major airport hubs, especially when several countries sit within one trip.',
+      points: [
+        'Compare city-centre arrival time against cheaper secondary airports.',
+        'Group countries by transport links, not only geography.',
+        'Watch baggage rules on short-haul low-cost carriers.',
+      ],
+    },
+    'North America': {
+      summary:
+        'North America is easier when you plan around flight hubs, domestic distances, and seasonal weather that can reshape routes quickly.',
+      points: [
+        'Check whether a hub airport adds useful onward options.',
+        'Allow extra time for domestic connections and immigration.',
+        'Compare city stays with airport-area hotels for early flights.',
+      ],
+    },
+    Oceania: {
+      summary:
+        'Oceania trips depend heavily on flight timing, island connections, and long distances between countries that look close on a map.',
+      points: [
+        'Plan island hops around limited weekly flight schedules.',
+        'Compare Australia and New Zealand gateways before committing.',
+        'Build weather flexibility into beach and outdoor itineraries.',
+      ],
+    },
+    'South America': {
+      summary:
+        'South America works best when routes are planned through major hubs and climate zones, because mountains, rainforest, and coastlines change travel time fast.',
+      points: [
+        'Use hub cities to avoid awkward backtracking.',
+        'Check altitude, wet season, and domestic flight reliability.',
+        'Keep extra margin for long bus or regional-airline legs.',
+      ],
+    },
+  };
+
+  return angles[name] ?? {
+    summary:
+      'Use this regional page as a planning layer before choosing countries, airports, routes, and city guides.',
+    points: [
+      'Start broad, then narrow by country and city.',
+      'Compare airports before choosing the cheapest fare.',
+      'Use related stories for practical trip details.',
+    ],
+  };
+}
 
 function ContinentFactsPanel({
   destination,

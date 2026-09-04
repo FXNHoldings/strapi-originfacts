@@ -47,7 +47,7 @@ const HOTEL_SCOPES = [
 ] as const;
 
 const BOOKING_AFFILIATE_URL = 'https://tatrck.com/h/0Hu30_OZ0V7N?model=cpc';
-const HOTEL_BROWSER_CACHE_PREFIX = 'originfacts:hotels-near-you:v2';
+const HOTEL_BROWSER_CACHE_PREFIX = 'originfacts:hotels-near-you:v3';
 const HOTEL_BROWSER_CACHE_TTL_MS = 1000 * 60 * 60 * 24 * 7;
 
 function hotelBrowserCacheKey({
@@ -74,6 +74,11 @@ function readHotelBrowserCache(key: string): HotelResponse | null {
     const parsed = JSON.parse(raw) as HotelResponse & { storedAt?: string };
     const storedAt = parsed.storedAt ? Date.parse(parsed.storedAt) : 0;
     if (!Number.isFinite(storedAt) || Date.now() - storedAt > HOTEL_BROWSER_CACHE_TTL_MS) {
+      window.localStorage.removeItem(key);
+      return null;
+    }
+
+    if (!parsed.hotels || parsed.hotels.length === 0) {
       window.localStorage.removeItem(key);
       return null;
     }
@@ -111,14 +116,34 @@ function formatMoney(value: number | null, currency: string | null) {
   }
 }
 
-export default function PopularHotelsByCity() {
+export default function PopularHotelsByCity({
+  city,
+  country,
+  eyebrow = 'Hotels near you',
+  title,
+  description,
+  searchContextLabel = 'IP-detected city',
+}: {
+  city?: string;
+  country?: string;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  searchContextLabel?: string;
+}) {
   const [data, setData] = useState<HotelResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [scope, setScope] = useState<HotelScope>('popular');
   const [cityContext, setCityContext] = useState<GeoResponse | null>(null);
   const responsesByScopeRef = useRef<Partial<Record<HotelScope, HotelResponse>>>({});
+  const hasFixedCity = Boolean(city?.trim());
 
   useEffect(() => {
+    if (hasFixedCity) {
+      setCityContext({ name: city?.trim() || 'New York', country: country?.trim() || '' });
+      return;
+    }
+
     let active = true;
 
     async function loadCity() {
@@ -135,7 +160,7 @@ export default function PopularHotelsByCity() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [city, country, hasFixedCity]);
 
   useEffect(() => {
     if (!cityContext?.name) return;
@@ -202,23 +227,24 @@ export default function PopularHotelsByCity() {
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
             <div>
               <p className="font-urbanist text-[11px] font-bold uppercase tracking-[0.22em] text-primary-emphasis">
-                Hotels near you
+                {eyebrow}
               </p>
               <h2
                 id="popular-hotels-by-city-heading"
                 className="mt-3 max-w-3xl font-urbanist text-3xl font-bold leading-[1.05] text-forest-950 sm:text-4xl"
               >
-                Compare hotel areas near {cityLabel}
+                {title || `Compare hotel areas near ${cityLabel}`}
               </h2>
               <p className="mt-4 max-w-4xl text-sm leading-6 text-forest-900/68 sm:text-base">
-                Choose the type of stay you want, then scan live Google Hotels data before you commit to a flight. CBD and city-centre searches are useful when location matters more than the lowest nightly rate.
+                {description ||
+                  'Choose the type of stay you want, then scan live Google Hotels data before you commit to a flight. CBD and city-centre searches are useful when location matters more than the lowest nightly rate.'}
               </p>
             </div>
             <div className="rounded-[0.4rem] bg-white px-4 py-3 text-sm shadow-sm ring-1 ring-forest-900/10">
               <span className="block font-urbanist text-[10px] font-bold uppercase tracking-[0.18em] text-forest-900/45">
                 Search context
               </span>
-              <span className="mt-1 block font-semibold text-forest-950">IP-detected city</span>
+              <span className="mt-1 block font-semibold text-forest-950">{searchContextLabel}</span>
               {data?.checkIn && data.checkOut && (
                 <span className="mt-2 block text-xs font-medium text-forest-900/55">
                   Sample dates: {data.checkIn} to {data.checkOut}
@@ -302,7 +328,7 @@ function HotelFeatureCard({ hotel }: { hotel: Hotel }) {
         <span className="rounded-full bg-white/95 px-3 py-1 font-urbanist text-[11px] font-bold uppercase tracking-wider text-forest-950">
           Best match
         </span>
-        <h3 className="mt-4 max-w-xl font-urbanist text-3xl font-bold leading-tight text-white" style={{ color: '#ffffff' }}>
+        <h3 className="mt-4 max-w-xl font-urbanist text-3xl font-bold leading-tight !text-[#ffffff]" style={{ color: '#ffffff' }}>
           {hotel.name}
         </h3>
         <HotelMeta hotel={hotel} className="mt-3 text-white/82" />
