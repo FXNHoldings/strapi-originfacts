@@ -101,14 +101,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`${inter.variable} ${urbanist.variable} ${jakarta.variable} ${figtree.variable}`}>
       <head>
-        <Script
-          {...({ nowprocket: '', 'nitro-exclude': '' } as Record<string, string>)}
-          type="text/javascript"
-          id="sa-dynamic-optimization"
-          data-uuid="5dd6702c-eaa5-420e-a784-a4685d29cc71"
-          src="https://dashboard.searchatlas.com/scripts/dynamic_optimization.js"
-          strategy="afterInteractive"
-        />
         <script
           {...({
             nowprocket: '',
