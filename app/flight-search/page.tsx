@@ -7,7 +7,6 @@ import { breadcrumbJsonLd } from '@/lib/jsonld';
 import { faqJsonLd } from '@/lib/entity-seo';
 import TpwlLoader from '@/components/TpwlLoader';
 import AirlineResultsFilter from '@/components/AirlineResultsFilter';
-import CustomFlightSearch from '@/components/CustomFlightSearch';
 import ComparisonTable from '@/components/ComparisonTable';
 
 export const metadata = {
@@ -128,8 +127,7 @@ export default async function FlightsPage({
       <JsonLd data={faqJsonLd(BOOKING_FAQ)} />
       <TpwlLoader />
 
-      {/* TPWL renders the result list below. The hero uses our custom form so
-          its layout stays fully under OriginFacts' control. */}
+      {/* TPWL renders the search form and result list in their containers below. */}
 
       <Script id="flight-search-state" strategy="afterInteractive">
         {`(function () {
@@ -164,7 +162,7 @@ export default async function FlightsPage({
             </div>
 
             <div className="tpwl-search-wrap mt-10">
-              <CustomFlightSearch variant="hero" />
+              <div id="tpwl-search" />
             </div>
           </div>
         </div>
