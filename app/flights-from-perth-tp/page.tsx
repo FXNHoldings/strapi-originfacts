@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { breadcrumbJsonLd } from '@/lib/jsonld';
+import { JsonLd } from '@/components/SeoBlocks';
 
 export const metadata: Metadata = {
   title: 'Flights from Perth — TravelPayouts Edition',
@@ -13,8 +15,11 @@ const MONTHS = [
 ];
 
 export default function PerthTPExploreIndex() {
+  const breadcrumbs = breadcrumbJsonLd([{ name: 'Flights from Perth (TP)', url: '/flights-from-perth-tp' }]);
+
   return (
     <main className="mx-auto max-w-7xl px-6 py-16" data-testid="perth-explore-index-tp">
+      <JsonLd data={breadcrumbs} />
       <header>
         <p className="text-xs uppercase tracking-widest text-forest-900/55">
           Flights from Perth (PER) · TravelPayouts source

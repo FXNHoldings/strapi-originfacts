@@ -2,7 +2,7 @@
   "name": "fxn-travel-blog",
   "version": "1.0.0",
   "private": true,
-  "description": "FXN Studio travel blog \u2014 Next.js frontend for Strapi CMS",
+  "description": "FXN Studio travel blog — Next.js frontend for Strapi CMS",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
@@ -27,6 +27,7 @@
     "date-fns": "^4.1.0",
     "marked": "^15.0.3",
     "next": "^15.5.21",
+    "nodemailer": "^10.0.0",
     "qs": "^6.15.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^22.10.1",
+    "@types/nodemailer": "^8.0.1",
     "@types/qs": "^6.9.17",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",

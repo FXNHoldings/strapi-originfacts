@@ -9,7 +9,7 @@ import {
   mediaUrl,
   type StrapiArticle,
 } from '@/lib/strapi';
-import { ORG_ID, organizationJsonLd } from '@/lib/jsonld';
+import { ORG_ID, organizationJsonLd, breadcrumbJsonLd } from '@/lib/jsonld';
 
 const FEATURED_COUNTRY_SLUGS = [
   'japan',
@@ -82,6 +82,8 @@ export default async function HomePage() {
     },
   };
 
+  const breadcrumbs = breadcrumbJsonLd([]);
+
   return (
     <div data-testid="home-page">
       <script
@@ -91,6 +93,10 @@ export default async function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
 
       <TagsBar />

@@ -6,6 +6,9 @@ import {
   type ExploreResult,
 } from '@/lib/explore';
 import { listAirports } from '@/lib/strapi';
+import { SITE_URL, articleBlogPostingJsonLd } from '@/lib/entity-seo';
+import { breadcrumbJsonLd } from '@/lib/jsonld';
+import { JsonLd } from '@/components/SeoBlocks';
 
 const PERTH_IATA = 'PER';
 
@@ -111,8 +114,28 @@ export default async function PerthExplorePage({
     result = await fetchSerpapiExplore(fetchOpts);
   }
 
+  const articleSchema = articleBlogPostingJsonLd({
+    headline: title,
+    description: intro,
+    url: `${SITE_URL}/flights-from-perth`,
+    authorNameOrSlug: 'kritin-vashist',
+    categoryName: 'Flights',
+    type: 'BlogPosting',
+  });
+
+  const breadcrumbs = breadcrumbJsonLd(
+    title === 'Flights from Perth'
+      ? [{ name: 'Flights from Perth', url: '/flights-from-perth' }]
+      : [
+          { name: 'Flights from Perth', url: '/flights-from-perth' },
+          { name: title, url: '/flights-from-perth' },
+        ]
+  );
+
   return (
     <main className="mx-auto max-w-7xl px-6 py-16" data-testid="perth-explore">
+      <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbs} />
       <header>
         <p className="text-xs uppercase tracking-widest text-forest-900/55">
           Flights from Perth (PER)

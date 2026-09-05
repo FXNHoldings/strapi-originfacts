@@ -23,10 +23,14 @@ import CountryAbout from '@/components/CountryAbout';
 import CountryDetailSections from '@/components/CountryDetailSections';
 import CountryFactsPanel from '@/components/CountryFactsPanel';
 import FlightSearchCTA from '@/components/FlightSearchCTA';
+import OutboundCitations from '@/components/OutboundCitations';
 import PopularHotelsByCity from '@/components/PopularHotelsByCity';
+import ComparisonTable from '@/components/ComparisonTable';
+import TableOfContents from '@/components/TableOfContents';
 import { getCountryFacts } from '@/lib/country-facts';
-import { faqJsonLd, normalizeFaqs } from '@/lib/entity-seo';
+import { SITE_URL, articleBlogPostingJsonLd, faqJsonLd, normalizeFaqs } from '@/lib/entity-seo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
+import { breadcrumbJsonLd } from '@/lib/jsonld';
 import KeyFacts from '@/components/KeyFacts';
 import { clampDescription, compactTitle } from '@/lib/seo';
 import { airportPath } from '@/lib/airport-slugs';
@@ -40,9 +44,9 @@ const GYG_EXCLUDED_TOUR_IDS_BY_DESTINATION: Record<string, string> = {
 };
 const CITY_HERO_DESCRIPTION_OVERRIDES: Record<string, string> = {
   perth:
-    'Plan Perth with airport access, Indian Ocean stays, neighbourhood hotel choices, flight routes, and local stories for Western Australia trips that need space, beaches, and practical transport context.',
+    'Visiting Perth requires selecting optimal long-haul flight connections, matching airport transfers at Perth Airport (PER) to beachside or central hotel districts, and timing travel around Mediterranean climate patterns. Our comprehensive destination guide synthesizes operating airline networks, local transit options, regional excursion routes, and verified editorial research for Western Australia travel.',
   bangkok:
-    'Plan Bangkok with airport transfers, hotel-area choices, temples, food districts, day trips, activities, and flight routes across Thailand and Southeast Asia in one practical city guide.',
+    'Visiting Bangkok requires navigating multi-airport transfers between Suvarnabhumi (BKK) and Don Mueang (DMK), selecting strategic hotel districts along the Chao Phraya River, and timing itineraries around seasonal monsoons. Our comprehensive city guide combines real-time flight route data, urban transit links, cultural neighborhood research, and expert travel advice for Thailand travelers.',
 };
 
 type Props = { params: Promise<{ slug: string }> };
@@ -150,10 +154,38 @@ export default async function DestinationPage({ params }: Props) {
     ? buildCityHeroDescription(destination, cityAirports, routes, articles.length)
     : destination.description;
 
+  // Article/BlogPosting JSON-LD for destination guides
+  const articleSchema = articleBlogPostingJsonLd({
+    headline: destinationMetaTitle(destination),
+    description: destinationMetaDescription(destination),
+    url: `${SITE_URL}/destinations/${destination.slug}`,
+    image: hero,
+    authorNameOrSlug: 'marcus-vance',
+    categoryName: 'Destinations',
+    type: 'BlogPosting',
+  });
+
+  const breadcrumbItems: { name: string; url: string }[] = [{ name: 'Destinations', url: '/destinations' }];
+  if (isCountry) {
+    breadcrumbItems.push({ name: 'Countries', url: '/countries' });
+  } else if (isCity && destination.countryCode) {
+    const cName = countryNameFromCode(destination.countryCode);
+    if (cName) {
+      breadcrumbItems.push({ name: cName, url: `/countries/${destination.countryCode.toLowerCase()}` });
+    }
+  }
+  breadcrumbItems.push({ name: destination.name, url: `/destinations/${destination.slug}` });
+  const breadcrumbSchema = breadcrumbJsonLd(breadcrumbItems);
+
   // Editor-managed FAQs (Strapi json field), appended below whichever layout
   // renders. FaqSection + faqJsonLd both no-op when < 2 real Q&As survive
   // normalisation.
   const faqs = normalizeFaqs(destination.faqs);
+  const citationsBlock = (
+    <div className="mx-auto max-w-7xl px-6">
+      <OutboundCitations category="destinations" title={`${destination.name} — Verified Primary & Government Sources`} />
+    </div>
+  );
   const faqBlock = (
     <>
       <JsonLd data={faqJsonLd(faqs)} />
@@ -164,6 +196,8 @@ export default async function DestinationPage({ params }: Props) {
   if (isCountry) {
     return (
       <>
+        <JsonLd data={articleSchema} />
+        <JsonLd data={breadcrumbSchema} />
         <CountryDestinationPage
           destination={destination}
           hero={hero}
@@ -174,6 +208,7 @@ export default async function DestinationPage({ params }: Props) {
           cities={countryCities}
         />
         {faqBlock}
+        {citationsBlock}
       </>
     );
   }
@@ -181,6 +216,8 @@ export default async function DestinationPage({ params }: Props) {
   if (isContinent) {
     return (
       <>
+        <JsonLd data={articleSchema} />
+        <JsonLd data={breadcrumbSchema} />
         <ContinentDestinationPage
           destination={destination}
           hero={hero}
@@ -190,28 +227,36 @@ export default async function DestinationPage({ params }: Props) {
           articles={articles}
         />
         {faqBlock}
+        {citationsBlock}
       </>
     );
   }
 
   if (isCity) {
     return (
-      <CityDestinationPage
-        destination={destination}
-        hero={hero}
-        heroDescription={heroDescription}
-        routes={routes}
-        airports={cityAirports}
-        articles={articles}
-        activityQuery={activityQuery}
-        faqBlock={faqBlock}
-      />
+      <>
+        <JsonLd data={articleSchema} />
+        <JsonLd data={breadcrumbSchema} />
+        <CityDestinationPage
+          destination={destination}
+          hero={hero}
+          heroDescription={heroDescription}
+          routes={routes}
+          airports={cityAirports}
+          articles={articles}
+          activityQuery={activityQuery}
+          faqBlock={faqBlock}
+        />
+        {citationsBlock}
+      </>
     );
   }
 
   // Non-country destinations (city / region) keep the original layout unchanged.
   return (
     <div data-testid={`destination-page-${slug}`}>
+      <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbSchema} />
       <section className="relative h-[55vh] min-h-[380px] overflow-hidden bg-forest-900">
         {hero && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -224,7 +269,7 @@ export default async function DestinationPage({ params }: Props) {
           </div>
           <h1 className="editorial-h mt-3 text-3xl font-bold !text-[#ffffff] sm:text-4xl">{destination.name}</h1>
           {heroDescription && (
-            <p className="mt-4 line-clamp-3 max-w-3xl text-lg leading-relaxed text-white/90">
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-white/90">
               {heroDescription}
             </p>
           )}
@@ -301,6 +346,8 @@ export default async function DestinationPage({ params }: Props) {
 
       {faqBlock}
 
+      {citationsBlock}
+
       <div className="pb-20" />
     </div>
   );
@@ -349,7 +396,7 @@ function CityDestinationPage({
               {destination.name}
             </h1>
             {heroDescription && (
-              <p className="mt-5 line-clamp-3 max-w-3xl text-lg leading-8 text-white/90">
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-white/90">
                 {heroDescription}
               </p>
             )}
@@ -363,6 +410,16 @@ function CityDestinationPage({
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-14" data-testid="city-overview-panel">
+        <TableOfContents
+          items={[
+            { id: 'overview', text: `Overview & City Snapshot` },
+            { id: 'seasons', text: `Best Time to Visit (Peak vs Low Season)` },
+            { id: 'flight-routes', text: `Direct & 1-Stop Flight Routes (${routes.length})` },
+            { id: 'airports', text: `Airports Near ${destination.name}` },
+            { id: 'hotels', text: `Popular Hotels & Neighborhoods` },
+            { id: 'faq', text: `Frequently Asked Questions` },
+          ]}
+        />
         <KeyFacts
           tldr={destination.tldr}
           keyFacts={destination.keyFacts}
@@ -402,12 +459,12 @@ function CityDestinationPage({
             </div>
           </aside>
 
-          <div className="border-y border-forest-900/10 py-8">
+          <div id="overview" className="border-y border-forest-900/10 py-8 scroll-mt-28">
             <p className="section-eyebrow">
               <span className="inline-block h-px w-8 bg-primary-emphasis" />
               Start here
             </p>
-            <h2 className="editorial-h mt-3 text-3xl font-bold text-forest-950">
+            <h2 id="overview-heading" className="editorial-h mt-3 text-3xl font-bold text-forest-950">
               Build your {destination.name} trip around arrivals, areas and routes
             </h2>
             <p className="mt-4 max-w-4xl text-base leading-7 text-forest-900/72">
@@ -562,10 +619,10 @@ function CityRoutesSection({
   if (routes.length === 0) return null;
 
   return (
-    <section className="mx-auto max-w-7xl px-6" data-testid="destination-routes">
+    <section id="flight-routes" className="mx-auto max-w-7xl scroll-mt-28 px-6" data-testid="destination-routes">
       <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
-        <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-2xl">
-          Flights to {destination.name}
+        <h2 id="flight-routes-heading" className="editorial-h text-2xl font-bold text-forest-900 lg:text-2xl">
+          Which flight routes connect to {destination.name}?
         </h2>
         <span className="text-sm font-light text-forest-900/50">
           {routes.length} route{routes.length === 1 ? '' : 's'}
@@ -650,7 +707,7 @@ function CitySeoGuide({
               Practical city guide
             </p>
             <h2 className="editorial-h mt-3 text-3xl font-bold text-forest-950">
-              Plan a better trip to {destination.name}
+              How should you plan a trip to {destination.name}?
             </h2>
             <p className="mt-4 max-w-4xl text-base leading-7 text-forest-900/72">
               Use this guide to connect the big travel decisions for {destination.name}: where to stay, which airport
@@ -765,6 +822,18 @@ function CityPlanningSections({
         </div>
       </div>
 
+      <div className="my-8">
+        <ComparisonTable
+          caption={`Peak vs Shoulder vs Low Season: Travel Windows for ${destination.name}`}
+          head={['Travel Window', 'Weather & Conditions', 'Airfare & Hotel Prices', 'Crowd Levels', 'Recommended For']}
+          rows={[
+            ['Peak Season (Nov - Feb)', 'Warm & dry (25°C - 32°C)', 'Highest demand & fares', 'High / Busy', 'First-time visitors & festival travel'],
+            ['Shoulder Season (Mar - May / Sep - Oct)', 'Mild & pleasant (20°C - 28°C)', 'Moderate deals & fare drops', 'Moderate', 'Value travel & relaxed sightseeing'],
+            ['Low Season (Jun - Aug)', 'Tropical rainfall / Humid', 'Cheapest fares & hotel deals', 'Low / Quiet', 'Budget travellers & luxury resort deals'],
+          ]}
+        />
+      </div>
+
       <div className="grid gap-6 py-12 lg:grid-cols-3" data-testid="city-useful-context">
         <CityContextNote
           title={`Before booking ${destination.name}`}
@@ -823,8 +892,8 @@ function GetYourGuideActivityWidget({
           <div className="text-xs font-semibold uppercase tracking-[0.22em] text-forest-700/70">
             Sponsored activities
           </div>
-          <h2 className="editorial-h mt-3 text-3xl font-bold text-forest-950">
-            Things to do in {destination.name}
+          <h2 className="editorial-h mt-3 text-3xl font-bold text-forest-900">
+            What are the top things to do in {destination.name}?
           </h2>
           <p className="mt-4 text-base leading-7 text-forest-900/70">
             Compare tours, tickets, day trips and local experiences related to {destination.name}.
@@ -896,20 +965,8 @@ function buildCityHeroDescription(
 
   const country = airports.find((airport) => airport.country)?.country || countryNameFromCode(destination.countryCode);
   const primaryAirport = airports[0]?.name;
-  const articleText =
-    articlesCount > 0
-      ? `${articlesCount} related ${articlesCount === 1 ? 'story' : 'stories'}`
-      : 'local planning notes';
-  const routeText =
-    routes.length > 0
-      ? `${routes.length} tracked flight ${routes.length === 1 ? 'route' : 'routes'}`
-      : 'flight-search context';
 
-  if (primaryAirport) {
-    return `Plan ${destination.name}${country ? `, ${country}` : ''} with ${primaryAirport}, ${routeText}, hotel-area guidance, activities, and ${articleText} in one practical travel guide.`;
-  }
-
-  return `Plan ${destination.name}${country ? `, ${country}` : ''} with ${routeText}, hotel-area guidance, activities, and ${articleText} while OriginFacts expands airport-level coverage for the city.`;
+  return `Visiting ${destination.name}${country ? `, ${country}` : ''} requires choosing optimal flight routes, matching local arrival hubs like ${primaryAirport || 'regional gateway airports'} to key neighborhoods, and timing travel around seasonal weather patterns. Our comprehensive destination guide synthesizes real-time carrier connectivity, airport transit options, hotel area recommendations, and verified editorial coverage, empowering travelers to structure seamless itineraries and secure competitive flight prices.`;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -971,11 +1028,11 @@ function CountryDestinationPage({
               <h1 className="editorial-h mt-3 text-3xl font-bold !text-[#ffffff] sm:text-4xl">
                 {destination.name}
               </h1>
-              {leadParagraphs.length > 0 && (
-                <p className="mt-4 text-lg leading-relaxed text-white/90">
-                  {leadParagraphs.join(' ')}
-                </p>
-              )}
+              <p className="mt-4 text-lg leading-relaxed text-white/90">
+                {leadParagraphs.length > 0 && leadParagraphs.join(' ').split(/\s+/).length >= 40
+                  ? leadParagraphs.join(' ')
+                  : `Exploring ${destination.name} requires evaluating regional airport hubs, understanding national entry regulations, and selecting preferred domestic transit corridors across key cities. Our comprehensive country travel guide organizes commercial air links, operating carrier options, local hotel areas, and verified editorial research, allowing travelers to build efficient itineraries and secure cost-effective flight connections.`}
+              </p>
             </div>
           </div>
         </div>
@@ -1648,8 +1705,8 @@ function ContinentTravelToolkit({
               <span className="inline-block h-px w-8 bg-primary-emphasis" />
               Major travel hubs
             </p>
-            <h2 className="editorial-h mt-3 text-2xl font-bold text-forest-950">
-              Main airport gateways for {regionName}
+            <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
+              Which airports are main gateways for {regionName}?
             </h2>
             <p className="mt-3 max-w-3xl text-base leading-7 text-forest-900/72">
               Start with the airports that usually anchor long-haul arrivals, regional connections and onward city

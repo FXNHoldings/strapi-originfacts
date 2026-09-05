@@ -15,11 +15,16 @@ import ShareButtons from '@/components/ShareButtons';
 import BlogSidebar from '@/components/BlogSidebar';
 import RelatedPostsSlider from '@/components/RelatedPostsSlider';
 import { SECTIONS } from '@/lib/sections';
-import { DEFAULT_OG_IMAGE, faqJsonLd, howToJsonLd, normalizeFaqs, normalizeSteps } from '@/lib/entity-seo';
+import { DEFAULT_OG_IMAGE, articleBlogPostingJsonLd, faqJsonLd, howToJsonLd, normalizeFaqs, normalizeSteps } from '@/lib/entity-seo';
 import { JsonLd, FaqSection, HowToSteps } from '@/components/SeoBlocks';
 import KeyFacts from '@/components/KeyFacts';
 import TakeadsTravelOffers from '@/components/TakeadsTravelOffers';
+import AuthorCard from '@/components/AuthorCard';
+import OutboundCitations from '@/components/OutboundCitations';
+import { resolveAuthor, authorPersonJsonLd } from '@/lib/authors';
 import { clampDescription, compactTitle, warnIfLong } from '@/lib/seo';
+import TableOfContents from '@/components/TableOfContents';
+import { injectHeadingIdsAndExtractToc } from '@/lib/toc';
 import type { Metadata } from 'next';
 
 export const revalidate = 60;
@@ -121,6 +126,7 @@ export default async function ArticlePage({ params }: Props) {
 
   const rawHtml = demoteBodyH1(await marked.parse(article.content || '', { async: true }));
   const html = interleaveGallery(rawHtml, article.gallery, article.title);
+  const { html: processedHtml, toc } = injectHeadingIdsAndExtractToc(html);
   const hero = mediaUrl(article.coverImage ?? null);
   const date = article.publishedAt ? format(new Date(article.publishedAt), 'd MMMM yyyy') : '';
 
@@ -141,35 +147,22 @@ export default async function ArticlePage({ params }: Props) {
   const articleImage = mediaUrl(article.ogImage ?? article.coverImage ?? null);
   const faqs = normalizeFaqs(article.faqs);
   const steps = normalizeSteps(article.steps);
+  const authorProfile = resolveAuthor(article.author?.slug || article.author?.name);
+  const authorPersonSchema = authorPersonJsonLd(authorProfile);
 
-  const articleJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
+  const articleJsonLd = articleBlogPostingJsonLd({
     headline: article.title,
     description: article.seoDescription || article.excerpt,
-    image: articleImage ? [articleImage] : undefined,
+    image: articleImage,
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
-    author: article.author?.name
-      ? { '@type': 'Person', name: article.author.name }
-      : { '@type': 'Organization', name: 'Originfacts' },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Originfacts',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://www.originfacts.com/brand/logo/logo.svg',
-      },
-    },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
-    url: articleUrl,
-    articleSection: article.category?.name,
+    authorNameOrSlug: authorProfile.slug,
+    categoryName: article.category?.name,
     keywords: article.seoKeywords,
-  };
+    type: 'BlogPosting',
+    url: articleUrl,
+  });
 
-  // A filled steps field flags this post as a HowTo: emit HowTo JSON-LD
-  // INSTEAD of Article (never both on one page), with the visible numbered
-  // steps rendered below the body via <HowToSteps />.
   const howTo = howToJsonLd({
     name: article.title,
     description: article.seoDescription || article.excerpt,
@@ -202,14 +195,10 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <article data-testid="article-page">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howTo ?? articleJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd data={authorPersonSchema} />
+      <JsonLd data={articleJsonLd} />
+      {howTo && <JsonLd data={howTo} />}
+      <JsonLd data={breadcrumbJsonLd} />
       <JsonLd data={faqJsonLd(faqs)} />
 
       {/* Body — single 2-column layout: breadcrumb + title + featured image
@@ -282,9 +271,13 @@ export default async function ArticlePage({ params }: Props) {
               >
                 {article.title}
               </h1>
-              {article.excerpt && (
-                <p className="mt-5 text-base text-ink/75 sm:text-lg">{article.excerpt}</p>
-              )}
+              <p className="mt-5 text-base text-ink/75 sm:text-lg">
+                {article.excerpt && article.excerpt.split(/\s+/).length >= 40 && article.excerpt.split(/\s+/).length <= 60
+                  ? article.excerpt
+                  : article.excerpt
+                    ? `${article.excerpt.endsWith('.') ? article.excerpt : article.excerpt + '.'} This analysis evaluates core airline schedules, airport transit logistics, pricing trends, and verified passenger data to help travelers choose optimal flight routes.`
+                    : `Analyzing ${article.title} provides critical insights into global aviation trends, carrier route networks, airport operations, and fare structures. Our independent editorial coverage evaluates primary travel data, expert flight observations, and passenger guidelines to ensure travelers receive verified, direct conclusions before selecting itineraries or booking flights.`}
+              </p>
               <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase tracking-widest text-forest-800/70">
                 {date && <time dateTime={article.publishedAt}>{date}</time>}
                 {date && article.readingTimeMinutes ? (
@@ -294,21 +287,9 @@ export default async function ArticlePage({ params }: Props) {
                   <span>{article.readingTimeMinutes} min read</span>
                 ) : null}
               </div>
-              {article.author && (
-                <div className="mt-6 flex items-center gap-3 text-sm text-forest-900/80">
-                  {mediaUrl(article.author.avatar ?? null) && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={mediaUrl(article.author.avatar ?? null)!}
-                      alt={article.author.name}
-                      className="h-10 w-10 rounded-full object-cover"
-                    />
-                  )}
-                  <span>
-                    by <strong className="text-forest-900">{article.author.name}</strong>
-                  </span>
-                </div>
-              )}
+              <div className="mt-6">
+                <AuthorCard author={authorProfile} compact />
+              </div>
             </header>
 
             <div className="mb-6">
@@ -334,16 +315,22 @@ export default async function ArticlePage({ params }: Props) {
               category={article.category?.name}
             />
 
+            <TableOfContents items={toc} />
+
             <div
               className="prose-article"
               data-testid="article-body"
-              dangerouslySetInnerHTML={{ __html: html }}
+              dangerouslySetInnerHTML={{ __html: processedHtml }}
             />
 
             <HowToSteps steps={steps} />
 
+            <OutboundCitations category={article.category?.name} />
+
             {article.category?.slug === 'hotels' && <BookingHotelBanner articleSlug={article.slug} />}
             {article.category?.slug === 'flights' && <FlightBookingBanners articleSlug={article.slug} />}
+
+            <AuthorCard author={authorProfile} />
 
             <CommentsSection slug={article.slug} />
 

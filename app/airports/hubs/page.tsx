@@ -6,6 +6,9 @@ import CategoryDescription from '@/components/CategoryDescription';
 import { SECTIONS } from '@/lib/sections';
 import Link from 'next/link';
 
+import { JsonLd } from '@/components/SeoBlocks';
+import { breadcrumbJsonLd } from '@/lib/jsonld';
+
 export const revalidate = 60;
 
 export const metadata: Metadata = {
@@ -22,6 +25,12 @@ export default async function HubsPage() {
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-16" data-testid="airport-hubs-page">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Airports', url: '/airports' },
+          { name: 'Top Hubs', url: '/airports/hubs' },
+        ])}
+      />
       <header data-testid="airport-hubs-header">
         <div className="grid items-start gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-12">
           <div className="min-w-0">

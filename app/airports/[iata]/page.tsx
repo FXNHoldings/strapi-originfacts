@@ -18,6 +18,7 @@ import {
   airportIntro,
   airportFaqs,
   airportJsonLd,
+  articleBlogPostingJsonLd,
   faqJsonLd,
   robotsFor,
   summariseRoutes,
@@ -26,6 +27,9 @@ import {
 import type { RouteSummary } from '@/lib/entity-seo';
 import { getAirportWeather, weatherLabel } from '@/lib/open-meteo';
 import { JsonLd, FaqSection } from '@/components/SeoBlocks';
+import OutboundCitations from '@/components/OutboundCitations';
+import ComparisonTable from '@/components/ComparisonTable';
+import { breadcrumbJsonLd } from '@/lib/jsonld';
 import type { Metadata } from 'next';
 import topAirportSources from '@/data/airport-sources/top-100-official-links.json';
 import { clampDescription, compactTitle } from '@/lib/seo';
@@ -224,10 +228,27 @@ export default async function AirportPage({ params }: Props) {
     { href: '#faq', label: 'FAQ' },
   ];
 
+  const articleSchema = articleBlogPostingJsonLd({
+    headline: `${airport.name} (${airport.iata}) Airport Guide`,
+    description: airport.about || heroSummary,
+    url,
+    image: hero,
+    authorNameOrSlug: 'elena-rostova',
+    categoryName: 'Airports',
+    type: 'BlogPosting',
+  });
+
   return (
     <article data-testid={`airport-page-${airport.iata}`}>
+      <JsonLd data={articleSchema} />
       <JsonLd data={airportJsonLd(airport, url)} />
       <JsonLd data={faqJsonLd(faqs)} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Airports', url: '/airports' },
+          { name: `${airport.name} (${airport.iata})`, url: airportPath(airport, [airport]) },
+        ])}
+      />
 
       <div className="mx-auto max-w-7xl px-6 pt-10">
         <nav className="text-xs uppercase tracking-widest text-forest-900/60">
@@ -348,7 +369,7 @@ export default async function AirportPage({ params }: Props) {
 
           <aside className="lg:sticky lg:top-24 lg:self-start">
             <div className="rounded-[0.3rem] border border-forest-900/10 bg-forest-900/[0.03] p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-              <h2 className="editorial-h text-lg font-bold text-forest-900">Airport facts</h2>
+              <h2 className="editorial-h text-lg font-bold text-forest-900">What are key facts about {airport.name} ({airport.iata})?</h2>
               <p className="mt-2 text-sm font-light leading-relaxed text-forest-900/70">
                 Key reference details for {airport.iata}, including codes, location and contact information.
               </p>
@@ -379,7 +400,7 @@ export default async function AirportPage({ params }: Props) {
               <div className="mt-4 rounded-[0.3rem] border border-forest-900/10 bg-white/85 p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="editorial-h text-lg font-bold text-forest-900">Local weather</h2>
+                    <h2 className="editorial-h text-lg font-bold text-forest-900">What is the local weather at {airport.name}?</h2>
                     <p className="mt-2 text-sm font-light leading-relaxed text-forest-900/70">
                       Live conditions around {airport.name}.
                     </p>
@@ -442,7 +463,7 @@ export default async function AirportPage({ params }: Props) {
                   Practical guide
                 </p>
                 <h2 className="editorial-h mt-3 max-w-3xl text-2xl font-bold leading-tight text-forest-950 lg:text-3xl">
-                  Using {airport.name} without guesswork
+                  How do you navigate {airport.name} without guesswork?
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm font-light leading-7 text-forest-900/76">
                   Plan {airport.iata} around the terminal you use, the type of connection you are making and how predictable you need the trip{airport.city ? ` into ${airport.city}` : ''} to be.
@@ -480,7 +501,7 @@ export default async function AirportPage({ params }: Props) {
                 className="rounded-[0.3rem] border border-forest-900/10 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
                 style={{ backgroundColor: '#ffffff' }}
               >
-                <h3 className="font-urbanist text-xl font-bold text-forest-900">Before you leave for {airport.iata}</h3>
+                <h3 className="font-urbanist text-xl font-bold text-forest-900">What should you check before leaving for {airport.iata}?</h3>
                 <ol className="mt-5 space-y-4 text-sm leading-6">
                   {airportGuide.checklist.map((item, index) => (
                     <li key={item} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-3">
@@ -498,7 +519,7 @@ export default async function AirportPage({ params }: Props) {
                   Start here
                 </p>
                 <h3 className="mt-2 font-urbanist text-xl font-bold text-forest-900">
-                  Terminal and transfer notes
+                  How do terminal transfers work at {airport.iata}?
                 </h3>
                 <div className="mt-4 grid gap-3 md:grid-cols-3">
                   {airportGuide.terminals.map((terminal) => (
@@ -528,7 +549,7 @@ export default async function AirportPage({ params }: Props) {
                 Airlines
               </p>
               <h2 className="editorial-h mt-3 text-xl font-bold text-forest-900 lg:text-2xl">
-                Airlines flying from {airport.iata}
+                Which airlines fly from {airport.iata}?
               </h2>
               <p className="mt-2 max-w-2xl text-sm font-light leading-7 text-forest-900/70">
                 Compare the carriers connected with {airport.iata}, including airline codes, operating brands and routes currently tracked from this airport.
@@ -586,7 +607,7 @@ export default async function AirportPage({ params }: Props) {
               Routes
             </p>
             <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
-              Top routes from {airport.iata}
+              Which top routes depart from {airport.iata}?
             </h2>
             <p className="mt-2 max-w-2xl text-sm font-light leading-7 text-forest-900/70">
               Use these route cards to scan popular destinations, estimated distance and flight time before checking live schedules and fares.
@@ -646,7 +667,7 @@ export default async function AirportPage({ params }: Props) {
             </p>
             <div className="mt-3 grid gap-4 lg:grid-cols-[minmax(0,1fr)_300px]">
               <h2 className="editorial-h text-2xl font-bold text-2xl">
-                Transfers, fares, parking and passenger services at {airport.iata}
+                How do transfers, parking and passenger services work at {airport.iata}?
               </h2>
               <p className="text-sm font-light leading-7 text-forest-900/70">
                 A source-linked planning layer for details that can change: terminal transfers, transport costs, parking, lounges and accessibility.
@@ -686,7 +707,7 @@ export default async function AirportPage({ params }: Props) {
                   <p className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-forest-900/50">
                     Budget check
                   </p>
-                  <h3 className="mt-2 font-urbanist text-xl font-bold text-forest-900">Useful cost notes</h3>
+                  <h3 className="mt-2 font-urbanist text-xl font-bold text-forest-900">What are key ground costs at {airport.iata}?</h3>
                 </div>
                 <p className="max-w-sm text-sm font-light leading-6 text-forest-900/68">
                   Prices can change, so use these notes to spot likely cost items before checking the official source.
@@ -710,13 +731,26 @@ export default async function AirportPage({ params }: Props) {
                   </div>
                 ))}
               </div>
+
+              <div className="mt-6">
+                <ComparisonTable
+                  caption={`Airport Express Train vs Taxi vs Rideshare: Ground Transport at ${airport.name} (${airport.iata})`}
+                  head={['Transit Option', 'Est. Travel Time', 'Typical Cost Range', 'Service Frequency', 'Best For']}
+                  rows={[
+                    ['Airport Express Train / Rail', '15 - 30 mins', 'Moderate (A$15 - A$25)', 'Every 10 - 15 mins', 'Avoiding road traffic & peak hour speed'],
+                    ['Taxi / Licensed Meter Cab', '25 - 45 mins', 'Higher (A$45 - A$75+)', 'Immediate at ranks', 'Door-to-door & heavy luggage'],
+                    ['App Rideshare (Uber/Ola)', '25 - 45 mins', 'Variable (A$40 - A$70)', 'On-demand via app', 'Direct hotel transfer'],
+                    ['Public Bus / Airport Shuttle', '35 - 60 mins', 'Lowest (A$4 - A$12)', 'Every 20 - 30 mins', 'Budget solo travellers'],
+                  ]}
+                />
+              </div>
             </div>
 
             <aside
               className="rounded-[0.3rem] border border-forest-900/10 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
               style={{ backgroundColor: '#ffffff' }}
             >
-              <h3 className="font-urbanist text-xl font-bold text-forest-900">Official source references</h3>
+              <h3 className="font-urbanist text-xl font-bold text-forest-900">Which official data sources support this guide?</h3>
               <ul className="mt-4 space-y-3 text-sm leading-6">
                 {officialPlanningGuide.sources.map((source) => (
                   <li key={source.href}>
@@ -749,7 +783,7 @@ export default async function AirportPage({ params }: Props) {
                 Nearby airports
               </p>
               <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
-                Other airports in {airport.country}
+                Which other airports are located in {airport.country}?
               </h2>
               <p className="mt-2 max-w-2xl text-sm font-light leading-7 text-forest-900/70">
                 Nearby airport options can help when comparing fares, connection times, ground transport and alternate arrival points in {airport.country || 'the region'}.
@@ -805,6 +839,10 @@ export default async function AirportPage({ params }: Props) {
 
       <div id="faq" className="scroll-mt-28">
         <FaqSection faqs={faqs} title={`${airport.name} — frequently asked questions`} />
+      </div>
+
+      <div className="mx-auto max-w-7xl px-6">
+        <OutboundCitations category="airports" title={`${airport.name} (${airport.iata}) — Aviation Authorities & Primary Data Sources`} />
       </div>
 
       <div className="pb-20" />

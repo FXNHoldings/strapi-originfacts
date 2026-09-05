@@ -5,6 +5,7 @@ import { getRouteFacts } from '@/lib/route-facts';
 import { getAirlineFacts } from '@/lib/airline-facts';
 import AirlineDirectory from '@/components/AirlineDirectory';
 import Tier1AirlineCarousel, { type Tier1GuideSlide } from '@/components/Tier1AirlineCarousel';
+import ComparisonTable from '@/components/ComparisonTable';
 import CategoryDescription from '@/components/CategoryDescription';
 import { JsonLd } from '@/components/SeoBlocks';
 import { breadcrumbJsonLd, collectionPageJsonLd } from '@/lib/jsonld';
@@ -213,6 +214,19 @@ export default async function AirlinesPage() {
             region, country, operating model, and network footprint, then followed into the airport
             or route pages that explain how the trip fits together.
           </p>
+        </div>
+
+        <div className="mt-8">
+          <ComparisonTable
+            caption="Airline Types vs Service Inclusions Comparison Matrix"
+            head={['Carrier Type', 'Carry-on Bag', 'Checked Baggage', 'Seat Selection', 'Loyalty / Alliances', 'Best For']}
+            rows={[
+              ['Full-Service Carrier (FSC)', 'Included (7-10kg)', 'Included (1-2 Bags)', 'Included (Most fares)', 'Global Alliance (Oneworld/Star/SkyTeam)', 'Long-haul comfort & connecting travel'],
+              ['Low-Cost Carrier (LCC)', 'Included (7kg)', 'Fee required', 'Fee required', 'Point-to-point rewards', 'Point-to-point regional flights'],
+              ['Ultra-Low-Cost (ULCC)', 'Personal item only', 'Strict fee', 'Strict fee', 'Minimal / None', 'Short domestic budget hops'],
+              ['Hybrid Carrier', 'Included (7kg)', 'Route dependent', 'Tier dependent', 'Independent partner network', 'Regional value & medium-haul'],
+            ]}
+          />
         </div>
       </section>
 

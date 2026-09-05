@@ -217,7 +217,8 @@ export default function PopularHotelsByCity({
 
   return (
     <section
-      className="mt-20 border-0 p-0 shadow-none"
+      id="hotels"
+      className="mt-20 border-0 p-0 shadow-none scroll-mt-28"
       data-testid="popular-hotels-by-city"
       data-hotels-count={hotels.length}
       aria-labelledby="popular-hotels-by-city-heading"
@@ -230,7 +231,7 @@ export default function PopularHotelsByCity({
                 {eyebrow}
               </p>
               <h2
-                id="popular-hotels-by-city-heading"
+                id="hotels-heading"
                 className="mt-3 max-w-3xl font-urbanist text-3xl font-bold leading-[1.05] text-forest-950 sm:text-4xl"
               >
                 {title || `Compare hotel areas near ${cityLabel}`}

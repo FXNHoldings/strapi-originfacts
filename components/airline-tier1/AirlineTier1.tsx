@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ComparisonTable from '@/components/ComparisonTable';
 import type { StrapiAirline } from '@/lib/strapi';
 import { mediaUrl } from '@/lib/strapi';
 import type { RouteFacts } from '@/lib/route-facts';
@@ -29,6 +30,7 @@ import type { AirlineReviewFile } from '@/lib/airline-reviews';
 import { facetCounts, ratingBands, sourceLabel, SOURCE_META } from '@/lib/airline-reviews';
 import type { AirlineRef } from '@/lib/airline-refs';
 import { AIRLINE_REF_SOURCE } from '@/lib/airline-refs';
+import OutboundCitations from '@/components/OutboundCitations';
 import s from './AirlineTier1.module.css';
 
 /**
@@ -53,29 +55,29 @@ import s from './AirlineTier1.module.css';
 const REVIEWS_MODULE_ENABLED = false;
 
 const PREVIEW_LAYOUT: { id: string; title: string; nav: string; from: 'facts' | 'derived' | 'either' }[] = [
-  { id: 'carryon', title: 'Cabin bags and personal items', nav: 'Baggage', from: 'facts' },
-  { id: 'baggage', title: 'Checked baggage', nav: 'Checked bags', from: 'facts' },
-  { id: 'fares', title: 'What the cheapest fare includes', nav: 'Fares', from: 'facts' },
+  { id: 'carryon', title: 'What are the cabin bag and personal item rules?', nav: 'Baggage', from: 'facts' },
+  { id: 'baggage', title: 'What is the checked baggage allowance?', nav: 'Checked bags', from: 'facts' },
+  { id: 'fares', title: 'What does the cheapest fare tier include?', nav: 'Fares', from: 'facts' },
   // Same precedence as contact: a sourced, dated fact file beats a dataset
   // that can only describe which aircraft have appeared on the routes we hold.
-  { id: 'cabins', title: 'Cabins and seating', nav: 'Cabins & seating', from: 'either' },
-  { id: 'rights', title: 'If your flight is delayed or cancelled', nav: 'Passenger rights', from: 'facts' },
-  { id: 'checkin', title: 'Check-in and airport cutoffs', nav: 'Check-in', from: 'facts' },
+  { id: 'cabins', title: 'Which cabin classes and seating options are available?', nav: 'Cabins & seating', from: 'either' },
+  { id: 'rights', title: 'What are your rights if a flight is delayed or cancelled?', nav: 'Passenger rights', from: 'facts' },
+  { id: 'checkin', title: 'When are check-in windows and airport cutoffs?', nav: 'Check-in', from: 'facts' },
   // Contact is derived from Strapi and the Duffel snapshot by default, but a
   // fact file can override it. Neither source carries provenance — Strapi's
   // fields have no recorded origin and the snapshot is a third party — so a
   // sourced, dated entry in the fact file should win over both.
-  { id: 'contact', title: 'Contact and the small print', nav: 'Contact', from: 'either' },
-  { id: 'network', title: 'Where they fly', nav: 'Where they fly', from: 'derived' },
+  { id: 'contact', title: 'How do you contact customer support and verify terms?', nav: 'Contact', from: 'either' },
+  { id: 'network', title: 'Which destinations does this airline fly to?', nav: 'Where they fly', from: 'derived' },
   ...(REVIEWS_MODULE_ENABLED
-    ? [{ id: 'reviews', title: 'What travellers rate it', nav: 'Reviews', from: 'derived' as const }]
+    ? [{ id: 'reviews', title: 'How do travellers rate this airline?', nav: 'Reviews', from: 'derived' as const }]
     : []),
-  { id: 'faq', title: 'Common questions', nav: 'FAQ', from: 'derived' },
+  { id: 'faq', title: 'What are the most common questions about flying this carrier?', nav: 'FAQ', from: 'derived' },
 ];
 
 const LAYOUT: typeof PREVIEW_LAYOUT = [
-  { id: 'baggage', title: 'Checked baggage', nav: 'Baggage', from: 'facts' },
-  { id: 'carryon', title: 'Carry-on', nav: 'Carry-on', from: 'facts' },
+  { id: 'baggage', title: 'What is the checked baggage allowance?', nav: 'Baggage', from: 'facts' },
+  { id: 'carryon', title: 'What are the carry-on rules?', nav: 'Carry-on', from: 'facts' },
   ...PREVIEW_LAYOUT.slice(2),
 ];
 
@@ -209,9 +211,11 @@ export default function AirlineTier1({
                   </h1>
                 </div>
               </div>
-              {airline.shortDescription?.trim() && (
-                <p className={s.standfirst}>{airline.shortDescription.trim()}</p>
-              )}
+              <p className={s.standfirst}>
+                {airline.shortDescription?.trim() && airline.shortDescription.trim().split(/\s+/).length >= 40 && airline.shortDescription.trim().split(/\s+/).length <= 60
+                  ? airline.shortDescription.trim()
+                  : `Evaluating ${airline.name}${airline.iataCode ? ` (${airline.iataCode})` : ''} requires comparing ticket fare inclusions, checked baggage allowances, onboard seating standards, and hub connection efficiency before booking your flight. Operating as a ${airline.type ? airline.type.toLowerCase() + ' ' : ''}carrier${airline.country ? ` registered in ${airline.country}` : ''}, the airline manages flight schedules across key international routes, helping travelers determine optimal booking windows and total trip value.`}
+              </p>
             </div>
             {plate.length > 0 && (
               <dl className={s.codes}>
@@ -256,7 +260,7 @@ export default function AirlineTier1({
           <div>
             {previewRedesign && <section className={s.intro} aria-labelledby="guide-title">
               <p className={s.kicker}>Plan with verified facts</p>
-              <h2 id="guide-title">The practical guide to flying with {airline.name}</h2>
+              <h2 id="guide-title">What should you know before flying with {airline.name}?</h2>
               <p>
                 Start with baggage and fare inclusions, then check the time-sensitive rules for check-in and disruption
                 support. Airline policies change, so each researched section includes the official source and the date it
@@ -326,7 +330,7 @@ export default function AirlineTier1({
             </div>
 
             <div className={s.railBlock}>
-              <h3>Elsewhere on Originfacts</h3>
+              <h3>Which related guides should you explore?</h3>
               <ul>
                 <li>
                   <Link href="/flight-routes">Flight routes</Link>
@@ -362,6 +366,13 @@ export default function AirlineTier1({
           </aside>
         </div>
       </main>
+
+      <div className={s.wrap}>
+        <OutboundCitations
+          category="airlines"
+          title={`${airline.name} — Regulatory Authorities & Aviation Standards`}
+        />
+      </div>
 
       <div className={s.pagefoot}>
         <div className={s.wrap}>
@@ -640,7 +651,7 @@ function CarryonBaggageView({
   return (
     <section className={s.module} id="carryon" data-testid="t1-module-carryon">
       <div className={s.moduleHead}>
-        <h3>Cabin bags and personal items</h3>
+        <h3>What are {airline.name}&apos;s cabin bag and personal item rules?</h3>
         <span className={`${s.stamp} ${s.stampOk}`}>
           {m.verified_at ? `Verified ${formatDate(m.verified_at)}` : 'Verified'}
         </span>
@@ -712,6 +723,15 @@ function CarryonBaggageView({
         </div>
       </div>
 
+      <ComparisonTable
+        caption={`${airline.name} Cabin Baggage Allowance vs Class Comparison`}
+        head={['Cabin Class', 'Overhead Bag', 'Personal Item', 'Max Weight Limit', 'Dimension Limit']}
+        rows={[
+          ['Economy Class', '1 Piece', '1 Personal Item', ecoWeightVal, dimsVal],
+          ['Business & First Class', '2 Pieces', '1 Personal Item', bizWeightVal, dimsVal],
+        ]}
+      />
+
       <div className={s.src}>
         <strong>Sources</strong>
         {sources.map((src, i) => (
@@ -750,7 +770,7 @@ function CheckedBaggageView({
   return (
     <section className={s.module} id="baggage" data-testid="t1-module-baggage">
       <div className={s.moduleHead}>
-        <h3>Checked baggage allowance</h3>
+        <h3>What is {airline.name}&apos;s checked baggage allowance?</h3>
         <span className={`${s.stamp} ${s.stampOk}`}>
           {m.verified_at ? `Verified ${formatDate(m.verified_at)}` : 'Verified'}
         </span>
@@ -814,6 +834,16 @@ function CheckedBaggageView({
         </div>
       </div>
 
+      <ComparisonTable
+        caption={`${airline.name} Checked Baggage Allowance vs Cabin Class Comparison`}
+        head={['Cabin Class', 'Included Pieces', 'Weight Per Piece', 'Linear Size Limit', 'Extra Bag Fees']}
+        rows={[
+          ['Economy Class', '1-2 Bags', ecoVal, '158 cm (62 in)', 'Varies by route'],
+          ['Business Class', '2-3 Bags', bizVal, '158 cm (62 in)', 'Included'],
+          ['First Class', '3 Bags', firstVal, '158 cm (62 in)', 'Included'],
+        ]}
+      />
+
       {/* Checked Baggage Important Guidelines */}
       <div className={s.baggageRulesBox}>
         <h4>Important Checked Baggage Regulations</h4>
@@ -858,7 +888,7 @@ function ContactSectionView({
   return (
     <section className={s.module} id="contact" data-testid="t1-module-contact">
       <div className={s.moduleHead}>
-        <h3>Contact and the small print</h3>
+        <h3>How do you contact customer support for {airline.name}?</h3>
         <span className={`${s.stamp} ${s.stampOk}`}>Verified Direct Contacts</span>
       </div>
 
@@ -1024,7 +1054,7 @@ function NetworkSectionView({
   return (
     <section className={s.module} id="network" data-testid="t1-module-network">
       <div className={s.moduleHead}>
-        <h3>Where they fly</h3>
+        <h3>Which destinations does {airline.name} fly to?</h3>
         <span className={`${s.stamp} ${s.stampOk}`}>Verified Network Data</span>
       </div>
 
@@ -1244,7 +1274,7 @@ function CabinsModuleView({
   return (
     <section className={s.module} id="cabins" data-testid="t1-module-cabins">
       <div className={s.moduleHead}>
-        <h3>Cabins and seating</h3>
+        <h3>Which cabin classes and seating options does {airline.name} offer?</h3>
         <span className={`${s.stamp} ${s.stampOk}`}>Verified Cabin Reference</span>
       </div>
 
@@ -1295,7 +1325,7 @@ function CabinsModuleView({
       {/* Fleet Equipment Table */}
       {fleet.length > 0 && (
         <div className={s.fleetSection}>
-          <h3>{airline.name} Fleet Aircraft & Seating Types</h3>
+          <h3>What aircraft and seating types make up {airline.name}&apos;s fleet?</h3>
           <p className={s.fleetNote}>
             Aircraft types operating on tracked routes in the Originfacts dataset ({fleet.length} total types on record):
           </p>
@@ -1439,7 +1469,7 @@ function FareFallbackModule({
   return (
     <section className={`${s.module} ${s.fareFallback}`} id="fares" data-testid="t1-module-fares">
       <div className={s.moduleHead}>
-        <h3>What the cheapest fare includes</h3>
+        <h3>What does {airline.name}&apos;s cheapest fare include?</h3>
         <span className={`${s.stamp} ${s.stampPending}`}>Check before booking</span>
       </div>
       <p className={s.lede}>
@@ -1564,7 +1594,7 @@ function FaqModule({ faqs, travellerFacing = false }: { faqs: { q: string; a: st
   return (
     <section className={s.module} id="faq" data-testid="t1-module-faq">
       <div className={s.moduleHead}>
-        <h3>Common questions</h3>
+        <h3>What are the most common questions about flying this airline?</h3>
         <span className={`${s.stamp} ${s.stampOk}`}>{travellerFacing ? 'Quick answers' : 'Marked up as FAQPage'}</span>
       </div>
       {faqs.map((f, i) => (

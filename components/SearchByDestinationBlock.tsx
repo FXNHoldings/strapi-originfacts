@@ -13,7 +13,7 @@ export default function SearchByDestinationBlock() {
   return (
     <section className="mt-32" data-testid="cheap-flights-by-destination">
       <h2 className="editorial-h text-[1.5rem] font-bold text-forest-900">
-        Browse cheap flights by destination
+        Where can you find cheap flights by destination?
       </h2>
       <p className="mt-2 max-w-4xl text-[1rem] text-ink/75">
         Use these destination rows when you know where you want to go but still want a faster route into the search form. Each link starts from{' '}

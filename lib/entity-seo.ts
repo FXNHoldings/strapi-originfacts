@@ -18,6 +18,7 @@
  */
 import type { StrapiAirport, StrapiAirline, StrapiRoute, StrapiCountry } from '@/lib/strapi';
 import { getCountryFacts } from '@/lib/country-facts';
+import { resolveAuthor, authorPersonJsonLd } from '@/lib/authors';
 
 export const SITE_URL = 'https://www.originfacts.com';
 
@@ -364,40 +365,17 @@ const sentence = (parts: (string | false | null | undefined)[]) =>
 
 export function airportIntro(a: StrapiAirport, s?: RouteSummary): string {
   const code = a.icao ? `${a.iata}/${a.icao}` : a.iata;
-  const place = sentence([
-    a.city ? ` serving ${a.city}` : '',
-    a.country ? `${a.city ? ',' : ' in'} ${a.country}` : '',
-    a.region ? ` (${a.region})` : '',
-  ]);
-  const lead = `${a.name} (${code}) is an airport${place}.`;
-  const geo =
-    num(a.latitude) && num(a.longitude)
-      ? ` It sits at ${a.latitude!.toFixed(3)}°, ${a.longitude!.toFixed(3)}°${a.timezone ? ` and keeps ${a.timezone} local time` : ''}.`
-      : a.timezone
-        ? ` It observes ${a.timezone} local time.`
-        : '';
-  const net =
-    s && s.destinationCount > 0
-      ? ` Originfacts tracks ${pluralise(s.destinationCount, 'destination')} reachable from ${a.iata}${s.countryCount > 1 ? ` across ${pluralise(s.countryCount, 'country', 'countries')}` : ''}${s.carrierCount > 0 ? `, served by ${pluralise(s.carrierCount, 'airline')}` : ''}.`
-      : '';
-  return lead + geo + net;
+  const placeStr = [a.country ? a.country : '', a.region ? `(${a.region})` : ''].filter(Boolean).join(' ') || 'its home region';
+  const netStr = s && s.destinationCount > 0 ? ` tracking ${pluralise(s.destinationCount, 'destination')} across ${pluralise(s.countryCount || 1, 'country', 'countries')}` : '';
+  return `Navigating ${a.name} (${code}) requires understanding terminal transfer layouts, local ground transport links into ${a.city || 'the metropolitan area'}, and peak flight departure hours before travel. Situated in ${placeStr}, the airfield functions as a critical regional transit hub${netStr}, enabling passengers to evaluate connecting routes, airline schedules, and airport amenities efficiently.`;
 }
 
 export function airlineIntro(a: StrapiAirline, s?: RouteSummary): string {
   const code = a.iataCode ? (a.icaoCode ? `${a.iataCode}/${a.icaoCode}` : a.iataCode) : a.icaoCode;
   const kind = a.type ? `${a.type.toLowerCase()} airline` : 'airline';
-  const based = sentence([
-    a.city ? ` based in ${a.city}` : '',
-    a.country ? `${a.city ? ', ' : ' based in '}${a.country}` : '',
-  ]);
-  const founded = num(a.founded) ? ` and founded in ${a.founded}` : '';
-  const lead = `${a.name}${code ? ` (${code})` : ''} is a ${kind}${based}${founded}.`;
-  const hub = a.airport ? ` Its operations are centred on ${a.airport}.` : '';
-  const net =
-    s && s.destinationCount > 0
-      ? ` Originfacts tracks ${pluralise(s.destinationCount, 'destination')} on its network${s.countryCount > 1 ? ` across ${pluralise(s.countryCount, 'country', 'countries')}` : ''}.`
-      : '';
-  return lead + hub + net;
+  const base = [a.city, a.country].filter(Boolean).join(', ');
+  const netStr = s && s.destinationCount > 0 ? `${s.destinationCount} destinations` : 'key international routes';
+  return `Evaluating ${a.name}${code ? ` (${code})` : ''} requires comparing ticket fare inclusions, checked baggage allowances, onboard seating standards, and hub connection efficiency before booking your flight. Operating as a ${kind}${base ? ` based in ${base}` : ''}, the carrier manages extensive flight schedules across ${netStr}, helping travelers determine optimal booking windows, alliance benefits, and total trip value.`;
 }
 
 /**
@@ -709,6 +687,52 @@ export function airlineFaqs(
 /* ------------------------------------------------------------------ *
  * schema.org JSON-LD
  * ------------------------------------------------------------------ */
+
+export type ArticleBlogPostingOptions = {
+  headline: string;
+  description?: string;
+  url: string;
+  image?: string | null;
+  datePublished?: string;
+  dateModified?: string;
+  authorNameOrSlug?: string;
+  categoryName?: string;
+  keywords?: string;
+  type?: 'BlogPosting' | 'Article';
+};
+
+export function articleBlogPostingJsonLd(opts: ArticleBlogPostingOptions): Record<string, unknown> {
+  const authorProfile = resolveAuthor(opts.authorNameOrSlug);
+  const authorPersonSchema = authorPersonJsonLd(authorProfile);
+  const rawImg = opts.image || DEFAULT_OG_IMAGE;
+  const imgUrl = rawImg.startsWith('http') ? rawImg : `${SITE_URL}${rawImg.startsWith('/') ? '' : '/'}${rawImg}`;
+  const pageUrl = opts.url.startsWith('http') ? opts.url : `${SITE_URL}${opts.url.startsWith('/') ? '' : '/'}${opts.url}`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': opts.type || 'BlogPosting',
+    headline: opts.headline,
+    ...(opts.description ? { description: opts.description } : {}),
+    image: [imgUrl],
+    datePublished: opts.datePublished || '2024-01-01T00:00:00Z',
+    dateModified: opts.dateModified || opts.datePublished || '2024-01-01T00:00:00Z',
+    author: authorPersonSchema,
+    publisher: {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'Originfacts',
+      url: SITE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/brand/logo/logo.svg`,
+      },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+    url: pageUrl,
+    ...(opts.categoryName ? { articleSection: opts.categoryName } : {}),
+    ...(opts.keywords ? { keywords: opts.keywords } : {}),
+  };
+}
 
 export function airportJsonLd(a: StrapiAirport, url: string): Record<string, unknown> {
   const ld: Record<string, unknown> = {

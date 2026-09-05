@@ -170,7 +170,9 @@ export default function AirlineShowcase({
               </div>
 
               <p className="max-w-3xl text-sm font-light leading-7 text-white/75 sm:text-base">
-                {airline.shortDescription?.trim() || intro}
+                {airline.shortDescription?.trim() && airline.shortDescription.trim().split(/\s+/).length >= 40 && airline.shortDescription.trim().split(/\s+/).length <= 60
+                  ? airline.shortDescription.trim()
+                  : intro}
               </p>
 
               <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
@@ -198,7 +200,7 @@ export default function AirlineShowcase({
             </div>
 
             <aside className="self-start rounded-[0.3rem] border border-white/15 bg-white/[0.07] p-5 backdrop-blur-sm lg:p-6">
-              <h2 className="text-[11px] uppercase tracking-[0.2em] text-sand-200">Airline snapshot</h2>
+              <h2 className="text-[11px] uppercase tracking-[0.2em] text-sand-200">Operational snapshot</h2>
               <dl className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
                 {[
                   { label: 'Country', value: airline.country },
@@ -283,7 +285,7 @@ export default function AirlineShowcase({
               Airline profile
             </p>
             <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
-              About {airline.name}
+              What is the background of {airline.name}?
             </h2>
             <div className="mt-5">
               <AboutParagraphs paragraphs={aboutParas} />
@@ -292,7 +294,7 @@ export default function AirlineShowcase({
 
           <aside className="self-start overflow-hidden rounded-[0.3rem] border border-forest-900/10 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] lg:sticky lg:top-16">
             <div className="flex items-center justify-between bg-forest-950 px-5 py-3.5">
-              <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-sand-100">Airline details</h3>
+              <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-sand-100">Key airline details</h3>
               {(airline.iataCode || airline.icaoCode) && (
                 <span className="font-mono text-[11px] font-bold tracking-wider text-sand-300">
                   {[airline.iataCode, airline.icaoCode].filter(Boolean).join(' · ')}
@@ -356,7 +358,7 @@ export default function AirlineShowcase({
               Good to know
             </p>
             <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
-              Flying with {airline.name} — what to expect
+              What can you expect when flying with {airline.name}?
             </h2>
             {goodToKnowCards.length > 0 ? (
               <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -414,7 +416,7 @@ export default function AirlineShowcase({
                 Route network
               </p>
               <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
-                Popular routes operated by {airline.name}
+                Which popular routes does {airline.name} operate?
               </h2>
             </div>
             <span className="text-sm font-light text-forest-900/50">
@@ -449,7 +451,7 @@ export default function AirlineShowcase({
               Route network
             </p>
             <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
-              Popular routes operated by {airline.name}
+              Which popular routes does {airline.name} operate?
             </h2>
             <p className="mt-3 text-sm font-light text-forest-900/60">
               {hubLabel
@@ -488,7 +490,7 @@ export default function AirlineShowcase({
             More from {airline.country}
           </p>
           <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
-            Other airlines based in {airline.country}
+            Which other airlines are based in {airline.country}?
           </h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {relatedAirlines.map((rel) => {

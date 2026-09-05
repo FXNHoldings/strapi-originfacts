@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const PREVIEW_WORDS = 30;
+const PREVIEW_WORDS = 70;
 
 export default function CategoryDescription({
   text,

@@ -87,7 +87,7 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
       <div className="rounded-[0.3rem] border border-forest-900/10 bg-white p-6 shadow-[0_1px_2px_rgba(0,0,0,0.03)] sm:p-8">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
           <h2 className="editorial-h text-2xl font-bold text-forest-900 lg:text-[1.7rem]">
-            Reviews of {name}
+            How do passengers rate flying with {name}?
           </h2>
           <span className="text-xs uppercase tracking-[0.2em] text-forest-900/45">
             {sources.map(sourceLabel).join(' + ')} · {years}
@@ -192,7 +192,7 @@ export default function AirlineReviews({ slug, name }: { slug: string; name: str
 
             {subs.length > 0 && (
               <>
-                <h3 className="mt-6 text-sm font-bold text-forest-900">Category averages</h3>
+                <h3 className="mt-6 text-sm font-bold text-forest-900">How does {name} score across key categories?</h3>
                 <ul className="mt-3 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
                   {subs.map((sub) => (
                     <li key={sub.label} className="flex items-center gap-3 text-xs text-forest-900/65">

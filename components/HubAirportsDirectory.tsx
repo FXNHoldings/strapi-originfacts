@@ -166,7 +166,7 @@ export default function HubAirportsDirectory({
                     <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-forest-900/45">
                       First matches
                     </p>
-                    <h3 className="mt-1 font-urbanist text-xl font-bold text-forest-950">Primary gateways to review</h3>
+                    <h3 className="mt-1 font-urbanist text-xl font-bold text-forest-950">Which primary airport gateways should you review?</h3>
                   </div>
                   <span className="rounded-full bg-forest-900/[0.06] px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-forest-900/55">
                     {filtered.length} total

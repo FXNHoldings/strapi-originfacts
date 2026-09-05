@@ -4,6 +4,8 @@ import { getAirlineFacts, resolveModule } from '@/lib/airline-facts';
 import { PUBLISHED_AIRLINE_GUIDES } from '@/lib/airline-tier';
 import { getRouteFacts } from '@/lib/route-facts';
 import { listAirlines, mediaUrl, type StrapiAirline } from '@/lib/strapi';
+import { breadcrumbJsonLd } from '@/lib/jsonld';
+import { JsonLd } from '@/components/SeoBlocks';
 import s from './page.module.css';
 
 export const revalidate = 60;
@@ -42,8 +44,11 @@ export default async function AirlineDirectoryPreview() {
   const countryCount = new Set(guides.map(({ airline }) => airline.country).filter(Boolean)).size;
   const verifiedFieldCount = guides.reduce((total, guide) => total + guide.verifiedFields, 0);
 
+  const breadcrumbs = breadcrumbJsonLd([{ name: 'Airline Fares', url: '/preview/airlines' }]);
+
   return (
     <main className={s.page} data-testid="airlines-page">
+      <JsonLd data={breadcrumbs} />
       <span className="sr-only" data-testid="airline-directory-preview">Preview airline directory</span>
       <section className={s.hero}>
         <div className={s.heroGlow} aria-hidden="true" />

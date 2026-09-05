@@ -30,6 +30,13 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Canonical host: redirect bare domain (originfacts.com) to www.originfacts.com
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'originfacts.com' }],
+        destination: 'https://www.originfacts.com/:path*',
+        permanent: true,
+      },
       // Travel Resources merged into Travel Tips on 2026-05-02.
       { source: '/category/travel-resources', destination: '/category/travel-tips', permanent: true },
       // Car Rental → Car Rentals (category renamed in Strapi, 2026-05-20).

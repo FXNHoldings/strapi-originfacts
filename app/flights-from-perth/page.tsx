@@ -1,5 +1,10 @@
 import Link from 'next/link';
+import { SITE_URL, articleBlogPostingJsonLd } from '@/lib/entity-seo';
+import { JsonLd } from '@/components/SeoBlocks';
 import type { Metadata } from 'next';
+
+import { breadcrumbJsonLd } from '@/lib/jsonld';
+import ComparisonTable from '@/components/ComparisonTable';
 
 export const metadata: Metadata = {
   title: 'Flights from Perth — Cheap Destinations Explorer',
@@ -13,21 +18,30 @@ const MONTHS = [
 ];
 
 export default function PerthExploreIndex() {
+  const articleSchema = articleBlogPostingJsonLd({
+    headline: 'Flights from Perth — Cheap Destinations Explorer',
+    description: 'Where can you fly from Perth? Cheapest destinations, monthly views, budget tiers, weekend trips, and non-stop only — refreshed daily.',
+    url: `${SITE_URL}/flights-from-perth`,
+    authorNameOrSlug: 'kritin-vashist',
+    categoryName: 'Flights',
+    type: 'BlogPosting',
+  });
+
   return (
     <main className="mx-auto max-w-7xl px-6 py-16" data-testid="perth-explore-index">
+      <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Flights from Perth', url: '/flights-from-perth' }])} />
       <header>
         <p className="text-xs uppercase tracking-widest text-forest-900/55">Flights from Perth (PER)</p>
         <h1 className="editorial-h mt-2 text-3xl font-bold text-forest-900 sm:text-4xl">
           Where can I fly from Perth?
         </h1>
         <p className="mt-3 max-w-3xl text-base text-forest-900/75">
-          Live cheap-fare data from Google Travel Explore, sliced however you want to plan. All
-          pages refresh every 24 hours. Click any tile to see real prices, dates, and a deep link
-          straight into Google Flights for booking.
+          Finding cheap flights from Perth (PER) requires comparing seasonal destination fare drops, non-stop flight availability, and flexible trip durations across domestic and international carriers. Our interactive explorer aggregates live airfare data updated every 24 hours, allowing travelers to filter affordable destinations by monthly travel windows, budget thresholds, and direct booking links.
         </p>
       </header>
 
-      <Section title="Browse by category" testid="category-tiles">
+      <Section title="Which flight categories can you browse from Perth?" testid="category-tiles">
         <Tile href="/flights-from-perth/cheap-destinations" label="Top 20 cheapest now" />
         <Tile href="/flights-from-perth/non-stop" label="Non-stop only" />
         <Tile href="/flights-from-perth/under-800" label="Under $800" />
@@ -36,7 +50,7 @@ export default function PerthExploreIndex() {
         <Tile href="/flights-from-perth/two-week-trips" label="Two-week trips" />
       </Section>
 
-      <Section title="Browse by month" testid="month-tiles">
+      <Section title="When is the cheapest month to fly from Perth?" testid="month-tiles">
         {MONTHS.map((m) => (
           <Tile
             key={m}
@@ -45,6 +59,19 @@ export default function PerthExploreIndex() {
           />
         ))}
       </Section>
+
+      <div className="mt-12">
+        <ComparisonTable
+          caption="Perth (PER) Flight Options vs Popular Destinations Comparison"
+          head={['Destination Region', 'Direct Non-Stop Carriers', 'Typical Flight Duration', 'Budget Fare Range (Return)', 'Best Travel Window']}
+          rows={[
+            ['Southeast Asia (Bali / Singapore / Bangkok)', 'Batik Air, AirAsia, Jetstar, SQ', '3.5 hrs - 7 hrs', 'A$280 - A$650', 'Dry Season (Apr - Oct)'],
+            ['East Asia (Tokyo / Hong Kong)', 'ANA, Cathay Pacific, Qantas', '9.5 hrs - 10.5 hrs', 'A$750 - A$1,200', 'Spring & Autumn (Mar - May, Sep - Nov)'],
+            ['Europe (London / Paris / Rome)', 'Qantas (Non-Stop), Qatar, Emirates', '17.5 hrs (Direct) - 21 hrs', 'A$1,350 - A$2,100', 'Shoulder Season (May & Sep)'],
+            ['Domestic Australia (Sydney / Melbourne)', 'Qantas, Virgin Australia, Jetstar', '3.5 hrs - 4 hrs', 'A$220 - A$480', 'Year-Round'],
+          ]}
+        />
+      </div>
 
       <footer className="mt-12 border-t border-forest-900/10 pt-6 text-xs text-forest-900/55">
         Data pulled from Google Travel Explore via SerpAPI. One API call per page; results cached

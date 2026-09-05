@@ -83,7 +83,7 @@ export default function CountryDetailSections({
               Airport directory
             </p>
             <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
-              Airports in {countryName}
+              Which major airports serve {countryName}?
             </h2>
             <p className="mt-3 max-w-4xl text-sm font-light leading-7 text-forest-900/70">
               Compare the airport records linked to {countryName}. Use the list to jump from a city or IATA code to the
@@ -153,7 +153,7 @@ export default function CountryDetailSections({
               Airline directory
             </p>
             <h2 className="editorial-h mt-3 text-2xl font-bold text-2xl">
-              Airlines based in {countryName}
+              Which airlines are headquartered in {countryName}?
             </h2>
             <p className="mt-3 max-w-4xl text-sm font-light leading-7 text-forest-900/70">
               Browse the airline brands connected to {countryName}. Each logo opens the carrier guide with route,

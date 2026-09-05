@@ -109,7 +109,7 @@ export default function Tier1AirlineCarousel({ slides }: { slides: Tier1GuideSli
             <span className="text-xs font-medium text-forest-900/50">Top Global Carriers</span>
           </div>
           <h2 className="editorial-h mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-forest-900">
-            Featured Traveller Policy Guides
+            Which airline policy guides should you read?
           </h2>
           <p className="mt-1 text-sm text-forest-900/70">
             Hand-verified baggage rules, seat specifications, WiFi policies, and carry-on limits for top airlines.

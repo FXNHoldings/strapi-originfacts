@@ -7,6 +7,7 @@ import { getFlySfoAirlineProfile } from '@/lib/flysfo-airline';
 import { getAirlineReviews } from '@/lib/airline-reviews';
 import { getAirlineRef } from '@/lib/airline-refs';
 import { SITE_URL, faqJsonLd } from '@/lib/entity-seo';
+import { breadcrumbJsonLd } from '@/lib/jsonld';
 import { JsonLd } from '@/components/SeoBlocks';
 import AirlineTier1, { derivedFaqs } from '@/components/airline-tier1/AirlineTier1';
 
@@ -71,12 +72,18 @@ export default async function AirlineTier1Preview({ params }: Props) {
     airlineLd.sameAs = airline.website.startsWith('http') ? airline.website : `https://${airline.website}`;
   }
 
+  const breadcrumbs = breadcrumbJsonLd([
+    { name: 'Airline Fares', url: '/preview/airlines' },
+    { name: airline.name, url: `/preview/airlines/${slug}` },
+  ]);
+
   return (
     <>
       {/* Schema is emitted on the preview so the markup can be validated, but
           the page stays noindex — nothing here is eligible for a rich result. */}
       <JsonLd data={airlineLd} />
       {faqs.length > 0 && <JsonLd data={faqJsonLd(faqs)} />}
+      <JsonLd data={breadcrumbs} />
       <AirlineTier1
         airline={airline}
         routeFacts={routeFacts}

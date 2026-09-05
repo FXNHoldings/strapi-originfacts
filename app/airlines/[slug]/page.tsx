@@ -11,6 +11,7 @@ import {
   airlineExpectations,
   airlineFaqs,
   airlineJsonLd,
+  articleBlogPostingJsonLd,
   faqJsonLd,
   robotsFor,
   summariseRoutes,
@@ -150,6 +151,16 @@ export default async function AirlinePage({ params }: Props) {
     { label: 'Popular routes', value: routes.length ? String(routes.length) : undefined },
   ].filter((fact) => fact.value);
 
+  const articleSchema = articleBlogPostingJsonLd({
+    headline: `${airline.name} Airline Guide & Carrier Profile`,
+    description: airline.about || intro,
+    url: `${SITE_URL}/airlines/${airline.slug}`,
+    image: logo,
+    authorNameOrSlug: 'elena-rostova',
+    categoryName: 'Airlines',
+    type: 'BlogPosting',
+  });
+
   // Published Tier 1 guides & Tier 2 carriers. Render modern policy layout
   // for all substantive carriers (Tier 1 & Tier 2).
   if (airlineGuideIsPublished(slug) || airlineTier(airline, routes.length > 0) <= 2) {
@@ -160,6 +171,7 @@ export default async function AirlinePage({ params }: Props) {
 
     return (
       <>
+        <JsonLd data={articleSchema} />
         <JsonLd data={tier1AirlineLd} />
         {tier1Faqs.length > 0 && <JsonLd data={faqJsonLd(tier1Faqs)} />}
         <JsonLd
@@ -214,6 +226,7 @@ export default async function AirlinePage({ params }: Props) {
 
   return (
     <article className="bg-[#fbfcff]" data-testid={`airline-page-${slug}`}>
+      <JsonLd data={articleSchema} />
       <JsonLd data={airlineJsonLd(airline, url)} />
       <JsonLd data={faqJsonLd(faqs)} />
       <JsonLd
@@ -264,7 +277,9 @@ export default async function AirlinePage({ params }: Props) {
               </div>
 
               <p className="mt-6 max-w-4xl text-base font-normal leading-8 text-forest-900/80">
-                {airline.shortDescription?.trim() || intro}
+                {airline.shortDescription?.trim() && airline.shortDescription.trim().split(/\s+/).length >= 40 && airline.shortDescription.trim().split(/\s+/).length <= 60
+                  ? airline.shortDescription.trim()
+                  : intro}
               </p>
 
               <div className="mt-7 flex flex-wrap items-center gap-3 font-mono text-xs">

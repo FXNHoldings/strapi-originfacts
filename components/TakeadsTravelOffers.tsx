@@ -28,7 +28,7 @@ export default async function TakeadsTravelOffers({
             Sponsored travel options
           </p>
           <h2 id="takeads-travel-options" className="editorial-h mt-1 text-xl text-forest-950">
-            Plan the next part of your trip
+            How can you plan the next stage of your trip?
           </h2>
         </div>
         <p className="text-xs text-forest-900/50">We may earn when you visit a partner.</p>

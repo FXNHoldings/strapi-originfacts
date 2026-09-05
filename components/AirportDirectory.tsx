@@ -126,7 +126,7 @@ export default function AirportDirectory({ airports }: { airports: StrapiAirport
           <header className="flex items-end justify-between border-b border-forest-900/10 pb-3">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-forest-900/50">Featured hub guides</p>
-              <h2 className="editorial-h mt-2 text-2xl font-bold text-forest-900">Top international airports</h2>
+              <h2 className="editorial-h mt-2 text-2xl font-bold text-forest-900">Which top international airports can you explore?</h2>
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-forest-900/65">
                 Start with high-traffic airports where terminal layout, ground transport and connection planning can make
                 the biggest difference to the trip.
